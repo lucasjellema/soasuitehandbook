@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="DomainsService/DomainService"/>
+            <con:binding>
+                <con:name>DomainService_SOAP11_binding</con:name>
+                <con:namespace>myspace.com/reference</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:flow>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context>
+                    <con3:userNsDecl prefix="ref" namespace="myspace.com/reference" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:route>
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-5404235152075540744-16026e4.143519ed874.-7f19</con3:id>
+                        <con1:service ref="DomainsService/fileReference" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>SynchRead</con1:operation>
+                        <con1:outboundTransform>
+                            <con2:assign varName="requestedDomain">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-5404235152075540744-16026e4.143519ed874.-7f14</con3:id>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/ref:CodeListIdentification</con3:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con1:outboundTransform>
+                        <con1:responseTransform>
+                            <con2:assign varName="domainValues">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-5404235152075540744-16026e4.143519ed874.-7f11</con3:id>
+                                <con2:expr>
+                                    <con3:xsltTransform xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                                        <con3:resource ref="DomainsService/Transformations/extractRawDomainValues"/>
+                                        <con3:input>$body/*[1]</con3:input>
+                                        <con3:param name="domainName">
+                                            <con3:path>$requestedDomain//ref:Name/text()</con3:path>
+                                        </con3:param>
+                                    </con3:xsltTransform>
+                                </con2:expr>
+                            </con2:assign>
+                            <con2:nxsdTranslation>
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-5404235152075540744-16026e4.143519ed874.-7eda</con3:id>
+                                <con2:type>Native-To-XML</con2:type>
+                                <con2:sourceExpr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$domainValues//ref:ValuesInJSON/text()</con3:xqueryText>
+                                </con2:sourceExpr>
+                                <con2:nxsd ref="DomainsService/Schemas/nxsd_domainValuesJSON"/>
+                                <con2:schemaElement xmlns:my="my.domains.dom">my:domainValues</con2:schemaElement>
+                                <con2:replace-body-content/>
+                            </con2:nxsdTranslation>
+                            <con2:replace varName="body" contents-only="true">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-5404235152075540744-16026e4.143519ed874.-7ed6</con3:id>
+                                <con2:expr>
+                                    <con3:xsltTransform xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                                        <con3:resource ref="DomainsService/Transformations/JSONValuesToCodeList"/>
+                                        <con3:input>$body/*[1]</con3:input>
+                                    </con3:xsltTransform>
+                                </con2:expr>
+                            </con2:replace>
+                        </con1:responseTransform>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

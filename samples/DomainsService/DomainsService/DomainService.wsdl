@@ -1,0 +1,31 @@
+<definitions name="DomainService" targetNamespace="myspace.com/reference" xmlns:my="myspace.com/reference" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:inp2="myspace.com/reference" xmlns:inp1="myspace.com/reference" xmlns:tns="myspace.com/reference" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <types>
+    <xsd:schema elementFormDefault="qualified">
+            <xsd:import namespace="myspace.com/reference" schemaLocation="Schemas/CodeLists.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="requestMessage">
+        <part name="in" element="my:CodeListIdentification"/>
+    </message>
+    <message name="replyMessage">
+        <part name="out" element="my:CodeList"/>
+    </message>
+    <portType name="DomainService">
+        <operation name="getDomainValues">
+            <input message="inp2:requestMessage"/>
+            <output message="inp2:replyMessage"/>
+        </operation>
+    </portType>
+    <binding name="DomainService_SOAP11_binding" type="inp2:DomainService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getDomainValues">
+            <soap:operation style="document" soapAction="getDomainValues"/>
+            <input>
+                <soap:body use="literal" namespace="myspace.com/reference"/>
+            </input>
+            <output>
+                <soap:body use="literal" namespace="myspace.com/reference"/>
+            </output>
+        </operation>
+    </binding>
+</definitions>
