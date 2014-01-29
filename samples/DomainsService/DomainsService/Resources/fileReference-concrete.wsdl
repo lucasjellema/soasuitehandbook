@@ -1,0 +1,20 @@
+<definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/DomainsService/DomainsService/fileReference" name="fileReference-concrete" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/file/DomainsService/DomainsService/fileReference" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/file/DomainsService/DomainsService/fileReference" location="fileReference.wsdl"/>
+  <binding name="SynchRead_ptt-binding" type="tns:SynchRead_ptt">
+    <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+    <operation name="SynchRead">
+      <soap:operation soapAction="SynchRead"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="fileReference-service">
+    <port name="fileReference-port" binding="tns:SynchRead_ptt-binding">
+      <soap:address location="jca://eis/FileAdapter"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<tns:RawCodeListValues xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="myspace.com/reference" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="myspace.com/reference file:/u01/work/ch5a/DomainsService/DomainsService/Schemas/CodeLists.xsd">
+   <tns:ValuesInJSON>
+{"values" : [{"code":"M","label":"Male","description":"manly, masculine" },{"code":"F","label":"Female","description":"feminine, womanly" }]}
+</tns:ValuesInJSON>
+</tns:RawCodeListValues>

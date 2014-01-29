@@ -1,0 +1,4 @@
+domain;values
+genders;{"values" : [{"code":"M","label":"Male","description":"manly, masculine" },{"code":"F","label":"Female","description":"feminine, womanly" }]}
+colors;{"values": [{"code":"red","label":"Red","description":"Rudolfś Nose color" },{"code":"blue","label":"Blue","description":"color of the sky or the sea on a good day" },{"code":"brown","label":"Brown","description":"Mix of Red and Green" }]}
+traficlight;{"values": [{"code":"red","label":"Red","description":"Stop" },{"code":"yellow","label":"Yellow","description":"About to turn red" },{"code":"green","label":"Green","description":"Good to Go" }]}
