@@ -1,0 +1,41 @@
+<wsdl:definitions name="AirportService" targetNamespace="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService" xmlns:tns="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService" xmlns:inp1="saibot.airport/operational/aircraftservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/operational/aircraftservice" schemaLocation="AircraftService.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="requestProposalMessage">
+        <wsdl:part name="part1" element="inp1:RequestProposalMessage"/>
+    </wsdl:message>
+    <wsdl:message name="submitProposalCallbackMessage">
+        <wsdl:part name="part1" element="inp1:SubmitProposalCallbackMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="AircraftService">
+        <wsdl:operation name="requestProposal">
+            <wsdl:input message="tns:requestProposalMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="AircraftServiceCallback">
+        <wsdl:operation name="submitProposal">
+            <wsdl:input message="tns:submitProposalCallbackMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AircraftServiceSOAP11Binding" type="tns:AircraftService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="requestProposal">
+            <soap:operation style="document" soapAction="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService/requestProposal"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="part1"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="AircraftServiceCallbackSOAP11Binding" type="tns:AircraftServiceCallback">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="submitProposal">
+            <soap:operation style="document" soapAction="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService/submitProposal"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="part1"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

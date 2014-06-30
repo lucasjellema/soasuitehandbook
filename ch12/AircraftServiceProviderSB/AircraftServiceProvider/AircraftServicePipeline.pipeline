@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="AircraftServiceProvider/AircraftService"/>
+            <con:binding>
+                <con:name>AircraftServiceSOAP11Binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-7f000001.N17e12f4d.0.146de3a9cab.N7fea">
+            <con:stage id="_StageId-7f000001.N17e12f4d.0.146de3a9cab.N7f4a" name="GatherCallbackToandMessageID" xmlns:con3="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context>
+                    <con2:userNsDecl prefix="air" namespace="saibot.airport/operational/aircraftservice"/>
+                </con:context>
+                <con:disabled>true</con:disabled>
+                <con:actions>
+                    <con4:report>
+                        <con2:id>_ActionId-7f000001.148de0fd.0.146e1311a52.N7ffe</con2:id>
+                        <con4:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con4:expr>
+                        <con4:labels>
+                            <con4:key>requestForAircraftService</con4:key>
+                            <con4:varName>body</con4:varName>
+                            <con4:value>
+                                <con2:xpathText>./air:RequestProposalMessage/air:RFPIdentificationNumber</con2:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                    </con4:report>
+                    <con4:report>
+                        <con2:id>_ActionId-7f000001.148de0fd.0.146e1311a52.N7ff2</con2:id>
+                        <con4:expr>
+                            <con2:xqueryText>$header</con2:xqueryText>
+                        </con4:expr>
+                        <con4:labels>
+                            <con4:key>incomingHeader</con4:key>
+                            <con4:varName>header</con4:varName>
+                            <con4:value>
+                                <con2:xpathText>.</con2:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                    </con4:report>
+                    <con1:assign varName="callbackToAddress">
+                        <con2:id>_ActionId-7f000001.N17e12f4d.0.146de3a9cab.N7f49</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$header/wsa05:ReplyTo/wsa05:Address/.</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="relatesTo">
+                        <con2:id>_ActionId-7f000001.N17e12f4d.0.146de3a9cab.N7f48</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$header/wsa05:RelatesTo/.</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="MessageID">
+                        <con2:id>_ActionId-7f000001.N17e12f4d.0.146de3a9cab.N7f47</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$header/wsa05:MessageID/.</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="wsaReferenceParameters">
+                        <con2:id>_ActionId-7f000001.3fe79a8.0.146e1aaf0cd.N7ffe</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$header/wsa05:ReplyTo/wsa05:ReferenceParameters</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con4:report>
+                        <con2:id>_ActionId-7f000001.148de0fd.0.146e1311a52.N7ff5</con2:id>
+                        <con4:expr>
+                            <con2:xqueryText>$MessageID</con2:xqueryText>
+                        </con4:expr>
+                        <con4:labels>
+                            <con4:key>messaageId</con4:key>
+                            <con4:varName>callbackToAddress</con4:varName>
+                            <con4:value>
+                                <con2:xpathText>.</con2:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                    </con4:report>
+                    <con4:report>
+                        <con2:id>_ActionId-7f000001.3fe79a8.0.146e1aaf0cd.N7ffb</con2:id>
+                        <con4:expr>
+                            <con2:xqueryText>$wsaReferenceParameters</con2:xqueryText>
+                        </con4:expr>
+                        <con4:labels>
+                            <con4:key>wsaReferenceParams</con4:key>
+                            <con4:varName>wsaReferenceParameters</con4:varName>
+                            <con4:value>
+                                <con2:xpathText>.</con2:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                    </con4:report>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-7f000001.N17e12f4d.0.146de3a9cab.N7f43" name="PrepareResponse">
+                <con:context>
+                    <con2:userNsDecl prefix="air" namespace="saibot.airport/operational/aircraftservice"/>
+                </con:context>
+                <con:disabled>true</con:disabled>
+                <con:actions>
+                    <con3:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con2:id>_ActionId-7f000001.N17e12f4d.0.146de3a9cab.N7ffb</con2:id>
+                        <con3:expr>
+                            <con2:xsltTransform>
+                                <con2:resource ref="AircraftServiceProvider/RFPtoFakeProposal"/>
+                                <con2:input>$body/air:RequestProposalMessage</con2:input>
+                            </con2:xsltTransform>
+                        </con3:expr>
+                    </con3:replace>
+                    <con4:report>
+                        <con2:id>_ActionId-7f000001.148de0fd.0.146e1311a52.N7ffb</con2:id>
+                        <con4:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con4:expr>
+                        <con4:labels>
+                            <con4:key>afterPrepareResponse</con4:key>
+                            <con4:varName>body</con4:varName>
+                            <con4:value>
+                                <con2:xpathText>.</con2:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                    </con4:report>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-7f000001.N17e12f4d.0.146de3a9cab.N7fe8" name="InvokeCallbackBusinessService">
+                <con:context/>
+                <con:actions>
+                    <con5:route xmlns:con3="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id>_ActionId-7f000001.N17e12f4d.0.146de3a9cab.N7ea7</con2:id>
+                        <con5:service ref="AircraftServiceProvider/AircraftServiceProviderCallbackPipeline" xsi:type="con:PipelineRef"/>
+                        <con5:operation>submitProposal</con5:operation>
+                        <con3:outboundTransform>
+                            <con1:replace varName="header">
+                                <con2:id>_ActionId-7f000001.N17e12f4d.0.146de3a9cab.N7ea6</con2:id>
+                                <con2:disabled>true</con2:disabled>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<soap-env:Header >
+  <wsa05:Action  soap-env:mustUnderstand="1">http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService/requestProposal</wsa05:Action> 
+  <wsa05:To>{$callbackToAddress/text()}</wsa05:To>
+  <wsa05:RelatesTo>{$MessageID/text()}</wsa05:RelatesTo>
+  <wsa05:ReplyTo>
+    <wsa05:Address>http://www.w3.org/2005/08/addressing/anonymous</wsa05:Address>
+    <wsa05:ReferenceParameters>{$wsaReferenceParameters}</wsa05:ReferenceParameters>
+  </wsa05:ReplyTo>
+</soap-env:Header>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                            <con4:report>
+                                <con2:id>_ActionId-7f000001.148de0fd.0.146e1311a52.N7ff8</con2:id>
+                                <con4:expr>
+                                    <con2:xqueryText>$header</con2:xqueryText>
+                                </con4:expr>
+                                <con4:labels>
+                                    <con4:key>header</con4:key>
+                                    <con4:varName>header</con4:varName>
+                                    <con4:value>
+                                        <con2:xpathText>.</con2:xpathText>
+                                    </con4:value>
+                                </con4:labels>
+                            </con4:report>
+                            <con1:routing-options>
+                                <con2:id>_ActionId-7f000001.N17e12f4d.0.146de3a9cab.N7ea5</con2:id>
+                                <con2:disabled>true</con2:disabled>
+                                <con1:uriExpr>
+                                    <con2:xqueryText>$callbackToAddress/text()</con2:xqueryText>
+                                </con1:uriExpr>
+                                <con1:mode>request</con1:mode>
+                            </con1:routing-options>
+                        </con3:outboundTransform>
+                    </con5:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-7f000001.N17e12f4d.0.146de3a9cab.N7fe9">
+            <con:stage id="_StageId-7f000001.N17e12f4d.0.146de3a9cab.N7fe7" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-7f000001.N17e12f4d.0.146de3a9cab.N7fea</con:request>
+                <con:response>response-7f000001.N17e12f4d.0.146de3a9cab.N7fe9</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
