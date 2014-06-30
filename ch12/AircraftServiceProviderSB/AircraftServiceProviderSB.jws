@@ -27,7 +27,6 @@
    </list>
    <list n="listOfChildren">
       <hash><url n="URL" path="AircraftServiceProvider/AircraftServiceProvider.jpr"/></hash>
-      <hash><url n="URL" path="SBProjectACProvider/SBProjectACProvider.jpr"/></hash>
    </list>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
