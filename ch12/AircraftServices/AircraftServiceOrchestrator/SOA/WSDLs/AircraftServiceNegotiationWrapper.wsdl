@@ -1,0 +1,45 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="AircraftServiceNegotiation"
+     targetNamespace="saibot.airport/operational/aircraftservice"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:acs="saibot.airport/operational/aircraftservice"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:cor="http://xmlns.oracle.com/AircraftServices/AircraftServiceOrchestrator/AircraftServiceNegotiationProcessor/correlationset"
+     xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+     xmlns:ns1="saibot.airport/operational/aircraftservicenegotiation"
+    >
+    <plnk:partnerLinkType name="AircraftServiceNegotiationProcessor">
+        <plnk:role name="AircraftServiceNegotiation" portType="acs:AircraftServiceNegotiation"/>
+    </plnk:partnerLinkType>
+    <vprop:propertyAlias propertyName="cor:ServiceRequestIdentifier" xmlns:acs="saibot.airport/operational/aircraftservice"
+         messageType="acs:CancelAircraftServiceRequestMessage" part="part1" xmlns:ns1="saibot.airport/operational/aircraftservicenegotiation">
+        <vprop:query>ns1:ServiceRequestId</vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="cor:ServiceRequestIdentifier" xmlns:acs="saibot.airport/operational/aircraftservice"
+         messageType="acs:ArrangeAircraftServiceResponseMessage" part="part1" xmlns:ns1="saibot.airport/operational/aircraftservicenegotiation">
+        <vprop:query>ns1:ServiceRequestId</vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="cor:ServiceRequestIdentifier" xmlns:acs="saibot.airport/operational/aircraftservice"
+         messageType="acs:RetrieveStatusAircraftServiceNegotiationRequestMessage" part="part1">
+        <vprop:query>ns1:ServiceRequestId</vprop:query>
+    </vprop:propertyAlias>
+    <wsdl:import namespace="saibot.airport/operational/aircraftservice" location="AircraftServiceNegotiation.wsdl"/>
+    <wsdl:import namespace="http://xmlns.oracle.com/AircraftServices/AircraftServiceOrchestrator/AircraftServiceNegotiationProcessor/correlationset"
+         location="AircraftServiceNegotiationProcessor_properties.wsdl"/>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:acs="saibot.airport/operational/aircraftservice"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:cor="http://xmlns.oracle.com/AircraftServices/AircraftServiceOrchestrator/AircraftServiceNegotiationProcessor/correlationset"
+             xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+             xmlns:ns1="saibot.airport/operational/aircraftservicenegotiation">
+            <xsd:import namespace="saibot.airport/operational/aircraftservicenegotiation" schemaLocation="../Schemas/AircraftServiceNegotiation.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/operational/aircraftservice" schemaLocation="oramds:/apps/Schemas/AircraftService.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+</wsdl:definitions>
