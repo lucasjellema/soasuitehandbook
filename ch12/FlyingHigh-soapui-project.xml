@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="FlyingHigh" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="AircraftServiceSOAP11Binding" type="wsdl" bindingName="{http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService}AircraftServiceSOAP11Binding" soapVersion="1_1" anonymous="optional" definition="http://localhost:7101/FlyingHighAircraftService/AircraftServiceProvider?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:7101/FlyingHighAircraftService/AircraftServiceProvider?wsdl"><con:part><con:url>http://localhost:7101/FlyingHighAircraftService/AircraftServiceProvider?wsdl</con:url><con:content><![CDATA[<WL5G3N0:definitions name="AirportService" targetNamespace="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport/operational/aircraftservice" xmlns:WL5G3N2="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService" xmlns:WL5G3N3="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema xmlns:inp1="saibot.airport/operational/aircraftservice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/operational/aircraftservice" schemaLocation="http://localhost:7101/FlyingHighAircraftService/AircraftServiceProvider?SCHEMA%2FAircraftServiceProvider%2FAircraftService"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="requestProposalMessage">
+    <WL5G3N0:part element="WL5G3N1:RequestProposalMessage" name="part1"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="submitProposalCallbackMessage">
+    <WL5G3N0:part element="WL5G3N1:SubmitProposalCallbackMessage" name="part1"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="AircraftService">
+    <WL5G3N0:operation name="requestProposal">
+      <WL5G3N0:input message="WL5G3N2:requestProposalMessage"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="AircraftServiceSOAP11Binding" type="WL5G3N2:AircraftService">
+    <WL5G3N3:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="requestProposal">
+      <WL5G3N3:operation soapAction="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService/requestProposal" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body parts="part1" use="literal"/>
+      </WL5G3N0:input>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="AircraftServiceSOAP11BindingQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N2:AircraftServiceSOAP11Binding" name="AircraftServiceSOAP11BindingQSPort">
+      <WL5G3N3:address location="http://localhost:7101/FlyingHighAircraftService/AircraftServiceProvider"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:7101/FlyingHighAircraftService/AircraftServiceProvider?SCHEMA%2FAircraftServiceProvider%2FAircraftService</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="saibot.airport/operational/aircraftservice" xmlns:acs="saibot.airport/operational/aircraftservice" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="RequestProposalMessage" type="acs:requestProposalMessageType"/>
+  <element name="SubmitProposalCallbackMessage" type="acs:submitProposalCallbackMessageType"/>
+  <complexType name="requestProposalMessageType">
+    <sequence>
+      <element name="RequestingCarrierIATACode" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="Flight" nillable="false" type="acs:flightType" minOccurs="1" maxOccurs="1"/>
+      <element name="Services">
+        <complexType>
+          <sequence>
+            <element name="ServiceRequirement" type="acs:serviceRequirementType" minOccurs="0" maxOccurs="10"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RFPIdentificationNumber" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="DeadlineForProposals" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="submitProposalCallbackMessageType">
+    <sequence>
+      <element name="RFPIdentificationNumber" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="CanDo" nillable="false" type="boolean" minOccurs="1" maxOccurs="1"/>
+      <element name="Price" nillable="false" type="float" minOccurs="0" maxOccurs="1"/>
+      <element name="Comments" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ProposalExpiryDate" nillable="false" type="dateTime" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="flightType">
+    <sequence>
+      <element name="AircraftTypeIATACode" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="EstimatedNumberOfPassengers" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="SlotTime" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+      <element name="ArrivalOrDeparture" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="ConnectingAirport" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="serviceRequirementType">
+    <sequence>
+      <element name="Service" type="acs:serviceType" minOccurs="1" maxOccurs="1"/>
+      <element name="MinimumQualityLevel" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="Quantity" nillable="false" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="Description" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <simpleType name="serviceType">
+    <restriction base="string">
+      <enumeration value="fuel"/>
+      <enumeration value="catering"/>
+      <enumeration value="cleaning"/>
+      <enumeration value="bagage"/>
+      <enumeration value="deicing"/>
+    </restriction>
+  </simpleType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7101/FlyingHighAircraftService/AircraftServiceProvider</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService/requestProposal" name="requestProposal" bindingOperationName="requestProposal" type="One-Way" inputName="" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/FlyingHighAircraftService/AircraftServiceProvider</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:air="saibot.airport/operational/aircraftservice">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <air:RequestProposalMessage>
+         <air:RequestingCarrierIATACode>KLM</air:RequestingCarrierIATACode>
+         <air:Flight>
+            <air:AircraftTypeIATACode>747</air:AircraftTypeIATACode>
+            <air:EstimatedNumberOfPassengers>123</air:EstimatedNumberOfPassengers>
+            <air:SlotTime>2014-09-24T07:23:31+01:00</air:SlotTime>
+            <air:ArrivalOrDeparture>D</air:ArrivalOrDeparture>
+            <air:ConnectingAirport>SFO</air:ConnectingAirport>
+         </air:Flight>
+         <air:Services>
+            <!--0 to 10 repetitions:-->
+            <air:ServiceRequirement>
+               <air:Service>bagage</air:Service>
+               <air:MinimumQualityLevel>3</air:MinimumQualityLevel>
+               <!--Optional:-->
+               <air:Quantity>45</air:Quantity>
+               <!--Optional:-->
+               <air:Description>doeoiw</air:Description>
+            </air:ServiceRequirement>
+         </air:Services>
+         <air:RFPIdentificationNumber>8764</air:RFPIdentificationNumber>
+         <air:DeadlineForProposals>2014-08-28T07:24:12+01:00</air:DeadlineForProposals>
+      </air:RequestProposalMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService/requestProposal" addDefaultTo="false" replyTo="http://myoel64.localdomain:8088/mockAircraftServiceCallbackSOAP11Binding" generateMessageId="true" relatesTo="MyMessage"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>

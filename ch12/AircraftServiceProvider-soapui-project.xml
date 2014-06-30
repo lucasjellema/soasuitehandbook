@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="AircraftServiceProvider" resourceRoot="" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="AircraftServiceNegotiationBinding" type="wsdl" bindingName="{saibot.airport/operational/aircraftservice}AircraftServiceNegotiationBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?wsdl"><con:part><con:url>http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="AircraftServiceNegotiation" targetNamespace="saibot.airport/operational/aircraftservice" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:acs="saibot.airport/operational/aircraftservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:documentation>
+    <abstractWSDL>http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator!1.0/WSDLs/AircraftServiceNegotiationWrapper.wsdl</abstractWSDL>
+  </wsdl:documentation>
+  <plnk:partnerLinkType name="AircraftServiceNegotiationProcessor">
+    <plnk:role name="AircraftServiceNegotiation" portType="acs:AircraftServiceNegotiation"/>
+  </plnk:partnerLinkType>
+  <wsdl:import namespace="saibot.airport/operational/aircraftservice" location="http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?WSDL=AircraftServiceNegotiation.wsdl"/>
+  <wsdl:binding name="AircraftServiceNegotiationBinding" type="acs:AircraftServiceNegotiation">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="arrangeAircraftService">
+      <soap:operation style="document" soapAction="arrangeAircraftService"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelAircraftService">
+      <soap:operation style="document" soapAction="cancelAircraftService"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AircraftServiceOrchestration_ep">
+    <wsdl:port name="AircraftServiceNegotiation_pt" binding="acs:AircraftServiceNegotiationBinding">
+      <soap:address location="http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?WSDL=AircraftServiceNegotiation.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="AircraftServiceNegotiation" targetNamespace="saibot.airport/operational/aircraftservice" xmlns:acs="saibot.airport/operational/aircraftservice" xmlns:acsn="saibot.airport/operational/aircraftservicenegotiation" xmlns:tns="saibot.airport/operational/aircraftservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/operational/aircraftservicenegotiation" schemaLocation="http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?XSD=../Schemas/AircraftServiceNegotiation.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ArrangeAircraftServiceRequestMessage">
+    <wsdl:part name="part1" element="acsn:ArrangeAircraftServiceRequestMessage"/>
+  </wsdl:message>
+  <wsdl:message name="ArrangeAircraftServiceResponseMessage">
+    <wsdl:part name="part1" element="acsn:ArrangeAircraftServiceResponseMessage"/>
+  </wsdl:message>
+  <wsdl:message name="CancelAircraftServiceRequestMessage">
+    <wsdl:part name="part1" element="acsn:CancelAircraftServiceRequestMessage"/>
+  </wsdl:message>
+  <wsdl:message name="CancelAircraftServiceResponseMessage">
+    <wsdl:part name="part1" element="acsn:CancelAircraftServiceResponseMessage"/>
+  </wsdl:message>
+  <wsdl:portType name="AircraftServiceNegotiation">
+    <wsdl:operation name="arrangeAircraftService">
+      <wsdl:input message="acs:ArrangeAircraftServiceRequestMessage"/>
+      <wsdl:output message="acs:ArrangeAircraftServiceResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="cancelAircraftService">
+      <wsdl:input message="acs:CancelAircraftServiceRequestMessage"/>
+      <wsdl:output message="acs:CancelAircraftServiceResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?XSD=../Schemas/AircraftServiceNegotiation.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="saibot.airport/operational/aircraftservicenegotiation" xmlns:acs="saibot.airport/operational/aircraftservice" xmlns:acsn="saibot.airport/operational/aircraftservicenegotiation" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?XSD=../Schemas/AircraftService.xsd" namespace="saibot.airport/operational/aircraftservice"/>
+  <element name="ArrangeAircraftServiceRequestMessage" type="acsn:requestforAircraftServiceRequestMessageType"/>
+  <element name="ArrangeAircraftServiceResponseMessage" type="acsn:requestforAircraftServiceResponseMessageType"/>
+  <element name="CancelAircraftServiceRequestMessage" type="acsn:cancelRequestforAircraftServiceRequestMessageType"/>
+  <element name="CancelAircraftServiceResponseMessage" type="acsn:cancelRequestforAircraftServiceResponseMessageType"/>
+  <complexType name="requestforAircraftServiceRequestMessageType">
+    <sequence>
+      <element name="RequestingCarrierIATACode" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="Flight" nillable="false" type="acs:flightType" minOccurs="1" maxOccurs="1"/>
+      <element name="Services">
+        <complexType>
+          <sequence>
+            <element name="ServiceRequirement" type="acs:serviceRequirementType" minOccurs="0" maxOccurs="10"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ServiceRequestId" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="ServiceDeliveryDate" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="requestforAircraftServiceResponseMessageType">
+    <sequence>
+      <element name="ServiceRequestId" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="DealCloseDate" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="cancelRequestforAircraftServiceRequestMessageType">
+    <sequence>
+      <element name="ServiceRequestId" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="Reason" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="cancelRequestforAircraftServiceResponseMessageType">
+    <sequence>
+      <element name="ServiceRequestId" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="Description" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep?XSD=../Schemas/AircraftService.xsd</con:url><con:content><![CDATA[<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="saibot.airport/operational/aircraftservice" xmlns:acs="saibot.airport/operational/aircraftservice" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="RequestProposalMessage" type="acs:requestProposalMessageType"/>
+  <element name="SubmitProposalCallbackMessage" type="acs:submitProposalCallbackMessageType"/>
+  <complexType name="requestProposalMessageType">
+    <sequence>
+      <element name="RequestingCarrierIATACode" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="Flight" nillable="false" type="acs:flightType" minOccurs="1" maxOccurs="1"/>
+      <element name="Services">
+        <complexType>
+          <sequence>
+            <element name="ServiceRequirement" type="acs:serviceRequirementType" minOccurs="0" maxOccurs="10"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RFPIdentificationNumber" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="DeadlineForProposals" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="submitProposalCallbackMessageType">
+    <sequence>
+      <element name="RFPIdentificationNumber" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="CanDo" nillable="false" type="boolean" minOccurs="1" maxOccurs="1"/>
+      <element name="Price" nillable="false" type="float" minOccurs="0" maxOccurs="1"/>
+      <element name="Comments" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+      <element name="ProposalExpiryDate" nillable="false" type="dateTime" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="flightType">
+    <sequence>
+      <element name="AircraftTypeIATACode" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="EstimatedNumberOfPassengers" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="SlotTime" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+      <element name="ArrivalOrDeparture" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="ConnectingAirport" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="serviceRequirementType">
+    <sequence>
+      <element name="Service" type="acs:serviceType" minOccurs="1" maxOccurs="1"/>
+      <element name="MinimumQualityLevel" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="Quantity" nillable="false" type="int" minOccurs="0" maxOccurs="1"/>
+      <element name="Description" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <simpleType name="serviceType">
+    <restriction base="string">
+      <enumeration value="fuel"/>
+      <enumeration value="catering"/>
+      <enumeration value="cleaning"/>
+      <enumeration value="bagage"/>
+      <enumeration value="deicing"/>
+    </restriction>
+  </simpleType>
+</schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep</con:endpoint></con:endpoints><con:operation isOneWay="false" action="arrangeAircraftService" name="arrangeAircraftService" bindingOperationName="arrangeAircraftService" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:air="saibot.airport/operational/aircraftservicenegotiation" xmlns:air1="saibot.airport/operational/aircraftservice">
+   <soapenv:Header/>
+   <soapenv:Body>
+<air:ArrangeAircraftServiceRequestMessage>
+         <air:RequestingCarrierIATACode>KLM</air:RequestingCarrierIATACode>
+         <air:Flight>
+            <air1:AircraftTypeIATACode>747</air1:AircraftTypeIATACode>
+            <air1:EstimatedNumberOfPassengers>245</air1:EstimatedNumberOfPassengers>
+            <air1:SlotTime>2014-09-24T07:23:31+01:00</air1:SlotTime>
+            <air1:ArrivalOrDeparture>AD</air1:ArrivalOrDeparture>
+            <air1:ConnectingAirport>SFO</air1:ConnectingAirport>
+         </air:Flight>
+         <air:Services>
+            <air:ServiceRequirement>
+               <air1:Service>bagage</air1:Service>
+               <air1:MinimumQualityLevel>4</air1:MinimumQualityLevel>
+               <air1:Quantity>234</air1:Quantity>
+            </air:ServiceRequirement>
+         </air:Services>
+         <air:ServiceRequestId>955</air:ServiceRequestId>
+         <air:ServiceDeliveryDate>2014-08-28T07:24:12+01:00</air:ServiceDeliveryDate>
+      </air:ArrangeAircraftServiceRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="arrangeAircraftService"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="cancelAircraftService" name="cancelAircraftService" bindingOperationName="cancelAircraftService" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:7101/soa-infra/services/operations/AircraftServiceOrchestrator/AircraftServiceOrchestration_ep</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:air="saibot.airport/operational/aircraftservicenegotiation">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <air:CancelAircraftServiceRequestMessage>
+         <air:ServiceRequestId>?</air:ServiceRequestId>
+         <air:Reason>?</air:Reason>
+      </air:CancelAircraftServiceRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="cancelAircraftService"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
