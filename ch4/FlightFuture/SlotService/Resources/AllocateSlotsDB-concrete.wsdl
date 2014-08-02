@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/FlightFuture/SlotService/AllocateSlotsDB" name="AllocateSlotsDB-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="AllocateSlotsDB.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/FlightFuture/SlotService/AllocateSlotsDB"/>
+    <wsdl:binding name="AllocateSlotsDB_ptt-binding" type="all:AllocateSlotsDB_ptt" xmlns:all="http://xmlns.oracle.com/pcbpel/adapter/db/FlightFuture/SlotService/AllocateSlotsDB">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="AllocateSlotsDB">
+            <soap:operation soapAction="AllocateSlotsDB"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

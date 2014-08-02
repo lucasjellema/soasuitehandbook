@@ -1,0 +1,35 @@
+<definitions targetNamespace="saibot.airport/services/slot" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="saibot.airport/services/slot" xmlns:slot="saibot.airport/services/slot"
+             xmlns:reference="saibot.airport/datareference" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <types>
+    <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/slot" schemaLocation="../Schemas/SlotService.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="allocateSlotRequestMessage">
+    <part name="in" element="slot:allocateSlotRequestMessage"/>
+  </message>
+  <message name="allocateSlotResponseMessage">
+    <part name="return" element="slot:allocateSlotResponseMessage"/>
+  </message>
+  <portType name="SlotServicePortType">
+    <operation name="allocateSlot">
+      <input message="tns:allocateSlotRequestMessage"/>
+      <output message="tns:allocateSlotResponseMessage"/>
+    </operation>
+  </portType>
+  <binding name="SlotServicePortTypeSOAP11Binding" type="tns:SlotServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="allocateSlot">
+      <soap:operation style="document" soapAction="saibot.airport/services/slot/allocateSlot"/>
+      <input>
+        <soap:body use="literal" parts="in"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="return"/>
+      </output>
+    </operation>
+  </binding>
+</definitions>

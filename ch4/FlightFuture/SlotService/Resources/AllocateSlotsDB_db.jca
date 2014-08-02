@@ -1,0 +1,13 @@
+<adapter-config name="AllocateSlotsDB" adapter="db" wsdlLocation="AllocateSlotsDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="soadb_saibot" location="eis/DB/SaibotCommonDB"/>
+  <endpoint-interaction portType="AllocateSlotsDB_ptt" operation="AllocateSlotsDB">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="SAIBOT"/>
+      <property name="PackageName" value="FUT_SLOT_API"/>
+      <property name="ProcedureName" value="ALLOCATE_SLOTS"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

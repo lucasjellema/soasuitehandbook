@@ -1,0 +1,82 @@
+<ser:businessServiceEntry xmlns:ser="http://xmlns.oracle.com/servicebus/business/config" xmlns:svc="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:ops="http://xmlns.oracle.com/servicebus/business/operations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ser:coreEntry>
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="SlotService/Resources/AllocateSlotsDB-concrete"/>
+      <con:binding>
+        <con:name>AllocateSlotsDB_ptt-binding</con:name>
+        <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/db/FlightFuture/SlotService/AllocateSlotsDB</con:namespace>
+      </con:binding>
+    </ser:binding>
+    <ops:operations enabled="true">
+      <ops:sla-alerting enabled="true"/>
+    </ops:operations>
+    <ser:ws-policy>
+      <svc:binding-mode>no-policies</svc:binding-mode>
+    </ser:ws-policy>
+    <ser:xqConfiguration>
+      <svc:snippetVersion>1.0</svc:snippetVersion>
+    </ser:xqConfiguration>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>jca</tran:provider-id>
+    <tran:inbound>false</tran:inbound>
+    <tran:URI>
+      <env:value>jca://eis/DB/SaibotCommonDB</env:value>
+    </tran:URI>
+    <tran:outbound-properties>
+      <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+      <tran:retry-count>0</tran:retry-count>
+      <tran:retry-interval>30</tran:retry-interval>
+      <tran:retry-application-errors>true</tran:retry-application-errors>
+    </tran:outbound-properties>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <jca:jca-file ref="SlotService/Resources/AllocateSlotsDB_db"/>
+      <jca:adapter-name>AllocateSlotsDB</jca:adapter-name>
+      <jca:adapter-type>DB</jca:adapter-type>
+      <jca:always-use-wsdl>true</jca:always-use-wsdl>
+      <jca:connection-mode>managed</jca:connection-mode>
+      <jca:outbound-properties>
+        <jca:operation-properties>
+          <jca:operation-name>AllocateSlotsDB</jca:operation-name>
+          <jca:spec-properties>
+            <jca:property>
+              <jca:name>SchemaName</jca:name>
+              <jca:value>SAIBOT</jca:value>
+            </jca:property>
+            <jca:property>
+              <jca:name>PackageName</jca:name>
+              <jca:value>FUT_SLOT_API</jca:value>
+            </jca:property>
+            <jca:property>
+              <jca:name>ProcedureName</jca:name>
+              <jca:value>ALLOCATE_SLOTS</jca:value>
+            </jca:property>
+            <jca:property>
+              <jca:name>GetActiveUnitOfWork</jca:name>
+              <jca:value>false</jca:value>
+            </jca:property>
+          </jca:spec-properties>
+        </jca:operation-properties>
+      </jca:outbound-properties>
+      <jca:endpoint-properties>
+        <jca:endpoint-property>
+          <jca:name>jca.retry.maxInterval</jca:name>
+          <jca:value>120</jca:value>
+        </jca:endpoint-property>
+        <jca:endpoint-property>
+          <jca:name>jca.retry.count</jca:name>
+          <jca:value>4</jca:value>
+        </jca:endpoint-property>
+        <jca:endpoint-property>
+          <jca:name>jca.retry.interval</jca:name>
+          <jca:value>1</jca:value>
+        </jca:endpoint-property>
+        <jca:endpoint-property>
+          <jca:name>jca.retry.backoff</jca:name>
+          <jca:value>2</jca:value>
+        </jca:endpoint-property>
+      </jca:endpoint-properties>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+</ser:businessServiceEntry>

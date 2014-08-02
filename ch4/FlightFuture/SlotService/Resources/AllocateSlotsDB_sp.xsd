@@ -1,0 +1,71 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AllocateSlotsDB" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/AllocateSlotsDB" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_SLOTS" type="db:SAIBOT.SLOT_TBL_T" db:index="1" db:type="Array" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_SLOT_ALLOCATIONS" type="db:SAIBOT.SLOT_ALLOCATION_TBL_T" db:index="2" db:type="Array" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <complexType name="SAIBOT.WEEKDAY_TBL_T">
+      <sequence>
+         <element name="DAYS_OF_WEEK_ITEM" type="db:string3" db:type="VARCHAR2" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="SAIBOT.SLOT_T">
+      <sequence>
+         <element name="AIRCARRIER_CODE" type="db:string3" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="TIMEBLOCK" type="db:SAIBOT.TIMEUNIT_T" db:type="Struct" minOccurs="0" nillable="true"/>
+         <element name="ARRIVAL_OR_DEPARTURE" type="db:string1" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="AIRCRAFT_MODEL_IATA_CODE" type="db:string3" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+         <element name="AIRCRAFT_MODEL_ICAO_CODE" type="db:string4" db:type="VARCHAR2" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="SAIBOT.SLOT_ALLOCATION_TBL_T">
+      <sequence>
+         <element name="P_SLOT_ALLOCATIONS_ITEM" type="db:SAIBOT.SLOT_ALLOCATION_T" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="SAIBOT.SLOT_TBL_T">
+      <sequence>
+         <element name="P_SLOTS_ITEM" type="db:SAIBOT.SLOT_T" db:type="Struct" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="SAIBOT.TIMEUNIT_T">
+      <sequence>
+         <element name="START_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="END_DATE" type="dateTime" db:type="DATE" minOccurs="0" nillable="true"/>
+         <element name="DAYS_OF_WEEK" type="db:SAIBOT.WEEKDAY_TBL_T" db:type="Array" minOccurs="0" nillable="true"/>
+         <element name="HOUR_OF_DAY" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="FIVE_MINUTE_BLOCK" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <complexType name="SAIBOT.SLOT_ALLOCATION_T">
+      <sequence>
+         <element name="ALLOCATION_TIMESTAMP" type="dateTime" db:type="TIMESTAMP" minOccurs="0" nillable="true"/>
+         <element name="RESULT_CODE" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         <element name="SLOT_ID" type="decimal" db:type="NUMBER" minOccurs="0" nillable="true"/>
+      </sequence>
+   </complexType>
+   <simpleType name="string3">
+      <restriction base="string">
+         <maxLength value="3"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string1">
+      <restriction base="string">
+         <maxLength value="1"/>
+      </restriction>
+   </simpleType>
+   <simpleType name="string4">
+      <restriction base="string">
+         <maxLength value="4"/>
+      </restriction>
+   </simpleType>
+</schema>
