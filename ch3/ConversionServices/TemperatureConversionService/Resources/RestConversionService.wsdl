@@ -1,0 +1,37 @@
+<wsdl:definitions name="RestConversionService" targetNamespace="http://xmlns.oracle.com/ConversionServices/TemperatureConversionService/RestConversionService" xmlns:tns="http://xmlns.oracle.com/ConversionServices/TemperatureConversionService/RestConversionService" xmlns:inp1="RestConversionService_convertCelsiusToFahrenheit_request" xmlns:inp2="saibot.airport/services/utility/conversion/celsiusTemperatureConversionRESTJSONResponse" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="RestConversionService">
+        <plnk:role name="RestConversionServiceProvider" portType="tns:RestConversionService_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="RestConversionService_convertCelsiusToFahrenheit_request" schemaLocation="../Schemas/NXSD/nxsd_getTemperatureURL.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/services/utility/conversion/celsiusTemperatureConversionRESTJSONResponse" schemaLocation="../Schemas/NXSD/nxsd_getTemperatureResponseJSON.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="convertCelsiusToFahrenheit_inputMessage">
+        <wsdl:part name="request" element="inp1:URIParams"/>
+    </wsdl:message>
+    <wsdl:message name="convertCelsiusToFahrenheit_outputMessage">
+        <wsdl:part name="reply" element="inp2:TemperatureConversionResult"/>
+    </wsdl:message>
+    <wsdl:portType name="RestConversionService_ptt">
+        <wsdl:operation name="convertCelsiusToFahrenheit">
+            <wsdl:input message="tns:convertCelsiusToFahrenheit_inputMessage"/>
+            <wsdl:output message="tns:convertCelsiusToFahrenheit_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RestConversionService_ptt-binding" type="tns:RestConversionService_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="convertCelsiusToFahrenheit">
+            <soap:operation soapAction="convertCelsiusToFahrenheit"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

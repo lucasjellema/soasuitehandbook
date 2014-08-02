@@ -1,0 +1,31 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:tns="http://xmlns.oracle.com/ConversionServices/TemperatureConversionService/RestConversionService"
+             xmlns="http://wadl.dev.java.net/2009/02">
+  <doc title="RestConversionService">RestService</doc>
+  <grammars>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="RestConversionService_convertCelsiusToFahrenheit_request"
+                  schemaLocation="../Schemas/NXSD/nxsd_getTemperatureURL.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/services/utility/conversion/celsiusTemperatureConversionRESTJSONResponse"
+                  schemaLocation="../Schemas/NXSD/nxsd_getTemperatureResponseJSON.xsd"/>
+    </xsd:schema>
+  </grammars>
+  <resources>
+    <resource path="/Temperature">
+      <method name="GET" soa:wsdlOperation="convertCelsiusToFahrenheit">
+        <request>
+          <param name="celsiusTemperature" style="query" soa:expression="$msg.request/tns:celsiusTemperature" default=""
+                 type="xsd:decimal"/>
+        </request>
+        <response status="200">
+          <representation mediaType="application/json" element="cns:TemperatureConversionResult"
+                          xmlns:cns="saibot.airport/services/utility/conversion/celsiusTemperatureConversionRESTJSONResponse"/>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>

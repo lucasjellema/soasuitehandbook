@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="RestConversionService_convertCelsiusToFahrenheit_request" targetNamespace="RestConversionService_convertCelsiusToFahrenheit_request" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:encoding="US-ASCII">
+
+
+  <xsd:element name="URIParams">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="celsiusTemperature" type="xsd:decimal"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+<xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

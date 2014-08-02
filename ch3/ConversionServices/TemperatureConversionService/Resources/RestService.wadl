@@ -1,0 +1,35 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:tns="saibot.airport/services/utility/conversion" xmlns="http://wadl.dev.java.net/2009/02"
+             xmlns:cns="saibot.airport/services/utility/conversion">
+  <doc title="RestService">RestService</doc>
+  <grammars>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="RestConversionService_convertCelsiusToFahrenheit_request"
+                  schemaLocation="../Schemas/NXSD/nxsd_getTemperatureURL.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/services/utility/conversion/celsiusTemperatureConversionRESTJSONResponse"
+                  schemaLocation="../Schemas/NXSD/nxsd_getTemperatureResponseJSON.xsd"/>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/services/utility/conversion"
+                  schemaLocation="../Schemas/ConversionService.xsd"/>
+    </xsd:schema>
+  </grammars>
+  <resources>
+    <resource path="/Temperature">
+      <method name="GET" soa:wsdlOperation="getTemperatureCelsiusToFahrenheit">
+        <request>
+          <param name="temperature" style="query" soa:expression="$msg.in/tns:temperature" default=""
+                 type="xsd:decimal"/>
+        </request>
+        <response status="200">
+          <representation mediaType="application/json" element="cns:temperatureCelsiusToFahrenheitResponseMessage"
+                          xmlns:cns="saibot.airport/services/utility/conversion"/>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>

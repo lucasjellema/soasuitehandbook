@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions name="TemperatureConversionService" targetNamespace="saibot.airport/services/utility/conversion"
+             xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             xmlns:tns="saibot.airport/services/utility/conversion" 
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:conversion="saibot.airport/services/utility/conversion"
+             >
+  <types>
+    <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/utility/conversion"
+                  schemaLocation="../Schemas/TemperatureConversionService.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="temperatureCelsiusToFahrenheitRequestMessage">
+    <part name="in" element="conversion:temperatureCelsiusToFahrenheitRequestMessage"/>
+  </message>
+  <message name="temperatureCelsiusToFahrenheitResponseMessage">
+    <part name="return" element="conversion:temperatureCelsiusToFahrenheitRequestMessage"/>
+  </message>
+    <portType name="TemperatureConversionServicePortType">
+    <operation name="getTemperatureCelsiusToFahrenheit">
+      <input message="tns:temperatureCelsiusToFahrenheitRequestMessage"/>
+      <output message="tns:temperatureCelsiusToFahrenheitResponseMessage"/>
+    </operation>
+  </portType>
+  <binding name="TemperatureConversionServicePortTypeSOAP11Binding" type="tns:TemperatureConversionServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getTemperatureCelsiusToFahrenheit">
+      <soap:operation style="document"
+                      soapAction="saibot.airport/services/utility/conversion/getTemperatureCelsiusToFahrenheit"/>
+      <input>
+        <soap:body use="literal" parts="in"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="return"/>
+      </output>
+    </operation>
+  </binding>
+
+</definitions>

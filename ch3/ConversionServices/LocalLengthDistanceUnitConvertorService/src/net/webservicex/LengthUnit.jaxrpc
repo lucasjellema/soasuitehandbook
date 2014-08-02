@@ -1,0 +1,120 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jdevws:WebService xmlns:jdevws="http://xmlns.oracle.com/jdeveloper/10130/webservice">
+   <list n="CHILD_NODES">
+      <url path="../../../public_html/WEB-INF/wsdl/lengthUnit.wsdl"/>
+      <url path="ObjectFactory.java"/>
+      <url path="package-info.java"/>
+      <url path="ChangeLengthUnit.java"/>
+      <url path="ChangeLengthUnitResponse.java"/>
+      <url path="Lengths.java"/>
+      <url path="LengthUnitSoapImpl.java"/>
+   </list>
+   <hash n="DATA_MODEL">
+      <value n="ATTACHMENT_ENCODING" v="MIME"/>
+      <list n="BD_">
+         <hash>
+            <value n="BOUND_PORT_TYPE" v="{http://www.webserviceX.NET/}lengthUnitSoap"/>
+            <value n="DEFAULT_NAME" v="false"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPBinding"/>
+            <value n="NAME" v="{http://www.webserviceX.NET/}lengthUnitSoap"/>
+            <list n="OP_BINDINGS">
+               <hash>
+                  <value n="BD_SOAP_ACTION" v="http://www.webserviceX.NET/ChangeLengthUnit"/>
+                  <value n="BD_WSDL_RETURN_NAME" v="ChangeLengthUnitResult"/>
+                  <value n="BD_WSDL_RETURN_TNS" v="USE_OWNER_TNS"/>
+                  <value n="BOUND_OPERATION" v="double.ChangeLengthUnit.double.net.webservicex.Lengths.net.webservicex.Lengths"/>
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPOperationBinding"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </list>
+            <hash n="PROPERTY_GROUPS"/>
+         </hash>
+      </list>
+      <list n="BINDING_FILES"/>
+      <value n="GENERATION_OPTION" v="ANNOTATIONS_WSDL"/>
+      <value n="GUID" v="92439df1-0147-1000-8001-c0a83801958b"/>
+      <value n="LAST_GENERATION_BOTTOM_UP" v="false"/>
+      <list n="LOCAL_FILES"/>
+      <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaWebService"/>
+      <list n="PO_">
+         <hash>
+            <value n="DEFAULT_NAME" v="false"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.SOAPPort"/>
+            <value n="NAME" v="lengthUnitSoap"/>
+            <value n="PORT_BINDING_NAME" v="{http://www.webserviceX.NET/}lengthUnitSoap"/>
+            <list n="PORT_OPS">
+               <hash>
+                  <value n="EXPOSED_BD_OPERATION" v="double.changeLengthUnit.double.net.webservicex.Lengths.net.webservicex.Lengths"/>
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.PortOperation"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </list>
+            <hash n="PROPERTY_GROUPS"/>
+            <url n="URL" protocol="http" host="www.webservicex.net" path="/length.asmx"/>
+         </hash>
+      </list>
+      <hash n="PROPERTY_GROUPS">
+         <hash n="WSDL_TO_JAVA_PROPERTIES">
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.WSDLToJavaProperties"/>
+         </hash>
+      </hash>
+      <list n="PT_">
+         <hash>
+            <value n="AUTO_SERVICE_INTERFACE"/>
+            <value n="DEFAULT_NAME" v="false"/>
+            <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaPortType"/>
+            <value n="NAME" v="{http://www.webserviceX.NET/}lengthUnitSoap"/>
+            <list n="OP_">
+               <hash>
+                  <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaOperation"/>
+                  <value n="OP_JAVA_NAME" v="changeLengthUnit"/>
+                  <list n="OP_JAVA_PARAMETERS">
+                     <hash>
+                        <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaParameter"/>
+                        <value n="NAME" v="lengthValue"/>
+                        <value n="PA_MODE" v="0"/>
+                        <value n="PA_WSDL_NAME" v="LengthValue"/>
+                        <value n="TARGET_NAMESPACE" v="USE_OWNER_TNS"/>
+                        <value n="TYPE" v="double"/>
+                     </hash>
+                     <hash>
+                        <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaParameter"/>
+                        <value n="NAME" v="fromLengthUnit"/>
+                        <value n="PA_MODE" v="0"/>
+                        <value n="PA_WSDL_NAME" v="fromLengthUnit"/>
+                        <value n="TARGET_NAMESPACE" v="USE_OWNER_TNS"/>
+                        <value n="TYPE" v="net.webservicex.Lengths"/>
+                     </hash>
+                     <hash>
+                        <value n="MODEL_CLASS" v="oracle.jdeveloper.webservices.model.java.JavaParameter"/>
+                        <value n="NAME" v="toLengthUnit"/>
+                        <value n="PA_MODE" v="0"/>
+                        <value n="PA_WSDL_NAME" v="toLengthUnit"/>
+                        <value n="TARGET_NAMESPACE" v="USE_OWNER_TNS"/>
+                        <value n="TYPE" v="net.webservicex.Lengths"/>
+                     </hash>
+                  </list>
+                  <value n="OP_JAVA_RETURN_TYPE" v="double"/>
+                  <value n="OP_NAME" v="ChangeLengthUnit"/>
+                  <hash n="PROPERTY_GROUPS"/>
+               </hash>
+            </list>
+            <hash n="PROPERTY_GROUPS"/>
+            <value n="PT_CLASS" v="net.webservicex.LengthUnitSoapImpl"/>
+            <value n="PT_TOP_DOWN_GENERATED_SEI_NAME" v="net.webservicex.LengthUnitSoap"/>
+         </hash>
+      </list>
+      <value n="SERVICE_ASYNC" v="false"/>
+      <url n="TARGET_PROJECT" path="../../../LocalLengthDistanceUnitConvertorService.jpr"/>
+      <value n="TOPDOWN_GENERATION_OPTION" v="JAVA"/>
+      <list n="WS_DEPENDENT_VALUE_TYPES"/>
+      <value n="WS_ORIG_GEN_DIRECTION" v="TOP_DOWN"/>
+      <url n="WS_REFERENCE_WSDL" path="../../../public_html/WEB-INF/wsdl/lengthUnit.wsdl"/>
+      <value n="WS_TARGET_NAMESPACE" v="http://www.webserviceX.NET/"/>
+      <value n="WS_URI" v="lengthUnit"/>
+      <url n="WS_WSDL_FILE" path="../../../public_html/WEB-INF/wsdl/lengthUnit.wsdl"/>
+      <value n="WS_WSDL_LOC_ON_SEI" v="false"/>
+      <value n="WS_WSDL_LOC_VALUE" v="/WEB-INF/wsdl/lengthUnit.wsdl"/>
+      <list n="WSDL_DEPENDENT_FILES"/>
+   </hash>
+</jdevws:WebService>

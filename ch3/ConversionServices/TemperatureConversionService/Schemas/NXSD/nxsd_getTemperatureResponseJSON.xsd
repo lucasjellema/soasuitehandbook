@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/services/utility/conversion/celsiusTemperatureConversionRESTJSONResponse" targetNamespace="saibot.airport/services/utility/conversion/celsiusTemperatureConversionRESTJSONResponse" elementFormDefault="qualified" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" nxsd:version="JSON" nxsd:encoding="UTF-8">
+   <xsd:element name="TemperatureConversionResult">
+      <xsd:complexType>
+         <xsd:sequence>
+            <xsd:element name="temperatureConversion">
+               <xsd:complexType>
+                  <xsd:sequence>
+                     <xsd:element name="celsiusTemperature" type="xsd:integer"/>
+                     <xsd:element name="fahrenheitTemperature" type="xsd:integer"/>
+                  </xsd:sequence>
+               </xsd:complexType>
+            </xsd:element>
+         </xsd:sequence>
+      </xsd:complexType>
+   </xsd:element>
+<xsd:annotation xmlns="">
+      <xsd:appinfo>NXSDSAMPLE=</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

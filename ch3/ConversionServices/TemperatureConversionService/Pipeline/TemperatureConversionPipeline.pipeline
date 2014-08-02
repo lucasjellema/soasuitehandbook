@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/alert/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="TemperatureConversionService/WSDLs/ConversionService"/>
+            <con:binding>
+                <con:name>ConversionServicePortTypeSOAP11Binding</con:name>
+                <con:namespace>saibot.airport/services/utility/conversion</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.N4598523b.0.14792110881.N8000">
+            <con:stage id="_StageId-N3f57c7ff.N4598523b.0.14792110881.N7ffe" name="Stage1" errorHandler="error-N3f57c7ff.N4598523b.0.14792110881.N7ff6">
+                <con:context>
+                    <con1:userNsDecl prefix="con" namespace="saibot.airport/services/utility/conversion"/>
+                </con:context>
+                <con:actions>
+                    <con2:report>
+                        <con1:id>_ActionId-N3f57c7ff.N4598523b.0.14792110881.N7feb</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body/con:temperatureCelsiusToFahrenheitRequestMessage</con1:xqueryText>
+                        </con2:expr>
+                        <con2:labels>
+                            <con2:key>celsiusTemperature</con2:key>
+                            <con2:varName>body</con2:varName>
+                            <con2:value>
+                                <con1:xpathText>./con:temperatureCelsiusToFahrenheitRequestMessage/con:temperature</con1:xpathText>
+                            </con2:value>
+                        </con2:labels>
+                    </con2:report>
+                    <con3:validate>
+                        <con1:id>_ActionId-N3f57c7ff.N4598523b.0.14792110881.N7ff7</con1:id>
+                        <con3:schema ref="TemperatureConversionService/Schemas/TemperatureConversionService"/>
+                        <con3:schemaElement xmlns:con1="saibot.airport/services/utility/conversion">con1:temperatureCelsiusToFahrenheitRequestMessage</con3:schemaElement>
+                        <con3:varName>body</con3:varName>
+                        <con3:location>
+                            <con1:xpathText>./con:temperatureCelsiusToFahrenheitRequestMessage</con1:xpathText>
+                        </con3:location>
+                    </con3:validate>
+                    <con3:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-N3f57c7ff.N4598523b.0.14792110881.N7ffa</con1:id>
+                        <con3:expr>
+                            <con1:xsltTransform>
+                                <con1:resource ref="TemperatureConversionService/Transformations/temperatureCelsiusToFahrenheitRequestToResponse"/>
+                                <con1:input>$body/con:temperatureCelsiusToFahrenheitRequestMessage</con1:input>
+                            </con1:xsltTransform>
+                        </con3:expr>
+                    </con3:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.N4598523b.0.14792110881.N7fff">
+            <con:stage id="_StageId-N3f57c7ff.N4598523b.0.14792110881.N7ffd" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57c7ff.N4598523b.0.14792110881.N7ff6">
+            <con:stage id="_StageId-N3f57c7ff.N4598523b.0.14792110881.N7ff5" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="con" namespace="saibot.airport/services/utility/conversion"/>
+                </con:context>
+                <con:actions>
+                    <con4:alert>
+                        <con1:id>_ActionId-N3f57c7ff.N4598523b.0.14792110881.N7fef</con1:id>
+                        <con4:destination ref="TemperatureConversionService/Alerts/PipelineAlertDestination"/>
+                        <con4:description>Validation Error</con4:description>
+                        <con4:severity>warning</con4:severity>
+                        <con4:payload>
+                            <con1:xqueryText>concat($fault/ctx:errorCode, ' ', $fault/ctx:details)</con1:xqueryText>
+                        </con4:payload>
+                    </con4:alert>
+                    <con3:Error>
+                        <con1:id>_ActionId-N3f57c7ff.N4598523b.0.14792110881.N7ff2</con1:id>
+                        <con3:errCode>SAIBOT-001</con3:errCode>
+                        <con3:message>The request message did not comply with the definitions in the XSD.</con3:message>
+                    </con3:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.N4598523b.0.14792110881.N8000</con:request>
+                <con:response>response-N3f57c7ff.N4598523b.0.14792110881.N7fff</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
