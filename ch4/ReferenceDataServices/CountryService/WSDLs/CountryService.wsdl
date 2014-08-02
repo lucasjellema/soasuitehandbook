@@ -1,0 +1,71 @@
+<definitions targetNamespace="saibot.airport/services/utility/reference" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="saibot.airport/services/utility/reference" xmlns:reference="saibot.airport/services/utility/reference" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <types>
+   <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/utility/reference" schemaLocation="../Schemas/CountryService.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="createCountryRequestMessage">
+    <part name="in" element="reference:createCountryRequestMessage"/>
+  </message>
+  <message name="createCountryResponseMessage">
+    <part name="return" element="reference:createCountryResponseMessage"/>
+  </message>
+  <message name="getCountryDetailsRequestMessage">
+    <part name="in" element="reference:getCountryDetailsRequestMessage"/>
+  </message>
+  <message name="getCountryDetailsResponseMessage">
+    <part name="return" element="reference:getCountryDetailsResponseMessage"/>
+  </message>
+  <message name="findCountriesRequestMessage">
+    <part name="in" element="reference:findCountriesRequestMessage"/>
+  </message>
+  <message name="findCountriesResponseMessage">
+    <part name="return" element="reference:findCountriesResponseMessage"/>
+  </message>
+  <portType name="CountryServicePortType">
+    <operation name="getCountryDetails">
+      <input message="tns:getCountryDetailsRequestMessage"/>
+      <output message="tns:getCountryDetailsResponseMessage"/>
+    </operation>
+    <operation name="findCountries">
+      <input message="tns:findCountriesRequestMessage"/>
+      <output message="tns:findCountriesResponseMessage"/>
+    </operation>
+    <operation name="createCountry">
+      <input message="tns:createCountryRequestMessage"/>
+      <output message="tns:createCountryResponseMessage"/>
+    </operation>
+   
+    
+  </portType>
+  <binding name="CountryServicePortTypeSOAP11Binding" type="tns:CountryServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getCountryDetails">
+      <soap:operation style="document" soapAction="saibot.airport/services/utility/reference/getCountryDetails"/>
+      <input>
+        <soap:body use="literal" parts="in"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="return"/>
+      </output>
+    </operation>
+    <operation name="findCountries">
+      <soap:operation style="document" soapAction="saibot.airport/services/utility/reference/findCountries"/>
+      <input>
+        <soap:body use="literal" parts="in"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="return"/>
+      </output>
+    </operation>
+    <operation name="createCountry">
+      <soap:operation style="document" soapAction="saibot.airport/services/utility/reference/createCountry"/>
+      <input>
+        <soap:body use="literal" parts="in"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="return"/>
+      </output>
+    </operation>
+  </binding>
+</definitions>

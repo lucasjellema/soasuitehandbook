@@ -1,0 +1,29 @@
+<wsdl:definitions
+     name="CreateCountryDB"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ReferenceDataServices/CountryService/CreateCountryDB"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ReferenceDataServices/CountryService/CreateCountryDB"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/CreateCountryDB"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="CreateCountryDB_plt" >
+    <plt:role name="CreateCountryDB_role" >
+      <plt:portType name="tns:CreateCountryDB_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/CreateCountryDB" schemaLocation="CreateCountryDB_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="CmnCountriesCollection_msg">
+        <wsdl:part name="CmnCountriesCollection" element="top:CmnCountriesCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="CreateCountryDB_ptt">
+        <wsdl:operation name="insert">
+            <wsdl:input message="tns:CmnCountriesCollection_msg"/>
+            <wsdl:output message="tns:CmnCountriesCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

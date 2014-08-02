@@ -1,0 +1,26 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="CMN_COUNTRIES.ID:db_column_precision">10</entry>
+   <entry key="CMN_COUNTRIES.CODE:db_column_size">2</entry>
+   <entry key="CMN_COUNTRIES.ID:db_column_type">NUMBER</entry>
+   <entry key="CMN_COUNTRIES.FLAG:db_column_type">BLOB</entry>
+   <entry key="CMN_COUNTRIES.TAILCODE:db_column_size">10</entry>
+   <entry key="CMN_COUNTRIES.FLAG:db_column_not_null">false</entry>
+   <entry key="CMN_COUNTRIES.CODE:db_column_not_null">true</entry>
+   <entry key="CMN_COUNTRIES.ID:db_column_scale">0</entry>
+   <entry key="CMN_COUNTRIES.NAME:db_column_type">VARCHAR2</entry>
+   <entry key="CMN_COUNTRIES.CODE:db_column_type">VARCHAR2</entry>
+   <entry key="CMN_COUNTRIES.ID:db_column_not_null">true</entry>
+   <entry key="CMN_COUNTRIES.TAILCODE:db_column_type">VARCHAR2</entry>
+   <entry key="CMN_COUNTRIES:db_column_4">FLAG</entry>
+   <entry key="root_descriptor_alias">CMN_COUNTRIES</entry>
+   <entry key="CMN_COUNTRIES:db_column_3">TAILCODE</entry>
+   <entry key="CMN_COUNTRIES:db_column_2">NAME</entry>
+   <entry key="CMN_COUNTRIES:db_column_1">CODE</entry>
+   <entry key="CMN_COUNTRIES:db_column_0">ID</entry>
+   <entry key="CMN_COUNTRIES:db_table_type">TABLE</entry>
+   <entry key="CMN_COUNTRIES.TAILCODE:db_column_not_null">false</entry>
+   <entry key="CMN_COUNTRIES.NAME:db_column_not_null">false</entry>
+   <entry key="CMN_COUNTRIES.NAME:db_column_size">100</entry>
+</properties>

@@ -1,0 +1,63 @@
+<xsd:schema targetNamespace="saibot.airport/services/utility/reference" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:refMsg="saibot.airport/services/utility/reference" xmlns:refData="saibot.airport/data/reference">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+  <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+  <xsd:element name="createCountryRequestMessage" type="refMsg:createCountryRequestType"/>
+  <xsd:element name="createCountryResponseMessage" type="refMsg:createCountryResponseType"/>
+  <xsd:element name="findCountriesRequestMessage" type="refMsg:findCountriesRequestType"/>
+  <xsd:element name="findCountriesResponseMessage" type="refMsg:findCountriesResponseType"/>
+
+
+  <xsd:element name="getCountryDetailsRequestMessage" type="refMsg:getCountryDetailsRequestType"/>
+  <xsd:element name="getCountryDetailsResponseMessage" type="refMsg:getCountryDetailsResponseType"/>
+               
+
+  <xsd:complexType name="findCountriesRequestType">
+    <xsd:sequence>
+         <xsd:element name="code" nillable="false" type="common:alpha2Type" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="name" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="tailcode" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="continent" nillable="false" type="common:alpha2Type" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="findCountriesResponseType">
+    <xsd:sequence>
+      <xsd:element name="Countries" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Country" nillable="false" type="refData:countryType" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="getCountryDetailsRequestType">
+    <xsd:sequence>
+         <xsd:element name="code" nillable="false" type="common:alpha2Type" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="getCountryDetailsResponseType">
+    <xsd:sequence>
+    <xsd:sequence>
+            <xsd:element name="Country" nillable="false" type="refData:countryType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="createCountryRequestType">
+    <xsd:sequence>
+            <xsd:element name="NewCountry" nillable="false" type="refData:countryType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="createCountryResponseType">
+    <xsd:sequence>
+            <xsd:element name="resultCode" nillable="false" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+
+</xsd:schema>

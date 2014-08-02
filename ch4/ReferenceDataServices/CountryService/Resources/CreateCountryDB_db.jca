@@ -1,0 +1,15 @@
+<adapter-config name="CreateCountryDB" adapter="db" wsdlLocation="CreateCountryDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="soadb_saibot" location="eis/DB/SaibotCommonDB"/>
+  <endpoint-interaction portType="CreateCountryDB_ptt" operation="insert">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="CreateCountryDB.CmnCountries"/>
+      <property name="DmlType" value="insert"/>
+      <property name="OutputCompletedXml" value="true"/>
+      <property name="MappingsMetaDataURL" value="CreateCountryDB-or-mappings.xml"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+      <property name="DetectOmissions" value="true"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

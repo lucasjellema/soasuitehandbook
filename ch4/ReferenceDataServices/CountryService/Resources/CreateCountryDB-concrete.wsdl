@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ReferenceDataServices/CountryService/CreateCountryDB" name="CreateCountryDB-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="CreateCountryDB.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ReferenceDataServices/CountryService/CreateCountryDB"/>
+    <wsdl:binding name="CreateCountryDB_ptt-binding" type="cre:CreateCountryDB_ptt" xmlns:cre="http://xmlns.oracle.com/pcbpel/adapter/db/ReferenceDataServices/CountryService/CreateCountryDB">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="insert">
+            <soap:operation soapAction="insert"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
