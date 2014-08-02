@@ -1,0 +1,34 @@
+<wsdl:definitions
+     name="FlightEventLogFileReader"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileReader"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileReader"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:imp1="saibot.airport/data/flight/FlightEventLogFileWriter"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="ReadFlightEventLogHistory_plt" >
+    <plt:role name="ReadFlightEventLogHistory_role" >
+      <plt:portType name="tns:ReadFlightEventLogHistory_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileReader"
+              xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="saibot.airport/data/flight/FlightEventLogFileWriter" schemaLocation="nxsd_FlightEventLogFile.xsd" />
+      <element name="empty"><complexType/></element>
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="Empty_msg">
+        <wsdl:part name="Empty" element="tns:empty"/>
+    </wsdl:message>
+    <wsdl:message name="ReadFlightEventLogHistory_msg">
+        <wsdl:part name="body" element="imp1:FlightEventLog"/>
+    </wsdl:message>
+    <wsdl:portType name="ReadFlightEventLogHistory_ptt">
+        <wsdl:operation name="ReadFlightEventLogHistory">
+            <wsdl:input message="tns:Empty_msg"/>
+            <wsdl:output message="tns:ReadFlightEventLogHistory_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con5="http://www.bea.com/wli/sb/stages/logging/config">
     <con:coreEntry>
         <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
             <con:wsdl ref="FlightReportService/WSDLs/FlightReportService"/>
@@ -14,43 +14,101 @@
     </con:coreEntry>
     <con:router>
         <con:flow>
-            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
-                <con:context>
-                    <con2:userNsDecl prefix="flig" namespace="saibot.airport/services/flightreport"/>
-                </con:context>
-                <con:actions>
-                    <con1:route>
-                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f4f</con2:id>
-                        <con1:service ref="FlightReportService/Adapters/FlightEventLogFileWriter" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
-                        <con1:operation>WriteFlightEventLogEntry</con1:operation>
-                        <con1:outboundTransform>
-                            <con3:assign varName="flightEventLogFileName" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
-                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f0c</con2:id>
-                                <con3:expr>
-                                    <con2:xqueryText>concat(fn:month-from-date($body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightDate),'-',fn:day-from-date($body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightDate),'/',$body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:Carrier,$body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightNumber, 'FlightEventLog.txt')</con2:xqueryText>
-                                </con3:expr>
-                            </con3:assign>
-                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
-                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f48</con2:id>
-                                <con3:expr>
-                                    <con2:xsltTransform>
-                                        <con2:resource ref="FlightReportService/Transformations/reportFlightStatusUpdateRequestToNXSDFlightEventLog"/>
-                                        <con2:input>$body/*[1]</con2:input>
-                                    </con2:xsltTransform>
-                                </con3:expr>
-                            </con3:replace>
-                            <con3:transport-headers copy-all="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
-                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f42</con2:id>
-                                <con3:header-set>outbound-request</con3:header-set>
-                                <con3:header value="expression" name="jca.file.FileName">
-                                    <con2:xqueryText>$flightEventLogFileName</con2:xqueryText>
-                                </con3:header>
-                            </con3:transport-headers>
-                        </con1:outboundTransform>
-                        <con1:responseTransform/>
-                    </con1:route>
-                </con:actions>
-            </con:route-node>
+            <con:branch-node type="operation" id="_FlowId-N3f57c7ff.1e953248.0.147963b145d.N7f0b" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="reportFlightStatusUpdate">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:route-node name="RouteNode2" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                <con:context>
+                                    <con2:userNsDecl prefix="flig" namespace="saibot.airport/services/flightreport"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7eff</con2:id>
+                                        <con1:service ref="FlightReportService/Adapters/FlightEventLogFileWriter" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>WriteFlightEventLogEntry</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con6:assign varName="flightEventLogFileName" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7efe</con2:id>
+                                                <con6:expr>
+                                                    <con2:xqueryText>concat(fn:month-from-date($body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightDate),'-',fn:day-from-date($body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightDate),'/',$body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:Carrier,$body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightNumber, 'FlightEventLog.txt')</con2:xqueryText>
+                                                </con6:expr>
+                                            </con6:assign>
+                                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7efd</con2:id>
+                                                <con3:expr>
+                                                    <con2:xsltTransform>
+                                                        <con2:resource ref="FlightReportService/Transformations/reportFlightStatusUpdateRequestToNXSDFlightEventLog"/>
+                                                        <con2:input>$body/*[1]</con2:input>
+                                                    </con2:xsltTransform>
+                                                </con3:expr>
+                                            </con3:replace>
+                                            <con3:transport-headers copy-all="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7efc</con2:id>
+                                                <con3:header-set>outbound-request</con3:header-set>
+                                                <con3:header value="expression" name="jca.file.FileName">
+                                                    <con2:xqueryText>$flightEventLogFileName</con2:xqueryText>
+                                                </con3:header>
+                                            </con3:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getFlightReport">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:route-node name="RouteNode1">
+                                <con:context>
+                                    <con2:userNsDecl prefix="flig" namespace="saibot.airport/services/flightreport"/>
+                                </con:context>
+                                <con:actions>
+                                    <con3:route>
+                                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7ef5</con2:id>
+                                        <con3:service ref="FlightReportService/Adapters/FlightEventLogFileReader" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con3:operation>ReadFlightEventLogHistory</con3:operation>
+                                        <con3:outboundTransform>
+                                            <con1:assign varName="flightEventLogFileName">
+                                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7ef2</con2:id>
+                                                <con1:expr>
+                                                    <con2:xqueryText>concat(fn:month-from-date($body/flig:getFlightReportRequestMessage/flig:FlightDate),'-',fn:day-from-date($body/flig:getFlightReportRequestMessage/flig:FlightDate),'/',$body/flig:getFlightReportRequestMessage/flig:Carrier,$body/flig:getFlightReportRequestMessage/flig:FlightNumber,'FlightEventLog.txt')</con2:xqueryText>
+                                                </con1:expr>
+                                            </con1:assign>
+                                            <con1:transport-headers>
+                                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7eec</con2:id>
+                                                <con1:header-set>outbound-request</con1:header-set>
+                                                <con1:header value="expression" name="jca.file.FileName">
+                                                    <con2:xqueryText>$flightEventLogFileName</con2:xqueryText>
+                                                </con1:header>
+                                            </con1:transport-headers>
+                                        </con3:outboundTransform>
+                                        <con3:responseTransform>
+                                            <con1:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7ee9</con2:id>
+                                                <con1:expr>
+                                                    <con2:xsltTransform>
+                                                        <con2:resource ref="FlightReportService/Transformations/nxsdFlightEventLogTogetFlightReportResponse"/>
+                                                        <con2:input>$body/*[1]</con2:input>
+                                                    </con2:xsltTransform>
+                                                </con1:expr>
+                                            </con1:replace>
+                                        </con3:responseTransform>
+                                    </con3:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
         </con:flow>
     </con:router>
 </con:pipelineEntry>

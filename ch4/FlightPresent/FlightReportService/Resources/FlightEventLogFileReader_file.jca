@@ -1,0 +1,12 @@
+<adapter-config name="FlightEventLogFileReader" adapter="file" wsdlLocation="FlightEventLogFileReader.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/FileAdapter"/>
+  <endpoint-interaction portType="ReadFlightEventLogHistory_ptt" operation="ReadFlightEventLogHistory">
+    <interaction-spec className="oracle.tip.adapter.file.outbound.FileReadInteractionSpec">
+      <property name="DeleteFile" value="false"/>
+      <property name="FileName" value="UNSPECIFIED"/>
+      <property name="LogicalDirectory" value="FLIGHT_EVENTLOG_DIRECTORY"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
