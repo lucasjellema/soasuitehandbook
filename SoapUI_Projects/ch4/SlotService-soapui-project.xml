@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="SlotService" resourceRoot="" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="SlotServicePortTypeSOAP11Binding" type="wsdl" bindingName="{saibot.airport/services/slot}SlotServicePortTypeSOAP11Binding" soapVersion="1_1" anonymous="optional" definition="http://soa2admin2:8011/flight/SlotService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://soa2admin2:8011/flight/SlotService?wsdl"><con:part><con:url>http://soa2admin2:8011/flight/SlotService?wsdl</con:url><con:content><![CDATA[<WL5G3N0:definitions targetNamespace="saibot.airport/services/slot" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport/services/slot" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema elementFormDefault="qualified" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:reference="saibot.airport/datareference" xmlns:slot="saibot.airport/services/slot" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="saibot.airport/services/slot" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/services/slot" schemaLocation="http://soa2admin2:8011/flight/SlotService?SCHEMA%2FSlotService%2FSchemas%2FSlotService"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="allocateSlotRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:allocateSlotRequestMessage" name="in"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="allocateSlotResponseMessage">
+    <WL5G3N0:part element="WL5G3N1:allocateSlotResponseMessage" name="return"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="SlotServicePortType">
+    <WL5G3N0:operation name="allocateSlot">
+      <WL5G3N0:input message="WL5G3N1:allocateSlotRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N1:allocateSlotResponseMessage"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="SlotServicePortTypeSOAP11Binding" type="WL5G3N1:SlotServicePortType">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="allocateSlot">
+      <WL5G3N2:operation soapAction="saibot.airport/services/slot/allocateSlot" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body parts="in" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body parts="return" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="SlotServicePortTypeSOAP11BindingQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N1:SlotServicePortTypeSOAP11Binding" name="SlotServicePortTypeSOAP11BindingQSPort">
+      <WL5G3N2:address location="http://soa2admin2:8011/flight/SlotService"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://soa2admin2:8011/flight/SlotService?SCHEMA%2FSlotService%2FSchemas%2FSlotService</con:url><con:content><![CDATA[<xsd:schema targetNamespace="saibot.airport/services/slot" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:slot="saibot.airport/services/slot" xmlns:reference="saibot.airport/data/reference">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="http://soa2admin2:8011/flight/SlotService?SCHEMA%2FSlotService%2FSchemas%2Fcommon"/>
+  <xsd:import namespace="saibot.airport/data/reference" schemaLocation="http://soa2admin2:8011/flight/SlotService?SCHEMA%2FSlotService%2FSchemas%2Freference"/>
+  <xsd:element name="allocateSlotRequestMessage" type="slot:allocateSlotRequestType"/>
+  <xsd:element name="allocateSlotResponseMessage" type="slot:allocateSlotResponseType"/>
+  <xsd:complexType name="allocateSlotRequestType">
+    <xsd:sequence>
+      <xsd:element name="AllocationDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Period" nillable="false" type="common:periodType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="TimePlanningUnit" nillable="false" type="reference:timePlanningUnitType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="ArrivalOrDeparture" nillable="false" type="common:arrivalOrDepartureType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AircraftModel" nillable="false" type="common:iataEquipmentCodeType" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="allocateSlotResponseType">
+    <xsd:sequence>
+      <xsd:element name="SlotId" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Result" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://soa2admin2:8011/flight/SlotService?SCHEMA%2FSlotService%2FSchemas%2Fcommon</con:url><con:content><![CDATA[<xsd:schema targetNamespace="saibot.airport/data/common" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common">
+  <xsd:simpleType name="baseCelsiusTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-273.15"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="baseFahrenheitTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-459.67"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha2Type">
+    <xsd:annotation>
+      <xsd:documentation>2-char uppercase strings only</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="2"/>
+      <xsd:pattern value="[A-Z]{2}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha3Type">
+    <xsd:annotation>
+      <xsd:documentation>3-char uppercase strings only</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="3"/>
+      <xsd:pattern value="[A-Z]{3}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alphaNumeric4Type">
+    <xsd:annotation>
+      <xsd:documentation>4-char strings only</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="4"/>
+      <xsd:pattern value="[0-9A-Z]{4}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="countryCodeType">
+    <xsd:annotation>
+      <xsd:documentation>the code is the unique two letter ISO 3166-1 indication for a country - see http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 and http://www.iso.org/iso/home/standards/country_codes.htm</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="common:alpha2Type"></xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="iataAirportType">
+    <xsd:annotation>
+      <xsd:documentation>the code is the three letter IATA identification for airports; see for example http://www.world-airport-codes.com/ and http://www.iata.org/publications/Pages/code-search.aspx</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="common:alpha3Type"></xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="iataAirlineType">
+    <xsd:annotation>
+      <xsd:documentation>the code is the two letter IATA identification for airlines (carriers); see for example http://www.iata.org/publications/Pages/code-search.aspx; http://en.wikipedia.org/wiki/Airline_codes-All</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="common:alpha2Type"></xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="icaoCodeType">
+    <xsd:annotation>
+      <xsd:documentation>4-char strings only</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="4"/>
+      <xsd:pattern value="[0-9A-Z]{4}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="iataEquipmentCodeType">
+    <xsd:annotation>
+      <xsd:documentation>strings with numbers and captials only; see for example
+                         http://www.flugzeuginfo.net/table_accodes_iata_en.php</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="3"/>
+      <xsd:pattern value="[0-9A-Z]{4}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="timezoneOffsetType">
+    <xsd:annotation>
+      <xsd:documentation>an offset (in hours) versus UTC</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:float">
+      <xsd:maxInclusive value="12"/>
+      <xsd:minInclusive value="-12"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="geoLocationType">
+    <xsd:sequence>
+      <xsd:element name="latitude" nillable="false" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="longitude" nillable="false" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="elevation" nillable="false" type="xsd:double" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="distanceType">
+    <xsd:annotation>
+      <xsd:documentation>a distance in some unspecified unit</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:double">
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="flightNumberType">
+    <xsd:annotation>
+      <xsd:documentation>A flight number. Flight numbers are integer values
+                         within the range of [0-9999]. Example: 1234</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="9999"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="hourOfDayType">
+    <xsd:annotation>
+      <xsd:documentation>An hour during the day: 0-23</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="23"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="fiveMinuteBlockType">
+    <xsd:annotation>
+      <xsd:documentation>A five minute block within one clock hour: 0(-5), 5(-10), 10()-15)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="55"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="yesNoType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Yes"/>
+      <xsd:enumeration value="No"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="periodType">
+    <xsd:sequence>
+      <xsd:element name="season" nillable="false" type="common:seasonType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="year" nillable="false" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="searchMetaType">
+    <xsd:sequence>
+      <xsd:element name="offset" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="numberOfResults" nillable="false" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="sortBy" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="flightStatusType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Active"/>
+      <xsd:enumeration value="Suspended"/>
+      <xsd:enumeration value="Open"/>
+      <xsd:enumeration value="Closed"/>
+      <xsd:enumeration value="Cancelled"/>
+      <xsd:enumeration value="Diverted"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="flightActionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="EnRoute"/>
+      <xsd:enumeration value="FinalApproach"/>
+      <xsd:enumeration value="Taxiing"/>
+      <xsd:enumeration value="AtGate"/>
+      <xsd:enumeration value="BagageOnBelt"/>
+      <xsd:enumeration value="Prepare"/>
+      <xsd:enumeration value="GateOpen"/>
+      <xsd:enumeration value="GateClosing"/>
+      <xsd:enumeration value="GateClosed"/>
+      <xsd:enumeration value="Other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="seasonType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="S"/>
+      <xsd:enumeration value="W"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="arrivalOrDepartureType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="A"/>
+      <xsd:enumeration value="D"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="weekDayType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Monday"/>
+      <xsd:enumeration value="Tuesday"/>
+      <xsd:enumeration value="Wednesday"/>
+      <xsd:enumeration value="Thursday"/>
+      <xsd:enumeration value="Friday"/>
+      <xsd:enumeration value="Saturday"/>
+      <xsd:enumeration value="Sunday"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://soa2admin2:8011/flight/SlotService?SCHEMA%2FSlotService%2FSchemas%2Freference</con:url><con:content><![CDATA[<xsd:schema targetNamespace="saibot.airport/data/reference" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:reference="saibot.airport/data/reference" xmlns:common="saibot.airport/data/common">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="http://soa2admin2:8011/flight/SlotService?SCHEMA%2FSlotService%2FSchemas%2Fcommon"/>
+  <xsd:complexType name="countryType">
+    <xsd:sequence>
+      <!--the code is the unique two letter ISO 3166-1 indication for a country - see http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 and http://www.iso.org/iso/home/standards/country_codes.htm-->
+      <xsd:element name="code" nillable="false" type="common:alpha2Type" minOccurs="0" maxOccurs="1"/>
+      <!--the name is the common name, used to present the country to humans-->
+      <xsd:element name="name" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <!--see see http://www.flugzeuginfo.net/table_tailcodes_country_en.php-->
+      <xsd:element name="tailcode" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Flag" type="xsd:base64Binary" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="aircarrierType">
+    <xsd:sequence>
+      <xsd:element name="IATACode" nillable="false" type="common:alpha2Type" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="PAXCode" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="ICAOCode" nillable="false" type="common:alphaNumeric4Type" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Name" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Country" type="reference:countryType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Logo" type="xsd:base64Binary" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="airportType">
+    <xsd:sequence>
+      <xsd:element name="IATACode" nillable="false" type="common:iataAirportType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="ICAOCode" nillable="false" type="common:icaoCodeType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Name" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Country" type="reference:countryType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="City" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="GeoLocation" type="common:geoLocationType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="UTCOffset" type="common:timezoneOffsetType" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="weatherReportType">
+    <xsd:sequence>
+      <!--based on METAR - see http://weather.cod.edu/notes/metar.html ; http://en.wikipedia.org/wiki/METAR-->
+      <!--knots-->
+      <xsd:element name="WindSpeed" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="WindDirection" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="DewPointTemperature" nillable="false" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="CurrentTemperature" nillable="false" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Pressure" type="reference:countryType" minOccurs="0" maxOccurs="1"/>
+      <!--Clear, Not significant, few, Scattered, Broken,  Overcast,-->
+      <xsd:element name="SkyCondition" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Visibility" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Precipitation" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Obscuration" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="aircraftModelType">
+    <xsd:sequence>
+      <xsd:element name="IATACode" nillable="false" type="common:iataEquipmentCodeType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="IACOCode" nillable="false" type="common:icaoCodeType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Manufacturer" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Model" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="WakeCategory" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="PassengerCapacity" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="RangeInKilometers" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+      <xsd:element name="CruiseSpeedInKilolmetersPerHour" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+      <xsd:element name="LengthInMeters" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+      <xsd:element name="HeightInMeters" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+      <xsd:element name="WingSpanInMeters" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+      <xsd:element name="MaximumTakeOffWeightInKilogram" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="aircraftType">
+    <xsd:sequence>
+      <xsd:element name="aircraftModel" nillable="false" type="reference:aircraftModelType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Registration" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="LaunchDate" nillable="false" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="gateLocationType">
+    <xsd:sequence>
+      <xsd:element name="Terminal" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Pier" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Gate" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="timePlanningUnitType">
+    <xsd:sequence>
+      <xsd:element name="startDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="endDate" nillable="true" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="DaysOfWeek" minOccurs="0" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="day" nillable="false" minOccurs="0" maxOccurs="7" type="common:weekDayType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="HourOfDay" nillable="false" type="common:hourOfDayType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="FiveMinuteBlock" nillable="false" type="common:fiveMinuteBlockType" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://soa2admin2:8011/flight/SlotService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="saibot.airport/services/slot/allocateSlot" name="allocateSlot" bindingOperationName="allocateSlot" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/flight/SlotService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:slot="saibot.airport/services/slot" xmlns:com="saibot.airport/data/common" xmlns:ref="saibot.airport/data/reference">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <slot:allocateSlotRequestMessage>
+         <slot:AllocationDate>2015-04-29</slot:AllocationDate>
+         <slot:Carrier>KL</slot:Carrier>
+         <slot:Period>
+            <com:season>S</com:season>
+            <com:year>2016</com:year>
+         </slot:Period>
+         <slot:TimePlanningUnit>
+            <ref:startDate>2016-05-14</ref:startDate>
+            <!--Optional:-->
+            <ref:endDate>2016-09-01</ref:endDate>
+            <!--Optional:-->
+            <ref:DaysOfWeek>
+               <!--0 to 7 repetitions:-->
+               <ref:day>Saturday</ref:day>
+               <ref:day>Sunday</ref:day>
+            </ref:DaysOfWeek>
+            <!--Optional:-->
+            <ref:HourOfDay>9</ref:HourOfDay>
+            <!--Optional:-->
+            <ref:FiveMinuteBlock>10</ref:FiveMinuteBlock>
+         </slot:TimePlanningUnit>
+         <slot:ArrivalOrDeparture>A</slot:ArrivalOrDeparture>
+         <!--Optional:-->
+         <slot:AircraftModel>747</slot:AircraftModel>
+      </slot:allocateSlotRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="saibot.airport/services/slot/allocateSlot"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
