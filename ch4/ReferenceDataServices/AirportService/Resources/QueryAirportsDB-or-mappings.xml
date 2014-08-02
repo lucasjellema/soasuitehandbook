@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-persistence xmlns="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eclipselink="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd">
+   <name>QueryAirportsDB-OR</name>
+   <class-mapping-descriptors>
+      <class-mapping-descriptor xsi:type="object-relational-class-mapping-descriptor">
+         <class>QueryAirportsDB.CmnAirports</class>
+         <alias>CMN_AIRPORTS</alias>
+         <primary-key>
+            <field table="CMN_AIRPORTS" name="ID" xsi:type="column"/>
+         </primary-key>
+         <events/>
+         <querying>
+            <queries>
+               <query name="QueryAirportsDBSelect" xsi:type="read-all-query">
+                  <arguments>
+                     <argument name="pIATACode">
+                        <type>java.lang.String</type>
+                     </argument>
+                     <argument name="pCountryCode">
+                        <type>java.lang.String</type>
+                     </argument>
+                     <argument name="pAirportName">
+                        <type>java.lang.String</type>
+                     </argument>
+                  </arguments>
+                  <call xsi:type="sql-call">
+                     <sql>SELECT t1.ID, t1.IATA_CODE, t1.ICAO_CODE, t1.&quot;NAME&quot;, t1.CITY, t1.LONGITUDE, t1.LATTITUDE, t1.UTC_OFFSET, t1.CTY_ID, t0.ID, t0.CODE, t0.&quot;NAME&quot;, t0.TAILCODE, t0.FLAG FROM CMN_COUNTRIES t0, CMN_AIRPORTS t1 WHERE ((((t1.IATA_CODE = COALESCE(#pIATACode,t1.IATA_CODE)) AND (t0.CODE = COALESCE(#pCountryCode,t0.code))) AND (t1.&quot;NAME&quot; = COALESCE(#pAirportName,t1.&quot;NAME&quot;))) AND (t0.ID = t1.CTY_ID))</sql>
+                  </call>
+                  <reference-class>QueryAirportsDB.CmnAirports</reference-class>
+                  <container xsi:type="list-container-policy">
+                     <collection-type>java.util.Vector</collection-type>
+                  </container>
+               </query>
+            </queries>
+         </querying>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>id</attribute-name>
+               <field table="CMN_AIRPORTS" name="ID" xsi:type="column"/>
+               <attribute-classification>java.lang.Long</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>iataCode</attribute-name>
+               <field table="CMN_AIRPORTS" name="IATA_CODE" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>icaoCode</attribute-name>
+               <field table="CMN_AIRPORTS" name="ICAO_CODE" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>name</attribute-name>
+               <field table="CMN_AIRPORTS" name="NAME" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>ctyId</attribute-name>
+               <read-only>true</read-only>
+               <properties>
+                  <property name="fkPlaceholder">
+                     <value>true</value>
+                  </property>
+               </properties>
+               <field table="CMN_AIRPORTS" name="CTY_ID" xsi:type="column"/>
+               <attribute-classification>java.lang.Long</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>city</attribute-name>
+               <field table="CMN_AIRPORTS" name="CITY" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>longitude</attribute-name>
+               <field table="CMN_AIRPORTS" name="LONGITUDE" xsi:type="column"/>
+               <attribute-classification>java.math.BigDecimal</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>lattitude</attribute-name>
+               <field table="CMN_AIRPORTS" name="LATTITUDE" xsi:type="column"/>
+               <attribute-classification>java.math.BigDecimal</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>utcOffset</attribute-name>
+               <field table="CMN_AIRPORTS" name="UTC_OFFSET" xsi:type="column"/>
+               <attribute-classification>java.math.BigDecimal</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="one-to-one-mapping">
+               <attribute-name>cmnCountries</attribute-name>
+               <properties>
+                  <property name="enabled">
+                     <value>true</value>
+                  </property>
+               </properties>
+               <reference-class>QueryAirportsDB.CmnCountries</reference-class>
+               <foreign-key>
+                  <field-reference>
+                     <source-field table="CMN_AIRPORTS" name="CTY_ID" xsi:type="column"/>
+                     <target-field table="CMN_COUNTRIES" name="ID" xsi:type="column"/>
+                  </field-reference>
+               </foreign-key>
+               <foreign-key-fields>
+                  <field table="CMN_AIRPORTS" name="CTY_ID" xsi:type="column"/>
+               </foreign-key-fields>
+               <batch-reading>true</batch-reading>
+               <indirection xsi:type="value-holder-indirection-policy"/>
+               <selection-query xsi:type="read-object-query">
+                  <reference-class>QueryAirportsDB.CmnCountries</reference-class>
+               </selection-query>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>independent</descriptor-type>
+         <caching>
+            <cache-type>weak-reference</cache-type>
+            <cache-size>-1</cache-size>
+            <always-refresh>true</always-refresh>
+         </caching>
+         <remote-caching>
+            <cache-type>weak-reference</cache-type>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <tables>
+            <table name="CMN_AIRPORTS"/>
+         </tables>
+         <structure>structureName</structure>
+      </class-mapping-descriptor>
+      <class-mapping-descriptor xsi:type="object-relational-class-mapping-descriptor">
+         <class>QueryAirportsDB.CmnCountries</class>
+         <alias>CMN_COUNTRIES</alias>
+         <primary-key>
+            <field table="CMN_COUNTRIES" name="ID" xsi:type="column"/>
+         </primary-key>
+         <events/>
+         <querying/>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>id</attribute-name>
+               <field table="CMN_COUNTRIES" name="ID" xsi:type="column"/>
+               <attribute-classification>java.lang.Long</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>code</attribute-name>
+               <field table="CMN_COUNTRIES" name="CODE" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>name</attribute-name>
+               <field table="CMN_COUNTRIES" name="NAME" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>tailcode</attribute-name>
+               <field table="CMN_COUNTRIES" name="TAILCODE" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>flag</attribute-name>
+               <field table="CMN_COUNTRIES" name="FLAG" xsi:type="column"/>
+               <attribute-classification>[B</attribute-classification>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>independent</descriptor-type>
+         <caching>
+            <cache-type>weak-reference</cache-type>
+            <cache-size>-1</cache-size>
+            <always-refresh>true</always-refresh>
+         </caching>
+         <remote-caching>
+            <cache-type>weak-reference</cache-type>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <tables>
+            <table name="CMN_COUNTRIES"/>
+         </tables>
+         <structure>structureName</structure>
+      </class-mapping-descriptor>
+   </class-mapping-descriptors>
+   <login xsi:type="database-login">
+      <platform-class>org.eclipse.persistence.platform.database.oracle.Oracle9Platform</platform-class>
+      <connection-url></connection-url>
+   </login>
+</object-persistence>

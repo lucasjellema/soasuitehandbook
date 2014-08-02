@@ -1,0 +1,64 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/QueryAirportsDB" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/QueryAirportsDB" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="CmnAirportsCollection" type="CmnAirportsCollection"/>
+   <xs:complexType name="CmnAirportsCollection">
+      <xs:sequence>
+         <xs:element name="CmnAirports" type="CmnAirports" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="CmnAirports">
+      <xs:sequence>
+         <xs:element name="id" type="xs:long"/>
+         <xs:element name="iataCode" type="string3" minOccurs="0" nillable="true"/>
+         <xs:element name="icaoCode" type="string4" minOccurs="0" nillable="true"/>
+         <xs:element name="name" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="city" type="string100" minOccurs="0" nillable="true"/>
+         <xs:element name="longitude" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="lattitude" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="utcOffset" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="cmnCountries" type="CmnCountries" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="CmnCountries">
+      <xs:sequence>
+         <xs:element name="id" type="xs:long"/>
+         <xs:element name="code" type="string2" minOccurs="0"/>
+         <xs:element name="name" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="tailcode" type="string10" minOccurs="0" nillable="true"/>
+         <xs:element name="flag" type="xs:base64Binary" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="QueryAirportsDBSelect_pIATACode_pCountryCode_pAirportNameInputParameters" type="QueryAirportsDBSelect_pIATACode_pCountryCode_pAirportName"/>
+   <xs:complexType name="QueryAirportsDBSelect_pIATACode_pCountryCode_pAirportName">
+      <xs:sequence>
+         <xs:element name="pIATACode" type="xs:string" minOccurs="1" maxOccurs="1"/>
+         <xs:element name="pCountryCode" type="xs:string" minOccurs="1" maxOccurs="1"/>
+         <xs:element name="pAirportName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string3">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="3"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string4">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="4"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string100">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="100"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string2">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="2"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string10">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="10"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

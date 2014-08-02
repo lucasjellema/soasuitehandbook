@@ -1,0 +1,14 @@
+<adapter-config name="QueryAirportsDB" adapter="db" wsdlLocation="QueryAirportsDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="soadb_saibot" location="eis/DB/SaibotCommonDB"/>
+  <endpoint-interaction portType="QueryAirportsDB_ptt" operation="QueryAirportsDBSelect">
+    <interaction-spec className="oracle.tip.adapter.db.DBReadInteractionSpec">
+      <property name="DescriptorName" value="QueryAirportsDB.CmnAirports"/>
+      <property name="QueryName" value="QueryAirportsDBSelect"/>
+      <property name="MappingsMetaDataURL" value="QueryAirportsDB-or-mappings.xml"/>
+      <property name="ReturnSingleResultSet" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

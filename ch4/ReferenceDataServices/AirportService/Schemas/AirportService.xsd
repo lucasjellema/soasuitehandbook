@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:common="saibot.airport/data/common"
+            targetNamespace="saibot.airport/services/utility/reference"
+            xmlns:refMsg="saibot.airport/services/utility/reference"
+            xmlns:refData="saibot.airport/data/reference"
+            elementFormDefault="qualified">
+  <xsd:import namespace="saibot.airport/data/common"
+              schemaLocation="common.xsd"/>
+  <xsd:import namespace="saibot.airport/data/reference"
+              schemaLocation="reference.xsd"/>
+  <xsd:element name="airportDetailsRequestMessage"
+               type="refMsg:airportDetailsRequestType"/>
+  <xsd:element name="airportDetailsResponsetMessage"
+               type="refMsg:airportDetailsResponseType"/>
+  <xsd:element name="findAirportsRequestMessage"
+               type="refMsg:findAirportsRequestType"/>
+  <xsd:element name="findAirportsResponseMessage"
+               type="refMsg:findAirportsResponseType"/>
+               
+
+               
+  <xsd:complexType name="findAirportsRequestType">
+    <xsd:sequence>
+      <xsd:element name="IATACode" nillable="false"
+                   type="common:iataAirportType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="CountryCode" nillable="false"
+                   type="common:countryCodeType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Name" nillable="false" type="xsd:string" minOccurs="0"
+                   maxOccurs="1"/>
+      <xsd:element name="searchMeta" type="common:searchMetaType" 
+      minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="findAirportsResponseType">
+    <xsd:sequence>
+      <xsd:element name="Airports" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="airport" nillable="false"
+                         type="refData:airportType" minOccurs="1"
+                         maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="airportDetailsRequestType">
+    <xsd:sequence>
+      <xsd:element name="IATACode" nillable="false" type="common:alpha3Type"
+                   minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="airportDetailsResponseType">
+    <xsd:sequence>
+      <xsd:element name="airport" nillable="false" type="refData:airportType"
+                   minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
