@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileWriter" name="FlightEventLogFileWriter-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="FlightEventLogFileWriter.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileWriter"/>
+    <wsdl:binding name="WriteFlightEventLogEntry_ptt-binding" type="flig:WriteFlightEventLogEntry_ptt" xmlns:flig="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileWriter">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="WriteFlightEventLogEntry">
+            <soap:operation soapAction="WriteFlightEventLogEntry"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

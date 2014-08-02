@@ -1,0 +1,12 @@
+<adapter-config name="FlightEventLogFileWriter" adapter="file" wsdlLocation="FlightEventLogFileWriter.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/FileAdapter"/>
+  <endpoint-interaction portType="WriteFlightEventLogEntry_ptt" operation="WriteFlightEventLogEntry">
+    <interaction-spec className="oracle.tip.adapter.file.outbound.FileInteractionSpec">
+      <property name="LogicalDirectory" value="FLIGHT_EVENTLOG_DIRECTORY"/>
+      <property name="Append" value="true"/>
+      <property name="FileNamingConvention" value="flightEventLog.txt"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

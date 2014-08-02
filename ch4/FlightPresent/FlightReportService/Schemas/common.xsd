@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:common="saibot.airport/data/common"
+            targetNamespace="saibot.airport/data/common"
+            elementFormDefault="qualified">
+  <xsd:simpleType name="baseCelsiusTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-273.15"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="baseFahrenheitTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-459.67"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alpha2Type">
+    <xsd:annotation>
+      <xsd:documentation>2-char uppercase strings only</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="2"/>
+      <xsd:pattern value="[A-Z]{2}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+
+  <xsd:simpleType name="alpha3Type">
+    <xsd:annotation>
+      <xsd:documentation>3-char uppercase strings only</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="3"/>
+      <xsd:pattern value="[A-Z]{3}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="alphaNumeric4Type">
+    <xsd:annotation>
+      <xsd:documentation>4-char strings only</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="4"/>
+      <xsd:pattern value="[0-9A-Z]{4}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="countryCodeType">
+    <xsd:annotation>
+      <xsd:documentation>the code is the unique two letter ISO 3166-1 indication for a country - see http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 and http://www.iso.org/iso/home/standards/country_codes.htm
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="common:alpha2Type">
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="iataAirportType">
+    <xsd:annotation>
+      <xsd:documentation>the code is the three letter IATA identification for airports; see for example http://www.world-airport-codes.com/ and http://www.iata.org/publications/Pages/code-search.aspx
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="common:alpha3Type">
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="iataAirlineType">
+    <xsd:annotation>
+      <xsd:documentation>the code is the two letter IATA identification for airlines (carriers); see for example http://www.iata.org/publications/Pages/code-search.aspx; http://en.wikipedia.org/wiki/Airline_codes-All
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="common:alpha2Type">
+    </xsd:restriction>
+  </xsd:simpleType>
+
+
+  <xsd:simpleType name="iacoCodeType">
+    <xsd:annotation>
+      <xsd:documentation>4-char strings only</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="4"/>
+      <xsd:pattern value="[0-9A-Z]{4}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="iataEquipmentCodeType">
+    <xsd:annotation>
+      <xsd:documentation>strings with numbers and capitals only; see for example
+                         http://www.flugzeuginfo.net/table_accodes_iata_en.php</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:length value="3"/>
+      <xsd:pattern value="[0-9A-Z]{3}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="timezoneOffsetType">
+    <xsd:annotation>
+      <xsd:documentation>an offset (in hours) versus UTC</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:float">
+      <xsd:maxInclusive value="12"/>
+      <xsd:minInclusive value="-12"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:complexType name="geoLocationType">
+    <xsd:sequence>
+      <xsd:element name="latitude" nillable="false" type="xsd:double"
+                   minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="longitude" nillable="false" type="xsd:double"
+                   minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="elevation" nillable="false" type="xsd:double"
+                   minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="distanceType">
+    <xsd:annotation>
+      <xsd:documentation>a distance in some unspecified unit</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:double">
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="flightNumberType">
+    <xsd:annotation>
+      <xsd:documentation>A flight number. Flight numbers are integer values
+                         within the range of [0-9999]. Example: 1234</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="9999"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="hourOfDayType">
+    <xsd:annotation>
+      <xsd:documentation>An hour during the day: 0-23</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="23"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="fiveMinuteBlockType">
+    <xsd:annotation>
+      <xsd:documentation>A five minute block within one clock hour: 0(-5), 5(-10), 10()-15)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:integer">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="55"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  
+  
+
+<xsd:simpleType name="yesNoType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Yes"/>
+      <xsd:enumeration value="No"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+
+  <xsd:complexType name="periodType">
+    <xsd:sequence>
+      <xsd:element name="season" nillable="false" type="common:seasonType"
+                   minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="year" nillable="false" type="xsd:nonNegativeInteger"
+                   minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="searchMetaType">
+    <xsd:sequence>
+      <xsd:element name="offset" nillable="false" type="xsd:nonNegativeInteger"
+                   minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="numberOfResults" nillable="false" type="xsd:nonNegativeInteger"
+                   minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="sortBy" nillable="false" type="xsd:string"
+                   minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  
+  <xsd:simpleType name="flightStatusType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Active"/>
+      <xsd:enumeration value="Suspended"/>
+      <xsd:enumeration value="Open"/>
+      <xsd:enumeration value="Closed"/>
+      <xsd:enumeration value="Cancelled"/>
+      <xsd:enumeration value="Diverted"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+
+  <xsd:simpleType name="flightActionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="EnRoute"/>
+      <xsd:enumeration value="FinalApproach"/>
+      <xsd:enumeration value="Taxiing"/>
+      <xsd:enumeration value="AtGate"/>
+      <xsd:enumeration value="BagageOnBelt"/>
+      <xsd:enumeration value="Prepare"/>
+      <xsd:enumeration value="GateOpen"/>
+      <xsd:enumeration value="GateClosing"/>
+      <xsd:enumeration value="GateClosed"/>
+      <xsd:enumeration value="Other"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="seasonType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="S"/>
+      <xsd:enumeration value="W"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="arrivalOrDepartureType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="A"/>
+      <xsd:enumeration value="D"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+
+  <xsd:simpleType name="weekDayType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Monday"/>
+      <xsd:enumeration value="Tuesday"/>
+      <xsd:enumeration value="Wednesday"/>
+      <xsd:enumeration value="Thursday"/>
+      <xsd:enumeration value="Friday"/>
+      <xsd:enumeration value="Saturday"/>
+      <xsd:enumeration value="Sunday"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

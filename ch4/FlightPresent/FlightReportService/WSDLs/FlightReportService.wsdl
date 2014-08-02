@@ -1,0 +1,50 @@
+<definitions targetNamespace="saibot.airport/services/flightreport" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="saibot.airport/services/flightreport" xmlns:flightreport="saibot.airport/services/flightreport" xmlns:reference="saibot.airport/datareference" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <types>
+   <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/flightreport" schemaLocation="../Schemas/FlightReportService.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="reportFlightStatusUpdateRequestMessage">
+    <part name="in" element="flightreport:reportFlightStatusUpdateRequestMessage"/>
+  </message>
+  <message name="reportFlightStatusUpdateResponseMessage">
+    <part name="return" element="flightreport:reportFlightStatusUpdateResponseMessage"/>
+  </message>
+  <message name="getFlightReportRequestMessage">
+    <part name="in" element="flightreport:getFlightReportRequestMessage"/>
+  </message>
+  <message name="getFlightReportResponseMessage">
+    <part name="return" element="flightreport:getFlightReportResponseMessage"/>
+  </message>
+  <portType name="FlightReportServicePortType">
+    <operation name="reportFlightStatusUpdate">
+      <input message="tns:reportFlightStatusUpdateRequestMessage"/>
+      <output message="tns:reportFlightStatusUpdateResponseMessage"/>
+    </operation>
+    <operation name="getFlightReport">
+      <input message="tns:getFlightReportRequestMessage"/>
+      <output message="tns:getFlightReportResponseMessage"/>
+    </operation>
+  </portType>
+  <binding name="FlightReportServicePortTypeSOAP11Binding" type="tns:FlightReportServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="reportFlightStatusUpdate">
+      <soap:operation style="document" soapAction="saibot.airport/services/flightreport/reportFlightStatusUpdate"/>
+      <input>
+        <soap:body use="literal" parts="in"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="return"/>
+      </output>
+    </operation>
+    <operation name="getFlightReport">
+      <soap:operation style="document" soapAction="saibot.airport/services/flightreport/getFlightReport"/>
+      <input>
+        <soap:body use="literal" parts="in"/>
+      </input>
+      <output>
+        <soap:body use="literal" parts="return"/>
+      </output>
+    </operation>
+  </binding>
+</definitions>

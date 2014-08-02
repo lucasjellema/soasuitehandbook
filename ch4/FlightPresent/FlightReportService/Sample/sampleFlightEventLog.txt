@@ -1,0 +1,3 @@
+FlightDate,Aircarrier,FlightNumber,StatusTimestamp,NewStatus,Action,Terminal,Pier,Gate,Runway,CheckinCounter,BagageLocation
+13-11-2015,UA,2031,12-11-2015T23:48:23,Open,GateOpen,3,F,45,,12-15,
+12-11-2015,QA,15,12-11-2015T23:48:25,Closed,Taxiing,,,,3W,,

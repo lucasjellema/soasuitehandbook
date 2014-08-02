@@ -1,0 +1,29 @@
+<wsdl:definitions
+     name="FlightEventLogFileWriter"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileWriter"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileWriter"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:imp1="saibot.airport/data/flight/FlightEventLogFileWriter"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="WriteFlightEventLogEntry_plt" >
+    <plt:role name="WriteFlightEventLogEntry_role" >
+      <plt:portType name="tns:WriteFlightEventLogEntry_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileWriter"
+              xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="saibot.airport/data/flight/FlightEventLogFileWriter" schemaLocation="nxsd_FlightEventLogFile.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="WriteFlightEventLogEntry_msg">
+        <wsdl:part name="body" element="imp1:FlightEventLog"/>
+    </wsdl:message>
+    <wsdl:portType name="WriteFlightEventLogEntry_ptt">
+        <wsdl:operation name="WriteFlightEventLogEntry">
+            <wsdl:input message="tns:WriteFlightEventLogEntry_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

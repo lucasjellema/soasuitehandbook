@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ser:businessServiceEntry xmlns:ser="http://xmlns.oracle.com/servicebus/business/config" xmlns:svc="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:ops="http://xmlns.oracle.com/servicebus/business/operations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ser:coreEntry>
+        <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+            <con:wsdl ref="FlightReportService/Resources/FlightEventLogFileWriter-concrete"/>
+            <con:binding>
+                <con:name>WriteFlightEventLogEntry_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/file/FlightPresent/FlightReportService/FlightEventLogFileWriter</con:namespace>
+            </con:binding>
+        </ser:binding>
+        <ops:operations enabled="true">
+            <ops:sla-alerting enabled="true"/>
+        </ops:operations>
+        <ser:ws-policy>
+            <svc:binding-mode>no-policies</svc:binding-mode>
+        </ser:ws-policy>
+        <ser:xqConfiguration>
+            <svc:snippetVersion>1.0</svc:snippetVersion>
+        </ser:xqConfiguration>
+    </ser:coreEntry>
+    <ser:endpointConfig>
+        <tran:provider-id>jca</tran:provider-id>
+        <tran:inbound>false</tran:inbound>
+        <tran:URI>
+            <env:value>jca://eis/FileAdapter</env:value>
+        </tran:URI>
+        <tran:outbound-properties>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>30</tran:retry-interval>
+            <tran:retry-application-errors>true</tran:retry-application-errors>
+        </tran:outbound-properties>
+        <tran:all-headers>false</tran:all-headers>
+        <tran:provider-specific xsi:type="jca:JCAEndPointConfiguration">
+            <jca:jca-file ref="FlightReportService/Resources/FlightEventLogFileWriter_file"/>
+            <jca:adapter-name>File Adapter</jca:adapter-name>
+            <jca:adapter-type>file</jca:adapter-type>
+            <jca:dispatch-policy>SBDefaultResponseWorkManager</jca:dispatch-policy>
+            <jca:always-use-wsdl>true</jca:always-use-wsdl>
+            <jca:connection-mode>managed</jca:connection-mode>
+            <jca:outbound-properties>
+                <jca:operation-properties>
+                    <jca:operation-name>WriteFlightEventLogEntry</jca:operation-name>
+                    <jca:spec-properties>
+                        <jca:property>
+                            <jca:name>FileNamingConvention</jca:name>
+                            <jca:value>flightEventLog.txt</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>Append</jca:name>
+                            <jca:value>true</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>LogicalDirectory</jca:name>
+                            <jca:value>FLIGHT_EVENTLOG_DIRECTORY</jca:value>
+                        </jca:property>
+                    </jca:spec-properties>
+                </jca:operation-properties>
+            </jca:outbound-properties>
+            <jca:endpoint-properties>
+                <jca:endpoint-property>
+                    <jca:name>FLIGHT_EVENTLOG_DIRECTORY</jca:name>
+                    <jca:value>/vagrant/flightlogs</jca:value>
+                </jca:endpoint-property>
+            </jca:endpoint-properties>
+        </tran:provider-specific>
+    </ser:endpointConfig>
+</ser:businessServiceEntry>

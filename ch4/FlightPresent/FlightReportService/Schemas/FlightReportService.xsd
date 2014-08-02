@@ -1,0 +1,52 @@
+<xsd:schema targetNamespace="saibot.airport/services/flightreport" elementFormDefault="qualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common"
+            xmlns:flightreport="saibot.airport/services/flightreport" xmlns:flight="saibot.airport/data/flight"
+            xmlns:reference="saibot.airport/data/reference">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+  <xsd:import namespace="saibot.airport/data/flight" schemaLocation="flight.xsd"/>
+  <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+  <xsd:element name="reportFlightStatusUpdateRequestMessage" type="flightreport:reportFlightStatusUpdateRequestType"/>
+  <xsd:element name="reportFlightStatusUpdateResponseMessage" type="flightreport:reportFlightStatusUpdateResponseType"/>
+  <xsd:element name="getFlightReportRequestMessage" type="flightreport:getFlightReportRequestType"/>
+  <xsd:element name="getFlightReportResponseMessage" type="flightreport:getFlightReportResponseType"/>
+  <xsd:complexType name="getFlightReportRequestType">
+    <xsd:sequence>
+      <xsd:element name="FlightDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="getFlightReportResponseType">
+    <xsd:sequence>
+      <xsd:element name="FlightLog" minOccurs="1" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="FlightLogEntry" type="flightreport:flightLogEventType" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="reportFlightStatusUpdateRequestType">
+    <xsd:sequence>
+      <xsd:element name="flightStatusEvent" type="flightreport:flightLogEventType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="reporter" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="reportFlightStatusUpdateResponseType">
+    <xsd:sequence>
+      <xsd:element name="Result" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="flightLogEventType">
+    <xsd:sequence>
+      <xsd:element name="EventTimestamp" nillable="false" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+
+      <xsd:element name="FlightStatus" nillable="false" type="flight:flightStatusType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Remarks" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
