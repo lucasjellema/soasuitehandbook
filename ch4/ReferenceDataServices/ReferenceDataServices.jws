@@ -27,6 +27,7 @@
    </list>
    <list n="listOfChildren">
       <hash><url n="URL" path="AirportService/AirportService.jpr"/></hash>
+      <hash><url n="URL" path="CountryService/CountryService.jpr"/></hash>
    </list>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
@@ -45,6 +46,6 @@
       </hash>
    </hash>
    <hash n="oracle.sb.tooling.ide.core.internal.application.SbApplication">
-      <value n="configContextSessionName" v="OSB-IDE_build_1406966986687"/>
+      <value n="configContextSessionName" v="OSB-IDE_build_1406980031719"/>
    </hash>
 </jws:workspace>

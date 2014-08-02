@@ -11,6 +11,7 @@
 
     <modules>
         <module>System</module>
+        <module>CountryService</module>
     </modules>
 
 </project>
