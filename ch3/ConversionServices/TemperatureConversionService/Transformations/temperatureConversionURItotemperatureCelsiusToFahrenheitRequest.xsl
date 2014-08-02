@@ -36,15 +36,14 @@
     <xsl:template match="/">
         <tns:temperatureCelsiusToFahrenheitRequestMessage>
             <tns:temperature>
-            <!-- Author's Note: apparently the XML created by the REST adapter from the URI parameters does not conform to the NXSD definition created by the tooling in JDeveloper.
+                <!-- Author's Note: apparently the XML created by the REST adapter from the URI parameters does not conform to the NXSD definition created by the tooling in JDeveloper.
                  The child element celsiusTemperature is created in a different namespace than specified as target namespace for the NXSD schema:
-                 "http://xmlns.oracle.com/ConversionServices/TemperatureConversionService/RestConversionService" 
+                 "http://xmlns.oracle.com/ConversionServices/TemperatureConversionService/RestConversionService"  (ns9)
                  instead of
-                 RestConversionService_convertCelsiusToFahrenheit_request                 
+                 RestConversionService_convertCelsiusToFahrenheit_request  (ns0)               
                  
                  that is the reason below the ns9:  namespace prefix appears before the celsiusTemperature element and the visual mapper indicates a question mark
-              -->   
-
+              -->
                 <xsl:value-of select="/ns0:URIParams/ns9:celsiusTemperature"/>
             </tns:temperature>
         </tns:temperatureCelsiusToFahrenheitRequestMessage>
