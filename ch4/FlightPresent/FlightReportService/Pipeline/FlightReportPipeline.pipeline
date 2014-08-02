@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
     <con:coreEntry>
         <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
             <con:wsdl ref="FlightReportService/WSDLs/FlightReportService"/>
@@ -13,41 +13,40 @@
         </con:xqConfiguration>
     </con:coreEntry>
     <con:router>
-        <con:pipeline type="request" name="request-N3f57c7ff.1e953248.0.147963b145d.N7f4e">
-            <con:stage id="_StageId-N3f57c7ff.1e953248.0.147963b145d.N7f4c" name="Stage1">
-                <con:context/>
-                <con:actions>
-                    <con1:replace varName="body" contents-only="true">
-                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f48</con2:id>
-                        <con1:expr>
-                            <con2:xsltTransform>
-                                <con2:resource ref="FlightReportService/Transformations/reportFlightStatusUpdateRequestToNXSDFlightEventLog"/>
-                                <con2:input>$body/*[1]</con2:input>
-                            </con2:xsltTransform>
-                        </con1:expr>
-                    </con1:replace>
-                </con:actions>
-            </con:stage>
-        </con:pipeline>
-        <con:pipeline type="response" name="response-N3f57c7ff.1e953248.0.147963b145d.N7f4d">
-            <con:stage id="_StageId-N3f57c7ff.1e953248.0.147963b145d.N7f4b" name="Stage1">
-                <con:context/>
-                <con:actions/>
-            </con:stage>
-        </con:pipeline>
         <con:flow>
-            <con:pipeline-node name="PipelinePairNode1">
-                <con:request>request-N3f57c7ff.1e953248.0.147963b145d.N7f4e</con:request>
-                <con:response>response-N3f57c7ff.1e953248.0.147963b145d.N7f4d</con:response>
-            </con:pipeline-node>
-            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
-                <con:context/>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context>
+                    <con2:userNsDecl prefix="flig" namespace="saibot.airport/services/flightreport"/>
+                </con:context>
                 <con:actions>
                     <con1:route>
                         <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f4f</con2:id>
                         <con1:service ref="FlightReportService/Adapters/FlightEventLogFileWriter" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
                         <con1:operation>WriteFlightEventLogEntry</con1:operation>
-                        <con1:outboundTransform/>
+                        <con1:outboundTransform>
+                            <con3:assign varName="flightEventLogFileName" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f0c</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>concat(fn:month-from-date($body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightDate),'-',fn:day-from-date($body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightDate),'/',$body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:Carrier,$body/flig:reportFlightStatusUpdateRequestMessage/flig:flightStatusEvent/flig:FlightNumber, 'FlightEventLog.txt')</con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f48</con2:id>
+                                <con3:expr>
+                                    <con2:xsltTransform>
+                                        <con2:resource ref="FlightReportService/Transformations/reportFlightStatusUpdateRequestToNXSDFlightEventLog"/>
+                                        <con2:input>$body/*[1]</con2:input>
+                                    </con2:xsltTransform>
+                                </con3:expr>
+                            </con3:replace>
+                            <con3:transport-headers copy-all="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f42</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="jca.file.FileName">
+                                    <con2:xqueryText>$flightEventLogFileName</con2:xqueryText>
+                                </con3:header>
+                            </con3:transport-headers>
+                        </con1:outboundTransform>
                         <con1:responseTransform/>
                     </con1:route>
                 </con:actions>
