@@ -13,12 +13,12 @@
         </con:xqConfiguration>
     </con:coreEntry>
     <con:router>
-        <con:pipeline type="request" name="request-N3f57c7ff.1e953248.0.147963b145d.N7fc4">
-            <con:stage id="_StageId-N3f57c7ff.1e953248.0.147963b145d.N7fc2" name="Stage1">
+        <con:pipeline type="request" name="request-N3f57c7ff.1e953248.0.147963b145d.N7ed6">
+            <con:stage id="_StageId-N3f57c7ff.1e953248.0.147963b145d.N7ed5" name="Stage1">
                 <con:context/>
                 <con:actions>
                     <con1:replace varName="body" contents-only="true">
-                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7fbe</con2:id>
+                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7ed4</con2:id>
                         <con1:expr>
                             <con2:xsltTransform>
                                 <con2:resource ref="CountryService/Transformations/createCountryRequestToCreateCountryDBInput"/>
@@ -29,12 +29,12 @@
                 </con:actions>
             </con:stage>
         </con:pipeline>
-        <con:pipeline type="response" name="response-N3f57c7ff.1e953248.0.147963b145d.N7fc3">
-            <con:stage id="_StageId-N3f57c7ff.1e953248.0.147963b145d.N7fc1" name="Stage1">
+        <con:pipeline type="response" name="response-N3f57c7ff.1e953248.0.147963b145d.N7ed3">
+            <con:stage id="_StageId-N3f57c7ff.1e953248.0.147963b145d.N7ed2" name="Stage1">
                 <con:context/>
                 <con:actions>
                     <con1:replace varName="body" contents-only="true">
-                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7f8b</con2:id>
+                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7ed1</con2:id>
                         <con1:expr>
                             <con2:xsltTransform>
                                 <con2:resource ref="CountryService/Transformations/CreateCountryDBOutputToCreateCountryResponse"/>
@@ -45,23 +45,111 @@
                 </con:actions>
             </con:stage>
         </con:pipeline>
-        <con:flow>
-            <con:pipeline-node name="PipelinePairNode1">
-                <con:request>request-N3f57c7ff.1e953248.0.147963b145d.N7fc4</con:request>
-                <con:response>response-N3f57c7ff.1e953248.0.147963b145d.N7fc3</con:response>
-            </con:pipeline-node>
-            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
-                <con:context/>
+        <con:pipeline type="request" name="request-N3f57c7ff.1e953248.0.147963b145d.N7eca">
+            <con:stage id="_StageId-N3f57c7ff.1e953248.0.147963b145d.N7ec8" name="Stage1">
+                <con:context>
+                    <con2:userNsDecl prefix="ref" namespace="saibot.airport/services/utility/reference"/>
+                </con:context>
                 <con:actions>
-                    <con1:route>
-                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7fc5</con2:id>
-                        <con1:service ref="CountryService/CreateCountryDB" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
-                        <con1:operation>insert</con1:operation>
-                        <con1:outboundTransform/>
+                    <con1:assign varName="findCountriesRequest">
+                        <con2:id>_ActionId-N3f57c7ff.N59a501de.0.14798b63014.N7ffd</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body/ref:findCountriesRequestMessage</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:wsCallout>
+                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7ec4</con2:id>
+                        <con1:service ref="CountryService/OurAirportsCountriesBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:request>
+                            <con1:payload wrapped="false">body</con1:payload>
+                        </con1:request>
+                        <con1:response>
+                            <con1:payload wrapped="false">countriesCSV</con1:payload>
+                        </con1:response>
+                        <con1:requestTransform/>
                         <con1:responseTransform/>
-                    </con1:route>
+                    </con1:wsCallout>
                 </con:actions>
-            </con:route-node>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.1e953248.0.147963b145d.N7ec9">
+            <con:stage id="_StageId-N3f57c7ff.1e953248.0.147963b145d.N7ec7" name="Stage1">
+                <con:context>
+                    <con2:userNsDecl prefix="ref" namespace="saibot.airport/services/utility/reference"/>
+                </con:context>
+                <con:actions>
+                    <con1:nxsdTranslation>
+                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7ebe</con2:id>
+                        <con1:type>Native-To-XML</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText>$countriesCSV</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="CountryService/Schemas/nxsd_OurAirportCountries"/>
+                        <con1:schemaElement xmlns:nxsd="/reference/nxsd_OurAirportsCountries">nxsd:Countries</con1:schemaElement>
+                        <con1:replace-body-content/>
+                    </con1:nxsdTranslation>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-N3f57c7ff.N59a501de.0.14798b63014.N7fc9</con2:id>
+                        <con1:expr>
+                            <con2:xsltTransform>
+                                <con2:resource ref="CountryService/Transformations/nxsdOurAirportsCountriesTofindCountriesResponse"/>
+                                <con2:input>$body/*[1]</con2:input>
+                                <con2:param name="continent">
+                                    <con2:path>$findCountriesRequest/ref:continent/text()</con2:path>
+                                </con2:param>
+                                <con2:param name="countryName">
+                                    <con2:path>$findCountriesRequest/ref:name/text()</con2:path>
+                                </con2:param>
+                                <con2:param name="countryCode">
+                                    <con2:path>$findCountriesRequest/ref:code/text()</con2:path>
+                                </con2:param>
+                            </con2:xsltTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" id="_FlowId-N3f57c7ff.1e953248.0.147963b145d.N7edf" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="findCountries">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>request-N3f57c7ff.1e953248.0.147963b145d.N7eca</con:request>
+                                <con:response>response-N3f57c7ff.1e953248.0.147963b145d.N7ec9</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="createCountry">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode2">
+                                <con:request>request-N3f57c7ff.1e953248.0.147963b145d.N7ed6</con:request>
+                                <con:response>response-N3f57c7ff.1e953248.0.147963b145d.N7ed3</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode2" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-N3f57c7ff.1e953248.0.147963b145d.N7ece</con2:id>
+                                        <con1:service ref="CountryService/CreateCountryDB" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>insert</con1:operation>
+                                        <con1:outboundTransform/>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
         </con:flow>
     </con:router>
 </con:pipelineEntry>

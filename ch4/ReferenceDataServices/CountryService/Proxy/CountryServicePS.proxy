@@ -10,7 +10,7 @@
                 <con:name>CountryServicePortTypeSOAP11Binding</con:name>
                 <con:namespace>saibot.airport/services/utility/reference</con:namespace>
             </con:binding>
-            <con:selector type="SOAP body"/>
+            <con:selector type="SOAP action"/>
         </ser:binding>
         <oper:operations enabled="true"/>
         <ser:ws-policy>

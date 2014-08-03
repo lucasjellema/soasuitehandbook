@@ -20,13 +20,13 @@
         <tran:provider-id>http</tran:provider-id>
         <tran:inbound>false</tran:inbound>
         <tran:URI>
-            <env:value>https://dl.dropboxusercontent.com/u/12217570/countries.csv</env:value>
+            <env:value>http://blog.soasuitehandbook.org/wp-content/uploads/2014/08/countries.csv</env:value>
         </tran:URI>
         <tran:URI>
             <env:value>http://ourairports.com/data/countries.csv</env:value>
         </tran:URI>
         <tran:outbound-properties>
-            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:load-balancing-algorithm>none</tran:load-balancing-algorithm>
             <tran:retry-count>0</tran:retry-count>
             <tran:retry-interval>30</tran:retry-interval>
         </tran:outbound-properties>
