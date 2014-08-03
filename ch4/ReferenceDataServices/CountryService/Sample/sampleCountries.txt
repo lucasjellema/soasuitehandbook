@@ -1,0 +1,13 @@
+"id","code","name","continent","wikipedia_link","keywords"
+302672,"AD","Andorra","EU","http://en.wikipedia.org/wiki/Andorra",
+302618,"AE","United Arab Emirates","AS","http://en.wikipedia.org/wiki/United_Arab_Emirates","UAE"
+302619,"AF","Afghanistan","AS","http://en.wikipedia.org/wiki/Afghanistan",
+302722,"AG","Antigua and Barbuda","NA","http://en.wikipedia.org/wiki/Antigua_and_Barbuda",
+302723,"AI","Anguilla","NA","http://en.wikipedia.org/wiki/Anguilla",
+302673,"AL","Albania","EU","http://en.wikipedia.org/wiki/Albania",
+302620,"AM","Armenia","AS","http://en.wikipedia.org/wiki/Armenia",
+302556,"AO","Angola","AF","http://en.wikipedia.org/wiki/Angola",
+302615,"AQ","Antarctica","AN","http://en.wikipedia.org/wiki/Antarctica",
+302789,"AR","Argentina","SA","http://en.wikipedia.org/wiki/Argentina",
+302763,"AS","American Samoa","OC","http://en.wikipedia.org/wiki/American_Samoa",
+302674,"AT","Austria","EU","http://en.wikipedia.org/wiki/Austria",

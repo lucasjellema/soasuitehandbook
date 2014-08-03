@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:businessServiceEntry xmlns:con="http://xmlns.oracle.com/servicebus/business/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/business/operations" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http">
+    <con:coreEntry>
+        <con1:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:con1="http://xmlns.oracle.com/servicebus/business/config">
+            <con:request type="Text"/>
+            <con:response type="Text"/>
+        </con1:binding>
+        <oper:operations enabled="true">
+            <oper:throttling enabled="false"/>
+            <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
+        </oper:operations>
+        <con:ws-policy>
+            <ser:binding-mode>no-policies</ser:binding-mode>
+        </con:ws-policy>
+        <con:xqConfiguration>
+            <ser:snippetVersion>1.0</ser:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:endpointConfig>
+        <tran:provider-id>http</tran:provider-id>
+        <tran:inbound>false</tran:inbound>
+        <tran:URI>
+            <env:value>https://dl.dropboxusercontent.com/u/12217570/countries.csv</env:value>
+        </tran:URI>
+        <tran:URI>
+            <env:value>http://ourairports.com/data/countries.csv</env:value>
+        </tran:URI>
+        <tran:outbound-properties>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>30</tran:retry-interval>
+        </tran:outbound-properties>
+        <tran:provider-specific>
+            <http:outbound-properties>
+                <http:request-method>POST</http:request-method>
+                <http:timeout>0</http:timeout>
+                <http:connection-timeout>0</http:connection-timeout>
+                <http:follow-redirects>false</http:follow-redirects>
+                <http:chunked-streaming-mode>true</http:chunked-streaming-mode>
+                <http:session-sctikiness enabled="false" session-id-name="JSESSIONID"/>
+            </http:outbound-properties>
+            <http:dispatch-policy>SBDefaultResponseWorkManager</http:dispatch-policy>
+        </tran:provider-specific>
+    </con:endpointConfig>
+</con:businessServiceEntry>
