@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions targetNamespace="saibot.airport/services/utility/conversion" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:tns="saibot.airport/services/utility/conversion"
+             xmlns:conversion="saibot.airport/services/utility/conversion" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+    <types>
+        <xsd:schema elementFormDefault="qualified">
+            <xsd:import namespace="saibot.airport/services/utility/conversion"
+                        schemaLocation="../Schemas/ConversionService.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="temperatureCelsiusToFahrenheitRequestMessage">
+        <part name="in" element="conversion:temperatureCelsiusToFahrenheitRequestMessage"/>
+    </message>
+    <message name="temperatureCelsiusToFahrenheitResponseMessage">
+        <part name="return" element="conversion:temperatureCelsiusToFahrenheitResponseMessage"/>
+    </message>
+    <message name="distanceFeetToMeterRequestMessage">
+        <part name="in" element="conversion:distanceFeetToMeterRequestMessage"/>
+    </message>
+    <message name="distanceFeetToMeterResponseMessage">
+        <part name="return" element="conversion:distanceFeetToMeterResponseMessage"/>
+    </message>
+    <message name="distanceMileToMeterRequestMessage">
+        <part name="in" element="conversion:distanceMileToMeterRequestMessage"/>
+    </message>
+    <message name="distanceMileToMeterResponseMessage">
+        <part name="return" element="conversion:distanceMileToMeterResponseMessage"/>
+    </message>
+    <message name="weightLbToKilogramRequestMessage">
+        <part name="in" element="conversion:weightLbToKilogramRequestMessage"/>
+    </message>
+    <message name="weightLbToKilogramResponseMessage">
+        <part name="return" element="conversion:weightLbToKilogramResponseMessage"/>
+    </message>
+    <message name="speedKnotToKMphRequestMessage">
+        <part name="in" element="conversion:weightLbToKilogramRequestMessage"/>
+    </message>
+    <message name="speedKnotToKMphResponseMessage">
+        <part name="return" element="conversion:weightLbToKilogramResponseMessage"/>
+    </message>
+    <portType name="ConversionServicePortType">
+        <operation name="getTemperatureCelsiusToFahrenheit">
+            <input message="tns:temperatureCelsiusToFahrenheitRequestMessage"/>
+            <output message="tns:temperatureCelsiusToFahrenheitResponseMessage"/>
+        </operation>
+        <operation name="getDistanceFeetToMeter">
+            <input message="tns:distanceFeetToMeterRequestMessage"/>
+            <output message="tns:distanceFeetToMeterResponseMessage"/>
+        </operation>
+        <operation name="getDistanceMileToMeter">
+            <input message="tns:distanceMileToMeterRequestMessage"/>
+            <output message="tns:distanceMileToMeterResponseMessage"/>
+        </operation>
+        <operation name="getWeightLbToKilogram">
+            <input message="tns:weightLbToKilogramRequestMessage"/>
+            <output message="tns:weightLbToKilogramResponseMessage"/>
+        </operation>
+        <operation name="getSpeedKnotToKMph">
+            <input message="tns:speedKnotToKMphRequestMessage"/>
+            <output message="tns:speedKnotToKMphResponseMessage"/>
+        </operation>
+    </portType>
+    <binding name="ConversionServicePortTypeSOAP11Binding" type="tns:ConversionServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getTemperatureCelsiusToFahrenheit">
+            <soap:operation style="document"
+                            soapAction="saibot.airport/services/utility/conversion/getTemperatureCelsiusToFahrenheit"/>
+            <input>
+                <soap:body use="literal" parts="in"/>
+            </input>
+            <output>
+                <soap:body use="literal" parts="return"/>
+            </output>
+        </operation>
+        <operation name="getDistanceFeetToMeter">
+            <soap:operation style="document"
+                            soapAction="saibot.airport/services/utility/conversion/getDistanceFeetToMeter"/>
+            <input>
+                <soap:body use="literal" parts="in"/>
+            </input>
+            <output>
+                <soap:body use="literal" parts="return"/>
+            </output>
+        </operation>
+        <operation name="getDistanceMileToMeter">
+            <soap:operation style="document"
+                            soapAction="saibot.airport/services/utility/conversion/getDistanceMileToMeter"/>
+            <input>
+                <soap:body use="literal" parts="in"/>
+            </input>
+            <output>
+                <soap:body use="literal" parts="return"/>
+            </output>
+        </operation>
+        <operation name="getWeightLbToKilogram">
+            <soap:operation style="document"
+                            soapAction="saibot.airport/services/utility/conversion/getWeightLbToKilogram"/>
+            <input>
+                <soap:body use="literal" parts="in"/>
+            </input>
+            <output>
+                <soap:body use="literal" parts="return"/>
+            </output>
+        </operation>
+        <operation name="getSpeedKnotToKMph">
+            <soap:operation style="document"
+                            soapAction="saibot.airport/services/utility/conversion/getSpeedKnotToKMph"/>
+            <input>
+                <soap:body use="literal" parts="in"/>
+            </input>
+            <output>
+                <soap:body use="literal" parts="return"/>
+            </output>
+        </operation>
+    </binding>
+</definitions>
