@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions xmlns="http://xmlns.oracle.com/bpel/sensor">
+    <action name="JMSSensorAction_celsiusTemperatureValue" enabled="false" publishType="JMSQueue" publishTarget="">
+        <property name="JMSConnectionFactory"/>
+    </action>
+    <action name="DBSensorAction" enabled="true" publishType="BpelReportsSchema" publishName="" filter="" publishTarget="">
+        <sensorName>celsiusTemperatureValue</sensorName>
+    </action>
+</actions>

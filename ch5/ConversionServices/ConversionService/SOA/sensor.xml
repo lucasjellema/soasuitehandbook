@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sensors xmlns="http://xmlns.oracle.com/bpel/sensor">
+    <sensor sensorName="celsiusTemperatureValue" kind="service" target="undefined" filter="" xmlns:tns="saibot.airport/services/utility/conversion">
+        <serviceConfig service="ConversionService" expression="$in.in/tns:temperatureCelsiusToFahrenheitRequestMessage/tns:temperature" operation="getTemperatureCelsiusToFahrenheit" outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema"/>
+    </sensor>
+</sensors>

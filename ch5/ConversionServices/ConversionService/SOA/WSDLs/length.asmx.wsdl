@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions
+    
+     targetNamespace="http://www.webserviceX.NET/"
+     xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/"
+     xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:tns="http://www.webserviceX.NET/"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:s="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://www.webserviceX.NET/">
+            <s:element name="ChangeLengthUnit">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="LengthValue" type="s:double"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="fromLengthUnit" type="tns:Lengths"/>
+                        <s:element minOccurs="1" maxOccurs="1" name="toLengthUnit" type="tns:Lengths"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:simpleType name="Lengths">
+                <s:restriction base="s:string">
+                    <s:enumeration value="Angstroms"/>
+                    <s:enumeration value="Nanometers"/>
+                    <s:enumeration value="Microinch"/>
+                    <s:enumeration value="Microns"/>
+                    <s:enumeration value="Mils"/>
+                    <s:enumeration value="Millimeters"/>
+                    <s:enumeration value="Centimeters"/>
+                    <s:enumeration value="Inches"/>
+                    <s:enumeration value="Links"/>
+                    <s:enumeration value="Spans"/>
+                    <s:enumeration value="Feet"/>
+                    <s:enumeration value="Cubits"/>
+                    <s:enumeration value="Varas"/>
+                    <s:enumeration value="Yards"/>
+                    <s:enumeration value="Meters"/>
+                    <s:enumeration value="Fathoms"/>
+                    <s:enumeration value="Rods"/>
+                    <s:enumeration value="Chains"/>
+                    <s:enumeration value="Furlongs"/>
+                    <s:enumeration value="Cablelengths"/>
+                    <s:enumeration value="Kilometers"/>
+                    <s:enumeration value="Miles"/>
+                    <s:enumeration value="Nauticalmile"/>
+                    <s:enumeration value="League"/>
+                    <s:enumeration value="Nauticalleague"/>
+                </s:restriction>
+            </s:simpleType>
+            <s:element name="ChangeLengthUnitResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="ChangeLengthUnitResult" type="s:double"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="double" type="s:double"/>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="ChangeLengthUnitSoapIn">
+        <wsdl:part name="parameters" element="tns:ChangeLengthUnit"/>
+    </wsdl:message>
+    <wsdl:message name="ChangeLengthUnitSoapOut">
+        <wsdl:part name="parameters" element="tns:ChangeLengthUnitResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ChangeLengthUnitHttpGetIn">
+        <wsdl:part name="LengthValue" type="s:string"/>
+        <wsdl:part name="fromLengthUnit" type="s:string"/>
+        <wsdl:part name="toLengthUnit" type="s:string"/>
+    </wsdl:message>
+    <wsdl:message name="ChangeLengthUnitHttpGetOut">
+        <wsdl:part name="Body" element="tns:double"/>
+    </wsdl:message>
+    <wsdl:message name="ChangeLengthUnitHttpPostIn">
+        <wsdl:part name="LengthValue" type="s:string"/>
+        <wsdl:part name="fromLengthUnit" type="s:string"/>
+        <wsdl:part name="toLengthUnit" type="s:string"/>
+    </wsdl:message>
+    <wsdl:message name="ChangeLengthUnitHttpPostOut">
+        <wsdl:part name="Body" element="tns:double"/>
+    </wsdl:message>
+    <wsdl:portType name="lengthUnitSoap">
+        <wsdl:operation name="ChangeLengthUnit">
+            <wsdl:input message="tns:ChangeLengthUnitSoapIn"/>
+            <wsdl:output message="tns:ChangeLengthUnitSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="lengthUnitHttpGet">
+        <wsdl:operation name="ChangeLengthUnit">
+            <wsdl:input message="tns:ChangeLengthUnitHttpGetIn"/>
+            <wsdl:output message="tns:ChangeLengthUnitHttpGetOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="lengthUnitHttpPost">
+        <wsdl:operation name="ChangeLengthUnit">
+            <wsdl:input message="tns:ChangeLengthUnitHttpPostIn"/>
+            <wsdl:output message="tns:ChangeLengthUnitHttpPostOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="lengthUnitSoap" type="tns:lengthUnitSoap">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ChangeLengthUnit">
+            <soap:operation style="document" soapAction="http://www.webserviceX.NET/ChangeLengthUnit"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="lengthUnitSoap12" type="tns:lengthUnitSoap">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ChangeLengthUnit">
+            <soap12:operation style="document" soapAction="http://www.webserviceX.NET/ChangeLengthUnit" soapActionRequired="false"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="lengthUnitHttpGet" type="tns:lengthUnitHttpGet">
+        <http:binding verb="GET"/>
+        <wsdl:operation name="ChangeLengthUnit">
+            <http:operation location="/ChangeLengthUnit"/>
+            <wsdl:input>
+                <http:urlEncoded/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="lengthUnitHttpPost" type="tns:lengthUnitHttpPost">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="ChangeLengthUnit">
+            <http:operation location="/ChangeLengthUnit"/>
+            <wsdl:input>
+                <mime:content type="application/x-www-form-urlencoded"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:mimeXml part="Body"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="lengthUnit">
+        <wsdl:port name="lengthUnitSoap" binding="tns:lengthUnitSoap">
+            <soap:address location="http://www.webservicex.net/length.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="lengthUnitSoap12" binding="tns:lengthUnitSoap12">
+            <soap12:address location="http://www.webservicex.net/length.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="lengthUnitHttpGet" binding="tns:lengthUnitHttpGet">
+            <http:address location="http://www.webservicex.net/length.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="lengthUnitHttpPost" binding="tns:lengthUnitHttpPost">
+            <http:address location="http://www.webservicex.net/length.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
