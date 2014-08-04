@@ -1,0 +1,14 @@
+<adapter-config name="EmailSender" adapter="ums" wsdlLocation="../WSDLs/EmailSender.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/ums/UMSAdapterOutbound"/>
+  <endpoint-interaction portType="SendNotification_ptt" operation="SendNotification">
+    <interaction-spec className="oracle.tip.adapter.ums.outbound.UmsInteractionSpec">
+      <property name="DeliveryType" value="Email"/>
+      <property name="Subject" value="Flight Update"/>
+      <property name="To" value="dummy@design.time"/>
+      <property name="ReplyTo" value="no-reply@saibot.airport"/>
+      <property name="From" value="info@saibot.airport"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
