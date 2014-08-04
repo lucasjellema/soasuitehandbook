@@ -4,10 +4,13 @@
           wsdlTargetNamespace="saibot.airport/services/utility/conversion"
           xmlns:tns="saibot.airport/services/utility/conversion">
   <operation name="getTemperatureCelsiusToFahrenheit" deliveryPolicy="AllOrNothing" priority="4"
-             validateSchema="false">
+             validateSchema="true">
     <switch>
       <case executionType="sequential" name="echo.getTemperatureCelsiusToFahrenheit">
         <action>
+          <validate part="$in.in">
+            <schematron>../Schemas/ConversionServiceValidationRules.sch</schematron>
+          </validate>
           <transform>
             <part name="$out.return"
                   function="xqueryt(../Transformations/temperatureCelsiusToFahrenheitRequestToResponse.xqy)">
@@ -20,7 +23,27 @@
       </case>
     </switch>
   </operation>
-  <operation name="getDistanceFeetToMeter" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false"/>
+  <operation name="getDistanceFeetToMeter" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+    <switch>
+      <case executionType="sequential" name="LengthDistanceUnitConvertorService.ChangeLengthUnit">
+        <action>
+          <transform>
+            <part name="$out.parameters"
+                  function="xslt(../Transformations/distanceFeetToMeterRequestToChangeLengthUnit.xsl, $in.in)"/>
+          </transform>
+          <invoke reference="LengthDistanceUnitConvertorService" operation="ChangeLengthUnit">
+            <onReply>
+              <transform>
+                <part name="$out.return"
+                      function="xslt(../Transformations/changeLengthUnitResponseTodistanceFeetToMeterResponse.xsl, $in.parameters)"/>
+              </transform>
+              <reply/>
+            </onReply>
+          </invoke>
+        </action>
+      </case>
+    </switch>
+  </operation>
   <operation name="getDistanceMileToMeter" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false"/>
   <operation name="getWeightLbToKilogram" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false"/>
   <operation name="getSpeedKnotToKMph" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false"/>

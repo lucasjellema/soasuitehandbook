@@ -13,6 +13,7 @@
            xmlns:sca-ext="http://xmlns.oracle.com/sca/1.0-ext">
   <import namespace="saibot.airport/services/utility/conversion" location="WSDLs/ConversionService.wsdl"
           importType="wsdl"/>
+  <import namespace="http://www.webserviceX.NET/" location="WSDLs/length.asmx.wsdl" importType="wsdl"/>
   <service name="ConversionService" ui:wsdlLocation="WSDLs/ConversionService.wsdl">
     <interface.wsdl interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
     <binding.ws port="saibot.airport/services/utility/conversion#wsdl.endpoint(ConversionService/ConversionServicePort)">
@@ -21,16 +22,36 @@
   </service>
   <property name="productVersion" type="xs:string" many="false">12.1.3.0.0</property>
   <property name="compositeID" type="xs:string" many="false">4624cdf1-870e-4e4a-8e3d-33313cd13614</property>
+  <property name="oracle.composite.faultPolicyFile" type="xs:string" many="false">fault-policies.xml</property>
+  <property name="oracle.composite.faultBindingFile" type="xs:string" many="false">fault-bindings.xml</property>
   <component name="ConversionMediator">
     <implementation.mediator src="Mediators/ConversionMediator.mplan"/>
     <componentType>
       <service name="ConversionMediator" ui:wsdlLocation="WSDLs/ConversionService.wsdl">
         <interface.wsdl interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
       </service>
+      <reference name="LengthDistanceUnitConvertorService" ui:wsdlLocation="WSDLs/length.asmx.wsdl">
+        <interface.wsdl interface="http://www.webserviceX.NET/#wsdl.interface(lengthUnitSoap)"/>
+      </reference>
     </componentType>
   </component>
+  <reference name="LengthDistanceUnitConvertorService" ui:wsdlLocation="WSDLs/length.asmx.wsdl">
+    <interface.wsdl interface="http://www.webserviceX.NET/#wsdl.interface(lengthUnitSoap)"/>
+    <binding.ws port="http://www.webserviceX.NET/#wsdl.endpoint(lengthUnit/lengthUnitSoap)"
+                location="http://www.webservicex.net/length.asmx?WSDL" soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+    <binding.ws port="http://www.webserviceX.NET/#wsdl.endpoint(lengthUnit/lengthUnitSoap12)"
+                location="http://www.webservicex.net/length.asmx?WSDL" soapVersion="1.2">
+      <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
   <wire>
     <source.uri>ConversionService</source.uri>
     <target.uri>ConversionMediator/ConversionMediator</target.uri>
+  </wire>
+  <wire>
+    <source.uri>ConversionMediator/LengthDistanceUnitConvertorService</source.uri>
+    <target.uri>LengthDistanceUnitConvertorService</target.uri>
   </wire>
 </composite>
