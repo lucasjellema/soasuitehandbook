@@ -1,0 +1,48 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="root_descriptor_alias">PORTAL_SLOT_ALLOCATIONS</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.START_DATE_FOR_SLOT:db_column_type">DATE</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.PROCESS_STATUS:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.HOUR_OF_DAY:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.DEPARTURE_YN:db_column_size">1</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.DEPARTURE_YN:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.CARRIER:db_column_type">VARCHAR2</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.IATA_AIRCRAFT_MODEL_TYPE:db_column_type">VARCHAR2</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.FIVE_MINUTE_BLOCK:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.START_DATE_FOR_SLOT:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.CARRIER:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.CARRIER:db_column_size">10</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.IATA_AIRCRAFT_MODEL_TYPE:db_column_size">10</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.PORTAL_SLOT_REFERENCE:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.WEEKDAYS_BITMAP:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.FIVE_MINUTE_BLOCK:db_column_type">NUMBER</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.FIVE_MINUTE_BLOCK:db_column_precision">2</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.PROCESS_STATUS:db_column_type">VARCHAR2</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_table_type">TABLE</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.HOUR_OF_DAY:db_column_scale">0</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.PORTAL_SLOT_REFERENCE:db_column_type">NUMBER</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.PROCESS_STATUS:db_column_size">1</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.PORTAL_SLOT_REFERENCE:db_column_precision">10</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.IATA_AIRCRAFT_MODEL_TYPE:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.PORTAL_SLOT_REFERENCE:db_column_scale">0</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.HOUR_OF_DAY:db_column_type">NUMBER</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.FIVE_MINUTE_BLOCK:db_column_scale">0</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_9">PROCESS_STATUS</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_8">IATA_AIRCRAFT_MODEL_TYPE</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.WEEKDAYS_BITMAP:db_column_type">CHAR</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_7">DEPARTURE_YN</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_6">CARRIER</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_5">FIVE_MINUTE_BLOCK</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_4">HOUR_OF_DAY</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_3">WEEKDAYS_BITMAP</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_2">END_DATE_FOR_SLOT</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_1">START_DATE_FOR_SLOT</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS:db_column_0">PORTAL_SLOT_REFERENCE</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.END_DATE_FOR_SLOT:db_column_not_null">false</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.DEPARTURE_YN:db_column_type">VARCHAR2</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.WEEKDAYS_BITMAP:db_column_size">7</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.END_DATE_FOR_SLOT:db_column_type">DATE</entry>
+   <entry key="PORTAL_SLOT_ALLOCATIONS.HOUR_OF_DAY:db_column_precision">2</entry>
+</properties>

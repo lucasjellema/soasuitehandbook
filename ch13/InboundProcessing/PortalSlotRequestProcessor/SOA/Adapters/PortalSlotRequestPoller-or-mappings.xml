@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-persistence xmlns="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eclipselink="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd">
+   <name>PortalSlotRequestPoller-OR</name>
+   <class-mapping-descriptors>
+      <class-mapping-descriptor xsi:type="object-relational-class-mapping-descriptor">
+         <class>PortalSlotRequestPoller.PortalSlotAllocations</class>
+         <alias>PORTAL_SLOT_ALLOCATIONS</alias>
+         <primary-key>
+            <field table="PORTAL_SLOT_ALLOCATIONS" name="PORTAL_SLOT_REFERENCE" xsi:type="column"/>
+         </primary-key>
+         <events/>
+         <querying>
+            <queries>
+               <query name="PortalSlotRequestPollerSelect" xsi:type="read-all-query">
+                  <reference-class>PortalSlotRequestPoller.PortalSlotAllocations</reference-class>
+                  <refresh>true</refresh>
+                  <remote-refresh>true</remote-refresh>
+                  <lock-mode>lock-no-wait</lock-mode>
+                  <container xsi:type="list-container-policy">
+                     <collection-type>java.util.Vector</collection-type>
+                  </container>
+               </query>
+            </queries>
+         </querying>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>portalSlotReference</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="PORTAL_SLOT_REFERENCE" xsi:type="column"/>
+               <attribute-classification>java.lang.Long</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>startDateForSlot</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="START_DATE_FOR_SLOT" xsi:type="column"/>
+               <attribute-classification>java.sql.Timestamp</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>endDateForSlot</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="END_DATE_FOR_SLOT" xsi:type="column"/>
+               <attribute-classification>java.sql.Timestamp</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>weekdaysBitmap</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="WEEKDAYS_BITMAP" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>hourOfDay</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="HOUR_OF_DAY" xsi:type="column"/>
+               <attribute-classification>java.lang.Integer</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>fiveMinuteBlock</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="FIVE_MINUTE_BLOCK" xsi:type="column"/>
+               <attribute-classification>java.lang.Integer</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>carrier</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="CARRIER" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>departureYn</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="DEPARTURE_YN" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>iataAircraftModelType</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="IATA_AIRCRAFT_MODEL_TYPE" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>processStatus</attribute-name>
+               <field table="PORTAL_SLOT_ALLOCATIONS" name="PROCESS_STATUS" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>independent</descriptor-type>
+         <caching>
+            <cache-type>weak-reference</cache-type>
+            <cache-size>-1</cache-size>
+            <always-refresh>true</always-refresh>
+         </caching>
+         <remote-caching>
+            <cache-type>weak-reference</cache-type>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <tables>
+            <table name="PORTAL_SLOT_ALLOCATIONS"/>
+         </tables>
+         <structure>structureName</structure>
+      </class-mapping-descriptor>
+   </class-mapping-descriptors>
+   <login xsi:type="database-login">
+      <platform-class>org.eclipse.persistence.platform.database.oracle.Oracle9Platform</platform-class>
+      <connection-url></connection-url>
+   </login>
+</object-persistence>

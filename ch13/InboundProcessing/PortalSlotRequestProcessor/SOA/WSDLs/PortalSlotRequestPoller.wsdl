@@ -1,0 +1,29 @@
+<wsdl:definitions
+     name="PortalSlotRequestPoller"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/InboundProcessing/PortalSlotRequestProcessor/PortalSlotRequestPoller"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/InboundProcessing/PortalSlotRequestProcessor/PortalSlotRequestPoller"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:pc="http://xmlns.oracle.com/pcbpel/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/PortalSlotRequestPoller"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="PortalSlotRequestPoller_plt" >
+    <plt:role name="PortalSlotRequestPoller_role" >
+      <plt:portType name="tns:PortalSlotRequestPoller_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/PortalSlotRequestPoller" schemaLocation="../Schemas/PortalSlotRequestPoller_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="PortalSlotAllocationsCollection_msg">
+        <wsdl:part name="PortalSlotAllocationsCollection" element="top:PortalSlotAllocationsCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="PortalSlotRequestPoller_ptt">
+        <wsdl:operation name="receive">
+            <wsdl:input message="tns:PortalSlotAllocationsCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

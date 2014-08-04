@@ -1,0 +1,22 @@
+<adapter-config name="PortalSlotRequestPoller" adapter="db" wsdlLocation="../WSDLs/PortalSlotRequestPoller.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="soadb_saibot" location="eis/DB/SaibotCommonDB"/>
+  <endpoint-activation portType="PortalSlotRequestPoller_ptt" operation="receive">
+    <activation-spec className="oracle.tip.adapter.db.DBActivationSpec">
+      <property name="DescriptorName" value="PortalSlotRequestPoller.PortalSlotAllocations"/>
+      <property name="QueryName" value="PortalSlotRequestPollerSelect"/>
+      <property name="MappingsMetaDataURL" value="PortalSlotRequestPoller-or-mappings.xml"/>
+      <property name="PollingStrategy" value="LogicalDeletePollingStrategy"/>
+      <property name="MarkReadColumn" value="PROCESS_STATUS"/>
+      <property name="MarkReadValue" value="Y"/>
+      <property name="MarkReservedValue" value="X"/>
+      <property name="MarkUnreadValue" value="N"/>
+      <property name="PollingInterval" value="20"/>
+      <property name="MaxRaiseSize" value="1"/>
+      <property name="MaxTransactionSize" value="2"/>
+      <property name="NumberOfThreads" value="1"/>
+      <property name="ReturnSingleResultSet" value="false"/>
+    </activation-spec>
+  </endpoint-activation>
+
+</adapter-config>
