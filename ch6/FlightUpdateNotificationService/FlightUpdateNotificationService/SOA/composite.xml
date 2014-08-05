@@ -15,6 +15,8 @@
           location="WSDLs/EmailSender.wsdl" importType="wsdl"/>
   <import namespace="saibot.airport/services/flightupdatenotification"
           location="WSDLs/FlightUpdateNotificationService.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/ChatClient"
+          location="WSDLs/ChatClient.wsdl" importType="wsdl"/>
   <service name="MachineToHumanMediator_ep" ui:wsdlLocation="WSDLs/FlightUpdateNotificationService.wsdl">
     <interface.wsdl interface="saibot.airport/services/flightupdatenotification#wsdl.interface(FlightUpdateNotificationServicePortType)"/>
     <binding.ws port="saibot.airport/services/flightupdatenotification#wsdl.endpoint(MachineToHumanMediator_ep/FlightUpdateNotificationServicePort)"/>
@@ -30,11 +32,18 @@
       <reference name="EmailSender" ui:wsdlLocation="WSDLs/EmailSender.wsdl">
         <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/EmailSender#wsdl.interface(SendNotification_ptt)"/>
       </reference>
+      <reference name="ChatClient" ui:wsdlLocation="WSDLs/ChatClient.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/ChatClient#wsdl.interface(SendNotification_ptt)"/>
+      </reference>
     </componentType>
   </component>
   <reference name="EmailSender" ui:wsdlLocation="WSDLs/EmailSender.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/EmailSender#wsdl.interface(SendNotification_ptt)"/>
     <binding.jca config="Adapters/EmailSender_ums.jca"/>
+  </reference>
+  <reference name="ChatClient" ui:wsdlLocation="WSDLs/ChatClient.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/ChatClient#wsdl.interface(SendNotification_ptt)"/>
+    <binding.jca config="Adapters/ChatClient_ums.jca"/>
   </reference>
   <wire>
     <source.uri>MachineToHumanMediator_ep</source.uri>
@@ -43,5 +52,9 @@
   <wire>
     <source.uri>MachineToHumanMediator/EmailSender</source.uri>
     <target.uri>EmailSender</target.uri>
+  </wire>
+  <wire>
+    <source.uri>MachineToHumanMediator/ChatClient</source.uri>
+    <target.uri>ChatClient</target.uri>
   </wire>
 </composite>
