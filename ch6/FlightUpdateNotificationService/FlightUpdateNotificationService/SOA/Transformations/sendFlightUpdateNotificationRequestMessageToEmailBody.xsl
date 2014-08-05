@@ -36,7 +36,27 @@
   <xsl:template match="/">
     <tns:message>
       <tns:payload>
-        <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:CommunicationMetadata/ns0:Salutation"/>
+        Dear <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:CommunicationMetadata/ns0:Salutation"/>&nbsp;
+        <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:CommunicationMetadata/ns0:ToAddress"/>
+        This is a flight status update from Saibot Airport regarding flight: <xsl:value-of select="concat(/ns0:sendFlightUpdateNotificationRequestMessage/ns0:Carrier,/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightNumber)"/>
+        
+        The current status for this flight:
+        Date: <xsl:value-of select="xp20:format-dateTime(/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightStatus/flight:TimePlanningUnit/reference:startDate,'[D01]-[M01]-[Y0001]')"/>
+        Time: <xsl:value-of select="xp20:format-dateTime(/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightStatus/flight:TimePlanningUnit/reference:startDate,'[H01]:[m01]')"/>
+        
+        
+        Status:   <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightStatus/flight:Status"/>
+        Action:   <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightStatus/flight:Action"/>
+        
+        Check In Details:
+        =================        
+        Terminal: <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightStatus/flight:GateLocation/reference:Terminal"/>
+        Pier:     <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightStatus/flight:GateLocation/reference:Pier"/>
+        Gate:     <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightStatus/flight:GateLocation/reference:Gate"/>
+        Checkin Counter:  <xsl:value-of select="/ns0:sendFlightUpdateNotificationRequestMessage/ns0:FlightStatus/flight:CheckinCounter"/>
+        
+        
+        
       </tns:payload>
     </tns:message>
   </xsl:template>
