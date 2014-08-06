@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="FinanceAircraftMovementReporter"
+     targetNamespace="http://finance.airport.saibot/"
+     xmlns:tns="http://finance.airport.saibot/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:ns0="http://finance.airport.saibot/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://finance.airport.saibot/types">
+            <xsd:complexType name="aircraftMovement">
+                <xsd:sequence>
+                    <xsd:element name="aircraftIataEquipmentCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="airportIataCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="arrivalOrDeparture" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="carrierIataCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="flightnumber" type="xsd:int" minOccurs="0"/>
+                    <xsd:element name="movementTimestamp" type="xsd:dateTime" minOccurs="0"/>
+                    <xsd:element name="numberOfPassengers" type="xsd:int" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema targetNamespace="http://finance.airport.saibot/" xmlns:tns="http://finance.airport.saibot/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://finance.airport.saibot/types">
+            <xsd:import namespace="http://finance.airport.saibot/types"/>
+            <xsd:complexType name="reportAircraftMovement">
+                <xsd:sequence>
+                    <xsd:element name="arg0" type="ns1:aircraftMovement"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="reportAircraftMovement" type="tns:reportAircraftMovement"/>
+            <xsd:complexType name="reportAircraftMovementResponse">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="reportAircraftMovementResponse" type="tns:reportAircraftMovementResponse"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="reportAircraftMovementInput">
+        <wsdl:part name="parameters" element="tns:reportAircraftMovement"/>
+    </wsdl:message>
+    <wsdl:message name="reportAircraftMovementOutput">
+        <wsdl:part name="parameters" element="tns:reportAircraftMovementResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="FinanceAircraftMovementReporter">
+        <wsdl:operation name="reportAircraftMovement">
+            <wsdl:input message="tns:reportAircraftMovementInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:reportAircraftMovementOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

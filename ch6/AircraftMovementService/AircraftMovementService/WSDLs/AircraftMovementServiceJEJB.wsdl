@@ -1,0 +1,63 @@
+<?xml version='1.0'?>
+<WL5G3N0:definitions xmlns="" name="JEJBServiceDefinitions" targetNamespace="saibot.airport.operations/monitoring" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport.operations/monitoring" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xs:schema xmlns:anyxml="http://alsb.bea.com/transports/xml/any-xml" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="saibot.airport.operations/monitoring" xmlns:bea="http://www.bea.com/wli/sb/context" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport.operations/monitoring" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="saibot.airport.operations/monitoring">
+      <xs:element name="reportAircraftActivity">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="aircraftMovement" type="bea:JavaContentPartType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="reportAircraftActivityResponse">
+        <xs:complexType>
+          <xs:sequence>
+                                              </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:anyxml="http://alsb.bea.com/transports/xml/any-xml" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="saibot.airport.operations/monitoring" xmlns:bea="http://www.bea.com/wli/sb/context" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport.operations/monitoring" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.bea.com/wli/sb/context">
+      <xs:complexType name="JavaContentType">
+        <xs:attribute name="ref" type="xs:anyURI" use="required"/>
+      </xs:complexType>
+      <xs:element name="java-content" type="bea:JavaContentType"/>
+      <xs:complexType name="JavaContentPartType">
+        <xs:sequence>
+          <xs:element ref="bea:java-content"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="java-exception" type="bea:JavaContentPartType"/>
+    </xs:schema>
+    <xs:schema xmlns:anyxml="http://alsb.bea.com/transports/xml/any-xml" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="saibot.airport.operations/monitoring" xmlns:bea="http://www.bea.com/wli/sb/context" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport.operations/monitoring" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://alsb.bea.com/transports/xml/any-xml">
+      <xs:complexType name="anyXML">
+        <xs:sequence>
+          <xs:any/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="reportAircraftActivity">
+    <WL5G3N0:part name="parameters" element="WL5G3N1:reportAircraftActivity"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="reportAircraftActivityResponse">
+    <WL5G3N0:part name="parameters" element="WL5G3N1:reportAircraftActivityResponse"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="JEJB">
+    <WL5G3N0:operation name="reportAircraftActivity" parameterOrder="parameters">
+      <WL5G3N0:input message="WL5G3N1:reportAircraftActivity"/>
+      <WL5G3N0:output message="WL5G3N1:reportAircraftActivityResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="JEJBServiceBinding" type="WL5G3N1:JEJB">
+    <WL5G3N2:binding transport="http://www.bea.com/soap/ejb" style="document"/>
+    <WL5G3N0:operation name="reportAircraftActivity">
+      <WL5G3N2:operation style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal" parts="parameters"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+</WL5G3N0:definitions>

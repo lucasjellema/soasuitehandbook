@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ser:proxyServiceEntry xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/proxy/operations" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env">
+    <ser:coreEntry>
+        <ser:binding type="SOAP" transport-typed="true" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+            <con:binding>
+                <con:name>JEJBServiceBinding</con:name>
+                <con:namespace>saibot.airport.operations/monitoring</con:namespace>
+            </con:binding>
+            <con:selector type="SOAP body"/>
+        </ser:binding>
+        <oper:operations enabled="true"/>
+        <ser:invoke ref="AircraftMovementService/WSDLs/AircraftMovementPipelineJEJB" xsi:type="con:PipelineRef" xmlns:con="http://www.bea.com/wli/sb/pipeline/config"/>
+        <ser:xqConfiguration>
+            <ser:snippetVersion>1.0</ser:snippetVersion>
+        </ser:xqConfiguration>
+    </ser:coreEntry>
+    <ser:endpointConfig>
+        <tran:provider-id>jejb</tran:provider-id>
+        <tran:inbound>true</tran:inbound>
+        <tran:URI>
+            <env:value>AircraftMovementServiceJEJB</env:value>
+        </tran:URI>
+        <tran:inbound-properties/>
+        <tran:provider-specific xsi:type="jejb:JEJBEndPointConfiguration" xmlns:jejb="http://www.bea.com/wli/sb/transports/jejb">
+            <jejb:inbound-properties>
+                <jejb:txAttribute>Supports</jejb:txAttribute>
+                <jejb:remoteClientTimeout>0</jejb:remoteClientTimeout>
+            </jejb:inbound-properties>
+            <jejb:ejb-version>3.0</jejb:ejb-version>
+            <jejb:pass-by-value>true</jejb:pass-by-value>
+            <jejb:service>
+                <jejb:clientJar ref="AircraftMovementService/deploy/AircraftMovementReporter_client"/>
+                <jejb:ejbObject classname="saibot.airport.operations.monitoring.AircraftMovementReporter">
+                    <jejb:method name="reportAircraftActivity" signature="void reportAircraftActivity(saibot.airport.operations.monitoring.beans.AircraftMovement)" exclude="false">
+                        <jejb:invocationPoint>reportAircraftActivity</jejb:invocationPoint>
+                        <jejb:param name="aircraftMovement" type="saibot.airport.operations.monitoring.beans.AircraftMovement"/>
+                    </jejb:method>
+                </jejb:ejbObject>
+                <jejb:targetNamespace>saibot.airport.operations/monitoring</jejb:targetNamespace>
+            </jejb:service>
+        </tran:provider-specific>
+    </ser:endpointConfig>
+</ser:proxyServiceEntry>

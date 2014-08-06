@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="AircraftMovementService/WSDLs/AircraftMovementServiceJEJB"/>
+            <con:binding>
+                <con:name>JEJBServiceBinding</con:name>
+                <con:namespace>saibot.airport.operations/monitoring</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:flow>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context>
+                    <con2:userNsDecl prefix="mon" namespace="saibot.airport.operations/monitoring"/>
+                </con:context>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7fa3</con2:id>
+                        <con1:service ref="AircraftMovementService/Pipeline/AircraftMovementPipeline" xsi:type="ref:PipelineRef" xmlns:ref="http://www.bea.com/wli/sb/pipeline/config"/>
+                        <con1:operation passThrough="true"/>
+                        <con1:outboundTransform>
+                            <con3:javaCallout varName="aircraftMovementRequest" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7fa0</con2:id>
+                                <con3:archive ref="AircraftMovementService/deploy/AircraftMovementReporter_client"/>
+                                <con3:className>saibot.airport.operations.monitoring.pipeline.JavaPayloadDissector</con3:className>
+                                <con3:method>public static org.apache.xmlbeans.XmlObject getReportAircraftMovementRequestMessage(saibot.airport.operations.monitoring.beans.AircraftMovement)</con3:method>
+                                <con3:expr>
+                                    <con2:xqueryText>$body/mon:reportAircraftActivity/mon:aircraftMovement/ctx:java-content</con2:xqueryText>
+                                </con3:expr>
+                                <con3:return-param-as-ref>false</con3:return-param-as-ref>
+                            </con3:javaCallout>
+                            <con3:replace contents-only="true" varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7f9d</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$aircraftMovementRequest</con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:outboundTransform>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
