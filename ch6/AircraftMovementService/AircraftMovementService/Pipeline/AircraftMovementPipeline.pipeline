@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
     <con:coreEntry>
         <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
             <con:wsdl ref="AircraftMovementService/WSDLs/AircraftMovementService"/>
@@ -13,19 +13,122 @@
         </con:xqConfiguration>
     </con:coreEntry>
     <con:router>
-        <con:flow>
-            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+        <con:pipeline type="request" name="request-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7fff">
+            <con:stage id="_StageId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7ffd" name="Stage1">
                 <con:context/>
                 <con:actions>
-                    <con1:route>
-                        <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N8000</con2:id>
-                        <con1:service ref="AircraftMovementService/Adapters/FinanceAircraftMovementsReporterJCA" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
-                        <con1:operation>reportAircraftMovement</con1:operation>
-                        <con1:outboundTransform/>
-                        <con1:responseTransform/>
-                    </con1:route>
+                    <con1:assign varName="channel">
+                        <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7ff9</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>&lt;ChannelValue>EJB&lt;/ChannelValue></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
                 </con:actions>
-            </con:route-node>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7ffe">
+            <con:stage id="_StageId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7ffc" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="SetChannel">
+                <con:request>request-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7fff</con:request>
+                <con:response>response-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7ffe</con:response>
+            </con:pipeline-node>
+            <con:branch-node type="condition" id="_FlowId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7ff8" name="BranchNode1">
+                <con:context/>
+                <con:branch-table variable="channel">
+                    <con:xpath>
+                        <con2:xpathText>$channel/text()</con2:xpathText>
+                    </con:xpath>
+                    <con:branch name="JMSTransport">
+                        <con:operator>equals</con:operator>
+                        <con:value>'JMSTransport'</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode1">
+                                <con:context/>
+                                <con:actions>
+                                    <con3:route>
+                                        <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7fc0</con2:id>
+                                        <con3:service ref="AircraftMovementService/Adapters/FinanceAircraftMovementsReporter" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con3:outboundTransform/>
+                                        <con3:responseTransform/>
+                                    </con3:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="JMSJCA">
+                        <con:operator>equals</con:operator>
+                        <con:value>'JMSJCA'</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode2" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7ff5</con2:id>
+                                        <con1:service ref="AircraftMovementService/Adapters/FinanceAircraftMovementsReporterJCA" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>reportAircraftMovement</con1:operation>
+                                        <con1:outboundTransform/>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="AQ">
+                        <con:operator>equals</con:operator>
+                        <con:value>'AQ'</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode3">
+                                <con:context/>
+                                <con:actions>
+                                    <con3:route>
+                                        <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7fbd</con2:id>
+                                        <con3:service ref="AircraftMovementService/Business Service/FinanceAircraftMovementReporterAQ" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con3:operation>Report</con3:operation>
+                                        <con3:outboundTransform>
+                                            <con1:replace varName="body" contents-only="true">
+                                                <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7fba</con2:id>
+                                                <con1:expr>
+                                                    <con2:xsltTransform>
+                                                        <con2:resource ref="AircraftMovementService/Transformations/reportAircraftMovementRequestMessageTOAQ_AIRCRAFT_MOVEMENT_REPORT_T"/>
+                                                        <con2:input>$body/*[1]</con2:input>
+                                                    </con2:xsltTransform>
+                                                </con1:expr>
+                                            </con1:replace>
+                                        </con3:outboundTransform>
+                                        <con3:responseTransform/>
+                                    </con3:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="EJB">
+                        <con:operator>equals</con:operator>
+                        <con:value>'EJB'</con:value>
+                        <con:flow>
+                            <con:route-node name="RouteNode4">
+                                <con:context/>
+                                <con:actions>
+                                    <con3:route>
+                                        <con2:id>_ActionId-N3f57c7ff.N72f27769.0.147a9e4c0f5.N7fa7</con2:id>
+                                        <con3:service ref="AircraftMovementService/Pipeline/AircraftMovementPipelineEJBTransport" xsi:type="con:PipelineRef"/>
+                                        <con3:operation>reportAircraftMovement</con3:operation>
+                                        <con3:outboundTransform/>
+                                        <con3:responseTransform/>
+                                    </con3:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
         </con:flow>
         <con:partner-links/>
     </con:router>

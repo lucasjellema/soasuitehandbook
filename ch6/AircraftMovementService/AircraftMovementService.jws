@@ -28,6 +28,7 @@
    <list n="listOfChildren">
       <hash><url n="URL" path="AircraftMovementService/AircraftMovementService.jpr"/></hash>
       <hash><url n="URL" path="AircraftMovementServiceSOAcomposite/AircraftMovementServiceSOAcomposite.jpr"/></hash>
+      <hash><url n="URL" path="FinanceAicraftMovementEJB/FinanceAicraftMovementEJB.jpr"/></hash>
    </list>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
