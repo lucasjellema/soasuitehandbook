@@ -1,0 +1,57 @@
+<?xml version='1.0'?>
+<WL5G3N0:definitions xmlns="" name="JwsServiceDefinitions" targetNamespace="saibot.airport/finance/aircraftmovement" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport/finance/aircraftmovement" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport/finance/aircraftmovement" targetNamespace="saibot.airport/finance/aircraftmovement" elementFormDefault="qualified" attributeFormDefault="unqualified">
+      <xs:import namespace="java:saibot.airport.finance"/>
+      <xs:element name="reportAircraftMovement">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:java="java:saibot.airport.finance" name="aircraftMovementReport" type="java:AircraftMovement"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="reportAircraftMovementResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport/finance/aircraftmovement" targetNamespace="java:saibot.airport.finance" elementFormDefault="qualified" attributeFormDefault="unqualified">
+      <xs:complexType name="AircraftMovement">
+        <xs:sequence>
+          <xs:element name="AirportIataCode" type="xs:string" minOccurs="1" nillable="true"/>
+          <xs:element name="CarrierIataCode" type="xs:string" minOccurs="1" nillable="true"/>
+          <xs:element name="Flightnumber" type="xs:int" minOccurs="1" nillable="true"/>
+          <xs:element name="ArrivalOrDeparture" type="xs:string" minOccurs="1" nillable="true"/>
+          <xs:element name="MovementTimestamp" type="xs:dateTime" minOccurs="1" nillable="true"/>
+          <xs:element name="AircraftIataEquipmentCode" type="xs:string" minOccurs="1" nillable="true"/>
+          <xs:element name="NumberOfPassengers" type="xs:int" minOccurs="1" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="reportAircraftMovement">
+    <WL5G3N0:part name="parameters" element="WL5G3N1:reportAircraftMovement"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="reportAircraftMovementResponse">
+    <WL5G3N0:part name="parameters" element="WL5G3N1:reportAircraftMovementResponse"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="Jws">
+    <WL5G3N0:operation name="reportAircraftMovement" parameterOrder="parameters">
+      <WL5G3N0:input message="WL5G3N1:reportAircraftMovement"/>
+      <WL5G3N0:output message="WL5G3N1:reportAircraftMovementResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="JwsServiceSoapBinding" type="WL5G3N1:Jws">
+    <WL5G3N2:binding transport="http://www.bea.com/soap/transport/local" style="document"/>
+    <WL5G3N0:operation name="reportAircraftMovement">
+      <WL5G3N2:operation style="document" soapAction="saibot.airport/finance/aircraftmovement/reportAircraftMovement"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal" parts="parameters"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+</WL5G3N0:definitions>

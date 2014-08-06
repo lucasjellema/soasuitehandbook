@@ -1,0 +1,28 @@
+<wsdl:definitions
+     name="FinanceAircraftMovementReporterAQ"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/aq/AircraftMovementService/AircraftMovementService/FinanceAircraftMovementReporterAQ"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/aq/AircraftMovementService/AircraftMovementService/FinanceAircraftMovementReporterAQ"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:obj1="http://xmlns.oracle.com/xdb/SAIBOT_FINANCE"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="Report_plt" >
+    <plt:role name="Report_role" >
+      <plt:portType name="tns:Report_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/xdb/SAIBOT_FINANCE" schemaLocation="SAIBOT_FINANCE_AIRCRAFT_MOVEMENT_REPORT_T.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="AIRCRAFT_MOVEMENT_REPORT_T_msg">
+        <wsdl:part name="AIRCRAFT_MOVEMENT_REPORT_T" element="obj1:AIRCRAFT_MOVEMENT_REPORT_T"/>
+    </wsdl:message>
+    <wsdl:portType name="Report_ptt">
+        <wsdl:operation name="Report">
+            <wsdl:input message="tns:AIRCRAFT_MOVEMENT_REPORT_T_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

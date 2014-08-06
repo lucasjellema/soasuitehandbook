@@ -1,0 +1,39 @@
+<schema targetNamespace="http://xmlns.oracle.com/xdb/SAIBOT_FINANCE" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SAIBOT_FINANCE="http://xmlns.oracle.com/xdb/SAIBOT_FINANCE" elementFormDefault="unqualified" attributeFormDefault="qualified">
+   <complexType name="AIRCRAFT_MOVEMENT_REPORT_T">
+      <sequence>
+         <element name="MESSAGE_ID" type="double" nillable="true" minOccurs="0"/>
+         <element name="MOVEMENT_TIMESTAMP" type="string" nillable="true" minOccurs="0"/>
+         <element name="FLIGHTNUMBER" type="double" nillable="true" minOccurs="0"/>
+         <element name="CARRIER_IATA_CODE" nillable="true" minOccurs="0">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="3"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="AIRPORT_IATA_CODE" nillable="true" minOccurs="0">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="3"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="ARRIVAL_OR_DEPARTURE" nillable="true" minOccurs="0">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="1"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="AIRCRAFT_IATA_EQUIPMENT_CODE" nillable="true" minOccurs="0">
+            <simpleType>
+               <restriction base="string">
+                  <maxLength value="3"/>
+               </restriction>
+            </simpleType>
+         </element>
+         <element name="NUMBER_OF_PASSENGERS" type="double" nillable="true" minOccurs="0"/>
+      </sequence>
+   </complexType>
+   <element name="AIRCRAFT_MOVEMENT_REPORT_T" type="SAIBOT_FINANCE:AIRCRAFT_MOVEMENT_REPORT_T" />
+</schema>

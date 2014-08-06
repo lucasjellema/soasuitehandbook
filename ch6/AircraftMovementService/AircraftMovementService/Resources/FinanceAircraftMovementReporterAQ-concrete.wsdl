@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/aq/AircraftMovementService/AircraftMovementService/FinanceAircraftMovementReporterAQ" name="FinanceAircraftMovementReporterAQ-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="FinanceAircraftMovementReporterAQ.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/aq/AircraftMovementService/AircraftMovementService/FinanceAircraftMovementReporterAQ"/>
+    <wsdl:binding name="Report_ptt-binding" type="fin:Report_ptt" xmlns:fin="http://xmlns.oracle.com/pcbpel/adapter/aq/AircraftMovementService/AircraftMovementService/FinanceAircraftMovementReporterAQ">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="Report">
+            <soap:operation soapAction="Report"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:businessServiceEntry xmlns:con="http://xmlns.oracle.com/servicebus/business/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/business/operations" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:ejb="http://www.bea.com/wli/sb/transports/ejb">
+    <con:coreEntry>
+        <con1:binding type="SOAP" transport-typed="true" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:con1="http://xmlns.oracle.com/servicebus/business/config">
+            <con:binding>
+                <con:name>JwsServiceSoapBinding</con:name>
+                <con:namespace>saibot.airport/finance/aircraftmovement</con:namespace>
+            </con:binding>
+        </con1:binding>
+        <oper:operations enabled="true">
+            <oper:throttling enabled="false"/>
+            <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
+        </oper:operations>
+        <con:xqConfiguration>
+            <ser:snippetVersion>1.0</ser:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:endpointConfig>
+        <tran:provider-id>ejb</tran:provider-id>
+        <tran:inbound>false</tran:inbound>
+        <tran:URI>
+            <env:value>ejb::FinanceAircraftMovementReporter#saibot.airport.finance.FinanceAircraftMovementReporter</env:value>
+        </tran:URI>
+        <tran:outbound-properties>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>30</tran:retry-interval>
+        </tran:outbound-properties>
+        <tran:provider-specific xsi:type="ejb:EjbEndpointConfiguration">
+            <ejb:security>
+                <ejb:passClientIdentity>false</ejb:passClientIdentity>
+            </ejb:security>
+            <ejb:service>
+                <ejb:clientJar ref="AircraftMovementService/Resources/AircraftMovementService_FinanceAicraftMovementEJB_ejb"/>
+                <ejb:ejbBizService classname="saibot.airport.finance.FinanceAircraftMovementReporter">
+                    <ejb:method name="reportAircraftMovement" signature="void reportAircraftMovement(saibot.airport.finance.AircraftMovement)" exclude="false">
+                        <ejb:operation>reportAircraftMovement</ejb:operation>
+                        <ejb:param name="aircraftMovementReport" type="saibot.airport.finance.AircraftMovement"/>
+                    </ejb:method>
+                </ejb:ejbBizService>
+                <ejb:targetNamespace>saibot.airport/finance/aircraftmovement</ejb:targetNamespace>
+                <ejb:style>Document Wrapped</ejb:style>
+                <ejb:encoding>Literal</ejb:encoding>
+            </ejb:service>
+            <ejb:ejb30>true</ejb:ejb30>
+        </tran:provider-specific>
+    </con:endpointConfig>
+</con:businessServiceEntry>

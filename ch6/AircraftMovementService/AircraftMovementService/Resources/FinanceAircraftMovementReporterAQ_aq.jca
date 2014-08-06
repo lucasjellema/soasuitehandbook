@@ -1,0 +1,10 @@
+<adapter-config name="FinanceAircraftMovementReporterAQ" adapter="aq" wsdlLocation="FinanceAircraftMovementReporterAQ.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/aq/SaibotFinance" UIConnectionName="soadb_saibot_finance"/>
+  <endpoint-interaction portType="Report_ptt" operation="Report">
+    <interaction-spec className="oracle.tip.adapter.aq.outbound.AQEnqueueInteractionSpec">
+      <property name="QueueName" value="AIRCRAFT_MOVEMENTS_QUEUE"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
