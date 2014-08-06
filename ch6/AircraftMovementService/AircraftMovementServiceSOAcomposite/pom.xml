@@ -84,6 +84,36 @@
                  <!-- extensions=true is needed to use the custom sar packaging type -->
                 <extensions>true</extensions>
             </plugin>
+            <plugin>
+                <groupId>com.oracle.adf.plugin</groupId>
+                <artifactId>ojdeploy</artifactId>
+                <version>12.1.3-0-0</version>
+                <configuration>
+                    <ojdeploy>
+                        ${oracleHome}/jdeveloper/jdev/bin/ojdeploy.exe
+                    </ojdeploy>
+                    <workspace>
+                        ${basedir}/../AircraftMovementService.jws
+                    </workspace>
+                    <project>
+                        AircraftMovementServiceSOAcomposite
+                    </project>
+                    <profile>
+                        AircraftMovementServiceSOAcomposite
+                    </profile>
+                    <usemaven>
+                        true
+                    </usemaven>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

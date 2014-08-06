@@ -15,6 +15,8 @@
           importType="wsdl"/>
   <import namespace="saibot.airport/services/aircraftmovement" location="WSDLs/FinanceAircraftMovementsReporterJCA.wsdl"
           importType="wsdl"/>
+  <import namespace="http://finance.airport.saibot/" location="WSDLs/FinanceAircraftMovementReporter.wsdl"
+          importType="wsdl"/>
   <service name="AircraftMovementMediator_2" ui:wsdlLocation="WSDLs/AircraftMovementService.wsdl">
     <interface.wsdl interface="saibot.airport/services/aircraftmovement#wsdl.interface(AircraftMovementServicePortType)"/>
     <binding.ws port="saibot.airport/services/aircraftmovement#wsdl.endpoint(AircraftMovementMediator/AircraftMovementServicePort)"/>
@@ -31,12 +33,20 @@
                  ui:wsdlLocation="WSDLs/FinanceAircraftMovementsReporterJCA.wsdl">
         <interface.wsdl interface="saibot.airport/services/aircraftmovement#wsdl.interface(AircraftMovementServicePortType)"/>
       </reference>
+      <reference name="FinanceAircraftMovementReportEJB" ui:wsdlLocation="WSDLs/FinanceAircraftMovementReporter.wsdl">
+        <interface.wsdl interface="http://finance.airport.saibot/#wsdl.interface(FinanceAircraftMovementReporter)"/>
+      </reference>
     </componentType>
   </component>
   <reference name="FinanceAircraftMovementsReporterJCA"
              ui:wsdlLocation="WSDLs/FinanceAircraftMovementsReporterJCA.wsdl">
     <interface.wsdl interface="saibot.airport/services/aircraftmovement#wsdl.interface(AircraftMovementServicePortType)"/>
     <binding.jca config="Adapters/FinanceAircraftMovementsReporterJCA_jms.jca"/>
+  </reference>
+  <reference name="FinanceAircraftMovementReportEJB">
+    <interface.java interface="saibot.airport.finance.FinanceAircraftMovementReporter"/>
+    <binding.ejb uri="FinanceAircraftMovementReporter#saibot.airport.finance.FinanceAircraftMovementReporter"
+                 jarLocation="AircraftMovementService_FinanceAicraftMovementEJB_ejb.jar" ejb-version="EJB3"/>
   </reference>
   <wire>
     <source.uri>AircraftMovementMediator_2</source.uri>
@@ -45,5 +55,9 @@
   <wire>
     <source.uri>AircraftMovementMediator/FinanceAircraftMovementsReporterJCA</source.uri>
     <target.uri>FinanceAircraftMovementsReporterJCA</target.uri>
+  </wire>
+  <wire>
+    <source.uri>AircraftMovementMediator/FinanceAircraftMovementReportEJB</source.uri>
+    <target.uri>FinanceAircraftMovementReportEJB</target.uri>
   </wire>
 </composite>

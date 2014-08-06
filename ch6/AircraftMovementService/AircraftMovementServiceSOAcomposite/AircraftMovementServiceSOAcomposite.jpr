@@ -244,7 +244,23 @@
             <value n="id" v="BC4J Service Runtime"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="SOA Designtime User Library"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
+      <hash n="internalDefinitions">
+         <list n="libraryDefinitions">
+            <hash>
+               <list n="classPath">
+                  <url path="SOA/SCA-INF/lib/AircraftMovementService_FinanceAicraftMovementEJB_ejb.jar"/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="SOA Designtime User Library"/>
+               <value n="id" v="SOA Designtime User Library"/>
+            </hash>
+         </list>
+      </hash>
       <list n="libraryReferences">
          <hash>
             <value n="id" v="SOA Designtime"/>
@@ -270,6 +286,10 @@
             <value n="id" v="BC4J Service Runtime"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="SOA Designtime User Library"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectPaths">
@@ -283,5 +303,6 @@
       </hash>
    </hash>
    <value n="SCA_MEDIATOR_FOLDER_PROPERTY_NAME" v="Mediators/"/>
+   <value n="SOA_TRANSFORMATION_FOLDER_NAME" v="Transformations/"/>
    <value n="SOA_WSDL_FOLDER_NAME" v="WSDLs/"/>
 </jpr:project>

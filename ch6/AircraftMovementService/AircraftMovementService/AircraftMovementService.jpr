@@ -93,7 +93,9 @@
    </hash>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
+         <string v="Java"/>
          <string v="Maven"/>
+         <string v="RESTWebServices"/>
          <string v="ServiceBusTechnology"/>
          <string v="WSDL"/>
          <string v="WSPolicy"/>
@@ -107,12 +109,46 @@
    </hash>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
+         <hash n="AircraftMovementReporter_client">
+            <hash n="archiveOptions">
+               <value n="hasManifest" v="true"/>
+            </hash>
+            <hash n="fileGroups">
+               <list n="groups">
+                  <hash>
+                     <list n="contributors">
+                        <hash>
+                           <value n="type" v="2"/>
+                        </hash>
+                        <hash>
+                           <value n="type" v="7"/>
+                        </hash>
+                     </list>
+                     <value n="displayName" v="Project Output"/>
+                     <hash n="filters">
+                        <list n="rules">
+                           <hash>
+                              <value n="pattern" v="**"/>
+                              <value n="type" v="0"/>
+                           </hash>
+                        </list>
+                     </hash>
+                     <value n="internalName" v="project-output"/>
+                     <value n="type" v="1"/>
+                  </hash>
+               </list>
+            </hash>
+            <url n="jarURL" path="deploy/AircraftMovementReporter_client.jar"/>
+            <value n="profileClass" v="oracle.jdeveloper.deploy.jar.ArchiveProfile"/>
+            <value n="profileName" v="AircraftMovementReporter_client"/>
+         </hash>
          <hash n="AircraftMovementService_AircraftMovementService_ServiceBusProjectProfile">
             <value n="profileClass" v="SbProjectDeployProfile"/>
             <value n="profileName" v="AircraftMovementService_AircraftMovementService_ServiceBusProjectProfile"/>
          </hash>
       </hash>
       <list n="profileList">
+         <string v="AircraftMovementReporter_client"/>
          <string v="AircraftMovementService_AircraftMovementService_ServiceBusProjectProfile"/>
       </list>
    </hash>
@@ -137,7 +173,9 @@
          </list>
       </hash>
       <hash n="javaContentSet">
-         <list n="pattern-filters"/>
+         <list n="pattern-filters">
+            <string v="+saibot/airport/operations/monitoring/"/>
+         </list>
          <list n="url-path">
             <url path=".data/contentsets/src/"/>
          </list>
@@ -163,6 +201,28 @@
             <url n="targetURL" path="servicebus.sboverview"/>
          </hash>
       </hash>
+   </hash>
+   <hash n="oracle.jdevimpl.config.JProjectLibraries">
+      <list n="exportedReferences"/>
+      <hash n="internalDefinitions">
+         <list n="libraryDefinitions">
+            <hash>
+               <list n="classPath">
+                  <url path="../../com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar" jar-entry=""/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar"/>
+               <value n="id" v="Com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+         </list>
+      </hash>
+      <list n="libraryReferences">
+         <hash>
+            <value n="id" v="Com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+      </list>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectPaths">
       <url n="outputDirectory" path=".data/contentsets/classes/"/>

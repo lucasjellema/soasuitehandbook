@@ -3,14 +3,23 @@
 <Mediator name="AircraftMovementMediator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.oracle.com/sca/1.0/mediator">
   <operation name="reportAircraftMovement" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
     <switch>
-      <case executionType="sequential" name="jmsReference.reportAircraftMovement">
-        <action>
-          <assign/>
-        </action>
-      </case>
       <case executionType="sequential" name="FinanceAircraftMovementsReporterJCA.reportAircraftMovement">
+        <condition language="xpath">
+          <expression>false()</expression>
+        </condition>
         <action>
           <invoke reference="FinanceAircraftMovementsReporterJCA" operation="reportAircraftMovement"/>
+        </action>
+      </case>
+      <case executionType="sequential" name="FinanceAircraftMovementReportEJB.reportAircraftMovement">
+        <action>
+          <transform>
+            <part name="$out.parameters"
+                  function="xslt(../Transformations/reportAircraftMovementRequestMessage_To_reportAircraftMovement.xsl, $in.part1)"/>
+          </transform>
+          <invoke reference="FinanceAircraftMovementReportEJB" operation="reportAircraftMovement">
+            <onReply/>
+          </invoke>
         </action>
       </case>
     </switch>

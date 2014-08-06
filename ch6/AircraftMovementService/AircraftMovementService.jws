@@ -27,6 +27,7 @@
    </list>
    <list n="listOfChildren">
       <hash><url n="URL" path="AircraftMovementService/AircraftMovementService.jpr"/></hash>
+      <hash><url n="URL" path="AircraftMovementServiceJEJBClient/AircraftMovementServiceJEJBClient.jpr"/></hash>
       <hash><url n="URL" path="AircraftMovementServiceSOAcomposite/AircraftMovementServiceSOAcomposite.jpr"/></hash>
       <hash><url n="URL" path="FinanceAicraftMovementEJB/FinanceAicraftMovementEJB.jpr"/></hash>
    </list>
