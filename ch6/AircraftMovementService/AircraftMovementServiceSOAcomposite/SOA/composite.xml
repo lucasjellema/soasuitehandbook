@@ -27,6 +27,10 @@
     <interface.java interface="saibot.airport.operations.aircraftmovement.AircraftMovementReporter"/>
     <binding.ejb uri="SaibotAirportOperations#AircraftMovementServiceEJB" ejb-version="EJB3"/>
   </service>
+  <service name="AircraftMovementServiceDirectBinding" ui:wsdlLocation="WSDLs/AircraftMovementService.wsdl">
+    <interface.wsdl interface="saibot.airport/services/aircraftmovement#wsdl.interface(AircraftMovementServicePortType)"/>
+    <binding.direct/>
+  </service>
   <property name="productVersion" type="xs:string" many="false">12.1.3.0.0</property>
   <property name="compositeID" type="xs:string" many="false">dc282514-d96a-4dda-969c-8daf841b5d68</property>
   <component name="AircraftMovementMediator">
@@ -85,6 +89,10 @@
   </wire>
   <wire>
     <source.uri>AircraftMovementEJBtoAircraftMovementMediator/AircraftMovementMediator.AircraftMovementMediator</source.uri>
+    <target.uri>AircraftMovementMediator/AircraftMovementMediator</target.uri>
+  </wire>
+  <wire>
+    <source.uri>AircraftMovementServiceDirectBinding</source.uri>
     <target.uri>AircraftMovementMediator/AircraftMovementMediator</target.uri>
   </wire>
 </composite>

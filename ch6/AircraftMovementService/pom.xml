@@ -13,6 +13,7 @@
         <module>System</module>
         <module>AircraftMovementService</module>
     	<module>AircraftMovementServiceSOAcomposite</module>
+    	<module>AircraftMovementServiceDirectBindingClient</module>
     </modules>
     <build>
         <plugins>
