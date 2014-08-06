@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:businessServiceEntry xmlns:con="http://xmlns.oracle.com/servicebus/business/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/business/operations" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:jms="http://www.bea.com/wli/sb/transports/jms">
+    <con:coreEntry>
+        <con1:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config" xmlns:con1="http://xmlns.oracle.com/servicebus/business/config">
+            <con:request type="Text"/>
+        </con1:binding>
+        <oper:operations enabled="true">
+            <oper:throttling enabled="false"/>
+            <oper:resultCachingEnabled>true</oper:resultCachingEnabled>
+        </oper:operations>
+        <con:xqConfiguration>
+            <ser:snippetVersion>1.0</ser:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:endpointConfig>
+        <tran:provider-id>jms</tran:provider-id>
+        <tran:inbound>false</tran:inbound>
+        <tran:URI>
+            <env:value>jms://soa2admin2:8001/jms.finance.FinanceConnectionFactory/jms.finance.AircraftMovementsQueue</env:value>
+        </tran:URI>
+        <tran:outbound-properties>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>30</tran:retry-interval>
+        </tran:outbound-properties>
+        <tran:provider-specific>
+            <jms:is-queue>true</jms:is-queue>
+            <jms:is-secure>false</jms:is-secure>
+            <jms:outbound-properties>
+                <jms:message-type>Bytes</jms:message-type>
+                <jms:expiration>0</jms:expiration>
+                <jms:enable-message-persistence>true</jms:enable-message-persistence>
+                <jms:pass-caller-subject>false</jms:pass-caller-subject>
+            </jms:outbound-properties>
+            <jms:dispatch-policy>SBDefaultResponseWorkManager</jms:dispatch-policy>
+            <jms:request-encoding>UTF-8</jms:request-encoding>
+            <jms:jndi-timeout>0</jms:jndi-timeout>
+        </tran:provider-specific>
+    </con:endpointConfig>
+</con:businessServiceEntry>

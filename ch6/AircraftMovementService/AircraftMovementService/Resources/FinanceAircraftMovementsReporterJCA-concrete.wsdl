@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/AircraftMovementService/AircraftMovementService/FinanceAircraftMovementsReporterJCA" name="FinanceAircraftMovementsReporterJCA-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="../WSDLs/AircraftMovementService.wsdl" namespace="saibot.airport/services/aircraftmovement"/>
+    <wsdl:binding name="AircraftMovementServicePortType-binding" type="air:AircraftMovementServicePortType" xmlns:air="saibot.airport/services/aircraftmovement">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="reportAircraftMovement">
+            <soap:operation soapAction="reportAircraftMovement"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

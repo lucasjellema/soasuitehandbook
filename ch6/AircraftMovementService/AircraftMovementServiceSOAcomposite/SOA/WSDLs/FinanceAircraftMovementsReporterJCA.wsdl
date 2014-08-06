@@ -1,0 +1,16 @@
+<wsdl:definitions
+     name="FinanceAircraftMovementsReporterJCA"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/AircraftMovementService/AircraftMovementServiceSOAcomposite/FinanceAircraftMovementsReporterJCA"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/jms/AircraftMovementService/AircraftMovementServiceSOAcomposite/FinanceAircraftMovementsReporterJCA"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:imp1="saibot.airport/services/aircraftmovement"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="AircraftMovementServicePortType_plt" >
+    <plt:role name="reportAircraftMovement_role" >
+      <plt:portType name="imp1:AircraftMovementServicePortType" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:import namespace="saibot.airport/services/aircraftmovement" location="AircraftMovementService.wsdl"/>
+</wsdl:definitions>

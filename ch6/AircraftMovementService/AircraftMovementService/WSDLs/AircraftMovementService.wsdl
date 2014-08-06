@@ -1,0 +1,34 @@
+<definitions name="AircraftMovementService" targetNamespace="saibot.airport/services/aircraftmovement" xmlns:acmmt="saibot.airport/services/aircraftmovement" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<types>
+   <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/aircraftmovement" schemaLocation="../Schemas/AircraftMovementService.xsd"/>
+    </xsd:schema>
+  </types>
+    <message name="requestMessage">
+        <part name="part1" element="acmmt:reportAircraftMovementRequestMessage"/>
+    </message>
+    <portType name="AircraftMovementServicePortType">
+        <operation name="reportAircraftMovement">
+            <input message="acmmt:requestMessage"/>
+        </operation>
+    </portType>
+    <binding name="execute_bind" type="acmmt:AircraftMovementServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="reportAircraftMovement">
+            <soap:operation style="document" soapAction="reportAircraftMovement"/>
+            <input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/AircraftMovementService/AircraftMovementService/AircraftMovementService"/>
+            </input>
+        </operation>
+    </binding>
+    <binding name="AircraftMovementServicePortTypeSOAP11Binding" type="acmmt:AircraftMovementServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="reportAircraftMovement">
+            <soap:operation style="document"
+                            soapAction="saibot.airport/services/aircraftmovement/reportAircraftMovement"/>
+            <input>
+                <soap:body use="literal" parts="part1"/>
+            </input>
+        </operation>
+    </binding>
+</definitions>

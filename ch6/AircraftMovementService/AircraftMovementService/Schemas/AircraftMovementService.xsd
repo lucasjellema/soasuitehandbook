@@ -1,0 +1,21 @@
+<xsd:schema targetNamespace="saibot.airport/services/aircraftmovement" elementFormDefault="qualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/services/aircraftmovement"
+            xmlns:acmmt="saibot.airport/services/aircraftmovement" xmlns:common="saibot.airport/data/common"
+            xmlns:reference="saibot.airport/data/reference">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+  <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+  <xsd:element name="reportAircraftMovementRequestMessage" type="acmmt:reportAircraftMovementRequestType"/>
+  <xsd:complexType name="reportAircraftMovementRequestType">
+    <xsd:sequence>
+      <xsd:element name="ActionDateAndTime" nillable="false" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="ArrivalOrDeparture" nillable="false" type="common:arrivalOrDepartureType" minOccurs="1"
+                   maxOccurs="1"/>
+      <xsd:element name="ConnectingAirport" nillable="false" type="common:iataAirportType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AircraftModel" nillable="false" type="common:iataEquipmentCodeType" minOccurs="0"
+                   maxOccurs="1"/>
+      <xsd:element name="NumberOfPassengers" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

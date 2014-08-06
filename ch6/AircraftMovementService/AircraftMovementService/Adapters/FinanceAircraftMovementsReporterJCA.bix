@@ -1,0 +1,64 @@
+<ser:businessServiceEntry xmlns:ser="http://xmlns.oracle.com/servicebus/business/config" xmlns:svc="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:ops="http://xmlns.oracle.com/servicebus/business/operations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ser:coreEntry>
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="AircraftMovementService/Resources/FinanceAircraftMovementsReporterJCA-concrete"/>
+      <con:binding>
+        <con:name>AircraftMovementServicePortType-binding</con:name>
+        <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/jms/AircraftMovementService/AircraftMovementService/FinanceAircraftMovementsReporterJCA</con:namespace>
+      </con:binding>
+    </ser:binding>
+    <ops:operations enabled="true">
+      <ops:sla-alerting enabled="true"/>
+    </ops:operations>
+    <ser:ws-policy>
+      <svc:binding-mode>no-policies</svc:binding-mode>
+    </ser:ws-policy>
+    <ser:xqConfiguration>
+      <svc:snippetVersion>1.0</svc:snippetVersion>
+    </ser:xqConfiguration>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>jca</tran:provider-id>
+    <tran:inbound>false</tran:inbound>
+    <tran:URI>
+      <env:value>jca://eis/wls/Queue</env:value>
+    </tran:URI>
+    <tran:outbound-properties>
+      <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+      <tran:retry-count>0</tran:retry-count>
+      <tran:retry-interval>30</tran:retry-interval>
+      <tran:retry-application-errors>true</tran:retry-application-errors>
+    </tran:outbound-properties>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <jca:jca-file ref="AircraftMovementService/Resources/FinanceAircraftMovementsReporterJCA_jms"/>
+      <jca:adapter-name>FinanceAircraftMovementsReporterJCA</jca:adapter-name>
+      <jca:adapter-type>JMS</jca:adapter-type>
+      <jca:always-use-wsdl>true</jca:always-use-wsdl>
+      <jca:connection-mode>managed</jca:connection-mode>
+      <jca:outbound-properties>
+        <jca:operation-properties>
+          <jca:operation-name>reportAircraftMovement</jca:operation-name>
+          <jca:spec-properties>
+            <jca:property>
+              <jca:name>TimeToLive</jca:name>
+              <jca:value>0</jca:value>
+            </jca:property>
+            <jca:property>
+              <jca:name>PayloadType</jca:name>
+              <jca:value>TextMessage</jca:value>
+            </jca:property>
+            <jca:property>
+              <jca:name>DeliveryMode</jca:name>
+              <jca:value>Persistent</jca:value>
+            </jca:property>
+            <jca:property>
+              <jca:name>DestinationName</jca:name>
+              <jca:value>jms/finance/AircraftMovementsQueue</jca:value>
+            </jca:property>
+          </jca:spec-properties>
+        </jca:operation-properties>
+      </jca:outbound-properties>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+</ser:businessServiceEntry>
