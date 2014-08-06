@@ -283,4 +283,5 @@
       </hash>
    </hash>
    <value n="SCA_MEDIATOR_FOLDER_PROPERTY_NAME" v="Mediators/"/>
+   <value n="SOA_WSDL_FOLDER_NAME" v="WSDLs/"/>
 </jpr:project>
