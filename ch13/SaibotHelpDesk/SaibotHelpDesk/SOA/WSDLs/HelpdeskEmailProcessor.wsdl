@@ -1,0 +1,29 @@
+<wsdl:definitions
+     name="HelpdeskEmailProcessor"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ums/SaibotHelpDesk/SaibotHelpDesk/HelpdeskEmailProcessor"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ums/SaibotHelpDesk/SaibotHelpDesk/HelpdeskEmailProcessor"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:pc="http://xmlns.oracle.com/pcbpel/"
+     xmlns:imp1="http://platform.integration.oracle/blocks/adapter/fw/metadata/HelpdeskEmailProcessor"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="ReceiveNotification_plt" >
+    <plt:role name="ReceiveNotification_role" >
+      <plt:portType name="tns:ReceiveNotification_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/HelpdeskEmailProcessor" schemaLocation="../Schemas/HelpdeskEmailProcessor.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="ReceiveNotification_msg">
+        <wsdl:part name="body" element="imp1:message"/>
+    </wsdl:message>
+    <wsdl:portType name="ReceiveNotification_ptt">
+        <wsdl:operation name="ReceiveNotification">
+            <wsdl:input message="tns:ReceiveNotification_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

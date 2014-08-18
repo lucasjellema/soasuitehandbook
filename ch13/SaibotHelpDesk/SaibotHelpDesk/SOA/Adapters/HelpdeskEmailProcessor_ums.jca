@@ -1,0 +1,14 @@
+<adapter-config name="HelpdeskEmailProcessor" adapter="ums" wsdlLocation="../WSDLs/HelpdeskEmailProcessor.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/ums/UMSAdapterInbound"/>
+  <endpoint-activation portType="ReceiveNotification_ptt" operation="ReceiveNotification">
+    <activation-spec className="oracle.tip.adapter.ums.inbound.UmsActivationSpec">
+      <property name="ConsumeMode" value="poller"/>
+      <property name="InboundThreadCount" value="1"/>
+      <property name="PollingInterval" value="6"/>
+      <property name="DeliveryType" value="Email"/>
+      <property name="To" value="saibot.airport@gmail.com"/>
+    </activation-spec>
+  </endpoint-activation>
+
+</adapter-config>
