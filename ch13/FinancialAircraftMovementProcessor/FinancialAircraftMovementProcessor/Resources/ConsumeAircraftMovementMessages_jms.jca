@@ -1,0 +1,12 @@
+<adapter-config name="ConsumeAircraftMovementMessages" adapter="jms" wsdlLocation="ConsumeAircraftMovementMessages.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/Finance/Queue" UIJmsProvider="WLSJMS" UIConnectionName="soa2admin2"/>
+  <endpoint-activation portType="ConsumeAircraftMovementMessage_ptt" operation="ConsumeAircraftMovementMessage">
+    <activation-spec className="oracle.tip.adapter.jms.inbound.JmsConsumeActivationSpec">
+      <property name="PayloadType" value="TextMessage"/>
+      <property name="UseMessageListener" value="false"/>
+      <property name="DestinationName" value="jms/finance/AircraftMovementsQueue"/>
+    </activation-spec>
+  </endpoint-activation>
+
+</adapter-config>

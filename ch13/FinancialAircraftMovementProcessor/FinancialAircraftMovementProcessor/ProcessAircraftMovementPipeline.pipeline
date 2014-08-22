@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="FinancialAircraftMovementProcessor/ProcessAircraftMovementPipeline"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>http://xmlns.oracle.com/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ProcessAircraftMovementPipeline</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.19572896.0.147fd9b9499.N7ff6">
+            <con:stage id="_StageId-N3f57c7ff.19572896.0.147fd9b9499.N7ff4" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="air" namespace="saibot.airport/services/aircraftmovement"/>
+                </con:context>
+                <con:actions>
+                    <con2:report>
+                        <con1:id>_ActionId-N3f57c7ff.19572896.0.147fd9b9499.N7ff0</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>$body</con1:xqueryText>
+                        </con2:expr>
+                        <con2:labels>
+                            <con2:key>FlightnumberForAircraftMovement</con2:key>
+                            <con2:varName>body</con2:varName>
+                            <con2:value>
+                                <con1:xpathText>$body/air:reportAircraftMovementRequestMessage/air:FlightNumber</con1:xpathText>
+                            </con2:value>
+                        </con2:labels>
+                    </con2:report>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.19572896.0.147fd9b9499.N7ff5">
+            <con:stage id="_StageId-N3f57c7ff.19572896.0.147fd9b9499.N7ff3" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.19572896.0.147fd9b9499.N7ff6</con:request>
+                <con:response>response-N3f57c7ff.19572896.0.147fd9b9499.N7ff5</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

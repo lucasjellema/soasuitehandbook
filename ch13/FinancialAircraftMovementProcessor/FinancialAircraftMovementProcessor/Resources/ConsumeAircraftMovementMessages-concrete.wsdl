@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ConsumeAircraftMovementMessages" name="ConsumeAircraftMovementMessages-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="ConsumeAircraftMovementMessages.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/jms/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ConsumeAircraftMovementMessages"/>
+    <wsdl:binding name="ConsumeAircraftMovementMessage_ptt-binding" type="con:ConsumeAircraftMovementMessage_ptt" xmlns:con="http://xmlns.oracle.com/pcbpel/adapter/jms/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ConsumeAircraftMovementMessages">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="ConsumeAircraftMovementMessage">
+            <soap:operation soapAction="ConsumeAircraftMovementMessage"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,29 @@
+<wsdl:definitions
+     name="ConsumeAircraftMovementMessages"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/jms/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ConsumeAircraftMovementMessages"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/jms/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ConsumeAircraftMovementMessages"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:pc="http://xmlns.oracle.com/pcbpel/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:imp1="saibot.airport/services/aircraftmovement"
+    >
+  <plt:partnerLinkType name="ConsumeAircraftMovementMessage_plt" >
+    <plt:role name="ConsumeAircraftMovementMessage_role" >
+      <plt:portType name="tns:ConsumeAircraftMovementMessage_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="saibot.airport/services/aircraftmovement" schemaLocation="../Schemas/AircraftMovementService.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="ConsumeAircraftMovementMessage_msg">
+        <wsdl:part name="body" element="imp1:reportAircraftMovementRequestMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="ConsumeAircraftMovementMessage_ptt">
+        <wsdl:operation name="ConsumeAircraftMovementMessage">
+            <wsdl:input message="tns:ConsumeAircraftMovementMessage_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

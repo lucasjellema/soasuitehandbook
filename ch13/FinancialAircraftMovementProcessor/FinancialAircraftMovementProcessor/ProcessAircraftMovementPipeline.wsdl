@@ -1,0 +1,33 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ProcessAircraftMovementPipeline"
+     targetNamespace="http://xmlns.oracle.com/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ProcessAircraftMovementPipeline"
+     xmlns:tns="http://xmlns.oracle.com/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ProcessAircraftMovementPipeline"
+     xmlns:inp1="saibot.airport/services/aircraftmovement"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/services/aircraftmovement" schemaLocation="Schemas/AircraftMovementService.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="requestMessage">
+        <wsdl:part name="part1" element="inp1:reportAircraftMovementRequestMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="execute_ptt">
+        <wsdl:operation name="execute">
+            <wsdl:input message="tns:requestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="execute_bind" type="tns:execute_ptt">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="execute">
+            <soap:operation style="document" soapAction="execute"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ProcessAircraftMovementPipeline"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

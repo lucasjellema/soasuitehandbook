@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ser:proxyServiceEntry xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:ops="http://xmlns.oracle.com/servicebus/proxy/operations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ser:coreEntry>
+        <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+            <con:wsdl ref="FinancialAircraftMovementProcessor/Resources/ConsumeAircraftMovementMessages-concrete"/>
+            <con:binding>
+                <con:name>ConsumeAircraftMovementMessage_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/jms/FinancialAircraftMovementProcessor/FinancialAircraftMovementProcessor/ConsumeAircraftMovementMessages</con:namespace>
+            </con:binding>
+            <con:selector type="SOAP action"/>
+        </ser:binding>
+        <ops:operations enabled="true">
+            <ops:sla-alerting enabled="true"/>
+        </ops:operations>
+        <ser:ws-policy>
+            <ser:binding-mode>no-policies</ser:binding-mode>
+        </ser:ws-policy>
+        <ser:invoke ref="FinancialAircraftMovementProcessor/ProcessAircraftMovementPipeline" xsi:type="con:PipelineRef" xmlns:con="http://www.bea.com/wli/sb/pipeline/config"/>
+        <ser:xqConfiguration>
+            <ser:snippetVersion>1.0</ser:snippetVersion>
+        </ser:xqConfiguration>
+    </ser:coreEntry>
+    <ser:endpointConfig>
+        <tran:provider-id>jca</tran:provider-id>
+        <tran:inbound>true</tran:inbound>
+        <tran:URI>
+            <env:value>jca://eis/Finance/Queue</env:value>
+        </tran:URI>
+        <tran:inbound-properties/>
+        <tran:all-headers>false</tran:all-headers>
+        <tran:provider-specific>
+            <jca:jca-file ref="FinancialAircraftMovementProcessor/Resources/ConsumeAircraftMovementMessages_jms"/>
+            <jca:adapter-name>ConsumeAircraftMovementMessages</jca:adapter-name>
+            <jca:adapter-type>JMS</jca:adapter-type>
+            <jca:always-use-wsdl>true</jca:always-use-wsdl>
+            <jca:connection-mode>managed</jca:connection-mode>
+            <jca:inbound-properties>
+                <jca:operation-properties>
+                    <jca:operation-name>ConsumeAircraftMovementMessage</jca:operation-name>
+                    <jca:spec-properties>
+                        <jca:property>
+                            <jca:name>PayloadType</jca:name>
+                            <jca:value>TextMessage</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>UseMessageListener</jca:name>
+                            <jca:value>false</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>DestinationName</jca:name>
+                            <jca:value>jms/finance/AircraftMovementsQueue</jca:value>
+                        </jca:property>
+                    </jca:spec-properties>
+                </jca:operation-properties>
+            </jca:inbound-properties>
+        </tran:provider-specific>
+    </ser:endpointConfig>
+</ser:proxyServiceEntry>
