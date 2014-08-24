@@ -1,0 +1,28 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="PresentFromFuture"
+     targetNamespace="saibot.airport/services/flight"
+     xmlns:tns="saibot.airport/services/flight"
+     xmlns:inp1="saibot.airport/services/flight"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/services/flight" schemaLocation="../Schemas/PresentFromFuture.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="deriveCurrentFlightsRequestMessage">
+        <wsdl:part name="part1" element="inp1:deriveCurrentFlightsRequestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="deriveCurrentFlightsResponseMessage">
+        <wsdl:part name="part1" element="inp1:deriveCurrentFlightsResponseMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="PresentFromFutureFlightService">
+        <wsdl:operation name="deriveCurrentFlights">
+            <wsdl:input message="tns:deriveCurrentFlightsRequestMessage"/>
+            <wsdl:output message="tns:deriveCurrentFlightsResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

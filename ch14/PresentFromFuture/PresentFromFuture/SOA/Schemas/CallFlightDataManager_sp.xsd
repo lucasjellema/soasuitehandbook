@@ -1,0 +1,17 @@
+<schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/CallFlightDataManager" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/sp/CallFlightDataManager" elementFormDefault="qualified">
+   <element name="InputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_START_TIME" type="dateTime" db:index="1" db:default="true" db:type="DATE" minOccurs="0" nillable="true"/>
+            <element name="P_HOURS" type="decimal" db:index="2" db:default="true" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+   <element name="OutputParameters">
+      <complexType>
+         <sequence>
+            <element name="P_NUMBER_OF_FLIGHTS" type="decimal" db:index="3" db:type="NUMBER" minOccurs="0" nillable="true"/>
+         </sequence>
+      </complexType>
+   </element>
+</schema>

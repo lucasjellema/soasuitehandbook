@@ -1,0 +1,33 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>Mediators/PreparePresentFromFutureMediator.mplan</file>
+      <name>Mediators/PreparePresentFromFutureMediator.mplan</name>
+      <fix/>
+      <msg>Assigning source "{saibot.airport/services/flight}StartTime" and target "{http://xmlns.oracle.com/pcbpel/adapter/db/sp/CallFlightDataManager}P_START_TIME" of different QName which may generate non-valid xml as per the xsd in case of non-leaf node. If required verify manually</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>Mediators/PreparePresentFromFutureMediator.mplan</file>
+      <name>Mediators/PreparePresentFromFutureMediator.mplan</name>
+      <fix/>
+      <msg>Assigning source "{saibot.airport/services/flight}PeriodDuration" and target "{http://xmlns.oracle.com/pcbpel/adapter/db/sp/CallFlightDataManager}P_HOURS" of different QName which may generate non-valid xml as per the xsd in case of non-leaf node. If required verify manually</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>Mediators/PreparePresentFromFutureMediator.mplan</file>
+      <name>Mediators/PreparePresentFromFutureMediator.mplan</name>
+      <fix/>
+      <msg>Assigning source "{http://xmlns.oracle.com/pcbpel/adapter/db/sp/CallFlightDataManager}P_NUMBER_OF_FLIGHTS" and target "{saibot.airport/services/flight}NumberOfFlightsCreated" of different QName which may generate non-valid xml as per the xsd in case of non-leaf node. If required verify manually</msg>
+   </Fault>
+</Faults>

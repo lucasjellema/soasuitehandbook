@@ -1,0 +1,13 @@
+<adapter-config name="CallFlightDataManager" adapter="db" wsdlLocation="../WSDLs/CallFlightDataManager.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="soadb_saibot" location="eis/DB/SaibotCommonDB"/>
+  <endpoint-interaction portType="CallFlightDataManager_ptt" operation="CallFlightDataManager">
+    <interaction-spec className="oracle.tip.adapter.db.DBStoredProcedureInteractionSpec">
+      <property name="SchemaName" value="SAIBOT"/>
+      <property name="PackageName" value="FLIGHT_DATA_MANAGER"/>
+      <property name="ProcedureName" value="DERIVE_PRESENT_FROM_FUTURE"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
