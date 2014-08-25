@@ -1,0 +1,130 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Aug 25 07:06:59 CEST 2014
+  Author:  lucas_j
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="IfDoRunPresFromFutJob"
+               targetNamespace="http://xmlns.oracle.com/InboundProcessing/PortalSlotRequestProcessor/IfDoRunPresFromFutJob"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/InboundProcessing/PortalSlotRequestProcessor/IfDoRunPresFromFutJob"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns1="http://xmlns.oracle.com/scheduler/types">
+
+  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/InboundProcessing/PortalSlotRequestProcessor/IfDoRunPresFromFutJob" location="../WSDLs/IfDoRunPresFromFutJob.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="ifdorunpresfromfutjob_client" partnerLinkType="client:IfDoRunPresFromFutJob" myRole="IfDoRunPresFromFutJobProvider"/>
+    <partnerLink name="EssService" partnerLinkType="ess:ESSWebService_ESSWebServiceCallback_PLT"
+                 partnerRole="ESSWebService_Role" myRole="ESSWebServiceCallback_Role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:IfDoRunPresFromFutJobRequestMessage"/>
+
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in IfDoRunPresFromFutJob.wsdl) -->
+    <receive name="receiveInput" partnerLink="ifdorunpresfromfutjob_client" portType="client:IfDoRunPresFromFutJob" operation="process" variable="inputVariable" createInstance="yes"/>
+    <if name="If1">
+      <documentation>
+        <![CDATA[SlotStartDateWithin48Hours]]>
+      </documentation>
+      <condition>$inputVariable.payload/client:slotStartDate &lt;=  xp20:add-dayTimeDuration-to-dateTime(xp20:current-dateTime(),'PT48H')</condition>
+      <scope name="ScheduleJobPresentFromFuture">
+        <bpelx:annotation>
+          <bpelx:pattern patternName="bpelx:scheduleJob"></bpelx:pattern>
+        </bpelx:annotation>
+        <variables>
+          <variable name="EssInput" messageType="ess:submitRequestInput"/>
+          <variable name="EssOutput" messageType="ess:submitRequestOutput"/>
+        </variables>
+        <sequence name="EssSequence">
+          <assign name="EssAssign">
+            <bpelx:annotation>
+              <bpelx:general>
+                <bpelx:property name="NUMBER_OF_FLIGHTS_PROCESSED">
+                  <![CDATA[INTEGER;'0';false;AppParam;false]]>
+                </bpelx:property>
+                <bpelx:property name="NUMBER_OF_HOURS">
+                  <![CDATA[INTEGER;'24';false;AppParam;false]]>
+                </bpelx:property>
+                <bpelx:property name="SYS_procedureName">
+                  <![CDATA[STRING;'saibot.ess_job_derive_pres_from_fut';false;SysParam;false]]>
+                </bpelx:property>
+                <bpelx:property name="SYS_effectiveApplication">
+                  <![CDATA[STRING;'EssNativeHostingApp';true;SysParam;false]]>
+                </bpelx:property>
+              </bpelx:general>
+            </bpelx:annotation>
+            <copy>
+              <from>'EssNativeHostingApp'</from>
+              <to variable="EssInput" part="parameters"><query>/ess:submitRequest/ess:application</query></to>
+            </copy>
+            <copy>
+              <from>'CreateCurrentFlightDataPLSQL'</from>
+              <to variable="EssInput" part="parameters"><query>/ess:submitRequest/ess:jobDefinitionId/ns1:name</query></to>
+            </copy>
+            <copy>
+              <from>'/oracle/apps/ess/custom/saibot/flight/'</from>
+              <to variable="EssInput" part="parameters"><query>/ess:submitRequest/ess:jobDefinitionId/ns1:packageName</query></to>
+            </copy>
+            <copy>
+              <from>'JOB_DEFINITION'</from>
+              <to variable="EssInput" part="parameters"><query>/ess:submitRequest/ess:jobDefinitionId/ns1:type</query></to>
+            </copy>
+          </assign>
+          <invoke name="EssInvoke" portType="ess:ESSWebService" partnerLink="EssService" inputVariable="EssInput"
+                  outputVariable="EssOutput" operation="submitRequest"/>
+        </sequence>
+      </scope>
+      <else>
+        <empty name="Empty1"/>
+      </else>
+    </if>
+  </sequence>
+</process>

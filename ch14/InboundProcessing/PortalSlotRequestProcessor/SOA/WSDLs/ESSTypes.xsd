@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <xs:schema version="1.0"
+            attributeFormDefault="qualified"
+            elementFormDefault="qualified"
+            targetNamespace="http://xmlns.oracle.com/scheduler/types"
+            xmlns:tns="http://xmlns.oracle.com/scheduler/types"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+            <xs:complexType name="metadataObjectId">
+                <xs:sequence>
+                    <xs:element name="name"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="packageName"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="type"
+                                type="tns:metadataObjectType"
+                                minOccurs="0"
+                                form="qualified"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="postProcessAction">
+                <xs:sequence>
+                    <xs:element name="actionName"
+                                type="xs:string"
+                                minOccurs="0"/>
+                    <xs:element name="actionOrder"
+                                type="xs:int"/>
+                    <xs:element name="arguments"
+                                type="xs:string"
+                                nillable="true"
+                                minOccurs="0"
+                                maxOccurs="100"/>
+                    <xs:element name="fileMgmtGroup"
+                                type="xs:string"
+                                minOccurs="0"/>
+                    <xs:element name="description"
+                                type="xs:string"
+                                minOccurs="0"/>
+                    <xs:element name="onError"
+                                type="xs:boolean"/>
+                    <xs:element name="onSuccess"
+                                type="xs:boolean"/>
+                    <xs:element name="onWarning"
+                                type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="nlsOptions">
+                <xs:sequence>
+                    <xs:element name="language"
+                                type="xs:string"
+                                minOccurs="0"/>
+                    <xs:element name="numericCharacters"
+                                type="xs:string"
+                                minOccurs="0"/>
+                    <xs:element name="territory"
+                                type="xs:string"
+                                minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="requestParameters">
+                <xs:sequence>
+                    <xs:element name="parameter"
+                                type="tns:requestParameter"
+                                nillable="true"
+                                minOccurs="0"
+                                maxOccurs="1000"
+                                form="qualified" />
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="requestParameter" >
+                <xs:sequence>
+                    <xs:element name="dataType"
+                                type="tns:dataType"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="name"
+                                type="xs:string"
+                                minOccurs="0"/>
+                    <xs:element name="scope"
+                                type="xs:string"
+                                minOccurs="0"/>
+                    <xs:element name="value"
+                                type="xs:string"
+                                minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="requestExecutionContext">
+                <xs:sequence>
+                    <xs:element name="requestId" 
+                                type="xs:long"/>     
+                    <xs:element name="requestHandle"
+                                type="xs:string"/>
+                    <xs:element name="pausedState"
+                                type="xs:string"/> 
+                    <xs:element name="resumed"
+                                type="xs:boolean"/> 
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="stepArgs">
+                <xs:sequence>
+                    <xs:element name="arguments"
+                                type="xs:string"
+                                nillable="true"
+                                minOccurs="0"
+                                maxOccurs="100"/>
+                    <xs:element name="NLSOptions"
+                                type="tns:nlsOptions"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="PPActions"
+                                type="tns:postProcessAction"
+                                nillable="true"
+                                minOccurs="0"
+                                maxOccurs="100"
+                                form="qualified"/>
+                    <xs:element name="stepPath"
+                                type="xs:string"
+                                minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="requestDetail">
+                <xs:sequence>
+                    <xs:element name="actualEndTime"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="actualStartTime"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="cause"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="description"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="dispatcherNode"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="expirationTime"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="isCancellable"
+                                type="xs:boolean"
+                                form="qualified"/>
+                    <xs:element name="isHoldable"
+                                type="xs:boolean"
+                                form="qualified"/>
+                    <xs:element name="jobDefinitionId"
+                                type="tns:metadataObjectId"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="parentRequestId"
+                                type="xs:long"
+                                form="qualified"/>
+                    <xs:element name="priority"
+                                type="xs:int"
+                                form="qualified"/>
+                    <xs:element name="processorNode"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="requestId"
+                                type="xs:long"
+                                form="qualified"/>
+                    <xs:element name="requestParameters"
+                                type="tns:requestParameters"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="requestedEndTime"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="requestedStartTime"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="retried"
+                                type="xs:int"
+                                form="qualified"/>
+                    <xs:element name="scheduleId"
+                                type="tns:metadataObjectId"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="scheduledTime"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="state"
+                                type="tns:state"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="errorType"
+                                type="tns:errorType"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="stepId"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="submissionTime"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="submitter"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="runAsUser"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="triggerId"
+                                type="tns:metadataObjectId"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="workAssignmentId"
+                                type="tns:metadataObjectId"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="workshiftId"
+                                type="tns:metadataObjectId"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="requestType"
+                                type="tns:requestType"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="errorWarningMessage"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="errorWarningTime"
+                                type="xs:dateTime"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="errorWarningDetail"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="ecid"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="processPhase"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="submitterDmsEcid"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="submitterDmsRid"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="submitterFlowId"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="flowId"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                    <xs:element name="dmsRid"
+                                type="xs:string"
+                                minOccurs="0"
+                                form="qualified"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="metadataObjectType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="JOB_TYPE"/>
+                    <xs:enumeration value="JOB_DEFINITION"/>
+                    <xs:enumeration value="JOB_SET"/>
+                    <xs:enumeration value="INCOMPATIBILITY"/>
+                    <xs:enumeration value="SCHEDULE_DEFINITION"/>
+                    <xs:enumeration value="EXCLUSION_DEFINITION"/>
+                    <xs:enumeration value="TRIGGER"/>
+                    <xs:enumeration value="WORKSHIFT"/>
+                    <xs:enumeration value="WORK_ASSIGNMENT"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="state">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="UNKNOWN"/>
+                    <xs:enumeration value="WAIT"/>
+                    <xs:enumeration value="READY"/>
+                    <xs:enumeration value="RUNNING"/>
+                    <xs:enumeration value="COMPLETED"/>
+                    <xs:enumeration value="BLOCKED"/>
+                    <xs:enumeration value="HOLD"/>
+                    <xs:enumeration value="CANCELLING"/>
+                    <xs:enumeration value="EXPIRED"/>
+                    <xs:enumeration value="CANCELLED"/>
+                    <xs:enumeration value="ERROR"/>
+                    <xs:enumeration value="WARNING"/>
+                    <xs:enumeration value="SUCCEEDED"/>
+                    <xs:enumeration value="PAUSED"/>
+                    <xs:enumeration value="PENDING_VALIDATION"/>
+                    <xs:enumeration value="VALIDATION_FAILED"/>
+                    <xs:enumeration value="SCHEDULE_ENDED"/>
+                    <xs:enumeration value="FINISHED"/>
+                    <xs:enumeration value="ERROR_AUTO_RETRY"/>
+                    <xs:enumeration value="ERROR_MANUAL_RECOVERY"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="errorType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="UNKNOWN"/>
+                    <xs:enumeration value="SYSTEM"/>
+                    <xs:enumeration value="BUSINESS"/>
+                    <xs:enumeration value="TIMEOUT"/>
+                    <xs:enumeration value="MIXED_NON_BUSINESS"/>
+                    <xs:enumeration value="MIXED_BUSINESS"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="dataType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="STRING"/>
+                    <xs:enumeration value="INTEGER"/>
+                    <xs:enumeration value="LONG"/>
+                    <xs:enumeration value="BOOLEAN"/>
+                    <xs:enumeration value="DATETIME"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="requestType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="UNKNOWN"/>
+                    <xs:enumeration value="SINGLETON"/>
+                    <xs:enumeration value="RECUR_PARENT"/>
+                    <xs:enumeration value="RECUR_CHILD"/>
+                    <xs:enumeration value="JOBSET_SINGLETON"/>
+                    <xs:enumeration value="JOBSET_STEP"/>
+                    <xs:enumeration value="JOBSET_RECUR_PARENT"/>
+                    <xs:enumeration value="JOBSET_RECUR_CHILD"/>
+                    <xs:enumeration value="SUB_REQUEST"/>
+                    <xs:enumeration value="UNVALIDATED_REQUEST"/>
+                    <xs:enumeration value="UNVALIDATED_SUB_REQUEST"/>
+                    <xs:enumeration value="TRIGGER_CHILD"/>
+                    <xs:enumeration value="JOBSET_TRIGGER_CHILD"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="asyncStatus">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="SUCCESS"/>
+                    <xs:enumeration value="PAUSE"/>
+                    <xs:enumeration value="CANCEL"/>
+                    <xs:enumeration value="WARNING"/>
+                    <xs:enumeration value="ERROR"/>
+                    <xs:enumeration value="UPDATE"/>
+                    <xs:enumeration value="BIZ_ERROR"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="processPhase">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Unknown"/>
+                    <xs:enumeration value="Undefined"/>
+                    <xs:enumeration value="Initial"/>
+                    <xs:enumeration value="JobSetInitial"/>
+                    <xs:enumeration value="PreProcessStart"/>
+                    <xs:enumeration value="PreProcessDelayed"/>
+                    <xs:enumeration value="PreProcessComplete"/>
+                    <xs:enumeration value="ExecuteInitiate"/>
+                    <xs:enumeration value="ExecuteInitiateComplete"/>
+                    <xs:enumeration value="ExecuteAsyncWait"/>
+                    <xs:enumeration value="ExecuteFinalize"/>
+                    <xs:enumeration value="ExecuteFinalizeAsync"/>
+                    <xs:enumeration value="ExecuteFinalizeComplete"/>
+                    <xs:enumeration value="ExecutePaused"/>
+                    <xs:enumeration value="PostProcessStart"/>
+                    <xs:enumeration value="PostProcessDelayed"/>
+                    <xs:enumeration value="PostProcessComplete"/>
+                    <xs:enumeration value="ProcessExecuteComplete"/>
+                    <xs:enumeration value="JobSetInitial"/>
+                    <xs:enumeration value="ProcessSetupReady"/>
+                    <xs:enumeration value="ExecutePausedWaitForSubreq"/>
+                    <xs:enumeration value="ExecuteAsyncReceived"/>
+                    <xs:enumeration value="JobSetExecuteStepsWait"/>
+                    <xs:enumeration value="PostExecuteStart"/>
+                    <xs:enumeration value="PostExecuteWaitForSubreq"/>
+                    <xs:enumeration value="PostExecuteTerminalComplete"/>
+                    <xs:enumeration value="PostExecuteComplete"/>
+                    <xs:enumeration value="Complete"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+

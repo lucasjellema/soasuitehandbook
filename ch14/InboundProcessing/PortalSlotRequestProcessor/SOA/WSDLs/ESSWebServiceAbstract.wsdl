@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions
+     name="ESSWebService"
+     targetNamespace="http://xmlns.oracle.com/scheduler"
+     xmlns="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://xmlns.oracle.com/scheduler"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+   
+    <types>
+        
+        <schema xmlns="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="http://xmlns.oracle.com/scheduler"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:tns="http://xmlns.oracle.com/scheduler"
+                xmlns:ns1="http://xmlns.oracle.com/scheduler/types">
+            
+            <import namespace="http://xmlns.oracle.com/scheduler/types" schemaLocation="ESSTypes.xsd"/>
+            
+            <xsd:complexType name="submitRequest">
+                <xsd:sequence>
+                    <xsd:element name="description"
+                                 type="xsd:string"
+                                 form="qualified"/>
+                    <xsd:element name="jobDefinitionId"
+                                 type="ns1:metadataObjectId"
+                                 form="qualified"/>
+                    <xsd:element name="application"
+                                 type="xsd:string"
+                                 form="qualified"/>
+                    <xsd:element name="requestedStartTime"
+                                 type="xsd:dateTime"
+                                 form="qualified"/>
+                    <xsd:element name="requestParameters"
+                                 type="ns1:requestParameters"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="submitRequest" type="tns:submitRequest"/>
+            <xsd:complexType name="submitRequestResponse">
+                <xsd:sequence>
+                    <xsd:element name="requestId" type="xsd:long"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="submitRequestResponse" type="tns:submitRequestResponse"/>
+            <xsd:complexType name="submitRecurringRequest">
+                <xsd:sequence>
+                    <xsd:element name="description"
+                                 type="xsd:string"
+                                 form="qualified"/>
+                    <xsd:element name="jobDefinitionId"
+                                 type="ns1:metadataObjectId"
+                                 form="qualified"/>
+                    <xsd:element name="scheduleId"
+                                 type="ns1:metadataObjectId"
+                                 form="qualified"/>
+                    <xsd:element name="triggerId"
+                                 type="ns1:metadataObjectId"
+                                 form="qualified"/>
+                    <xsd:element name="application"
+                                 type="xsd:string"
+                                 form="qualified"/>
+                    <xsd:element name="requestedStartTime"
+                                 type="xsd:dateTime"
+                                 form="qualified"/>
+                    <xsd:element name="requestedEndTime"
+                                 type="xsd:dateTime"
+                                 form="qualified"/>
+                    <xsd:element name="requestParameters"
+                                 type="ns1:requestParameters"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="submitRecurringRequest"
+                         type="tns:submitRecurringRequest"/>
+            <xsd:complexType name="submitRecurringRequestResponse">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 type="xsd:long"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="submitRecurringRequestResponse"
+                         type="tns:submitRecurringRequestResponse"/>
+            <xsd:complexType name="getCompletionStatus">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 type="xsd:long"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getCompletionStatus"
+                         type="tns:getCompletionStatus"/>
+            <xsd:complexType name="onJobCompletion">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 type="xsd:long"/>
+                    <xsd:element name="state"
+                                 type="ns1:state"
+                                 minOccurs="0"/>
+                    <xsd:element name="resultMessage"
+                                 type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="onJobCompletion" type="tns:onJobCompletion"/>
+            <xsd:complexType name="getRequestState">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 type="xsd:long"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRequestState" type="tns:getRequestState"/>
+            <xsd:complexType name="getRequestStateResponse">
+                <xsd:sequence>
+                    <xsd:element name="state" type="ns1:state"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRequestStateResponse" type="tns:getRequestStateResponse"/>
+            <xsd:complexType name="getRequestDetail">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 form="qualified"
+                                 type="xsd:long"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRequestDetail" type="tns:getRequestDetail"/>
+            <xsd:complexType name="getRequestDetailResponse">
+                <xsd:sequence>
+                    <xsd:element name="requestDetail"
+                                 type="ns1:requestDetail"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRequestDetailResponse" type="tns:getRequestDetailResponse"/>
+             <xsd:complexType name="getRequestExecutionContext">
+                <xsd:sequence>
+                    <xsd:element name="requestExecutionContext"
+                                 type="xsd:string"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRequestExecutionContext" type="tns:getRequestExecutionContext"/>
+            <xsd:complexType name="getRequestExecutionContextResponse">
+                <xsd:sequence>
+                    <xsd:element name="requestExecutionContext"
+                                 type="ns1:requestExecutionContext"/>                                                          
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="getRequestExecutionContextResponse" type="tns:getRequestExecutionContextResponse"/>              
+            <xsd:complexType name="holdRequest">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 form="qualified"
+                                 type="xsd:long"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="holdRequest" type="tns:holdRequest"/>
+            <xsd:complexType name="holdRequestResponse">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="holdRequestResponse" type="tns:holdRequestResponse"/>
+            <xsd:complexType name="releaseRequest">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 form="qualified"
+                                 type="xsd:long"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="releaseRequest" type="tns:releaseRequest"/>
+            <xsd:complexType name="releaseRequestResponse">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="releaseRequestResponse" type="tns:releaseRequestResponse"/>
+            <xsd:complexType name="setAsyncRequestStatus">
+                <xsd:sequence>
+                    <xsd:element name="requestExecutionContext"
+                                 type="xsd:string"
+                                 form="qualified"/>
+                    <xsd:element name="status"
+                                 form="qualified"
+                                 type="ns1:asyncStatus"/>
+                    <xsd:element name="statusMessage"
+                                 type="xsd:string"
+                                 minOccurs="0"
+                                 maxOccurs="1"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="setAsyncRequestStatus"
+                         type="tns:setAsyncRequestStatus"/>
+            <xsd:complexType name="setAsyncRequestStatusResponse">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="setAsyncRequestStatusResponse"
+                         type="tns:setAsyncRequestStatusResponse"/>
+            <xsd:complexType name="cancelRequest">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 type="xsd:long"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="cancelRequest" type="tns:cancelRequest"/>
+            <xsd:complexType name="cancelRequestResponse">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="cancelRequestResponse" type="tns:cancelRequestResponse"/>
+            <xsd:complexType name="deleteRequest">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 form="qualified"
+                                 type="xsd:long"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="deleteRequest" type="tns:deleteRequest"/>
+            <xsd:complexType name="deleteRequestResponse">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="deleteRequestResponse" type="tns:deleteRequestResponse"/>
+            <xsd:complexType name="purgeRequest">
+                <xsd:sequence>
+                    <xsd:element name="requestId"
+                                 form="qualified"
+                                 type="xsd:long"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="purgeRequest" type="tns:purgeRequest"/>
+            <xsd:complexType name="purgeRequestResponse">
+                <xsd:sequence/>
+            </xsd:complexType>
+            <xsd:element name="purgeRequestResponse" type="tns:purgeRequestResponse"/>
+
+            <xsd:complexType name="setSubmitArgs">
+                <xsd:sequence>
+                    <xsd:element name="requestParameters"
+                                 type="ns1:requestParameters"
+                                 form="qualified"/>
+                    <xsd:element name="arguments"
+                                 minOccurs="0"
+                                 maxOccurs="100"
+                                 type="xsd:string"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="setSubmitArgs"
+                         type="tns:setSubmitArgs"/>
+            <xsd:complexType name="setSubmitArgsResponse">
+                <xsd:sequence>
+                    <xsd:element name="requestParametersReturn"
+                                 type="ns1:requestParameters" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="setSubmitArgsResponse"
+                         type="tns:setSubmitArgsResponse"/>
+
+            <xsd:complexType name="setStepsArgs">
+                <xsd:sequence>
+                    <xsd:element name="requestParameters"
+                                 type="ns1:requestParameters"
+                                 form="qualified"/>
+                    <xsd:element name="stepArgsList"
+                                 minOccurs="0"
+                                 maxOccurs="100"
+                                 form="qualified"
+                                 type="ns1:stepArgs"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="setStepsArgs" type="tns:setStepsArgs"/>
+            <xsd:complexType name="setStepsArgsResponse">
+                <xsd:sequence>
+                   <xsd:element name="requestParametersReturn"
+                                type="ns1:requestParameters"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="setStepsArgsResponse" type="tns:setStepsArgsResponse"/>
+            <xsd:complexType name="addPPActions">
+                <xsd:sequence>
+                   <xsd:element name="requestParameters"
+                                type="ns1:requestParameters"
+                                form="qualified"/>
+                   <xsd:element name="postProcessActions"
+                                minOccurs="0"
+                                maxOccurs="100"
+                                type="ns1:postProcessAction"
+                                form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="addPPActions" type="tns:addPPActions"/>
+            <xsd:complexType name="addPPActionsResponse">
+                <xsd:sequence>
+                   <xsd:element name="requestParametersReturn"
+                                type="ns1:requestParameters"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="addPPActionsResponse" type="tns:addPPActionsResponse"/>
+
+            <xsd:complexType name="setNLSOptions">
+                <xsd:sequence>
+                    <xsd:element name="requestParameters"
+                                 type="ns1:requestParameters"
+                                 form="qualified"/>
+                    <xsd:element name="nlsOptions"
+                                 type="ns1:nlsOptions"
+                                 form="qualified"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="setNLSOptions" 
+                         type="tns:setNLSOptions"/>
+            <xsd:complexType name="setNLSOptionsResponse">
+                <xsd:sequence>
+                    <xsd:element name="requestParametersReturn"
+                                 type="ns1:requestParameters"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="setNLSOptionsResponse"
+                         type="tns:setNLSOptionsResponse"/>
+
+            <xsd:complexType name="IllegalStateException">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="IllegalStateException" type="tns:IllegalStateException"/>
+            <xsd:complexType name="RuntimeServiceException">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RuntimeServiceException" type="tns:RuntimeServiceException"/>
+            <xsd:complexType name="IllegalArgumentException">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="IllegalArgumentException" type="tns:IllegalArgumentException"/>
+            <xsd:complexType name="ValidationException">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="ValidationException" type="tns:ValidationException"/>
+            <xsd:complexType name="NotAllowedException">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="NotAllowedException" type="tns:NotAllowedException"/>
+            <xsd:complexType name="NotFoundException">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="NotFoundException" type="tns:NotFoundException"/>
+            <xsd:complexType name="RequestNotFoundException">
+                <xsd:sequence>
+                    <xsd:element name="Message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="RequestNotFoundException"
+                         type="tns:RequestNotFoundException"/>
+        </schema>
+    </types>
+
+    <message name="submitRequestInput">
+        <part name="parameters" element="tns:submitRequest"/>
+    </message>
+    <message name="submitRequestOutput">
+        <part name="parameters" element="tns:submitRequestResponse"/>
+    </message>
+    <message name="NotFoundException">
+        <part name="NotFoundException" element="tns:NotFoundException"/>
+    </message>
+    <message name="RequestNotFoundException">
+        <part name="RequestNotFoundException" 
+              element="tns:RequestNotFoundException"/>
+    </message>
+    <message name="RuntimeServiceException">
+        <part name="RuntimeServiceException" element="tns:RuntimeServiceException"/>
+    </message>
+    <message name="ValidationException">
+        <part name="ValidationException" element="tns:ValidationException"/>
+    </message>
+    <message name="submitRecurringRequestInput">
+        <part name="parameters" element="tns:submitRecurringRequest"/>
+    </message>
+    <message name="submitRecurringRequestOutput">
+        <part name="parameters" element="tns:submitRecurringRequestResponse"/>
+    </message>
+    <message name="getCompletionStatusInput">
+        <part name="parameters" element="tns:getCompletionStatus"/>
+    </message>
+    <message name="getRequestStateInput">
+        <part name="parameters" element="tns:getRequestState"/>
+    </message>
+    <message name="getRequestStateOutput">
+        <part name="parameters" element="tns:getRequestStateResponse"/>
+    </message>
+    <message name="getRequestDetailInput">
+        <part name="parameters" element="tns:getRequestDetail"/>
+    </message>
+    <message name="getRequestDetailOutput">
+        <part name="parameters" element="tns:getRequestDetailResponse"/>
+    </message>
+    <message name="getRequestExecutionContextInput">
+        <part name="parameters" element="tns:getRequestExecutionContext"/>
+    </message>
+    <message name="getRequestExecutionContextOutput">
+        <part name="parameters" element="tns:getRequestExecutionContextResponse"/>
+    </message>        
+    <message name="holdRequestInput">
+        <part name="parameters" element="tns:holdRequest"/>
+    </message>
+    <message name="holdRequestOutput">
+        <part name="parameters" element="tns:holdRequestResponse"/>
+    </message>
+    <message name="NotAllowedException">
+        <part name="NotAllowedException" element="tns:NotAllowedException"/>
+    </message>
+    <message name="IllegalStateException">
+        <part name="IllegalStateException" element="tns:IllegalStateException"/>
+    </message>
+    <message name="releaseRequestInput">
+        <part name="parameters" element="tns:releaseRequest"/>
+    </message>
+    <message name="releaseRequestOutput">
+        <part name="parameters" element="tns:releaseRequestResponse"/>
+    </message>
+
+    <message name="setAsyncRequestStatusInput">
+        <part name="parameters" element="tns:setAsyncRequestStatus"/>
+    </message>
+    <message name="setAsyncRequestStatusOutput">
+        <part name="parameters" element="tns:setAsyncRequestStatusResponse"/>
+    </message>
+
+    <message name="cancelRequestInput">
+        <part name="parameters" element="tns:cancelRequest"/>
+    </message>
+    <message name="cancelRequestOutput">
+        <part name="parameters" element="tns:cancelRequestResponse"/>
+    </message>
+    <message name="deleteRequestInput">
+        <part name="parameters" element="tns:deleteRequest"/>
+    </message>
+    <message name="deleteRequestOutput">
+        <part name="parameters" element="tns:deleteRequestResponse"/>
+    </message>
+    <message name="purgeRequestInput">
+        <part name="parameters" element="tns:purgeRequest"/>
+    </message>
+    <message name="purgeRequestOutput">
+        <part name="parameters" element="tns:purgeRequestResponse"/>
+    </message>
+    <message name="onJobCompletionInput">
+        <part name="parameters" element="tns:onJobCompletion"/>
+    </message>
+    <message name="setSubmitArgsInput">
+        <part name="parameters" element="tns:setSubmitArgs"/>
+    </message>
+    <message name="setSubmitArgsOutput">
+        <part name="parameters" element="tns:setSubmitArgsResponse"/>
+    </message>
+    <message name="IllegalArgumentException">
+        <part name="IllegalArgumentException" element="tns:IllegalArgumentException"/>
+    </message>
+    <message name="setStepsArgsInput">
+        <part name="parameters" element="tns:setStepsArgs"/>
+    </message>
+    <message name="setStepsArgsOutput">
+        <part name="parameters" element="tns:setStepsArgsResponse"/>
+    </message>
+    <message name="addPPActionsInput">
+        <part name="parameters" element="tns:addPPActions"/>
+    </message>
+    <message name="addPPActionsOutput">
+        <part name="parameters" element="tns:addPPActionsResponse"/>
+    </message>
+    <message name="setNLSOptionsInput">
+        <part name="parameters" element="tns:setNLSOptions"/>
+    </message>
+    <message name="setNLSOptionsOutput">
+        <part name="parameters" element="tns:setNLSOptionsResponse"/>
+    </message>
+    <portType name="ESSWebService">
+        <operation name="submitRequest">
+            <input message="tns:submitRequestInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="submitRequest"/>
+            <output message="tns:submitRequestOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="submitRequest"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+            <fault name="ValidationException" message="tns:ValidationException"/>
+        </operation>
+        <operation name="submitRecurringRequest">
+            <input message="tns:submitRecurringRequestInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="submitRecurringRequest"/>
+            <output message="tns:submitRecurringRequestOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="submitRecurringRequest"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+            <fault name="ValidationException" message="tns:ValidationException"/>
+        </operation>
+        <operation name="getCompletionStatus">
+            <input message="tns:getCompletionStatusInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="getCompletionStatus"/>
+        </operation>
+        <operation name="getRequestState">
+            <input message="tns:getRequestStateInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="getRequestState"/>
+            <output message="tns:getRequestStateOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="getRequestState"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+        </operation>
+        <operation name="getRequestDetail">
+            <input message="tns:getRequestDetailInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="getRequestDetail"/>
+            <output message="tns:getRequestDetailOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="getRequestDetail"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+        </operation>
+        <operation name="getRequestExecutionContext">
+            <input message="tns:getRequestExecutionContextInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="getRequestExecutionContext"/>
+            <output message="tns:getRequestExecutionContextOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="getRequestExecutionContext"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+        </operation>        
+        <operation name="holdRequest">
+            <input message="tns:holdRequestInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="holdRequest"/>
+            <output message="tns:holdRequestOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="holdRequest"/>
+            <fault name="NotAllowedException" message="tns:NotAllowedException"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+            <fault name="IllegalStateException" message="tns:IllegalStateException"/>
+        </operation>
+        <operation name="releaseRequest">
+            <input message="tns:releaseRequestInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="releaseRequest"/>
+            <output message="tns:releaseRequestOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="releaseRequest"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+            <fault name="IllegalStateException" message="tns:IllegalStateException"/>
+        </operation>
+
+        <operation name="setAsyncRequestStatus">
+            <input message="tns:setAsyncRequestStatusInput"
+                   xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="setAsyncRequestStatus"/>
+            <output message="tns:setAsyncRequestStatusOutput"
+                    xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="setAsyncRequestStatus"/>
+            <fault name="RequestNotFoundException"
+                   message="tns:RequestNotFoundException"/>
+            <fault name="RuntimeServiceException"
+                   message="tns:RuntimeServiceException"/>
+        </operation>
+
+        <operation name="cancelRequest">
+            <input message="tns:cancelRequestInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="cancelRequest"/>
+            <output message="tns:cancelRequestOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="cancelRequest"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+            <fault name="IllegalStateException" message="tns:IllegalStateException"/>
+        </operation>
+        <operation name="deleteRequest">
+            <input message="tns:deleteRequestInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="deleteRequest"/>
+            <output message="tns:deleteRequestOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="deleteRequest"/>
+            <fault name="NotAllowedException" message="tns:NotAllowedException"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+            <fault name="IllegalStateException" message="tns:IllegalStateException"/>
+        </operation>
+        <operation name="purgeRequest">
+            <input message="tns:purgeRequestInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="purgeRequest"/>
+            <output message="tns:purgeRequestOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="purgeRequest"/>
+            <fault name="NotAllowedException" message="tns:NotAllowedException"/>
+            <fault name="NotFoundException" message="tns:NotFoundException"/>
+            <fault name="RuntimeServiceException" message="tns:RuntimeServiceException"/>
+            <fault name="IllegalStateException" message="tns:IllegalStateException"/>
+        </operation>
+        <operation name="setSubmitArgs">
+            <input message="tns:setSubmitArgsInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="setSubmitArgs"/>
+            <output message="tns:setSubmitArgsOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="setSubmitArgs"/>
+            <fault name="IllegalArgumentException" message="tns:IllegalArgumentException"/>
+        </operation>
+        <operation name="setStepsArgs">
+            <input message="tns:setStepsArgsInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="setStepsArgs"/>
+            <output message="tns:setStepsArgsOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="setStepsArgs"/>
+            <fault name="IllegalArgumentException" message="tns:IllegalArgumentException"/>
+        </operation>
+        <operation name="addPPActions">
+            <input message="tns:addPPActionsInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="addPPActions"/>
+            <output message="tns:addPPActionsOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="addPPActions"/>
+            <fault name="IllegalArgumentException" message="tns:IllegalArgumentException"/>
+        </operation>
+        <operation name="setNLSOptions">
+            <input message="tns:setNLSOptionsInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="setNLSOptions"/>
+            <output message="tns:setNLSOptionsOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="setNLSOptions"/>
+            <fault name="IllegalArgumentException" message="tns:IllegalArgumentException"/>
+        </operation>
+    </portType>
+    <portType name="ESSWebServiceCallback">
+        <operation name="onJobCompletion">
+            <input message="tns:onJobCompletionInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action="http://xmlns.oracle.com/scheduler/ESSWebService/getCompletionStatus/Response"/>
+        </operation>
+    </portType>
+</definitions>

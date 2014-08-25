@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://xmlns.oracle.com/InboundProcessing/PortalSlotRequestProcessor/IfDoRunPresFromFutJob"
+	xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="process">
+		<complexType>
+			<sequence>
+				<element name="slotStartDate" type="dateTime"/>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

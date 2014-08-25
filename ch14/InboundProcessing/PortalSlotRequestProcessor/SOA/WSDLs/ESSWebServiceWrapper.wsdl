@@ -1,0 +1,22 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ESSWebService"
+     targetNamespace="http://xmlns.oracle.com/scheduler"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://xmlns.oracle.com/scheduler"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="ESSWebService_ESSWebServiceCallback_PLT">
+        <plnk:role name="ESSWebService_Role" portType="tns:ESSWebService"/>
+        <plnk:role name="ESSWebServiceCallback_Role" portType="tns:ESSWebServiceCallback"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="ESSWebService_PLT">
+        <plnk:role name="ESSWebService_Role" portType="tns:ESSWebService"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="ESSWebServiceCallback_PLT">
+        <plnk:role name="ESSWebServiceCallback_Role" portType="tns:ESSWebServiceCallback"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://xmlns.oracle.com/scheduler" location="ESSWebServiceAbstract.wsdl"/>
+</wsdl:definitions>
