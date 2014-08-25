@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<orawsp:wsm-assembly xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy">
+  <sca11:policySet xmlns:sca11="http://docs.oasis-open.org/ns/opencsa/sca/200912" name="policySet"
+                   appliesTo="SCA-REFERENCE()" attachTo="REFERENCE('EssService') and PORT('SchedulerServiceImplPort')"
+                   orawsp:highId="1"
+                   xml:id="SCA-REFERENCE__REFERENCE__EssService___and_PORT__SchedulerServiceImplPort__">
+    <wsp:PolicyReference xmlns:wsp="http://www.w3.org/ns/ws-policy"
+                         DigestAlgorithm="http://www.w3.org/ns/ws-policy/Sha1Exc"
+                         URI="oracle/wss_username_token_client_policy" orawsp:status="enabled" orawsp:id="1"/>
+  </sca11:policySet>
+</orawsp:wsm-assembly>

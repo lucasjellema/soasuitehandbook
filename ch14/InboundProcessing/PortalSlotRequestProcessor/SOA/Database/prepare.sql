@@ -33,59 +33,13 @@ insert into  PORTAL_SLOT_ALLOCATIONS
 ,IATA_AIRCRAFT_MODEL_TYPE  
 )
 values
-(342
-,to_date('25-01-2015', 'DD-MM-YYYY')
+(3428
+,to_date(sysdate+1 )
 ,to_date('25-04-2015', 'DD-MM-YYYY')
 ,'1100011'
 ,16
 ,35
-,'KL'
+,'XQ'
 ,'N'
-, null
-);
-
-insert into  PORTAL_SLOT_ALLOCATIONS
-(PORTAL_SLOT_REFERENCE     
-,START_DATE_FOR_SLOT       
-,END_DATE_FOR_SLOT         
-,WEEKDAYS_BITMAP           
-,HOUR_OF_DAY               
-,FIVE_MINUTE_BLOCK         
-,CARRIER                   
-,DEPARTURE_YN              
-,IATA_AIRCRAFT_MODEL_TYPE  
-)
-values
-(345
-,to_date('03-01-2016', 'DD-MM-YYYY')
-,to_date('18-02-2016', 'DD-MM-YYYY')
-,'1100011'
-,20
-,05
-,'MH'
-,'N'
-, null
-);
-
-insert into  PORTAL_SLOT_ALLOCATIONS
-(PORTAL_SLOT_REFERENCE     
-,START_DATE_FOR_SLOT       
-,END_DATE_FOR_SLOT         
-,WEEKDAYS_BITMAP           
-,HOUR_OF_DAY               
-,FIVE_MINUTE_BLOCK         
-,CARRIER                   
-,DEPARTURE_YN              
-,IATA_AIRCRAFT_MODEL_TYPE  
-)
-values
-(349
-,to_date('11-06-2015', 'DD-MM-YYYY')
-,to_date('20-06-2015', 'DD-MM-YYYY')
-,'0011100'
-,6
-,10
-,'QA'
-,'Y'
 , null
 );

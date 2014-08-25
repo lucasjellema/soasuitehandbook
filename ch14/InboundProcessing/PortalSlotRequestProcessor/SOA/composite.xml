@@ -18,8 +18,7 @@
           location="WSDLs/IfDoRunPresFromFutJob.wsdl" importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/scheduler" location="WSDLs/ESSWebServiceWrapper.wsdl" importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/scheduler"
-          location="file:/D:/GitHub/soasuitehandbook/ch14/InboundProcessing/PortalSlotRequestProcessor/SOA/WSDLs/ESSWebServiceAbstract.wsdl"
-          importType="wsdl"/>
+          location="http://soa2admin2.example.com:8001/ess/esswebservice?wsdl" importType="wsdl"/>
   <service name="PortalSlotRequestPoller" ui:wsdlLocation="WSDLs/PortalSlotRequestPoller.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/InboundProcessing/PortalSlotRequestProcessor/PortalSlotRequestPoller#wsdl.interface(PortalSlotRequestPoller_ptt)"/>
     <binding.jca config="Adapters/PortalSlotRequestPoller_db.jca">
@@ -68,12 +67,17 @@
     </binding.ws>
   </reference>
   <reference name="EssService"
-             ui:wsdlLocation="file:/D:/GitHub/soasuitehandbook/ch14/InboundProcessing/PortalSlotRequestProcessor/SOA/WSDLs/ESSWebServiceAbstract.wsdl">
+             ui:wsdlLocation="http://soa2admin2.example.com:8001/ess/esswebservice?wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/scheduler#wsdl.interface(ESSWebService)"
                     callbackInterface="http://xmlns.oracle.com/scheduler#wsdl.interface(ESSWebServiceCallback)"/>
-    <binding.ws port="" location=""/>
+    <binding.ws port="http://xmlns.oracle.com/scheduler#wsdl.endpoint(ESSWebService/SchedulerServiceImplPort)"
+                location="http://soa2admin2.example.com:8001/ess/esswebservice?wsdl" soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">WSDLDriven</property>
+      <property name="oracle.webservices.auth.username" type="xs:anyAtomicType" many="false" override="may">weblogic</property>
+      <property name="oracle.webservices.auth.password" type="xs:anyAtomicType" many="false" override="may">weblogic1</property>
+    </binding.ws>
     <callback>
-      <binding.ws port=""/>
+      <binding.ws port="http://xmlns.oracle.com/scheduler#wsdl.endpoint(ESSWebServiceCallback/ESSWebServiceCallback_pt)"/>
     </callback>
   </reference>
   <wire>
