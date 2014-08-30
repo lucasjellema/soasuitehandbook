@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FlightStatusUpdate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="saibot.airport/events/flight ../Schemas/FlightEvents.xsd"
+                    xmlns="saibot.airport/events/flight">
+  <Carrier>LU</Carrier>
+  <FlightNumber>432</FlightNumber>
+  <FlightStatus>
+    <TimePlanningUnit xmlns="saibot.airport/data/flight">
+      <startDate xmlns="saibot.airport/data/reference">20150429</startDate>
+      <HourOfDay xmlns="saibot.airport/data/reference">15</HourOfDay>
+      <FiveMinuteBlock xmlns="saibot.airport/data/reference">10</FiveMinuteBlock>
+    </TimePlanningUnit>
+    <Status xmlns="saibot.airport/data/flight">OPEN</Status>
+    <Action xmlns="saibot.airport/data/flight">GateOpen</Action>
+    <CheckinCounter xmlns="saibot.airport/data/flight">45</CheckinCounter>
+    <Runway xmlns="saibot.airport/data/flight"></Runway>
+    <GateLocation xmlns="saibot.airport/data/flight">
+      <Terminal xmlns="saibot.airport/data/reference">3</Terminal>
+      <Pier xmlns="saibot.airport/data/reference">B</Pier>
+      <Gate xmlns="saibot.airport/data/reference">34</Gate>
+    </GateLocation>
+  </FlightStatus>
+</FlightStatusUpdate>

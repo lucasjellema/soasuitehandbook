@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+    
+     targetNamespace="saibot.airport/services/flightupdatenotification"
+     xmlns="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="saibot.airport/services/flightupdatenotification"
+     xmlns:fun="saibot.airport/services/flightupdatenotification"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <documentation>
+        <abstractWSDL>http://soa2admin2.example.com:8001/soa-infra/services/default/FlightUpdateNotificationService!1.0/WSDLs/FlightUpdateNotificationService.wsdl</abstractWSDL>
+    </documentation>
+    <types>
+        <xsd:schema elementFormDefault="qualified">
+            <xsd:import namespace="saibot.airport/services/flightupdatenotification"
+                        schemaLocation="../Schemas/FlightUpdateNotificationService.xsd"/>
+        </xsd:schema>
+    </types>
+    <message name="requestMessage">
+        <part name="in" element="tns:sendFlightUpdateNotificationRequestMessage"/>
+    </message>
+    <portType name="FlightUpdateNotificationServicePortType">
+        <operation name="sendFlightUpdateNotification">
+            <input message="tns:requestMessage"/>
+        </operation>
+    </portType>
+    <binding name="FlightUpdateNotificationServiceBinding" type="tns:FlightUpdateNotificationServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="sendFlightUpdateNotification">
+            <soap:operation style="document" soapAction="sendFlightUpdateNotification"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+        </operation>
+    </binding>
+    <service name="MachineToHumanMediator_ep">
+        <port name="FlightUpdateNotificationServicePort" binding="tns:FlightUpdateNotificationServiceBinding">
+            <soap:address location="http://soa2admin2.example.com:8001/soa-infra/services/default/FlightUpdateNotificationService/MachineToHumanMediator_ep"/>
+        </port>
+    </service>
+</definitions>
