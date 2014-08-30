@@ -3,15 +3,18 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>com.oracle.servicebus</groupId>
+        <artifactId>sbar-project-common</artifactId>
+        <version>12.1.3-0-0</version>
+    </parent>
+
     <groupId>EDNandAlternativeChannels</groupId>
-    <artifactId>EDNandAlternativeChannels</artifactId>
+    <artifactId>ConsumeFlightStatusUpdateEventFromEDNtoServiceBus</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
+    <packaging>sbar</packaging>
 
-    <modules>
-        <module>System</module>
-        <module>ConsumeFlightStatusUpdateEventFromEDNtoServiceBus</module>
-    </modules>
+    <description/>
 
 </project>

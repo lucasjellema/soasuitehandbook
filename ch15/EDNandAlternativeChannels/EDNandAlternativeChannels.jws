@@ -26,6 +26,7 @@
       <string v="oracle.jdeveloper.model.PathsConfiguration/ResourceBundlesContentSet"/>
    </list>
    <list n="listOfChildren">
+      <hash><url n="URL" path="ConsumeFlightStatusUpdateEventFromEDNtoServiceBus/ConsumeFlightStatusUpdateEventFromEDNtoServiceBus.jpr"/></hash>
       <hash><url n="URL" path="EDNJavaClient/EDNJavaClient.jpr"/></hash>
       <hash><url n="URL" path="PublishFlightStatusUpdateEvent/PublishFlightStatusUpdateEvent.jpr"/></hash>
       <hash><url n="URL" path="PublishToEDN/PublishToEDN.jpr"/></hash>

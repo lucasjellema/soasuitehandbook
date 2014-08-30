@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+    <con:coreEntry>
+        <con:binding type="Any XML"/>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.af9667.0.14827d8e057.N8000">
+            <con:stage id="_StageId-N3f57c7ff.af9667.0.14827d8e057.N7ffe" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:report>
+                        <con2:id>_ActionId-N3f57c7ff.af9667.0.14827d8e057.N7ffa</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body/*[1]</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>EDN_EVENT</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText>./*[1]</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.af9667.0.14827d8e057.N7fff">
+            <con:stage id="_StageId-N3f57c7ff.af9667.0.14827d8e057.N7ffd" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.af9667.0.14827d8e057.N8000</con:request>
+                <con:response>response-N3f57c7ff.af9667.0.14827d8e057.N7fff</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
