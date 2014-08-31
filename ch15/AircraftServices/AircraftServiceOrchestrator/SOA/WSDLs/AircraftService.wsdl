@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="AirportService"
+     targetNamespace="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService"
+     xmlns:tns="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService"
+     xmlns:inp1="saibot.airport/operational/aircraftservice"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"     
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/operational/aircraftservice" schemaLocation="oramds:/apps/Schemas/AircraftService.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/operational/aircraftservice" schemaLocation="oramds:/apps/Schemas/AircraftService.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="requestProposalMessage">
+        <wsdl:part name="part1" element="inp1:RequestProposalMessage"/>
+    </wsdl:message>
+    <wsdl:message name="submitProposalCallbackMessage">
+        <wsdl:part name="part1" element="inp1:SubmitProposalCallbackMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="AircraftService">
+        <wsdl:operation name="requestProposal">
+            <wsdl:input message="tns:requestProposalMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="AircraftServiceCallback">
+        <wsdl:operation name="submitProposal">
+            <wsdl:input message="tns:submitProposalCallbackMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

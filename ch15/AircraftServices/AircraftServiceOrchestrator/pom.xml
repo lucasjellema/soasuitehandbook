@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         <!--
+           This POM was automatically generated during SOA project creation.           
+           This POM relates to this SOA Composite, i.e. the one in this same directory.
+           There is another POM in the SOA Application directory which handles
+           the whole SOA Application, which may contain additional projects. 
+        -->
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>AircraftServices</groupId>
+    <artifactId>AircraftServiceOrchestrator</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>sar</packaging>
+    
+    <!--
+           The parent points to the common SOA parent POM.  That is a special POM that is
+           shipped by Oracle as a point of customization (only). You can add default values
+           for properties like serverUrl, etc. to the SOA common parent POM, so that you
+           do not have to specify them over and over in every project POM.
+    --> 
+    <parent>
+        <groupId>com.oracle.soa</groupId>
+        <artifactId>sar-common</artifactId>
+        <version>12.1.3-0-0</version>
+    </parent>
+    
+    <properties>
+        <!-- These parameters are used by the compile goal -->
+        <scac.input.dir>${project.basedir}/SOA/</scac.input.dir>
+        <scac.output.dir>${project.basedir}/target</scac.output.dir>
+        <scac.input>${scac.input.dir}/composite.xml</scac.input>
+        <scac.output>${scac.output.dir}/out.xml</scac.output>
+        <scac.error>${scac.output.dir}/error.txt</scac.error>
+        <scac.displayLevel>1</scac.displayLevel>
+        <!-- if you are using a config plan, uncomment the following line and update to point
+             to your config plan -->
+        <!--<configplan>${scac.input.dir}/configplan.xml</configplan>-->
+        
+        <!-- These parameters are used by the deploy and undeploy goals --> 
+        <composite.name>${project.artifactId}</composite.name>
+        <composite.revision>1.0</composite.revision>
+        <composite.partition>default</composite.partition>        
+        <serverUrl>${oracleServerUrl}</serverUrl>        
+        <user>${oracleUsername}</user>
+        <password>${oraclePassword}</password>
+        <overwrite>true</overwrite>
+        <forceDefault>true</forceDefault>
+        <regenerateRulebase>false</regenerateRulebase>
+        <keepInstancesOnRedeploy>false</keepInstancesOnRedeploy>
+        
+        <!-- These parameters are used by the test goal 
+         if you are using the sca-test (test) goal, you need to uncomment the following
+             line and point it to your jndi.properties file. --> 
+             
+        <!--<jndi.properties.input>UNDEFINED</jndi.properties.input>-->
+        <scatest.result>${scac.output.dir}/testResult</scatest.result>
+        <!--  input is the name of the composite to run test suties against -->
+        <input>${project.artifactId}</input>
+        
+        <!--<scac.ant.buildfile>${env.MW_HOME}/soa/bin/ant-sca-compile.xml</scac.ant.buildfile>
+        <sca.ant.testfile>${env.MW_HOME}/soa/bin/ant-sca-test.xml</sca.ant.testfile>
+        -->
+        
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.oracle.soa.plugin</groupId>
+                <artifactId>oracle-soa-plugin</artifactId>
+                <version>12.1.3-0-0</version>
+                <configuration>
+                    <compositeName>${project.artifactId}</compositeName>
+                    <composite>${scac.input}</composite>
+                    <sarLocation>${scac.output.dir}/sca_${project.artifactId}_rev${composite.revision}.jar</sarLocation>
+                    <serverUrl>${serverUrl}</serverUrl>
+                    <user>${user}</user>
+                    <password>${password}</password>
+                    <!-- Note: compositeRevision is needed to package, revision is needed to undeploy -->
+                    <compositeRevision>${composite.revision}</compositeRevision>
+                    <revision>${composite.revision}</revision>
+                    <scacInputDir>${scac.input.dir}</scacInputDir>                    
+                    <input>${input}</input> 
+                </configuration>
+                 <!-- extensions=true is needed to use the custom sar packaging type -->
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

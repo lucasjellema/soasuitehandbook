@@ -1,0 +1,77 @@
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+        targetNamespace="saibot.airport/operational/aircraftservicenegotiation"
+        xmlns:acs="saibot.airport/operational/aircraftservice" 
+        xmlns:acsn="saibot.airport/operational/aircraftservicenegotiation" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:import schemaLocation="../Schemas/AircraftService.xsd"
+          namespace="saibot.airport/operational/aircraftservice"/>
+  <xsd:element name="ArrangeAircraftServiceRequestMessage" type="acsn:requestforAircraftServiceRequestMessageType"/>
+  <xsd:element name="ArrangeAircraftServiceResponseMessage" type="acsn:requestforAircraftServiceResponseMessageType"/>
+  <xsd:element name="CancelAircraftServiceRequestMessage" type="acsn:cancelRequestforAircraftServiceRequestMessageType"/>
+  <xsd:element name="CancelAircraftServiceResponseMessage" type="acsn:cancelRequestforAircraftServiceResponseMessageType"/>
+
+  <xsd:element name="RetrieveStatusAircraftServiceNegotiationRequestMessage" type="acsn:retrieveStatusAircraftServiceNegotiationRequestMessageType"/>
+  <xsd:element name="RetrieveStatusAircraftServiceNegotiationResponseMessage" type="acsn:retrieveStatusAircraftServiceNegotiationResponseMessageType"/>
+  <xsd:complexType name="requestforAircraftServiceRequestMessageType">
+    <xsd:sequence>
+      <xsd:element name="RequestingCarrierIATACode" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Flight" nillable="false" type="acs:flightType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Services">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ServiceRequirement" type="acs:serviceRequirementType" minOccurs="0" maxOccurs="10"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ServiceRequestId" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="ServiceDeliveryDate" nillable="false" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="requestforAircraftServiceResponseMessageType">
+    <xsd:sequence>
+      <xsd:element name="ServiceRequestId" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="DealCloseDate" nillable="false" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="cancelRequestforAircraftServiceRequestMessageType">
+    <xsd:sequence>
+      <xsd:element name="ServiceRequestId" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Reason" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="cancelRequestforAircraftServiceResponseMessageType">
+    <xsd:sequence>
+      <xsd:element name="ServiceRequestId" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Description" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="retrieveStatusAircraftServiceNegotiationRequestMessageType">
+    <xsd:sequence>
+      <xsd:element name="ServiceRequestId" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="retrieveStatusAircraftServiceNegotiationResponseMessageType">
+    <xsd:sequence>
+      <xsd:element name="ProposalsSoFar" nillable="false" type="acsn:proposalsListType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+      <xsd:complexType name="proposalsListType">
+        <xsd:sequence>
+            <xsd:element name="proposal" nillable="false" type="acsn:aircraftServiceProposalType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+  
+      <xsd:complexType name="aircraftServiceProposalType">
+        <xsd:sequence>
+            <xsd:element name="RFPIdentificationNumber" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="AircraftServiceProvider" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="CanDo" nillable="false" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="Price" nillable="false" type="xsd:float" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="Comments" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ProposalExpiryDate" nillable="false" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

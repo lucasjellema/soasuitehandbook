@@ -1,0 +1,102 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/services/carrierwatcher"
+     targetNamespace="saibot.airport/services/carrierwatcher" xmlns:fun="saibot.airport/services/carrierwatcher"
+     elementFormDefault="qualified">
+    <xsd:element name="carrierSuspension" type="fun:carrierSuspensionType"/>
+    <xsd:complexType name="carrierSuspensionType">
+        <xsd:sequence>
+            <xsd:element name="Carrier" nillable="false" type="fun:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="Comment" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="CurrentFlightsRequest" type="fun:currentFlightsRequestType"/>
+    <xsd:complexType name="currentFlightsRequestType">
+        <xsd:sequence>
+            <xsd:element name="Carrier" nillable="false" type="fun:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="CurrentFlightsResponse" type="fun:currentFlightsResponseType"/>
+    <xsd:complexType name="currentFlightsResponseType">
+        <xsd:sequence>
+            <xsd:element name="CurrentFlights" minOccurs="1" maxOccurs="1">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Flight" minOccurs="0" maxOccurs="unbounded" type="currentFlightType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="currentFlightType">
+        <xsd:sequence>
+            <xsd:element name="FlightNumber" nillable="false" type="fun:flightNumberType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="FlightStatus" nillable="false" type="fun:flightStatusType" minOccurs="1"
+                 maxOccurs="1"/>
+            <xsd:element name="ArrivalOrDeparture" nillable="false" type="fun:arrivalOrDepartureType"
+                 minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="FlightDate" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="HourOfDay" nillable="false" type="fun:hourOfDayType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="FiveMinuteBlock" nillable="false" type="fun:fiveMinuteBlockType" minOccurs="0"
+                 maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="hourOfDayType">
+        <xsd:annotation>
+            <xsd:documentation>An hour during the day: 0-23</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="23"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="fiveMinuteBlockType">
+        <xsd:annotation>
+            <xsd:documentation>A five minute block within one clock hour: 0(-5), 5(-10), 10()-15)</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="55"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="flightStatusType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Active"/>
+            <xsd:enumeration value="Suspended"/>
+            <xsd:enumeration value="Open"/>
+            <xsd:enumeration value="Closed"/>
+            <xsd:enumeration value="Cancelled"/>
+            <xsd:enumeration value="Diverted"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="flightNumberType">
+        <xsd:annotation>
+            <xsd:documentation>A flight number. Flight numbers are integer values
+                         within the range of [0-9999]. Example: 1234</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="9999"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="arrivalOrDepartureType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="A"/>
+            <xsd:enumeration value="D"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="iataAirlineType">
+        <xsd:annotation>
+            <xsd:documentation>the code is the two letter IATA identification for airlines (carriers); see for example http://www.iata.org/publications/Pages/code-search.aspx; http://en.wikipedia.org/wiki/Airline_codes-All</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="fun:alpha2Type"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="alpha2Type">
+        <xsd:annotation>
+            <xsd:documentation>2-char uppercase strings only</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:length value="2"/>
+            <xsd:pattern value="[A-Z]{2}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

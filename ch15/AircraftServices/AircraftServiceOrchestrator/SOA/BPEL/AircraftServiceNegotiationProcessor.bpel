@@ -1,0 +1,320 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Jun 27 13:38:38 CEST 2014
+  Author:  oracle
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="AircraftServiceNegotiationProcessor"
+         targetNamespace="http://xmlns.oracle.com/AircraftServices/AircraftServiceOrchestrator/AircraftServiceNegotiationProcessor"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/AircraftServices/AircraftServiceOrchestrator/AircraftServiceNegotiationProcessor"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns1="saibot.airport/operational/aircraftservice"
+         xmlns:ns3="saibot.airport/operational/aircraftservicenegotiation"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:ns2="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns4="http://xmlns.oracle.com/AircraftServices/AircraftServiceOrchestrator/AircraftServiceNegotiationProcessor/correlationset"
+         xmlns:ns5="saibot.airport/events/aircarrier" xmlns:ns6="saibot.airport/services/carrierwatcher">
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <bpelx:inlineSubProcess name="UpdateCollectedProposals">
+    <bpelx:annotation>
+      <bpelx:general>
+        <bpelx:property name="userLabel">
+          <![CDATA[AddProposalToCollection]]>
+        </bpelx:property>
+      </bpelx:general>
+    </bpelx:annotation>
+    <variables>
+      <variable name="proposal" element="ns1:SubmitProposalCallbackMessage"/>
+      <variable name="supplier" type="xsd:string"/>
+    </variables>
+    <assign name="AddFlyingHighProposalToSet">
+      <extensionAssignOperation>
+        <bpelx:append>
+          <bpelx:from><bpelx:literal><acns:proposal xmlns:acns="saibot.airport/operational/aircraftservicenegotiation"/></bpelx:literal></bpelx:from>
+          <bpelx:to>$collectedProposals</bpelx:to>
+        </bpelx:append>
+      </extensionAssignOperation>
+      <copy bpelx:insertMissingToData="yes">
+        <from>$supplier</from>
+        <to>$collectedProposals/ns3:proposal[last()]/ns3:AircraftServiceProvider</to>
+      </copy>
+      <copy bpelx:insertMissingToData="yes">
+        <from>$proposal/ns1:RFPIdentificationNumber</from>
+        <to>$collectedProposals/ns3:proposal[last()]/ns3:RFPIdentificationNumber</to>
+      </copy>
+      <copy bpelx:insertMissingToData="yes">
+        <from>$proposal/ns1:CanDo</from>
+        <to>$collectedProposals/ns3:proposal[last()]/ns3:CanDo</to>
+      </copy>
+      <copy bpelx:insertMissingToData="yes">
+        <from>$proposal/ns1:Price</from>
+        <to>$collectedProposals/ns3:proposal[last()]/ns3:Price</to>
+      </copy>
+      <copy ignoreMissingFromData="yes" bpelx:insertMissingToData="yes">
+        <from>$proposal/ns1:Comments</from>
+        <to>$collectedProposals/ns3:proposal[last()]/ns3:Comments</to>
+      </copy>
+      <copy bpelx:insertMissingToData="yes">
+        <from>$proposal/ns1:ProposalExpiryDate</from>
+        <to>$collectedProposals/ns3:proposal[last()]/ns3:ProposalExpiryDate</to>
+      </copy>
+    </assign>
+  </bpelx:inlineSubProcess>
+  <bpelx:annotation>
+    <bpelx:analysis>
+      <bpelx:property name="propertiesFile">
+        <![CDATA[../WSDLs/AircraftServiceNegotiationProcessor_properties.wsdl]]>
+      </bpelx:property>
+    </bpelx:analysis>
+  </bpelx:annotation>
+  <import namespace="saibot.airport/operational/aircraftservice" location="oramds:/apps/Schemas/AircraftService.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="saibot.airport/operational/aircraftservicenegotiation"
+          location="../Schemas/AircraftServiceNegotiation.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="saibot.airport/operational/aircraftservice"
+          location="../WSDLs/AircraftServiceNegotiationWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+          ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="AircraftServiceOrchestration" partnerLinkType="ns1:AircraftServiceNegotiationProcessor"
+                 myRole="AircraftServiceNegotiation"/>
+    <partnerLink name="AirportServiceProvider" partnerLinkType="ns2:AirportServiceProvider"
+                 partnerRole="AircraftService" myRole="AircraftServiceCallback"/>
+    <partnerLink name="FlyingHighAircraftServiceProvider" partnerLinkType="ns2:FlyingHighAircraftServiceProvider"
+                 partnerRole="AircraftService" myRole="AircraftServiceCallback"/>
+  </partnerLinks>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:ArrangeAircraftServiceRequestMessage"/>
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:ArrangeAircraftServiceResponseMessage"/>
+    <variable name="RFPIdentification" type="xsd:string"/>
+    <variable name="Deadline" type="xsd:dateTime"/>
+    <variable name="collectedProposals" type="ns3:proposalsListType"/>
+  </variables>
+  <correlationSets>
+    <correlationSet name="ServiceRequestIdentifierSet" properties="ns4:ServiceRequestIdentifier"/>
+    <correlationSet name="AirCarrierCorrelation" properties="ns4:AirCarrierIataCode"/>
+  </correlationSets>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+    <!-- Receive input from requestor. (Note: This maps to operation defined in AircraftServiceNegotiationProcessor.wsdl) -->
+    <receive name="receiveInput" partnerLink="AircraftServiceOrchestration" portType="ns1:AircraftServiceNegotiation"
+             operation="arrangeAircraftService" variable="inputVariable" createInstance="yes">
+      <correlations>
+        <correlation set="AirCarrierCorrelation" initiate="yes"/>
+      </correlations>
+    </receive>
+    <assign name="SetGlobals">
+      <!--      <copy>
+        <from>xp20:add-dayTimeDuration-to-dateTime($inputVariable.part1/ns3:ServiceDeliveryDate, '-P1DT12H')</from>
+        <to>$Deadline</to>
+    
+  </copy>
+  -->
+      <copy>
+        <from>concat('RFPACS' , $inputVariable.part1/ns3:ServiceRequestId, xp20:format-dateTime(xp20:current-dateTime(),'D01M01YY'))</from>
+        <to>$RFPIdentification</to>
+      </copy>
+      <copy>
+        <from>xp20:add-dayTimeDuration-to-dateTime(xp20:current-dateTime(), 'PT5M')</from>
+        <to>$Deadline</to>
+      </copy>
+    </assign>
+    <assign name="SetSynchReply">
+      <copy>
+        <from>$inputVariable.part1/ns3:ServiceRequestId</from>
+        <to>$outputVariable.part1/ns3:ServiceRequestId</to>
+      </copy>
+      <copy>
+        <from>$Deadline</from>
+        <to>$outputVariable.part1/ns3:DealCloseDate</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="AircraftServiceOrchestration" portType="ns1:AircraftServiceNegotiation"
+           operation="arrangeAircraftService" variable="outputVariable">
+      <correlations>
+        <correlation set="ServiceRequestIdentifierSet" initiate="yes"/>
+      </correlations>
+    </reply>
+    <scope name="ExecuteRFP">
+      <variables>
+        <variable name="RequestProposalForService_requestProposal_InputVariable"
+                  messageType="ns2:requestProposalMessage"/>
+        <variable name="ReceiveProposalForAircraftService_submitProposal_InputVariable"
+                  messageType="ns2:submitProposalCallbackMessage"/>
+        <variable name="FlyingHigh_submitProposal_InputVariable" messageType="ns2:submitProposalCallbackMessage"/>
+      </variables>
+      <eventHandlers>
+        <onEvent bpelx:name="ConsumeAirCarrierSuspendedEvent" bpelx:eventName="ns5:AirCarrierSuspendedEvent"
+                 variable="carrierSuspension" element="ns6:carrierSuspension">
+          <correlations>
+            <correlation set="AirCarrierCorrelation" initiate="no"/>
+          </correlations>
+          <scope name="Scope1">
+            <exit name="TerminateRFPBecauseOfAirlineSuspension"/>
+          </scope>
+        </onEvent>
+        <onEvent bpelx:name="HandleRequestForStatusUpdate" partnerLink="AircraftServiceOrchestration"
+                 operation="retrieveStatusAircraftServiceNegotiation" portType="ns1:AircraftServiceNegotiation"
+                 variable="retrieveStatusAircraftServiceNegotiationRequestMessage"
+                 element="ns3:RetrieveStatusAircraftServiceNegotiationRequestMessage">
+          <correlations>
+            <correlation set="ServiceRequestIdentifierSet" initiate="no"/>
+          </correlations>
+          <scope name="prepareAndReturnStatusUpdate">
+            <variables>
+              <variable name="ReturnRFPStatusUpdate_retrieveStatusAircraftServiceNegotiation_OutputVariable"
+                        messageType="ns1:RetrieveStatusAircraftServiceNegotiationResponseMessage"/>
+            </variables>
+            <sequence name="Sequence4">
+              <assign name="AssignStatusUpdate">
+                <copy>
+                  <from>$collectedProposals</from>
+                  <to>$ReturnRFPStatusUpdate_retrieveStatusAircraftServiceNegotiation_OutputVariable.part1/ns3:ProposalsSoFar</to>
+                </copy>
+              </assign>
+              <reply name="ReturnRFPStatusUpdate"
+                     variable="ReturnRFPStatusUpdate_retrieveStatusAircraftServiceNegotiation_OutputVariable"
+                     partnerLink="AircraftServiceOrchestration" portType="ns1:AircraftServiceNegotiation"
+                     operation="retrieveStatusAircraftServiceNegotiation"/>
+            </sequence>
+          </scope>
+        </onEvent>
+        <onEvent partnerLink="AircraftServiceOrchestration" operation="cancelAircraftService"
+                 portType="ns1:AircraftServiceNegotiation" variable="cancelAircraftServiceRequest"
+                 element="ns3:CancelAircraftServiceRequestMessage">
+          <correlations>
+            <correlation set="ServiceRequestIdentifierSet" initiate="no"/>
+          </correlations>
+          <scope name="HandleCancellation">
+            <variables>
+              <variable name="Reply1_cancelAircraftService_OutputVariable"
+                        messageType="ns1:CancelAircraftServiceResponseMessage"/>
+            </variables>
+            <sequence name="Sequence3">
+              <assign name="SetAcknowledgement">
+                <copy>
+                  <from>$cancelAircraftServiceRequest/ns3:ServiceRequestId</from>
+                  <to>$Reply1_cancelAircraftService_OutputVariable.part1/ns3:ServiceRequestId</to>
+                </copy>
+                <copy>
+                  <from>concat('Received the instruction to cancel Service Request ',$cancelAircraftServiceRequest/ns3:ServiceRequestId)</from>
+                  <to>$Reply1_cancelAircraftService_OutputVariable.part1/ns3:Description</to>
+                </copy>
+              </assign>
+              <reply name="AcknowledgeCancellation" variable="Reply1_cancelAircraftService_OutputVariable"
+                     partnerLink="AircraftServiceOrchestration" portType="ns1:AircraftServiceNegotiation"
+                     operation="cancelAircraftService"/>
+              <exit name="Exit2"/>
+            </sequence>
+          </scope>
+        </onEvent>
+        <onAlarm bpelx:name="WaitForRFPDeadlineToExpire">
+          <until>$Deadline</until>
+          <scope name="HandleDeadlineExpiry">
+            <exit name="Exit1"/>
+          </scope>
+        </onAlarm>
+      </eventHandlers>
+      <sequence name="CallSuppliers">
+        <assign name="SetInputForRFP">
+          <copy>
+            <from>$inputVariable.part1/ns3:RequestingCarrierIATACode</from>
+            <to>$RequestProposalForService_requestProposal_InputVariable.part1/ns1:RequestingCarrierIATACode</to>
+          </copy>
+          <copy>
+            <from>$RFPIdentification</from>
+            <to>$RequestProposalForService_requestProposal_InputVariable.part1/ns1:RFPIdentificationNumber</to>
+          </copy>
+          <copy>
+            <from>$Deadline</from>
+            <to>$RequestProposalForService_requestProposal_InputVariable.part1/ns1:DeadlineForProposals</to>
+          </copy>
+          <copy>
+            <from>$inputVariable.part1/ns3:Flight</from>
+            <to>$RequestProposalForService_requestProposal_InputVariable.part1/ns1:Flight</to>
+          </copy>
+          <copy>
+            <from>$inputVariable.part1/ns3:Services</from>
+            <to>$RequestProposalForService_requestProposal_InputVariable.part1/ns1:Services</to>
+          </copy>
+        </assign>
+        <flow name="InterrogateAllAircraftServiceProviders">
+          <sequence name="SupplierGroundAndCloud">
+            <invoke name="RequestProposalForService" bpelx:invokeAsDetail="no" partnerLink="AirportServiceProvider"
+                    portType="ns2:AircraftService" operation="requestProposal"
+                    inputVariable="RequestProposalForService_requestProposal_InputVariable"/>
+            <receive name="ReceiveProposalForAircraftService" partnerLink="AirportServiceProvider"
+                     portType="ns2:AircraftServiceCallback" operation="submitProposal"
+                     variable="ReceiveProposalForAircraftService_submitProposal_InputVariable"/>
+
+            <extensionActivity>
+              <bpelx:call name="AddFlyingHighProposalToCollectedProposals" target="UpdateCollectedProposals">
+                <bpelx:param name="proposal" copyByValue="yes">$ReceiveProposalForAircraftService_submitProposal_InputVariable.part1</bpelx:param>
+                <bpelx:param name="supplier" copyByValue="yes">'In the cloud and on the ground'</bpelx:param>
+              </bpelx:call>
+            </extensionActivity>
+
+          </sequence>
+          <sequence name="Sequence2">
+            <invoke name="RequestProposalFromFlyingHigh" partnerLink="FlyingHighAircraftServiceProvider"
+                    portType="ns2:AircraftService" operation="requestProposal"
+                    inputVariable="RequestProposalForService_requestProposal_InputVariable" bpelx:invokeAsDetail="no"></invoke>
+            <receive name="ReceiveProposalFromFlyingHigh" partnerLink="FlyingHighAircraftServiceProvider"
+                     portType="ns2:AircraftServiceCallback" operation="submitProposal"
+                     variable="FlyingHigh_submitProposal_InputVariable"></receive>
+            <extensionActivity>
+              <bpelx:call name="AddFlyingHighProposalToCollectedProposals" target="UpdateCollectedProposals">
+                <bpelx:param name="proposal" copyByValue="yes">$FlyingHigh_submitProposal_InputVariable.part1</bpelx:param>
+                <bpelx:param name="supplier" copyByValue="yes">'FlyingHigh'</bpelx:param>
+              </bpelx:call>
+            </extensionActivity>
+          </sequence>
+        </flow>
+        <wait name="Wait1">
+          <for>'PT5M'</for>
+        </wait>
+      </sequence>
+    </scope>
+  </sequence>
+</process>
