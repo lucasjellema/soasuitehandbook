@@ -7,8 +7,8 @@
            the whole SOA Application, which may contain additional projects. 
         -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>EDNandServiceBus</groupId>
-    <artifactId>EDNJavaClient</artifactId>
+    <groupId>EDNandAlternativeChannels</groupId>
+    <artifactId>EDNServiceBusCalloutLibrary</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>sar</packaging>
     
@@ -96,10 +96,10 @@
                         ${basedir}/../EDNandAlternativeChannels.jws
                     </workspace>
                     <project>
-                        EDNJavaClient
+                        EDNServiceBusCalloutLibrary
                     </project>
                     <profile>
-                        FlightStatusUpdateEventPublisherJARDeployment
+                        EDNServiceBusCalloutLibraryJAR
                     </profile>
                     <usemaven>
                         true

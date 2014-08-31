@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+    <con:coreEntry>
+        <con:binding type="Any XML"/>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.af9667.0.14827d8e057.N7f69">
+            <con:stage id="_StageId-N3f57c7ff.af9667.0.14827d8e057.N7f67" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:javaCallout>
+                        <con2:id>_ActionId-N3f57c7ff.af9667.0.14827d8e057.N7f5e</con2:id>
+                        <con1:archive ref="PublishFlightStatusUpdateEvent/EDNServiceBusCalloutLibraryJAR"/>
+                        <con1:className>saibot.airport.event.sb.EDNEventPublisher</con1:className>
+                        <con1:method>public static void publishEDNEvent(org.apache.xmlbeans.XmlObject, java.lang.String, java.lang.String, java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText>$body/*[1]</con2:xqueryText>
+                        </con1:expr>
+                        <con1:expr>
+                            <con2:xqueryText>'saibot.airport/events/flight'</con2:xqueryText>
+                        </con1:expr>
+                        <con1:expr>
+                            <con2:xqueryText>'FlightStatusUpdateEvent'</con2:xqueryText>
+                        </con1:expr>
+                        <con1:expr>
+                            <con2:xqueryText>'flig:FlightStatusUpdate'</con2:xqueryText>
+                        </con1:expr>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.af9667.0.14827d8e057.N7f68">
+            <con:stage id="_StageId-N3f57c7ff.af9667.0.14827d8e057.N7f66" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.af9667.0.14827d8e057.N7f69</con:request>
+                <con:response>response-N3f57c7ff.af9667.0.14827d8e057.N7f68</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

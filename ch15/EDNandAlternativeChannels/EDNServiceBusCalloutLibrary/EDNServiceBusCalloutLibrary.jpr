@@ -66,7 +66,7 @@
       <string v="oracle.tip.tools.ide.ess.addin.ESSContentSetProvider/ess-content"/>
       <string v="oracle.bpm.fusion.studio.BPMProjectSettings/bpmProjectsProcessesContentSet"/>
    </list>
-   <value n="defaultPackage" v="saibot.airport.events.client"/>
+   <value n="defaultPackage" v="saibot.airport.event.sb"/>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
          <string v="Java"/>
@@ -103,7 +103,7 @@
    </hash>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
-         <hash n="EDNJavaClient">
+         <hash n="EDNServiceBusCalloutLibrary">
             <hash n="archiveOptions">
                <value n="hasManifest" v="false"/>
             </hash>
@@ -178,11 +178,11 @@
                   </hash>
                </list>
             </hash>
-            <url n="jarURL" path="deploy/sca_EDNJavaClient${composite.revision_id}.jar"/>
+            <url n="jarURL" path="deploy/sca_EDNServiceBusCalloutLibrary${composite.revision_id}.jar"/>
             <value n="profileClass" v="oracle.tip.tools.ide.fabric.deploy.sar.SarProfile"/>
-            <value n="profileName" v="EDNJavaClient"/>
+            <value n="profileName" v="EDNServiceBusCalloutLibrary"/>
          </hash>
-         <hash n="FlightStatusUpdateEventPublisherJARDeployment">
+         <hash n="EDNServiceBusCalloutLibraryJAR">
             <hash n="archiveOptions">
                <value n="hasManifest" v="true"/>
             </hash>
@@ -200,10 +200,6 @@
                      <value n="displayName" v="Project Output"/>
                      <hash n="filters">
                         <list n="rules">
-                           <hash>
-                              <value n="pattern" v="saibot/airport/events/client/FlightStatusUpdateEventSubscriber.class"/>
-                              <value n="type" v="1"/>
-                           </hash>
                            <hash>
                               <value n="pattern" v="scac_out.xml"/>
                               <value n="type" v="1"/>
@@ -223,22 +219,22 @@
                   </hash>
                </list>
             </hash>
-            <url n="jarURL" path="deploy/FlightStatusUpdateEventPublisherJARDeployment.jar"/>
+            <url n="jarURL" path="deploy/EDNServiceBusCalloutLibraryJAR.jar"/>
             <value n="profileClass" v="oracle.jdeveloper.deploy.jar.ArchiveProfile"/>
-            <value n="profileName" v="FlightStatusUpdateEventPublisherJARDeployment"/>
+            <value n="profileName" v="EDNServiceBusCalloutLibraryJAR"/>
          </hash>
       </hash>
       <list n="profileList">
-         <string v="EDNJavaClient"/>
-         <string v="FlightStatusUpdateEventPublisherJARDeployment"/>
+         <string v="EDNServiceBusCalloutLibrary"/>
+         <string v="EDNServiceBusCalloutLibraryJAR"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
       <url n="pomfileURL" path="pom.xml"/>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
-      <value n="j2eeWebAppName" v="EDNandServiceBus-EDNJavaClient-webapp"/>
-      <value n="j2eeWebContextRoot" v="EDNandServiceBus-EDNJavaClient-context-root"/>
+      <value n="j2eeWebAppName" v="EDNandAlternativeChannels-EDNServiceBusCalloutLibrary-webapp"/>
+      <value n="j2eeWebContextRoot" v="EDNandAlternativeChannels-EDNServiceBusCalloutLibrary-context-root"/>
    </hash>
    <hash n="oracle.jdeveloper.model.PathsConfiguration">
       <hash n="javaContentSet">
@@ -265,10 +261,6 @@
    <hash n="oracle.jdevimpl.config.JProjectLibraries">
       <list n="exportedReferences">
          <hash>
-            <value n="id" v="WebLogic 12.1 Remote-Client"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
             <value n="id" v="SOA Runtime"/>
             <value n="isJDK" v="false"/>
          </hash>
@@ -277,16 +269,33 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Tracking-core.jar"/>
+            <value n="id" v="WebLogic 12.1 Remote-Client"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
             <value n="id" v="Jca-binding-api.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="Tracking-core.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
       <hash n="internalDefinitions">
          <list n="libraryDefinitions">
+            <hash>
+               <list n="classPath">
+                  <url protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/oracle.soa.adapter_11.1.1/jca-binding-api.jar!/"/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Jca-binding-api.jar"/>
+               <value n="id" v="Jca-binding-api.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
             <hash>
                <list n="classPath">
                   <url protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/oracle.soa.fabric_11.1.1/tracking-core.jar!/"/>
@@ -298,20 +307,16 @@
             </hash>
             <hash>
                <list n="classPath">
-                  <url protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/oracle.soa.adapter_11.1.1/jca-binding-api.jar!/"/>
+                  <url protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/oracle_common/modules/com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar!/"/>
                </list>
                <value n="deployedByDefault" v="true"/>
-               <value n="description" v="Jca-binding-api.jar"/>
-               <value n="id" v="Jca-binding-api.jar"/>
+               <value n="description" v="Com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar"/>
+               <value n="id" v="Com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar"/>
                <value n="locked" v="true"/>
             </hash>
          </list>
       </hash>
       <list n="libraryReferences">
-         <hash>
-            <value n="id" v="WebLogic 12.1 Remote-Client"/>
-            <value n="isJDK" v="false"/>
-         </hash>
          <hash>
             <value n="id" v="SOA Runtime"/>
             <value n="isJDK" v="false"/>
@@ -321,11 +326,19 @@
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
-            <value n="id" v="Tracking-core.jar"/>
+            <value n="id" v="WebLogic 12.1 Remote-Client"/>
             <value n="isJDK" v="false"/>
          </hash>
          <hash>
             <value n="id" v="Jca-binding-api.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Tracking-core.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Com.bea.core.xml.xmlbeans_1.0.0.0_2-6-0.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
