@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sensors xmlns="http://xmlns.oracle.com/bpel/sensor">
+    <sensor sensorName="AirCarrierSuspensionSensor" kind="event" target="undefined" filter="" xmlns:ns0="saibot.airport/services/carrierwatcher">
+        <eventConfig event="{saibot.airport/events/aircarrier}AirCarrierSuspendedEvent" actionType="Subscribe" expression="$in/ns0:carrierSuspension/ns0:Carrier" component="AirCarrierSuspensionProcessor" outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema"/>
+    </sensor>
+</sensors>
