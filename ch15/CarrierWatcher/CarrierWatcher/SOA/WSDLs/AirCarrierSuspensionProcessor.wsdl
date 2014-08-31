@@ -1,0 +1,21 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="AirCarrierSuspensionProcessor"
+     targetNamespace="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/AirCarrierSuspensionProcessor"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/AirCarrierSuspensionProcessor"
+     xmlns:ns1="saibot.airport/services/carrierwatcher"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns2="saibot.airport/events/flight"
+    >
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/AirCarrierSuspensionProcessor"
+             xmlns:ns1="saibot.airport/services/carrierwatcher" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+            <import namespace="saibot.airport/services/carrierwatcher" schemaLocation="../Schemas/CarrierWatcher.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/events/flight" schemaLocation="../Schemas/FlightEvents.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+</wsdl:definitions>

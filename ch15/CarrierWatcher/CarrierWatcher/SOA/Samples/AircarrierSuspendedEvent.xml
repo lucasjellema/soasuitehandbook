@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<carrierSuspension xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="saibot.airport/services/carrierwatcher ../Schemas/CarrierWatcher.xsd"
+                   xmlns="saibot.airport/services/carrierwatcher">
+  <Carrier>QQ</Carrier>
+  <Comment>IATA has suspended QQ as a member because of very poor safety levels.</Comment>
+</carrierSuspension>

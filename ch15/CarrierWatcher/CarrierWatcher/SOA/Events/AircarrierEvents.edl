@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<definitions xmlns="http://schemas.oracle.com/events/edl" targetNamespace="saibot.airport/events/aircarrier">
+   <schema-import location="../Schemas/CarrierWatcher.xsd" namespace="saibot.airport/services/carrierwatcher"/>
+   <event-definition name="AirCarrierSuspendedEvent">
+      <content xmlns:ns1="saibot.airport/services/carrierwatcher" element="ns1:carrierSuspension"/>
+   </event-definition>
+</definitions>

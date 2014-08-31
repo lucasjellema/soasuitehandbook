@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:definitions xmlns:ns0="http://schemas.oracle.com/events/edl" targetNamespace="saibot.airport/events/flight">
+   <ns0:schema-import location="../Schemas/FlightEvents.xsd" namespace="saibot.airport/events/flight"/>
+   <ns0:event-definition name="FlightStatusUpdateEvent">
+      <ns0:content xmlns:ns1="saibot.airport/events/flight" element="ns1:FlightStatusUpdate"/>
+   </ns0:event-definition>
+</ns0:definitions>

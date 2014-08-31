@@ -1,0 +1,19 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/services/flightupdatenotification"
+     targetNamespace="saibot.airport/events/flight" xmlns:fev="saibot.airport/events/flight"
+     xmlns:common="saibot.airport/data/common" xmlns:flight="saibot.airport/data/flight" xmlns:reference="saibot.airport/data/reference"
+     elementFormDefault="qualified">
+    <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+    <xsd:import namespace="saibot.airport/data/flight" schemaLocation="flight.xsd"/>
+    <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+    <xsd:element name="FlightStatusUpdate" type="fev:FlightStatusUpdateType"/>
+    <xsd:complexType name="FlightStatusUpdateType">
+        <xsd:sequence>
+            <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1"
+                 maxOccurs="1"/>
+            <xsd:element name="FlightStatus" nillable="false" type="flight:flightStatusType" minOccurs="1"
+                 maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

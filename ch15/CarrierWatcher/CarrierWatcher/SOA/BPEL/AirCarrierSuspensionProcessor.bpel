@@ -1,0 +1,141 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Sun Aug 31 12:59:00 CEST 2014
+  Author:  lucas_j
+  Purpose: BPEL Process for event subscription
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="AirCarrierSuspensionProcessor"
+         targetNamespace="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/AirCarrierSuspensionProcessor"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/AirCarrierSuspensionProcessor"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns1="saibot.airport/events/aircarrier"
+         xmlns:ns2="saibot.airport/services/carrierwatcher"
+         xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns3="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/CurrentFlightsRetriever"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:ns0="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns4="saibot.airport/events/flight"
+         xmlns:ns6="saibot.airport/data/reference" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns5="saibot.airport/data/flight">
+    <import namespace="saibot.airport/events/flight" location="../Schemas/FlightEvents.xsd"
+            importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="saibot.airport/services/carrierwatcher" location="../Schemas/CarrierWatcher.xsd"
+            importType="http://www.w3.org/2001/XMLSchema"/>
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/AirCarrierSuspensionProcessor" location="../WSDLs/AirCarrierSuspensionProcessor.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="CurrentFlightsRetriever.currentflightsretriever_client"
+                     partnerLinkType="ns3:CurrentFlightsRetriever" partnerRole="CurrentFlightsRetrieverProvider"/>
+    </partnerLinks>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable0" element="ns2:carrierSuspension"/>
+        <variable name="RetrieveCurrentFlights_process_InputVariable"
+                  messageType="ns3:CurrentFlightsRetrieverRequestMessage"/>
+        <variable name="RetrieveCurrentFlights_process_OutputVariable"
+                  messageType="ns3:CurrentFlightsRetrieverResponseMessage"/>
+        <variable name="PublishFlightStatusUpdateEvent_InputVariable" element="ns4:FlightStatusUpdate"/>
+    </variables>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in AirCarrierSuspensionProcessor.wsdl) -->
+        <receive name="receiveInput0" bpelx:eventName="ns1:AirCarrierSuspendedEvent" variable="inputVariable0" createInstance="yes"/>
+        <assign name="SetCarrierOnInputCurrentFlightsRetriever">
+            <copy>
+                <from>$inputVariable0/ns2:Carrier</from>
+                <to>$RetrieveCurrentFlights_process_InputVariable.payload/ns2:Carrier</to>
+            </copy>
+        </assign>
+        <invoke name="RetrieveCurrentFlights" bpelx:invokeAsDetail="no"
+                partnerLink="CurrentFlightsRetriever.currentflightsretriever_client"
+                portType="ns3:CurrentFlightsRetriever" operation="process"
+                inputVariable="RetrieveCurrentFlights_process_InputVariable"
+                outputVariable="RetrieveCurrentFlights_process_OutputVariable"/>
+        <forEach parallel="yes" counterName="index" name="ForEachCurrentFlight">
+            <startCounterValue>1</startCounterValue>
+            <finalCounterValue>ora:countNodes('RetrieveCurrentFlights_process_OutputVariable','payload','./ns2:CurrentFlights/ns2:Flight')</finalCounterValue>
+            <scope name="Scope1">
+                <variables>
+                    <variable name="flight" type="ns2:currentFlightType"/>
+                </variables>
+                <sequence name="Sequence1">
+                    <assign name="AssignCurrentFlight">
+                        <copy>
+                            <from>$RetrieveCurrentFlights_process_OutputVariable.payload/ns2:CurrentFlights/ns2:Flight[$index]</from>
+                            <to>$flight</to>
+                        </copy>
+                    </assign>
+                    <if name="IfFlightNotYetClosedOrCanceled">
+                        <documentation>
+                            <![CDATA[flight needs to be canceled]]>
+                        </documentation>
+                        <condition>$flight/ns2:FlightStatus!= 'Cancelled'  and $flight/ns2:FlightStatus != 'Closed'  </condition>
+                        <sequence name="Sequence2">
+                            <assign name="SetEventPayload">
+                                <copy>
+                                    <from>$inputVariable0/ns2:Carrier</from>
+                                    <to>$PublishFlightStatusUpdateEvent_InputVariable/ns4:Carrier</to>
+                                </copy>
+                                <copy>
+                                    <from>$flight/ns2:FlightNumber</from>
+                                    <to>$PublishFlightStatusUpdateEvent_InputVariable/ns4:FlightNumber</to>
+                                </copy>
+                                <copy>
+                                    <from>'Other'</from>
+                                    <to>$PublishFlightStatusUpdateEvent_InputVariable/ns4:FlightStatus/ns5:Action</to>
+                                </copy>
+                                <copy>
+                                    <from>'Cancelled'</from>
+                                    <to>$PublishFlightStatusUpdateEvent_InputVariable/ns4:FlightStatus/ns5:Status</to>
+                                </copy>
+                                <copy>
+                                    <from>$flight/ns2:FlightDate</from>
+                                    <to>$PublishFlightStatusUpdateEvent_InputVariable/ns4:FlightStatus/ns5:TimePlanningUnit/ns6:startDate</to>
+                                </copy>
+                                <copy>
+                                    <from>$flight/ns2:HourOfDay</from>
+                                    <to>$PublishFlightStatusUpdateEvent_InputVariable/ns4:FlightStatus/ns5:TimePlanningUnit/ns6:HourOfDay</to>
+                                </copy>
+                                <copy>
+                                    <from>$flight/ns2:FiveMinuteBlock</from>
+                                    <to>$PublishFlightStatusUpdateEvent_InputVariable/ns4:FlightStatus/ns5:TimePlanningUnit/ns6:FiveMinuteBlock</to>
+                                </copy>
+                            </assign>
+                            <invoke name="PublishFlightStatusUpdateEvent" bpelx:invokeAsDetail="no"
+                                    bpelx:eventName="ns4:FlightStatusUpdateEvent"
+                                    inputVariable="PublishFlightStatusUpdateEvent_InputVariable"/>
+                        </sequence>
+                        <else>
+                            <empty name="Empty"/>
+                        </else>
+                    </if>
+                </sequence>
+            </scope>
+        </forEach>
+    </sequence></process>

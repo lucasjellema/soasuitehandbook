@@ -1,0 +1,123 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Sun Aug 31 12:45:58 CEST 2014
+  Author:  lucas_j
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="CurrentFlightsRetriever"
+               targetNamespace="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/CurrentFlightsRetriever"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/CurrentFlightsRetriever"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="saibot.airport/services/carrierwatcher">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/CurrentFlightsRetriever" location="../WSDLs/CurrentFlightsRetriever.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="currentflightsretriever_client" partnerLinkType="client:CurrentFlightsRetriever" myRole="CurrentFlightsRetrieverProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:CurrentFlightsRetrieverRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:CurrentFlightsRetrieverResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in CurrentFlightsRetriever.wsdl) -->
+    <receive name="receiveInput" partnerLink="currentflightsretriever_client" portType="client:CurrentFlightsRetriever" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignDummySetOfCurrentFlights">
+      <copy>
+        <from><literal><CurrentFlightsResponse xmlns="saibot.airport/services/carrierwatcher">
+  <CurrentFlights>
+    <Flight>
+      <FlightNumber>91</FlightNumber>
+      <FlightStatus>Closed</FlightStatus>
+      <ArrivalOrDeparture>A</ArrivalOrDeparture>
+      <FlightDate>20150528</FlightDate>
+      <HourOfDay>14</HourOfDay>
+      <FiveMinuteBlock>5</FiveMinuteBlock>
+    </Flight>
+    <Flight>
+      <FlightNumber>119</FlightNumber>
+      <FlightStatus>Open</FlightStatus>
+      <ArrivalOrDeparture>D</ArrivalOrDeparture>
+      <FlightDate>20150528</FlightDate>
+      <HourOfDay>16</HourOfDay>
+      <FiveMinuteBlock>25</FiveMinuteBlock>
+    </Flight>
+    <Flight>
+      <FlightNumber>280</FlightNumber>
+      <FlightStatus>Active</FlightStatus>
+      <ArrivalOrDeparture>D</ArrivalOrDeparture>
+      <FlightDate>20150528</FlightDate>
+      <HourOfDay>13</HourOfDay>
+      <FiveMinuteBlock>30</FiveMinuteBlock>
+    </Flight>
+    <Flight>
+      <FlightNumber>772</FlightNumber>
+      <FlightStatus>Cancelled</FlightStatus>
+      <ArrivalOrDeparture>D</ArrivalOrDeparture>
+      <FlightDate>20150528</FlightDate>
+      <HourOfDay>18</HourOfDay>
+      <FiveMinuteBlock>25</FiveMinuteBlock>
+    </Flight>
+    <Flight>
+      <FlightNumber>1020</FlightNumber>
+      <FlightStatus>Suspended</FlightStatus>
+      <ArrivalOrDeparture>D</ArrivalOrDeparture>
+      <FlightDate>20150528</FlightDate>
+      <HourOfDay>22</HourOfDay>
+      <FiveMinuteBlock>55</FiveMinuteBlock>
+    </Flight>
+    <Flight>
+      <FlightNumber>448</FlightNumber>
+      <FlightStatus>Open</FlightStatus>
+      <ArrivalOrDeparture>A</ArrivalOrDeparture>
+      <FlightDate>20150529</FlightDate>
+      <HourOfDay>11</HourOfDay>
+      <FiveMinuteBlock>25</FiveMinuteBlock>
+    </Flight>
+  </CurrentFlights>
+</CurrentFlightsResponse></literal></from>
+        <to>$outputVariable.payload</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="currentflightsretriever_client" portType="client:CurrentFlightsRetriever" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

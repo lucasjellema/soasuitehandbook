@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="CurrentFlightsRetriever"
+             targetNamespace="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/CurrentFlightsRetriever"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/CarrierWatcher/CarrierWatcher/CurrentFlightsRetriever"
+             xmlns:ns1="saibot.airport/services/carrierwatcher"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	TYPE DEFINITION - List of services participating in this BPEL process
+	The default output of the BPEL designer uses strings as input and 
+	output to the BPEL Process. But you can define or import any XML 
+	Schema type and use them as part of the message types.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="saibot.airport/services/carrierwatcher" schemaLocation="../Schemas/CarrierWatcher.xsd" />
+		</schema>
+	</wsdl:types>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	MESSAGE TYPE DEFINITION - Definition of the message types used as 
+	part of the port type defintions
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
+	<wsdl:message name="CurrentFlightsRetrieverRequestMessage">
+		<wsdl:part name="payload" element="ns1:CurrentFlightsRequest" />
+	</wsdl:message>
+	<wsdl:message name="CurrentFlightsRetrieverResponseMessage">
+		<wsdl:part name="payload" element="ns1:CurrentFlightsResponse" />
+	</wsdl:message>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	PORT TYPE DEFINITION - A port type groups a set of operations into
+	a logical service unit.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<!-- portType implemented by the CurrentFlightsRetriever BPEL process -->
+	<wsdl:portType name="CurrentFlightsRetriever">
+		<wsdl:operation name="process">
+			<wsdl:input  message="client:CurrentFlightsRetrieverRequestMessage" />
+			<wsdl:output message="client:CurrentFlightsRetrieverResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	PARTNER LINK TYPE DEFINITION
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ --> 
+	<plnk:partnerLinkType name="CurrentFlightsRetriever">
+		<plnk:role name="CurrentFlightsRetrieverProvider" portType="client:CurrentFlightsRetriever"/>
+	</plnk:partnerLinkType>
+</wsdl:definitions>
