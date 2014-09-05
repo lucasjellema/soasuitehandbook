@@ -85,8 +85,8 @@
                <list n="additionalManifests">
                   <url path="META-INF/MANIFEST.MF"/>
                </list>
-               <value n="bundleName" v="OEP_HelloWorld.CarParking"/>
-               <value n="bundleSymbolicName" v="OEP_HelloWorld.CarParking"/>
+               <value n="bundleName" v="OEP_SaibotAirport.CarParking"/>
+               <value n="bundleSymbolicName" v="OEP_SaibotAirport.CarParking"/>
                <value n="bundleVersion" v="1.0.0"/>
                <value n="hasManifest" v="true"/>
             </hash>
@@ -217,6 +217,14 @@
       <hash n="javaContentSet">
          <list n="constituent-sets">
             <hash>
+               <list n="pattern-filters">
+                  <string v="+**"/>
+               </list>
+               <list n="url-path">
+                  <url path="src/"/>
+               </list>
+            </hash>
+            <hash>
                <url n="content-folder-url" path="META-INF/saibot/airport/facilities/parking/"/>
                <list n="pattern-filters">
                   <string v="+saibot/airport/facilities/parking/"/>
@@ -226,12 +234,7 @@
                </list>
             </hash>
          </list>
-         <list n="pattern-filters">
-            <string v="+**"/>
-         </list>
-         <list n="url-path">
-            <url path="src/"/>
-         </list>
+         <list n="url-path"/>
       </hash>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectLibraries">
