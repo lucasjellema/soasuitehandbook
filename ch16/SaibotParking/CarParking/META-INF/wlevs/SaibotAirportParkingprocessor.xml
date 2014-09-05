@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wlevs:config xmlns:wlevs="http://www.bea.com/ns/wlevs/config/application">
+  <processor>
+    <name>carParkEventProcessor</name>
+    <rules>
+          <view id="CarparkStatus"><![CDATA[ 
+ IStream(select sum(car.entryOrExit) as carCount, car.carparkIdentifier from carInputChannel as car 
+ group by carparkIdentifier) ]]></view>
+    
+      <query id="CarparkQuery"><![CDATA[ 
+ select  carCount, carparkIdentifier, carParkNames.carparkName as description from CarparkStatus[now]  as car 
+ , TABLE(saibot.airport.facilities.parking.CarParkManager.getCarparkDetails(
+  car.carparkIdentifier) 
+   AS carparkName OF CHAR) AS carParkNames
+  ]]></query>
+    </rules>
+  </processor>
+ <processor>
+    <name>abandonedCarsProcessor</name>
+    <rules>
+      <query id="AbandonedCarsQuery"><![CDATA[ 
+ select abandoned.licencePlate,abandoned.carparkIdentifier, abandoned.arrivalTime as arrivalDate 
+ from carInputChannel match_recognize ( 
+ partition by carparkIdentifier, licencePlate
+ measures A.licencePlate as licencePlate  , A.carparkIdentifier as carparkIdentifier, A.arrivalTime as arrivalTime
+ INCLUDE TIMER EVENTS
+ pattern (A NotExit*)
+ duration 120 seconds
+ define 
+ A as entryOrExit= 1 
+ , NotExit AS entryOrExit!= -1
+  ) as abandoned
+ ]]></query>
+    </rules>
+  </processor>
+ 
+</wlevs:config>
