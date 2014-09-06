@@ -15,18 +15,29 @@
         <wlevs:event-type type-name="TennisMatchEvent">
             <wlevs:class>nl.amis.event.tennis.TennisMatchEvent</wlevs:class>
         </wlevs:event-type>
+         <wlevs:event-type type-name="Match">
+         <wlevs:class>nl.amis.event.tennis.TennisMatch</wlevs:class>
+        </wlevs:event-type>
     </wlevs:event-type-repository>
 
-
+    <!-- definition for cache that holds the match details -->
+    <wlevs:caching-system id="tennisLocalCachingSystem"/>
+    <wlevs:cache id="tennisMatchCache"
+                 key-properties="matchIdentifier"
+                 value-type="Match">
+        <wlevs:caching-system ref="tennisLocalCachingSystem"/>
+        <wlevs:cache-loader ref="tennisMatchesCacheLoader"/>
+    </wlevs:cache>
+     <bean id="tennisMatchesCacheLoader" class="nl.amis.event.tennis.TennisMatchCacheLoader">
+       
+    </bean>
+    
     <!-- Adapter can be created from a local class, without having to go through a adapter factory -->
     <wlevs:adapter id="tennisMatchAdapter" class="nl.amis.event.tennis.TennisMatchAdapter">
         <wlevs:listener ref="tennisInputChannel"/>
     </wlevs:adapter>
     <wlevs:processor id="tennisMatchProcessor">
-     <wlevs:function function-name="prettyGameScore"  exec-method="gameScore" >
-        <bean class="nl.amis.event.tennis.CustomCQLFunctionsLibrary"/>
-    </wlevs:function>
-    
+      <wlevs:cache-source ref="tennisMatchCache"/>    
     </wlevs:processor>
     <wlevs:processor id="tennisGameProcessor">
         <wlevs:listener ref="tennisOutChannel"/>

@@ -55,14 +55,21 @@
     <name>tennisMatchProcessor</name>
     <rules>
        <view id="SetPoints"><![CDATA[select * from tennisSetOutChannel where pointType=2]]></view>
+        <view id="SetPointsEnriched" >
+       <![CDATA[
+         RStream(select T.player, T.matchId as matchId, R.player0||'-'||R.player1 as lineup 
+         from SetPoints[now] as T, tennisMatchCache as R 
+         where to_char(T.matchId)= R.matchIdentifier)
+       ]]> 
+     </view>
       <query id="tennisMatchProcessor">
       <![CDATA[ 
       IStream
-      (  select its.player, 3 as pointType, score0||' - '||score1 as score, matchId as matchId
-         from  SetPoints
+      (  select its.player, 3 as pointType, lineup||' '||score0||' - '||score1 as score, matchId as matchId
+         from  SetPointsEnriched
       MATCH_RECOGNIZE (
       PARTITION  BY matchId
-         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1) as score0, sum(A.player)+C.player as score1, C.matchId as matchId
+         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1) as score0, sum(A.player)+C.player as score1, C.matchId as matchId, C.lineup as lineup
          PATTERN ( A+?  C )
          DEFINE            
             C  as (case C.player 
