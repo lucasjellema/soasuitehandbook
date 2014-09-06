@@ -7,13 +7,52 @@ import com.bea.wlevs.ede.api.StreamSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class TennisMatchAdapter implements RunnableBean, StreamSource {
 
     public TennisMatchAdapter() {
         super();
-        points.addAll(Arrays.asList(0,0,1,1,0,1,1,1
+        // MATCH 0
+        matchPoints.add(Arrays.asList(0,0,1,1,0,1,1,1
                                     ,1,0,0,0,0
+                                    ,1,1,1,1
+                                    ,0,0,1,1,0,1,0,0
+                                    ,1,0,0,0,0
+                                    ,0,0,1,1,0,1,0,0
+                                    ,1,0,0,0,0
+                                    ,0,0,1,1,0,1,0,0
+        ,1,1,0,1,1
+        ,1,1,1,0,0,0,1,0,0,1,0,1,1,0,1,1
+        ,0,0,0,0
+        ,0,0,0,0
+        ,0,0,0,0
+        ,0,0,1,1,0,0
+        ,1,1,0,1,1
+       ,1,0,0,1,0,1,1,1
+        ,1,0,1,0,1,1
+        ,1,1,0,1,1
+        ,1,0,0,1,1,1
+                                      ,0,1,1,1,1
+                                      ,0,0,0,0
+                                      ,1,1,0,0,1,1
+                                      ,0,0,1,1,1,0,0,0
+                                      ,1,1,0,0,1,1
+        ,1,0,1,1,1
+        ,0,0,1,0,1,1,1
+        ,1,0,1,0,1,1
+        ));
+       //MATCH 1
+        matchPoints.add(Arrays.asList(        1,0,0,1,1,1
+                                      ,0,1,1,1,1
+                                      ,0,0,0,0
+                                      ,1,1,0,0,1,1
+                                      ,0,0,1,1,1,0,0,0
+                                      ,1,1,0,0,1,1
+        ,1,0,1,1,1
+        ,0,0,1,0,1,1,1
+,0,1,1,0,1,1,1
+                                    ,1,0,1,0,0,0
                                     ,1,1,1,1
                                     ,0,0,1,1,0,1,0,0
                                     ,1,0,0,0,0
@@ -30,18 +69,30 @@ public class TennisMatchAdapter implements RunnableBean, StreamSource {
         ,1,0,0,1,0,1,1,1
         ,1,0,1,0,1,1
         ,1,1,0,1,1
-
-                                    ));
-        // games won by 1,0,1,0,0,0,0,0,1
-
+        ));
+        counters.addAll( Arrays.asList(new Integer[]{0,0}));
     }
     private static final int SLEEP_MILLIS = 120;
+    private static Random rand = new Random();
 
-private int counter=0;
+
+    public static int randInt(int min, int max) {
+
+        // NOTE: Usually this should be a field rather than a method
+        // variable so that it is not re-seeded every call.
+     
+        // nextInt is normally exclusive of the top value,
+        // so add 1 to make it inclusive
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
+    }
+    private List<Integer> counters = new ArrayList<Integer>() ;
     private String message;
     private boolean suspended;
+    
+    private List<List<Integer>> matchPoints = new ArrayList<List<Integer>>() ;
 
-private List<Integer> points = new ArrayList<Integer>() ;
 
     private StreamSender eventSender;
 
@@ -71,9 +122,19 @@ private List<Integer> points = new ArrayList<Integer>() ;
     private void generateTennisMatchEvent() {
         
         TennisMatchEvent event = new TennisMatchEvent();
-        if (counter< points.size()) {
-        event.setPlayer(this.points.get(counter++));
-        eventSender.sendInsertEvent(event);
+        
+        int matchId = randInt(0,1);
+        
+        List<Integer> points = matchPoints.get(matchId);
+   
+        if (counters.get(matchId)< points.size()) {
+          event.setPlayer(points.get(counters.get(matchId)));
+          counters.set(matchId, counters.get(matchId)+1);
+          event.setMatchId(matchId);
+          event.setPointType(0);
+          eventSender.sendInsertEvent(event);
+        } else {
+//            System.out.println("Out of match Events for match id "+matchId);
         }
     }
 

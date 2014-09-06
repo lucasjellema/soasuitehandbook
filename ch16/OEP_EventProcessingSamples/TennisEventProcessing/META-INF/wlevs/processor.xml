@@ -6,10 +6,11 @@
       <query id="tennisMatchProcessor">
       <![CDATA[ 
       IStream
-      (  select its.player, 1 as pointType, prettyGameScore(score0,score1) as score
+      (  select its.player, 1 as pointType, prettyGameScore(score0,score1) as score, matchId as matchId
          from  tennisInputChannel
       MATCH_RECOGNIZE (
-         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1) as score0, sum(A.player)+C.player as score1
+      PARTITION  BY matchId
+         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1) as score0, sum(A.player)+C.player as score1, C.matchId as matchId
          PATTERN ( A+?  C )
          DEFINE            
             C  as (C.player = prev (C.player)  and case last(A.player) 
@@ -31,10 +32,11 @@
       <query id="tennisSetProcessor">
       <![CDATA[ 
       IStream
-      (  select its.player, 2 as pointType,  its.score as score
+      (  select its.player, 2 as pointType,  its.score as score, matchId as matchId
          from  gamePoints
       MATCH_RECOGNIZE (
-         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1)||'-'|| sum(A.player)+C.player as score
+      PARTITION  BY matchId
+         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1)||'-'|| sum(A.player)+C.player as score, C.matchId as matchId
          PATTERN ( A+?  C )
          DEFINE            
             C  as (C.player = prev (C.player)  and case last(A.player) 

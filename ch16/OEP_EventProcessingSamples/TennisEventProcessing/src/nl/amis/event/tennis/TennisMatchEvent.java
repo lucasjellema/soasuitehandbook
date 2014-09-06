@@ -5,6 +5,15 @@ public class TennisMatchEvent {
     private int player;
     private int pointType;  // game, set, match
     private String score;
+    private int matchId;
+
+    public void setMatchId(int matchId) {
+        this.matchId = matchId;
+    }
+
+    public int getMatchId() {
+        return matchId;
+    }
 
     public void setScore(String score) {
         this.score = score;
