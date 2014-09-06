@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<n1:config xmlns:n1="http://www.bea.com/ns/wlevs/config/application">
+  <processor>
+    <name>tennisMatchProcessor</name>
+    <rules>
+      <query id="tennisMatchProcessor">
+      <![CDATA[ 
+      IStream
+      (  select its.player, 1 as pointType, prettyGameScore(score0,score1) as score
+         from  tennisInputChannel
+      MATCH_RECOGNIZE (
+         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1) as score0, sum(A.player)+C.player as score1
+         PATTERN ( A+?  C )
+         DEFINE            
+            C  as (C.player = prev (C.player)  and case last(A.player) 
+                                                   when 1 then sum(A.player) else (sum(abs((A.player-1))))
+                                                   end >= 3
+                                               and case last(A.player) 
+                                                   when 1 then sum(A.player*2-1) else (sum(1-A.player*2))
+                                                   end >= 1)
+      ) as its
+      )
+      ]]>
+      </query>
+    </rules>
+  </processor>
+  <processor>
+    <name>tennisSetProcessor</name>
+    <rules>
+      <view id="gamePoints"><![CDATA[select * from tennisOutChannel where pointType=1]]></view>
+      <query id="tennisSetProcessor">
+      <![CDATA[ 
+      IStream
+      (  select its.player, 2 as pointType,  its.score as score
+         from  gamePoints
+      MATCH_RECOGNIZE (
+         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1)||'-'|| sum(A.player)+C.player as score
+         PATTERN ( A+?  C )
+         DEFINE            
+            C  as (C.player = prev (C.player)  and case last(A.player) 
+                                                   when 1 then sum(A.player) else (sum(abs((A.player-1))))
+                                                   end >= 5
+                                               and case last(A.player) 
+                                                   when 1 then sum(A.player*2-1) else (sum(1-A.player*2))
+                                                   end >= 1)
+      ) as its
+      )
+      ]]>
+      </query>
+    </rules>
+  </processor>
+</n1:config>

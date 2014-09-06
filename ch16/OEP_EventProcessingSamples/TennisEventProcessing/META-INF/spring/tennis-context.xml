@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:wlevs="http://www.bea.com/ns/wlevs/spring"
+       xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/osgi
+  http://www.springframework.org/schema/osgi/spring-osgi.xsd
+  http://www.bea.com/ns/wlevs/spring
+  http://www.bea.com/ns/wlevs/spring/ocep-epn.xsd">
+
+    <wlevs:event-type-repository>
+        <wlevs:event-type type-name="TennisMatchEvent">
+            <wlevs:class>nl.amis.event.tennis.helloworld.TennisMatchEvent</wlevs:class>
+        </wlevs:event-type>
+    </wlevs:event-type-repository>
+
+
+    <!-- Adapter can be created from a local class, without having to go through a adapter factory -->
+    <wlevs:adapter id="tennisMatchAdapter" class="nl.amis.event.tennis.helloworld.TennisMatchAdapter">
+        <wlevs:listener ref="tennisInputChannel"/>
+    </wlevs:adapter>
+    <wlevs:processor id="tennisMatchProcessor">
+     <wlevs:function function-name="prettyGameScore"  exec-method="gameScore" >
+        <bean class="nl.amis.event.tennis.helloworld.CustomCQLFunctionsLibrary"/>
+    </wlevs:function>
+    </wlevs:processor>
+    <wlevs:processor id="tennisSetProcessor"/>
+    <wlevs:channel id="tennisInputChannel"  event-type="TennisMatchEvent" advertise="true">
+        <wlevs:listener ref="tennisReporterBean"/>
+        <wlevs:listener ref="tennisMatchProcessor"/>
+         
+    </wlevs:channel>
+    <bean id="tennisReporterBean" class="nl.amis.event.tennis.helloworld.TennisReporter"/>
+    <wlevs:channel id="tennisOutChannel" event-type="TennisMatchEvent" >
+        <wlevs:listener  ref="tennisSetProcessor"/>
+        <wlevs:listener ref="tennisReporterBean"/>
+        <wlevs:source ref="tennisMatchProcessor"/>
+    </wlevs:channel>  
+    <wlevs:channel id="tennisSetOutChannel" event-type="TennisMatchEvent" >
+        <wlevs:listener ref="tennisReporterBean"/>
+        <wlevs:source ref="tennisSetProcessor"/>
+    </wlevs:channel>
+</beans>
