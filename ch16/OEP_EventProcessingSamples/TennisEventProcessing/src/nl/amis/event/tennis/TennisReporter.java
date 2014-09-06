@@ -1,4 +1,4 @@
-package nl.amis.event.tennis.helloworld;
+package nl.amis.event.tennis;
 
 import com.bea.wlevs.ede.api.StreamSink;
 
