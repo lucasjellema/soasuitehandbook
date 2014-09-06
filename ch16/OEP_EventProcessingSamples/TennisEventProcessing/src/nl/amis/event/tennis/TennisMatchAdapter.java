@@ -15,7 +15,7 @@ public class TennisMatchAdapter implements RunnableBean, StreamSource {
         super();
         // MATCH 0
         matchPoints.add(Arrays.asList(0,0,1,1,0,1,1,1
-                                    ,1,0,0,0,0
+                                    ,1,0,0,0,1,0
                                     ,1,1,1,1
                                     ,0,0,1,1,0,1,0,0
                                     ,1,0,0,0,0
@@ -45,7 +45,7 @@ public class TennisMatchAdapter implements RunnableBean, StreamSource {
        //MATCH 1
         matchPoints.add(Arrays.asList(        1,0,0,1,1,1
                                       ,0,1,1,1,1
-                                      ,0,0,0,0
+                                      ,0,0,0,1,0
                                       ,1,1,0,0,1,1
                                       ,0,0,1,1,1,0,0,0
                                       ,1,1,0,0,1,1

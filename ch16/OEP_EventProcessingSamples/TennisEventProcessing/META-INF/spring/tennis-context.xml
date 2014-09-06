@@ -26,21 +26,33 @@
      <wlevs:function function-name="prettyGameScore"  exec-method="gameScore" >
         <bean class="nl.amis.event.tennis.CustomCQLFunctionsLibrary"/>
     </wlevs:function>
+    
+    </wlevs:processor>
+    <wlevs:processor id="tennisGameProcessor">
+        <wlevs:listener ref="tennisOutChannel"/>
+        <wlevs:function function-name="prettyGameScore"  exec-method="gameScore" >
+        <bean class="nl.amis.event.tennis.CustomCQLFunctionsLibrary"/>
+    </wlevs:function>
     </wlevs:processor>
     <wlevs:processor id="tennisSetProcessor"/>
+    
+    
     <wlevs:channel id="tennisInputChannel"  event-type="TennisMatchEvent" advertise="true">
-        <wlevs:listener ref="tennisReporterBean"/>
-        <wlevs:listener ref="tennisMatchProcessor"/>
-         
+        <wlevs:listener ref="tennisGameProcessor"/>
+        <wlevs:listener ref="tennisReporterBean"/>        
     </wlevs:channel>
     <bean id="tennisReporterBean" class="nl.amis.event.tennis.TennisReporter"/>
     <wlevs:channel id="tennisOutChannel" event-type="TennisMatchEvent" >
         <wlevs:listener  ref="tennisSetProcessor"/>
         <wlevs:listener ref="tennisReporterBean"/>
-        <wlevs:source ref="tennisMatchProcessor"/>
     </wlevs:channel>  
     <wlevs:channel id="tennisSetOutChannel" event-type="TennisMatchEvent" >
+        <wlevs:listener ref="tennisMatchProcessor"/>
         <wlevs:listener ref="tennisReporterBean"/>
         <wlevs:source ref="tennisSetProcessor"/>
+    </wlevs:channel>
+    <wlevs:channel id="tennisMatchOutputChannel" event-type="TennisMatchEvent">
+        <wlevs:listener ref="tennisReporterBean"/>
+        <wlevs:source ref="tennisMatchProcessor"/>
     </wlevs:channel>
 </beans>

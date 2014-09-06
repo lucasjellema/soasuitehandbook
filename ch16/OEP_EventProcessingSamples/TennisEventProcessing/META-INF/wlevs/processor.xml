@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <n1:config xmlns:n1="http://www.bea.com/ns/wlevs/config/application">
   <processor>
-    <name>tennisMatchProcessor</name>
+    <name>tennisGameProcessor</name>
     <rules>
-      <query id="tennisMatchProcessor">
+      <query id="tennisGameProcessor">
       <![CDATA[ 
       IStream
       (  select its.player, 1 as pointType, prettyGameScore(score0,score1) as score, matchId as matchId
@@ -13,12 +13,12 @@
          MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1) as score0, sum(A.player)+C.player as score1, C.matchId as matchId
          PATTERN ( A+?  C )
          DEFINE            
-            C  as (C.player = prev (C.player)  and case last(A.player) 
-                                                   when 1 then sum(A.player) else (sum(abs((A.player-1))))
-                                                   end >= 3
-                                               and case last(A.player) 
-                                                   when 1 then sum(A.player*2-1) else (sum(1-A.player*2))
-                                                   end >= 1)
+            C  as (case C.player 
+                    when 1 then sum(A.player) else (sum(abs((A.player-1))))
+                    end >= 3
+                    and case C.player 
+                        when 1 then sum(A.player*2-1) else (sum(1-A.player*2))
+                        end >= 1)
       ) as its
       )
       ]]>
@@ -39,12 +39,37 @@
          MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1)||'-'|| sum(A.player)+C.player as score, C.matchId as matchId
          PATTERN ( A+?  C )
          DEFINE            
-            C  as (C.player = prev (C.player)  and case last(A.player) 
+            C  as ( case C.player 
                                                    when 1 then sum(A.player) else (sum(abs((A.player-1))))
                                                    end >= 5
-                                               and case last(A.player) 
+                                               and case C.player 
                                                    when 1 then sum(A.player*2-1) else (sum(1-A.player*2))
                                                    end >= 1)
+      ) as its
+      )
+      ]]>
+      </query>
+    </rules>
+  </processor>
+  <processor>
+    <name>tennisMatchProcessor</name>
+    <rules>
+       <view id="SetPoints"><![CDATA[select * from tennisSetOutChannel where pointType=2]]></view>
+      <query id="tennisMatchProcessor">
+      <![CDATA[ 
+      IStream
+      (  select its.player, 3 as pointType, score0||' - '||score1 as score, matchId as matchId
+         from  SetPoints
+      MATCH_RECOGNIZE (
+      PARTITION  BY matchId
+         MEASURES C.player as player, abs(sum((A.player-1)))+abs(C.player-1) as score0, sum(A.player)+C.player as score1, C.matchId as matchId
+         PATTERN ( A+?  C )
+         DEFINE            
+            C  as (case C.player 
+                    when 1 then sum(A.player) 
+                    else (sum(abs((A.player-1))))
+                    end >= 1
+                    )
       ) as its
       )
       ]]>

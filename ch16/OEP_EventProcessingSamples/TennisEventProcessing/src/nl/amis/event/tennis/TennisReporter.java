@@ -23,7 +23,7 @@ public class TennisReporter implements StreamSink {
                 System.out.println("Match Id "+tennisMatchEvent.getMatchId()+":  Match Won By: " + tennisMatchEvent.getPlayer()+" - score: "+tennisMatchEvent.getScore());
             }
             
-            if (tennisMatchEvent.getPointType() > 2) {
+            if (tennisMatchEvent.getPointType() > 3) {
             System.out.println("Special : " + tennisMatchEvent.getPointType());
             }
         }
