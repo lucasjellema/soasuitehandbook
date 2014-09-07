@@ -83,4 +83,69 @@
       </query>
     </rules>
   </processor>
+  <processor>
+    <name>newMatchDetector</name>
+    <rules>
+       <view id="TennisMatches"><![CDATA[select distinct matchId from tennisInputChannel ]]></view>
+        <view id="MatchesEnriched" >
+       <![CDATA[
+         RStream(select T.matchId as matchId, R.player0||'-'||R.player1 as lineup 
+         from TennisMatches[now] as T, tennisMatchCache as R 
+         where to_char(T.matchId)= R.matchIdentifier
+         )
+       ]]> 
+     </view>
+      <query id="newMatchesDetector">
+      <![CDATA[ 
+      IStream
+      (  select matchId as matchId, -1 as pointType, lineup as score
+         from  MatchesEnriched
+      )
+      ]]>
+      </query>
+    </rules>
+  </processor>
+  <processor>
+    <name>pausedMatchDetector</name>
+    <rules>
+      
+       <view id="CompletedTennisMatches"><![CDATA[select matchId, pointType from tennisMatchOutputChannel]]></view>
+       <view id="MatchRallypoints"><![CDATA[select matchId, pointType from tennisInputChannel ]]></view>
+       <view id="MatchBeat"><![CDATA[CompletedTennisMatches union all MatchRallypoints]]></view><!-- <view id="CompletedTennisMatches"><![CDATA[select matchId, pointType from tennisMatchOutputChannel]]></view>
+       <view id="MatchRallypoints"><![CDATA[select matchId, pointType from tennisInputChannel ]]></view>
+       <view id="MatchBeat"><![CDATA[CompletedTennisMatches union all MatchRallypoints]]></view>-->
+      <view id="pausedMatches"><![CDATA[ 
+ select interrupted.matchId as matchId, -2 as pointType 
+ from tennisInputChannel 
+  match_recognize ( 
+ partition by matchId
+ measures A.matchId as matchId
+ ALL MATCHES
+ INCLUDE TIMER EVENTS
+ pattern (A NoAction* )
+ duration multiples of 5 seconds
+ define 
+ A as A.pointType= 0 
+ , NoAction AS ( NoAction.pointType!= 0)
+  ) as interrupted
+ 
+ ]]></view>
+        <view id="InterruptedMatchesEnriched" >
+       <![CDATA[
+         RStream(select T.matchId as matchId,R.player0||'-'||R.player1 as lineup 
+         from pausedMatches[now] as T, tennisMatchCache as R 
+         where to_char(T.matchId)= R.matchIdentifier
+         )
+       ]]> 
+     </view>
+      <query id="pausedMatchDetector">
+      <![CDATA[ 
+      IStream
+      (  select matchId as matchId, -2 as pointType, lineup as score
+         from  InterruptedMatchesEnriched
+      )
+      ]]>
+      </query>
+    </rules>
+  </processor>
 </n1:config>

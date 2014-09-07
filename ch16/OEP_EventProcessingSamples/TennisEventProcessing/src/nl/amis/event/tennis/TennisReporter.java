@@ -10,8 +10,14 @@ public class TennisReporter implements StreamSink {
     public void onInsertEvent(Object event) {
         if (event instanceof TennisMatchEvent) {
             TennisMatchEvent tennisMatchEvent = (TennisMatchEvent) event;
+            if (tennisMatchEvent.getPointType() == -1) {
+                    System.out.println("New Match has begun: "+tennisMatchEvent.getScore());
+            }
+            if (tennisMatchEvent.getPointType() == -2) {
+                    System.out.println("!!! Match seems to be interrupted: "+tennisMatchEvent.getScore());
+            }
             if (tennisMatchEvent.getPointType() == 0) {
-       //        System.out.println("Match Id "+tennisMatchEvent.getMatchId()+":  Normal point for : " + tennisMatchEvent.getPlayer()); //+" - score: "+tennisMatchEvent.getScore());
+            //        System.out.println("Match Id "+tennisMatchEvent.getMatchId()+":  Normal point for : " + tennisMatchEvent.getPlayer()); //+" - score: "+tennisMatchEvent.getScore());
             }
             if (tennisMatchEvent.getPointType() == 1) {
                 System.out.println("Match Id "+tennisMatchEvent.getMatchId()+":  Game for : " + tennisMatchEvent.getPlayer()+" - score: "+tennisMatchEvent.getScore() );

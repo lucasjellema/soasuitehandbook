@@ -60,6 +60,8 @@ public class TennisMatchCacheLoader implements CacheLoader<String, Object>, Init
         //        matchIdProperty.setValue(event, 0);
         matchesMap.put("0", new TennisMatch("0", "Nadal", "Federer"));
         matchesMap.put("1", new TennisMatch("1", "Jellema", "Edberg"));
+        matchesMap.put("2", new TennisMatch("2", "McEnroe", "Djokovic"));
+        matchesMap.put("3", new TennisMatch("3", "Sjarapova", "Williams"));
 
 
     }

@@ -11,6 +11,8 @@ import java.util.Random;
 
 public class TennisMatchAdapter implements RunnableBean, StreamSource {
 
+int numberOfMatches=0;
+
     public TennisMatchAdapter() {
         super();
         // MATCH 0
@@ -70,7 +72,18 @@ public class TennisMatchAdapter implements RunnableBean, StreamSource {
         ,1,0,1,0,1,1
         ,1,1,0,1,1
         ));
-        counters.addAll( Arrays.asList(new Integer[]{0,0}));
+        //MATCH 1
+         matchPoints.add(Arrays.asList(        1,0,0,1,1,1
+                                       ,0,1,1,1,1
+                                       ,0,0,0,1,0
+                                       ,1,1,0,0,1,1
+                                       ,0,0,1,1,1,0,0,0
+         ));
+         numberOfMatches= matchPoints.size();
+         for (int i=0;i<numberOfMatches;i++) {
+             counters.add(0);
+         }
+//        counters.addAll( Arrays.asList(new Integer[]{0,0,0}));
     }
     private static final int SLEEP_MILLIS = 120;
     private static Random rand = new Random();
@@ -123,7 +136,7 @@ public class TennisMatchAdapter implements RunnableBean, StreamSource {
         
         TennisMatchEvent event = new TennisMatchEvent();
         
-        int matchId = randInt(0,1);
+        int matchId = randInt(0,numberOfMatches-1);
         
         List<Integer> points = matchPoints.get(matchId);
    

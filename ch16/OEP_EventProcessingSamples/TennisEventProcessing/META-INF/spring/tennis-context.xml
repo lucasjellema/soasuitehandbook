@@ -49,11 +49,14 @@
     
     
     <wlevs:channel id="tennisInputChannel"  event-type="TennisMatchEvent" advertise="true">
+        <wlevs:listener ref="newMatchDetector"/>
         <wlevs:listener ref="tennisGameProcessor"/>
+        <wlevs:listener ref="pausedMatchDetector"/>
         <wlevs:listener ref="tennisReporterBean"/>        
     </wlevs:channel>
     <bean id="tennisReporterBean" class="nl.amis.event.tennis.TennisReporter"/>
     <wlevs:channel id="tennisOutChannel" event-type="TennisMatchEvent" >
+        <wlevs:listener ref="pausedMatchDetector"/>
         <wlevs:listener  ref="tennisSetProcessor"/>
         <wlevs:listener ref="tennisReporterBean"/>
     </wlevs:channel>  
@@ -63,7 +66,19 @@
         <wlevs:source ref="tennisSetProcessor"/>
     </wlevs:channel>
     <wlevs:channel id="tennisMatchOutputChannel" event-type="TennisMatchEvent">
+        <wlevs:listener ref="pausedMatchDetector"/>
         <wlevs:listener ref="tennisReporterBean"/>
         <wlevs:source ref="tennisMatchProcessor"/>
+    </wlevs:channel>
+    <wlevs:processor id="newMatchDetector">
+        <wlevs:listener ref="tennisMatchOutputChannel"/>
+           <wlevs:cache-source ref="tennisMatchCache"/>   
+    </wlevs:processor>
+    <wlevs:processor id="pausedMatchDetector">
+           <wlevs:cache-source ref="tennisMatchCache"/>   
+    </wlevs:processor>
+    <wlevs:channel id="pausedMatchesOutputChannel" event-type="TennisMatchEvent">
+        <wlevs:listener ref="tennisReporterBean"/>
+        <wlevs:source ref="pausedMatchDetector"/>
     </wlevs:channel>
 </beans>
