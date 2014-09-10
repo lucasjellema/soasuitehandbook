@@ -23,6 +23,26 @@
       )
       ]]>
       </query>
+      <query id="tennisGameScoreProcessor">
+      <![CDATA[ 
+      IStream
+      (  select its.player, 5 as pointType, prettyGameScore(score0,score1) as score, matchId as matchId
+         from  tennisInputChannel
+      MATCH_RECOGNIZE (
+      PARTITION  BY matchId
+         MEASURES A.player as player, abs(sum((A.player-1)))+abs(A.player-1) as score0, sum(A.player)+A.player as score1, A.matchId as matchId
+         PATTERN ( A+ )
+         DEFINE            
+            A  as (case A.player 
+                    when 1 then sum(A.player) else (sum(abs((A.player-1))))
+                    end >993
+                    or case A.player 
+                        when 1 then sum(A.player*2-1) else (sum(1-A.player*2))
+                        end < 1)
+      ) as its
+      )
+      ]]>
+      </query>
     </rules>
   </processor>
   <processor>
@@ -109,13 +129,12 @@
     <name>pausedMatchDetector</name>
     <rules>
       
-       <view id="CompletedTennisMatches"><![CDATA[select matchId, pointType from tennisMatchOutputChannel]]></view>
-       <view id="MatchRallypoints"><![CDATA[select matchId, pointType from tennisInputChannel ]]></view>
-       <view id="MatchBeat"><![CDATA[CompletedTennisMatches union all MatchRallypoints]]></view><!-- <view id="CompletedTennisMatches"><![CDATA[select matchId, pointType from tennisMatchOutputChannel]]></view>
+       <view id="CompletedTennisMatches"><![CDATA[IStream(select distinct matchId as matchId from tennisMatchOutputChannel where pointType = 3)]]></view>
+    <!-- <view id="CompletedTennisMatches"><![CDATA[select matchId, pointType from tennisMatchOutputChannel]]></view>
        <view id="MatchRallypoints"><![CDATA[select matchId, pointType from tennisInputChannel ]]></view>
        <view id="MatchBeat"><![CDATA[CompletedTennisMatches union all MatchRallypoints]]></view>-->
       <view id="pausedMatches"><![CDATA[ 
- select interrupted.matchId as matchId, -2 as pointType 
+ select interrupted.matchId as matchId
  from tennisInputChannel 
   match_recognize ( 
  partition by matchId
@@ -123,17 +142,27 @@
  ALL MATCHES
  INCLUDE TIMER EVENTS
  pattern (A NoAction* )
- duration multiples of 5 seconds
+ duration multiples of 15 seconds
  define 
  A as A.pointType= 0 
  , NoAction AS ( NoAction.pointType!= 0)
   ) as interrupted
- 
  ]]></view>
+        <view id="PausedMatches" >
+       <![CDATA[
+         select c.matchId from pausedMatches[now]  as p left outer join CompletedTennisMatches [now] as c on p.matchId = c.matchId       
+         where c.matchId is null
+       ]]> 
+     </view>
+       <view id="InterruptedMatches" >
+       <![CDATA[
+         IStream(select * from PausedMatches)
+       ]]> 
+     </view>
         <view id="InterruptedMatchesEnriched" >
        <![CDATA[
          RStream(select T.matchId as matchId,R.player0||'-'||R.player1 as lineup 
-         from pausedMatches[now] as T, tennisMatchCache as R 
+         from InterruptedMatches[now] as T, tennisMatchCache as R 
          where to_char(T.matchId)= R.matchIdentifier
          )
        ]]> 
@@ -145,6 +174,48 @@
          from  InterruptedMatchesEnriched
       )
       ]]>
+      </query>
+    </rules>
+  </processor>
+  <processor>
+    <name>tennisTournamentAggregator</name>
+    <rules>
+      <view id="PartialTournamentStatus"><![CDATA[ 
+         select count(distinct matchId) as currentMatchCount 
+         ,      count(*)/(0.00001+(30*count(distinct matchId))) as averageTimePerPoint 
+         ,      count(*)  as totalPointsCount
+         from tennisInputChannel [range 30 slide 10] ]]></view>
+      <view id="TotalTournamentPointsCount"><![CDATA[ 
+         select count(*) as totalPointsCount 
+         from tennisInputChannel [range 14 DAY slide 5  ] ]]></view>
+      <view id="LongestRally"><![CDATA[ 
+        select max(RallyInterval)/1000000 as maxRallyInterval 
+        ,      avg(RallyInterval)/1000000 as avgRallyInterval  
+        from   tennisInputChannel 
+        match_recognize ( 
+            measures A.matchId as matchId
+            ,        B.Element_Time - A.element_Time as RallyInterval
+            pattern (A C* B )
+            define 
+               A as A.pointType= 0 
+             , B AS ( B.matchId = A.matchId and B.pointType = 0 and  nvl(B.Element_Time - A.element_Time,0)>0 )             
+             , C AS (C.matchId = A.matchId and C.pointType !=0)
+        ) as rally
+      ]]></view>
+      <view id="TournamentStatusMergeView"><![CDATA[ 
+         istream(select pts.currentMatchCount  as currentMatchCount 
+         ,      avgRallyInterval as averageTimePerPoint 
+         ,      tpc.totalPointsCount  as totalPointsCount
+         ,      maxRallyInterval as longestRallyDuration
+         from PartialTournamentStatus as pts ,TotalTournamentPointsCount as tpc, LongestRally
+         ) ]]>
+      </view>
+      <query id="TournamentStatusQuery"><![CDATA[ 
+         select currentMatchCount  as currentMatchCount 
+         ,      averageTimePerPoint  as averageTimePerPoint 
+         ,      totalPointsCount  as totalPointsCount
+         ,      longestRallyDuration as longestRallyDuration
+         from TournamentStatusMergeView [range 100 slide 10 seconds] ]]>
       </query>
     </rules>
   </processor>

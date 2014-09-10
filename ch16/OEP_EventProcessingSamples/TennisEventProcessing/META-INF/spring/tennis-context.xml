@@ -15,6 +15,9 @@
         <wlevs:event-type type-name="TennisMatchEvent">
             <wlevs:class>nl.amis.event.tennis.TennisMatchEvent</wlevs:class>
         </wlevs:event-type>
+        <wlevs:event-type type-name="TennisAggregateEvent">
+            <wlevs:class>nl.amis.event.tennis.TennisAggregateEvent</wlevs:class>
+        </wlevs:event-type>
          <wlevs:event-type type-name="Match">
          <wlevs:class>nl.amis.event.tennis.TennisMatch</wlevs:class>
         </wlevs:event-type>
@@ -49,6 +52,7 @@
     
     
     <wlevs:channel id="tennisInputChannel"  event-type="TennisMatchEvent" advertise="true">
+        <wlevs:listener ref="tennisTournamentAggregator"/>
         <wlevs:listener ref="newMatchDetector"/>
         <wlevs:listener ref="tennisGameProcessor"/>
         <wlevs:listener ref="pausedMatchDetector"/>
@@ -81,4 +85,9 @@
         <wlevs:listener ref="tennisReporterBean"/>
         <wlevs:source ref="pausedMatchDetector"/>
     </wlevs:channel>
+    <wlevs:channel id="aggregateTennisEventChannel" event-type="TennisAggregateEvent">
+        <wlevs:listener ref="tennisReporterBean"/>
+        <wlevs:source ref="tennisTournamentAggregator"/>
+    </wlevs:channel>
+    <wlevs:processor id="tennisTournamentAggregator"/>
 </beans>
