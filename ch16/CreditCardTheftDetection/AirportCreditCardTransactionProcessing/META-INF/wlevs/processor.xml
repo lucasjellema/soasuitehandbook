@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<n1:config xmlns:n1="http://www.bea.com/ns/wlevs/config/application">
+  <processor>
+    <name>creditCardAggregator</name>
+    <rules>
+      <query id="creditCardTransactionQuery"><![CDATA[ 
+        select count(distinct creditCardNumber) as numberOfCreditCards
+        ,      sum(amount) as sumAmounts
+        ,      count(*) as numberOfPurchases
+        ,      listAgg(distinct shopIdentifier) as shops 
+        from creditCardPurchaseChannel [range 1 hour slide 50 seconds]
+ ]]></query>
+    </rules>
+  </processor>
+  <processor>
+    <name>suspectCreditCardTransactionStringDetector</name>
+    <rules>
+      <view id="suspectStringOfTransactions"><![CDATA[ 
+ select its.creditCardNumber as creditCardNumber,totalSum as sumAmounts
+      , delta as shoppingDuration, shops as shops 
+      , purchaseAmounts as purchaseAmounts
+ from creditCardPurchaseChannel  
+      MATCH_RECOGNIZE (
+      PARTITION  BY creditCardNumber
+         MEASURES C.creditCardNumber as creditCardNumber
+         , sum(allPurchases.amount) as totalSum
+         , C.element_time - A.element_time as delta
+         , listAgg(allPurchases.shopIdentifier) as shops
+         , listAgg(allPurchases.amount) as purchaseAmounts
+         PATTERN ( A+  B?  A+ C) within 30000 milliseconds 
+         SUBSET allPurchases = (A,B,C)
+         DEFINE   
+          A as A.shopIdentifier >= A.shopIdentifier and A.amount between  200 and 600
+          , B as B.shopIdentifier < A.shopIdentifier and A.shopIdentifier - B.shopIdentifier < 7 and B.amount between  200 and 600
+           ,C as C.amount between  200 and 600 and A.shopIdentifier - C.shopIdentifier < 7 
+      ) as its
+ ]]></view>
+ <query id="funnyStringOfTransaction">
+ <![CDATA[
+ select creditCardNumber as creditCardNumber
+ ,      sumAmounts
+ ,      shops as shops  
+ ,      shoppingDuration
+ ,      purchaseAmounts
+ from  suspectStringOfTransactions
+ ]]>
+ </query></rules>
+  </processor>
+</n1:config>

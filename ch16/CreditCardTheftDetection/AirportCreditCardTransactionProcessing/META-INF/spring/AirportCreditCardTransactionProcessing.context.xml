@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<beans xmlns:spring="http://www.springframework.org/schema/beans" xmlns:wlevs="http://www.bea.com/ns/wlevs/spring"
+       xmlns:hadoop="http://www.oracle.com/ns/oep/hadoop" xmlns:nosqldb="http://www.oracle.com/ns/oep/nosqldb"
+       xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="
+ 	http://www.springframework.org/schema/beans
+ 	http://www.springframework.org/schema/beans/spring-beans.xsd
+ 	http://www.springframework.org/schema/osgi
+ 	http://www.springframework.org/schema/osgi/spring-osgi.xsd
+ 	http://www.bea.com/ns/wlevs/spring
+ 	http://www.bea.com/ns/wlevs/spring/ocep-epn.xsd
+ 	http://www.oracle.com/ns/oep/hadoop
+ 	http://www.oracle.com/ns/oep/hadoop/oep-hadoop.xsd
+ 	http://www.oracle.com/ns/oep/nosqldb
+ 	http://www.oracle.com/ns/oep/nosqldb/oep-nosqldb.xsd">
+  <wlevs:event-type-repository>
+    <wlevs:event-type type-name="CreditCardPurchaseEvent">
+      <wlevs:class>saibot.airport.security.prevention.event.CreditCardPurchaseEvent</wlevs:class>
+    </wlevs:event-type>
+    <wlevs:event-type type-name="SuspectCreditCardEvent">
+      <wlevs:class>saibot.airport.security.prevention.event.SuspectCreditCardEvent</wlevs:class>
+    </wlevs:event-type>
+    <wlevs:event-type type-name="CreditCardPurchasesSummaryEvent">
+      <wlevs:class>saibot.airport.security.prevention.event.CreditCardPurchasesSummaryEvent</wlevs:class>
+    </wlevs:event-type>
+  </wlevs:event-type-repository>
+  <wlevs:adapter id="creditCardPurchaseAdapter" class="saibot.airport.security.prevention.CreditCardPurchaseGenerator">
+    <wlevs:listener ref="creditCardPurchaseChannel"/>
+  </wlevs:adapter>
+  <wlevs:channel id="creditCardPurchaseChannel" event-type="CreditCardPurchaseEvent">
+    <wlevs:listener ref="suspectCreditCardTransactionStringDetector"/>
+    <wlevs:listener ref="creditCardAggregator"/>
+  </wlevs:channel>
+  <bean id="creditCardReporter" class="saibot.airport.security.prevention.CreditCardReporter"/>
+  <wlevs:channel id="creditCardStatusEventChannel" event-type="CreditCardPurchasesSummaryEvent">
+    <wlevs:listener ref="creditCardReporter"/>
+    <wlevs:source ref="creditCardAggregator"/>
+  </wlevs:channel>
+  <wlevs:channel id="suspectCreditCardEventChannel" event-type="SuspectCreditCardEvent">
+    <wlevs:listener ref="creditCardReporter"/>
+    <wlevs:source ref="suspectCreditCardTransactionStringDetector"/>
+  </wlevs:channel>
+  <wlevs:processor id="creditCardAggregator"/>
+  <wlevs:processor id="suspectCreditCardTransactionStringDetector"/>
+</beans>
