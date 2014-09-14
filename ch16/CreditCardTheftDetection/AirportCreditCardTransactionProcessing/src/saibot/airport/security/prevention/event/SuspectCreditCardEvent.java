@@ -6,7 +6,6 @@ public class SuspectCreditCardEvent {
     
     private Float sumAmounts;
     private String creditCardNumber;
-    private String shopIdentifiers;
     private List<Integer> shops;
     private List<Float> purchaseAmounts;
 
@@ -17,8 +16,6 @@ public class SuspectCreditCardEvent {
     public List<Float> getPurchaseAmounts() {
         return purchaseAmounts;
     }
-    private Long firstTimestamp;
-    private Long lastTimestamp;
     private Long shoppingDuration;
 
     public void setShoppingDuration(Long shoppingDuration) {
@@ -29,22 +26,6 @@ public class SuspectCreditCardEvent {
         return shoppingDuration;
     }
 
-
-    public void setFirstTimestamp(Long firstTimestamp) {
-        this.firstTimestamp = firstTimestamp;
-    }
-
-    public Long getFirstTimestamp() {
-        return firstTimestamp;
-    }
-
-    public void setLastTimestamp(Long lastTimestamp) {
-        this.lastTimestamp = lastTimestamp;
-    }
-
-    public Long getLastTimestamp() {
-        return lastTimestamp;
-    }
 
     public void setShops(List shops) {
         this.shops = shops;
@@ -71,13 +52,6 @@ public class SuspectCreditCardEvent {
         return creditCardNumber;
     }
 
-    public void setShopIdentifiers(String shopIdentifiers) {
-        this.shopIdentifiers = shopIdentifiers;
-    }
-
-    public String getShopIdentifiers() {
-        return shopIdentifiers;
-    }
 
     public SuspectCreditCardEvent() {
         super();
