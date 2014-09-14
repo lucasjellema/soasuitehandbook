@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<definitions xmlns="http://schemas.oracle.com/events/edl" targetNamespace="saibot.airport/events/security">
+   <schema-import location="../Schemas/SecurityEvents.xsd" namespace="saibot.airport/security"/>
+   <event-definition name="SuspectedCreditCardEvent">
+      <content xmlns:ns1="saibot.airport/security" element="ns1:SuspectCreditCardEvent"/>
+   </event-definition>
+</definitions>

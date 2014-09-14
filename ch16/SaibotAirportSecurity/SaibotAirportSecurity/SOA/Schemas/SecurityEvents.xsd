@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/security"
+            targetNamespace="saibot.airport/security" elementFormDefault="qualified">
+    <xsd:element name="SuspectCreditCardEvent" type="suspectCreditCardEventType"/>
+    <xsd:complexType name="suspectCreditCardEventType">
+        <xsd:sequence>
+            <xsd:element name="SumAmounts" type="xsd:float"/>
+            <xsd:element name="CreditCardNumber" type="xsd:string"/>
+            <xsd:element name="ShoppingDuration" type="xsd:integer"/>
+            <xsd:element name="Purchases" minOccurs="3" maxOccurs="unbounded">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Amount" type="xsd:float"/>
+                        <xsd:element name="ShopIdentifier" type="xsd:integer"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

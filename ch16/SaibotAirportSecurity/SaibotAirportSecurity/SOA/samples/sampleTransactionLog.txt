@@ -1,0 +1,4 @@
+creditCardNumber,timestamp,numberOfPurchases,totalAmount
+2321-9181-7261-8192,20151124T093415,4,1345
+6721-9111-8961-8192,20151126T182237,4,980
+
