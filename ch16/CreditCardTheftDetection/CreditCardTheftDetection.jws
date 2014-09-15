@@ -24,5 +24,6 @@
    </list>
    <list n="listOfChildren">
       <hash><url n="URL" path="AirportCreditCardTransactionProcessing/AirportCreditCardTransactionProcessing.jpr"/></hash>
+      <hash><url n="URL" path="JmsSuspectedCreditCardEventListener/JmsSuspectedCreditCardEventListener.jpr"/></hash>
    </list>
 </jws:workspace>

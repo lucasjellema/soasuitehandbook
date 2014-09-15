@@ -2,28 +2,22 @@
 <beans xmlns:spring="http://www.springframework.org/schema/beans" xmlns:wlevs="http://www.bea.com/ns/wlevs/spring"
        xmlns:hadoop="http://www.oracle.com/ns/oep/hadoop" xmlns:nosqldb="http://www.oracle.com/ns/oep/nosqldb"
        xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="
- 	http://www.springframework.org/schema/beans
- 	http://www.springframework.org/schema/beans/spring-beans.xsd
- 	http://www.springframework.org/schema/osgi
- 	http://www.springframework.org/schema/osgi/spring-osgi.xsd
- 	http://www.bea.com/ns/wlevs/spring
- 	http://www.bea.com/ns/wlevs/spring/ocep-epn.xsd
- 	http://www.oracle.com/ns/oep/hadoop
- 	http://www.oracle.com/ns/oep/hadoop/oep-hadoop.xsd
- 	http://www.oracle.com/ns/oep/nosqldb
- 	http://www.oracle.com/ns/oep/nosqldb/oep-nosqldb.xsd">
-  <wlevs:event-type-repository>
-    <wlevs:event-type type-name="CreditCardPurchaseEvent">
-      <wlevs:class>saibot.airport.security.prevention.event.CreditCardPurchaseEvent</wlevs:class>
-    </wlevs:event-type>
-    <wlevs:event-type type-name="SuspectCreditCardEvent">
-      <wlevs:class>saibot.airport.security.prevention.event.SuspectCreditCardEvent</wlevs:class>
-    </wlevs:event-type>
-    <wlevs:event-type type-name="CreditCardPurchasesSummaryEvent">
-      <wlevs:class>saibot.airport.security.prevention.event.CreditCardPurchasesSummaryEvent</wlevs:class>
-    </wlevs:event-type>
-<!--    <wlevs:event-type type-name="SuspectedCreditCardTupleEvent">
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="   http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd   http://www.springframework.org/schema/osgi   http://www.springframework.org/schema/osgi/spring-osgi.xsd   http://www.bea.com/ns/wlevs/spring   http://www.bea.com/ns/wlevs/spring/ocep-epn.xsd   http://www.oracle.com/ns/oep/hadoop   http://www.oracle.com/ns/oep/hadoop/oep-hadoop.xsd   http://www.oracle.com/ns/oep/nosqldb   http://www.oracle.com/ns/oep/nosqldb/oep-nosqldb.xsd">
+    <wlevs:event-type-repository>
+        <wlevs:event-type type-name="CreditCardPurchaseEvent">
+            <wlevs:class>saibot.airport.security.prevention.event.CreditCardPurchaseEvent</wlevs:class>
+        </wlevs:event-type>
+        <wlevs:event-type type-name="SuspectCreditCardEvent">
+            <wlevs:class>saibot.airport.security.prevention.event.SuspectCreditCardEvent</wlevs:class>
+        </wlevs:event-type>
+        <wlevs:event-type type-name="CreditCardPurchasesSummaryEvent">
+            <wlevs:class>saibot.airport.security.prevention.event.CreditCardPurchasesSummaryEvent</wlevs:class>
+        </wlevs:event-type>
+        <wlevs:event-type type-name="SuspectCreditCardJMSEvent">
+            <wlevs:class>saibot.airport.security.prevention.event.SuspectCreditCardJMSEvent</wlevs:class>
+        </wlevs:event-type>
+        <!--    <wlevs:event-type type-name="SuspectedCreditCardTupleEvent">
       <wlevs:properties>
         <wlevs:property name="sumAmounts" type="float"/>
         <wlevs:property name="creditCardNumber" type="char" length="20"/>
@@ -32,50 +26,57 @@
       </wlevs:properties>
     </wlevs:event-type>
     -->
-  </wlevs:event-type-repository>
-  <wlevs:adapter id="creditCardPurchaseAdapter" class="saibot.airport.security.prevention.CreditCardPurchaseGenerator">
-    <wlevs:listener ref="creditCardPurchaseChannel"/>
-  </wlevs:adapter>
-  <wlevs:channel id="creditCardPurchaseChannel" event-type="CreditCardPurchaseEvent">
-    <wlevs:listener ref="suspectCreditCardTransactionStringDetector"/>
-    <wlevs:listener ref="creditCardAggregator"/>
-  </wlevs:channel>
-  <bean id="creditCardReporter" class="saibot.airport.security.prevention.CreditCardReporter"/>
-  <wlevs:channel id="creditCardStatusEventChannel" event-type="CreditCardPurchasesSummaryEvent">
-    <wlevs:listener ref="creditCardReporter"/>
-    <wlevs:source ref="creditCardAggregator"/>
-  </wlevs:channel>
-  <wlevs:channel id="suspectCreditCardEventChannel" event-type="SuspectCreditCardEvent">
-    <wlevs:listener ref="creditCardReporter"/>
-    <wlevs:listener ref="suspectedCreditCardEventToEDNProcessor"/>
-    <wlevs:source ref="suspectCreditCardTransactionStringDetector"/>
-  </wlevs:channel>
-  <wlevs:processor id="creditCardAggregator"/>
-  <wlevs:processor id="suspectCreditCardTransactionStringDetector"/>
-  <!--
-  <wlevs:adapter id="edn-inbound-adapter" provider="edn-inbound">
-    <wlevs:listener ref="channel"/>
-    <wlevs:instance-property name="eventType" value="SuspectedCreditCardEvent"/>
-  </wlevs:adapter>
-  <wlevs:channel id="channel" event-type="SuspectedCreditCardEvent">
-    <wlevs:listener ref="bean"/>
-  </wlevs:channel>
-  <bean id="bean" class="saibot.airport.security.prevention.CreditCardReporter"/>
+    </wlevs:event-type-repository>
+    <wlevs:adapter id="creditCardPurchaseAdapter"
+                   class="saibot.airport.security.prevention.CreditCardPurchaseGenerator">
+        <wlevs:listener ref="creditCardPurchaseChannel"/>
+    </wlevs:adapter>
+    <wlevs:channel id="creditCardPurchaseChannel" event-type="CreditCardPurchaseEvent">
+        <wlevs:listener ref="suspectCreditCardTransactionStringDetector"/>
+        <wlevs:listener ref="creditCardAggregator"/>
+    </wlevs:channel>
+    <bean id="creditCardReporter" class="saibot.airport.security.prevention.CreditCardReporter"/>
+    <wlevs:channel id="creditCardStatusEventChannel" event-type="CreditCardPurchasesSummaryEvent">
+        <wlevs:listener ref="creditCardReporter"/>
+        <wlevs:source ref="creditCardAggregator"/>
+    </wlevs:channel>
+    <wlevs:channel id="suspectCreditCardEventChannel" event-type="SuspectCreditCardEvent">
+        <wlevs:listener ref="suspectCreditCardJMSEventProcessor"/>
+        <wlevs:listener ref="creditCardReporter"/>
+        <wlevs:listener ref="suspectedCreditCardEventToEDNProcessor"/>
+        <wlevs:source ref="suspectCreditCardTransactionStringDetector"/>
+    </wlevs:channel>
+    <wlevs:processor id="creditCardAggregator"/>
+    <wlevs:processor id="suspectCreditCardTransactionStringDetector"/>
+    <wlevs:adapter id="suspectedCreditCardEDN-outbound-adapter" provider="edn-outbound">
+        <wlevs:instance-property name="eventType" value="SuspectedCreditCardEvent"/>
+    </wlevs:adapter>
+    <wlevs:processor id="suspectedCreditCardEventToEDNProcessor">
+        <wlevs:function function-name="purchasesList" exec-method="purchasesList">
+            <bean class="saibot.airport.security.prevention.cql.CustomCQLFunctionsLibrary"/>
+        </wlevs:function>
+    </wlevs:processor>
+    <wlevs:channel id="suspectedCreditCardEventChannel" event-type="SuspectedCreditCardEvent">
+        <wlevs:listener ref="suspectedCreditCardEDN-outbound-adapter"/>
+        <wlevs:source ref="suspectedCreditCardEventToEDNProcessor"/>
+    </wlevs:channel>
+    <!-- <bean id="suspectedCreditCardEventConverter" class="saibot.airport.security.prevention.jms.SuspectedCreditCardEventConverter"/>
   -->
-  <wlevs:adapter id="suspectedCreditCardEDN-outbound-adapter" provider="edn-outbound">
-    <wlevs:instance-property name="eventType" value="SuspectedCreditCardEvent"/>
-  </wlevs:adapter>
-  <wlevs:processor id="suspectedCreditCardEventToEDNProcessor">
-     
-     <wlevs:function function-name="purchasesList"  exec-method="purchasesList" >
-        <bean class="saibot.airport.security.prevention.cql.CustomCQLFunctionsLibrary" />
-    </wlevs:function>
-     
-  </wlevs:processor>
-  <wlevs:channel id="suspectedCreditCardEventChannel" event-type="SuspectedCreditCardEvent" >
-    <wlevs:listener ref="suspectedCreditCardEDN-outbound-adapter"/>
-    <wlevs:source ref="suspectedCreditCardEventToEDNProcessor" />
-  </wlevs:channel>
-  
-  
+    <wlevs:adapter id="Saibot-Security-jms-outbound-adapter" provider="jms-outbound" >
+        <!--  <wlevs:instance-property name="converterBean" ref="suspectedCreditCardEventConverter"/>
+  -->
+        <wlevs:instance-property name="eventType" value="SuspectCreditCardJMSEvent"/>
+    </wlevs:adapter>
+    <wlevs:channel id="suspectCreditCardJMSEvent" event-type="SuspectCreditCardJMSEvent">
+        <wlevs:listener ref="Saibot-Security-jms-outbound-adapter"/>
+        <wlevs:source ref="suspectCreditCardJMSEventProcessor"/>
+    </wlevs:channel>
+    <wlevs:processor id="suspectCreditCardJMSEventProcessor">
+            <wlevs:function function-name="shopsListCSV" exec-method="intListCSV">
+            <bean class="saibot.airport.security.prevention.cql.CustomCQLFunctionsLibrary"/>
+        </wlevs:function>
+            <wlevs:function function-name="amountsListCSV" exec-method="floatListCSV">
+            <bean class="saibot.airport.security.prevention.cql.CustomCQLFunctionsLibrary"/>
+        </wlevs:function>
+</wlevs:processor>
 </beans>

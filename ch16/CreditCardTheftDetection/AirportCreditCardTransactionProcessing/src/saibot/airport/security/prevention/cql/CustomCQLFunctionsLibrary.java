@@ -17,4 +17,20 @@ public class CustomCQLFunctionsLibrary {
         purchases = purchases + "</PurchasesList>";
         return purchases;
     }
+    public String intListCSV(List<Integer> intList) {
+        String intsString = "";
+        for (Integer intId:intList) {
+            intsString = intsString+","+intId;
+        }
+        // remove initial comma
+        return intsString.substring(1);
+    }
+    public String floatListCSV(List<Float> floatList) {
+        String floatsString = "";
+        for (Float floatId:floatList) {
+            floatsString = floatsString+","+floatId;
+        }
+        // remove initial comma
+        return floatsString.substring(1);
+    }
 }

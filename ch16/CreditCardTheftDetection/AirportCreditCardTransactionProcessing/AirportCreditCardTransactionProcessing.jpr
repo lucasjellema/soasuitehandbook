@@ -133,6 +133,10 @@
                            <url n="location" path="lib/"/>
                            <value n="type" v="1"/>
                         </hash>
+                        <hash>
+                           <url n="location" protocol="jar" path="file:/C:/Oracle/OEP12_1_3/Oracle_Home/oep/modules/com.bea.wlevs.adapters.jms_12.1.3.0_0.jar!/"/>
+                           <value n="type" v="1"/>
+                        </hash>
                      </list>
                      <value n="displayName" v="Library"/>
                      <hash n="filters">
@@ -198,6 +202,12 @@
                <hash n="rules"/>
             </hash>
             <url n="jarURL" path="deploy/oep_profile-1.jar"/>
+            <hash n="libraryDependencies">
+               <list n="unselectedLibraries">
+                  <string v="Java EE"/>
+                  <string v="OEP Runtime"/>
+               </list>
+            </hash>
             <value n="profileClass" v="oracle.tip.tools.ide.cep.core.cepserver.deploy.CEPProjectDeploymentProfile"/>
             <value n="profileName" v="oep_profile-1"/>
             <hash n="requireBundles">
@@ -219,10 +229,39 @@
             <value n="id" v="OEP Runtime"/>
             <value n="isJDK" v="false"/>
          </hash>
+         <hash>
+            <value n="id" v="Java EE"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Com.bea.wlevs.adapters.jms_12.1.3.0_0.jar"/>
+            <value n="isJDK" v="false"/>
+         </hash>
       </list>
+      <hash n="internalDefinitions">
+         <list n="libraryDefinitions">
+            <hash>
+               <list n="classPath">
+                  <url protocol="jar" path="file:/C:/Oracle/OEP12_1_3/Oracle_Home/oep/modules/com.bea.wlevs.adapters.jms_12.1.3.0_0.jar!/"/>
+               </list>
+               <value n="deployedByDefault" v="true"/>
+               <value n="description" v="Com.bea.wlevs.adapters.jms_12.1.3.0_0.jar"/>
+               <value n="id" v="Com.bea.wlevs.adapters.jms_12.1.3.0_0.jar"/>
+               <value n="locked" v="true"/>
+            </hash>
+         </list>
+      </hash>
       <list n="libraryReferences">
          <hash>
             <value n="id" v="OEP Runtime"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Java EE"/>
+            <value n="isJDK" v="false"/>
+         </hash>
+         <hash>
+            <value n="id" v="Com.bea.wlevs.adapters.jms_12.1.3.0_0.jar"/>
             <value n="isJDK" v="false"/>
          </hash>
       </list>
