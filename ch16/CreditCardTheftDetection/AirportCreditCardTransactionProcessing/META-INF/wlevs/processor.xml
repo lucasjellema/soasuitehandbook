@@ -38,12 +38,53 @@
  <query id="funnyStringOfTransaction">
  <![CDATA[
  select creditCardNumber as creditCardNumber
- ,      sumAmounts
+ ,      sumAmounts as sumAmounts
  ,      shops as shops  
- ,      shoppingDuration
- ,      purchaseAmounts
+ ,      shoppingDuration as shoppingDuration
+ ,      purchaseAmounts as purchaseAmounts
  from  suspectStringOfTransactions
  ]]>
  </query></rules>
   </processor>
+  <processor>
+    <name>suspectedCreditCardEventToEDNProcessor</name>
+    <rules>   
+   <view id="Purchases"><![CDATA[
+     select ''||
+     purchasesList(shops, purchaseAmounts)
+        as purchasesXml
+        from suspectCreditCardEventChannel [now]
+    ]]></view>
+    <query id="SuspectCreditCardEDNEventQuery"><![CDATA[ 
+        select XMLELEMENT(
+            NAME "SuspectCreditCardEvent",XMLATTRIBUTES('saibot.airport/security' as "xmlns"),
+            XMLELEMENT(NAME "SumAmounts"
+            , ''||sumAmounts), 
+            XMLELEMENT(NAME "CreditCardNumber"
+            , creditCardNumber),
+            XMLELEMENT(NAME "ShoppingDuration" ,to_char(shoppingDuration)            
+            )           
+            , XMLPARSE (CONTENT purchasesXml)
+        ) as xmlContent
+        from suspectCreditCardEventChannel [now], Purchases ]]></query>        
+    </rules>
+  </processor>
+  <edn-adapter>
+    <name>edn-inbound-adapter</name>
+    <edl-file>SecurityEvents.edl</edl-file>
+    <raw-xml-content>true</raw-xml-content>
+    <jndi-provider-url>t3://10.10.10.21:8001</jndi-provider-url>
+    <jndi-factory>weblogic.jndi.WLInitialContextFactory</jndi-factory>
+    <user>weblogic</user>
+    <password>weblogic1</password>
+  </edn-adapter>
+  <edn-adapter>
+    <name>suspectedCreditCardEDN-outbound-adapter</name>
+    <edl-file>SecurityEvents.edl</edl-file>
+    <raw-xml-content>true</raw-xml-content>
+    <jndi-provider-url>t3://10.10.10.21:8001</jndi-provider-url>
+    <jndi-factory>weblogic.jndi.WLInitialContextFactory</jndi-factory>
+    <user>weblogic</user>
+    <password>weblogic1</password>
+  </edn-adapter>
 </n1:config>
