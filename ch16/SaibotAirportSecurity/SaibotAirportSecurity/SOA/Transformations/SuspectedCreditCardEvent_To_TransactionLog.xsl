@@ -43,7 +43,7 @@
                     <xsl:value-of select="xp20:current-dateTime ( )"/>
                 </tns:timestamp>
                 <tns:numberOfPurchases>
-                    <xsl:value-of select="count (/ns0:SuspectCreditCardEvent/ns0:Purchases )"/>
+                    <xsl:value-of select="count (/ns0:SuspectCreditCardEvent/ns0:PurchasesList/ns0:Purchase )"/>
                 </tns:numberOfPurchases>
                 <tns:totalAmount>
                     <xsl:value-of select="/ns0:SuspectCreditCardEvent/ns0:SumAmounts"/>

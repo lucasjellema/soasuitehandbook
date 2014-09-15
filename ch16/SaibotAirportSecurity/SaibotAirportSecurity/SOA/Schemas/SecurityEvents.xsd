@@ -7,11 +7,17 @@
             <xsd:element name="SumAmounts" type="xsd:float"/>
             <xsd:element name="CreditCardNumber" type="xsd:string"/>
             <xsd:element name="ShoppingDuration" type="xsd:integer"/>
-            <xsd:element name="Purchases" minOccurs="3" maxOccurs="unbounded">
+            <xsd:element name="PurchasesList">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="Amount" type="xsd:float"/>
-                        <xsd:element name="ShopIdentifier" type="xsd:integer"/>
+                        <xsd:element name="Purchase" minOccurs="3" maxOccurs="unbounded">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="Amount" type="xsd:float"/>
+                                    <xsd:element name="ShopIdentifier" type="xsd:integer"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
