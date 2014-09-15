@@ -69,6 +69,16 @@
         from suspectCreditCardEventChannel [now], Purchases ]]></query>        
     </rules>
   </processor>
+  <processor>
+    <name>suspectCreditCardJMSEventProcessor</name>
+    <rules>
+      <query id="ConvertSuspectCreditCardToJMS"><![CDATA[ 
+ select creditCardNumber as creditCardNumber
+ , sumAmounts as totalSum, shoppingDuration as durationOfShoppingSpree
+ , shopsListCSV(shops) as listOfShops , amountsListCSV(purchaseAmounts) as listOfAmounts 
+ from suspectCreditCardEventChannel [now] ]]></query>
+    </rules>
+  </processor>
   <jms-adapter>
     <name>Saibot-Security-jms-outbound-adapter</name>
     <event-type>SuspectCreditCardJMSEvent</event-type>
@@ -80,16 +90,16 @@
     <password>weblogic1</password>
     <session-transacted>false</session-transacted>
   </jms-adapter>
-  <processor>
-    <name>suspectCreditCardJMSEventProcessor</name>
-    <rules>
-      <query id="ConvertSuspectCreditCardToJMS"><![CDATA[ 
- select creditCardNumber as creditCardNumber
- , sumAmounts as totalSum, shoppingDuration as durationOfShoppingSpree
- , shopsListCSV(shops) as listOfShops , amountsListCSV(purchaseAmounts) as listOfAmounts 
- from suspectCreditCardEventChannel [now] ]]></query>
-    </rules>
-  </processor>
+  <jms-adapter>
+    <name>Saibot-Security-jms-outbound-adapter2</name>
+     <jndi-provider-url>t3://10.10.10.21:8001</jndi-provider-url>
+    <jndi-factory>weblogic.jndi.WLInitialContextFactory</jndi-factory>
+    <connection-jndi-name>jms/finance/FinanceConnectionFactory</connection-jndi-name>
+    <destination-jndi-name>jms/security/SuspectedCreditCardEventsQueue</destination-jndi-name>
+    <user>weblogic</user>
+    <password>weblogic1</password>
+    <session-transacted>false</session-transacted>
+  </jms-adapter>
   <edn-adapter>
     <name>edn-inbound-adapter</name>
     <edl-file>SecurityEvents.edl</edl-file>

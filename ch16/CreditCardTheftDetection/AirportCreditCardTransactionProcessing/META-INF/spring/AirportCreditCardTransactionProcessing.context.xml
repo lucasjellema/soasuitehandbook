@@ -41,6 +41,7 @@
         <wlevs:source ref="creditCardAggregator"/>
     </wlevs:channel>
     <wlevs:channel id="suspectCreditCardEventChannel" event-type="SuspectCreditCardEvent">
+        <wlevs:listener ref="Saibot-Security-jms-outbound-adapter2"/>
         <wlevs:listener ref="suspectCreditCardJMSEventProcessor"/>
         <wlevs:listener ref="creditCardReporter"/>
         <wlevs:listener ref="suspectedCreditCardEventToEDNProcessor"/>
@@ -58,14 +59,15 @@
     </wlevs:processor>
     <wlevs:channel id="suspectedCreditCardEventChannel" event-type="SuspectedCreditCardEvent">
         <wlevs:listener ref="suspectedCreditCardEDN-outbound-adapter"/>
+
         <wlevs:source ref="suspectedCreditCardEventToEDNProcessor"/>
     </wlevs:channel>
-    <!-- <bean id="suspectedCreditCardEventConverter" class="saibot.airport.security.prevention.jms.SuspectedCreditCardEventConverter"/>
-  -->
+    <bean id="suspectedCreditCardEventConverter" class="saibot.airport.security.prevention.jms.SuspectedCreditCardEventConverter"/>
     <wlevs:adapter id="Saibot-Security-jms-outbound-adapter" provider="jms-outbound" >
-        <!--  <wlevs:instance-property name="converterBean" ref="suspectedCreditCardEventConverter"/>
-  -->
         <wlevs:instance-property name="eventType" value="SuspectCreditCardJMSEvent"/>
+    </wlevs:adapter>
+    <wlevs:adapter id="Saibot-Security-jms-outbound-adapter2" provider="jms-outbound" >
+        <wlevs:instance-property name="converterBean" ref="suspectedCreditCardEventConverter"/>
     </wlevs:adapter>
     <wlevs:channel id="suspectCreditCardJMSEvent" event-type="SuspectCreditCardJMSEvent">
         <wlevs:listener ref="Saibot-Security-jms-outbound-adapter"/>
