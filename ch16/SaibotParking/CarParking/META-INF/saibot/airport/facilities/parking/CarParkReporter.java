@@ -19,7 +19,7 @@ public class CarParkReporter implements StreamSink {
         if (event instanceof CarParkNearFullEvent) {
             CarParkNearFullEvent cpe = (CarParkNearFullEvent)event;
             System.out.println("******* Carpark "+ cpe.getDescription()+" is close to filling up. Number of cars parked : "+cpe.getCarCount()
-                               + " (Capacity = "+cpe.getCapacity()+", current percentage full: " +(cpe.getPercentageFull())+"% ; the lowest carcount recently was "+cpe.getLowestRecentCount()+" %)");
+                               + " (Capacity = "+cpe.getCapacity()+", current percentage full: " +(cpe.getPercentageFull())+"% ; the lowest carcount recently was "+cpe.getLowestRecentCount()+" )");
             }
     }
 }
