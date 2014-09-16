@@ -1,4 +1,4 @@
-package saibot.airport.facilities.parking;
+package saibot.airport.facilities.parking.event;
 
 import java.util.Date;
 

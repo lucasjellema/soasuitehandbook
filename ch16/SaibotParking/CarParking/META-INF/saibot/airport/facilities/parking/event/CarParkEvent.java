@@ -1,4 +1,4 @@
-package saibot.airport.facilities.parking;
+package saibot.airport.facilities.parking.event;
 
 public class CarParkEvent {
     

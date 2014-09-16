@@ -3,15 +3,6 @@
   <processor>
     <name>carParkEventProcessor</name>
     <rules>
-
- <!--
-   <![CDATA[
-         RStream(select T.player, T.matchId as matchId, R.player0||'-'||R.player1 as lineup 
-         from SetPoints[now] as T, carparkCache as R 
-         where to_char(T.matchId)= R.identifier)
-       ]]> 
-       -->
- 
           <view id="CarparkStatus"><![CDATA[ 
  IStream(select sum(car.entryOrExit) as carCount, car.carparkIdentifier 
  from carInputChannel as car 
@@ -26,7 +17,7 @@
   
   -->
       <query id="CarparkQuery"><![CDATA[ 
- RStream(  select  carCount, carparkIdentifier, R.name as description , (carCount/R.capacity) as percentageFull
+ RStream(  select  carCount, carparkIdentifier, R.name as description , to_char(100*carCount/R.capacity) as percentageFull
  from CarparkStatus[now]  as car 
  , carparkCache as R 
          where carparkIdentifier = R.identifier
@@ -52,5 +43,47 @@
  ]]></query>
     </rules>
   </processor>
- 
+  <processor>
+    <name>carParkNearlyFullProcessor</name>
+    <rules>
+      <view id="CarparkStatus"><![CDATA[ 
+         IStream(select sum(car.entryOrExit) as carCount, car.carparkIdentifier 
+         from carInputChannel as car 
+         group by carparkIdentifier) ]]>
+      </view>
+      <view id="CarparkNearlyFullView"><![CDATA[ 
+         RStream(  select  car.carCount
+                   , car.carparkIdentifier
+                   , R.name as description 
+                   , to_char(100*car.carCount/R.capacity) as percentageFull
+                   , R.capacity as carParkCapacity
+                   from  CarparkStatus [now]  as car 
+                   ,     carparkCache as R 
+                   where car.carparkIdentifier = R.identifier
+         )
+      ]]></view>
+      <view id="CarparkStatusView"><![CDATA[ 
+         RStream(  select  min(carCount) as recentLowCarCount
+                   ,       carparkIdentifier
+                   from    CarparkStatus [range 30 second]  as car 
+                   group by carparkIdentifier
+                )
+      ]]></view>
+
+      <query id="CarparkNearlyFullQuery"><![CDATA[ 
+ IStream(  select  carCount
+ , c1.carparkIdentifier as carparkIdentifier
+ , description  as description
+ , percentageFull
+  , carParkCapacity as capacity
+ , recentLowCarCount as lowestRecentCount
+ from CarparkNearlyFullView[now] as c1
+ , CarparkStatusView[now] as c2
+ where c1.carparkIdentifier = c2.carparkIdentifier
+and percentageFull >= 90
+and (100*c2.recentLowCarCount/c1.carParkCapacity) >= 85
+         )
+  ]]></query>
+    </rules>
+  </processor>
 </wlevs:config>

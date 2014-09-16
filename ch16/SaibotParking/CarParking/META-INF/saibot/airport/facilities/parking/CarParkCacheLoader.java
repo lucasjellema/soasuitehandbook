@@ -42,23 +42,24 @@ public class CarParkCacheLoader implements CacheLoader<String, Object>, Initiali
 
     @Override
     public Map<String, Object> loadAll() {
+        if (parksMap.isEmpty()) {
+            try {
+                afterPropertiesSet();
+            } catch (Exception e) {
+            }
+        }
         return new HashMap<String, Object>(parksMap);
-
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        //        // create events and load them into memory
-        //        EventType eventType = getEventType();
-        //        EventProperty matchIdProperty = eventType.getProperty("matchId");
-        //
-        //        Object event = eventType.createEvent();
-        //        matchIdProperty.setValue(event, 0);
-        parksMap.put("0", new CarPark("13", "VIP Parking Lot", 150));
-        parksMap.put("1", new CarPark("16", "Traveller Parking Area I", 120));
-        parksMap.put("2", new CarPark("18", "Traveller Parking Area II", 250));
-        parksMap.put("3", new CarPark("22", "Short Stay Parking Lot", 170));
-        parksMap.put("4", new CarPark("27", "Rather not stay parking area", 350));
+    public void afterPropertiesSet() throws Exception { 
+        if (parksMap.isEmpty()){
+        parksMap.put("13", new CarPark("13", "VIP Parking Lot", 150));
+        parksMap.put("16", new CarPark("16", "Traveller Parking Area I", 120));
+        parksMap.put("18", new CarPark("18", "Traveller Parking Area II", 250));
+        parksMap.put("22", new CarPark("22", "Short Stay Parking Lot", 170));
+        parksMap.put("27", new CarPark("27", "Rather not stay parking area", 350));
+        }
 
 
     }

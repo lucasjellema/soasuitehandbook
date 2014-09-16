@@ -2,6 +2,8 @@ package saibot.airport.facilities.parking;
 
 import com.bea.wlevs.ede.api.StreamSink;
 
+import saibot.airport.facilities.parking.event.AbandonedCarEvent;
+
 public class AbandonedCarsMonitor
     implements StreamSink {
        
