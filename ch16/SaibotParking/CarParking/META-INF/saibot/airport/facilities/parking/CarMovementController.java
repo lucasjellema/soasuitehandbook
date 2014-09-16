@@ -61,11 +61,11 @@ public class CarMovementController implements RunnableBean, StreamSource{
         
         
         ParkedCar car = new ParkedCar();
-        car.setCarparkIdentifier(1);
+        car.setCarparkIdentifier("1");
         parkedCars.add(car);
         CarMovementEvent event = new CarMovementEvent();
         event.setEntryOrExit(1);
-        event.setCarparkIdentifier(1);
+        event.setCarparkIdentifier("1");
         event.setLicencePlate(car.getlicencePlate());
         event.setArrivalTime(car.getArrivalTime());
         eventSender.sendInsertEvent(event);
@@ -116,13 +116,13 @@ public class CarMovementController implements RunnableBean, StreamSource{
         String licencePlate;
         long   timeToLeave;
         long   arrivalTime;
-        private Integer carparkIdentifier;
+        private String carparkIdentifier;
 
-        public void setCarparkIdentifier(Integer carparkIdentifier) {
+        public void setCarparkIdentifier(String carparkIdentifier) {
             this.carparkIdentifier = carparkIdentifier;
         }
 
-        public Integer getCarparkIdentifier() {
+        public String getCarparkIdentifier() {
             return carparkIdentifier;
         }
 

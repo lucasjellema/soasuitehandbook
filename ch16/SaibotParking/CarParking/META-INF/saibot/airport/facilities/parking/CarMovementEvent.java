@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class CarMovementEvent {
     
-    private Integer carparkIdentifier;
+    private String carparkIdentifier;
     private Integer entryOrExit;
     private String licencePlate;
     private Long arrivalTime;
@@ -26,11 +26,11 @@ public class CarMovementEvent {
         return licencePlate;
     }
 
-    public void setCarparkIdentifier(Integer carparkIdentifier) {
+    public void setCarparkIdentifier(String carparkIdentifier) {
         this.carparkIdentifier = carparkIdentifier;
     }
 
-    public Integer getCarparkIdentifier() {
+    public String getCarparkIdentifier() {
         return carparkIdentifier;
     }
 

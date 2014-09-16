@@ -2,8 +2,17 @@ package saibot.airport.facilities.parking;
 
 public class CarParkEvent {
     
-    private Integer carparkIdentifier;
+    private String carparkIdentifier;
     private Integer carCount;
+    private Float percentageFull;
+
+    public void setPercentageFull(Float percentageFull) {
+        this.percentageFull = percentageFull;
+    }
+
+    public Float getPercentageFull() {
+        return percentageFull;
+    }
     private String  description;
 
     public void setDescription(String description) {
@@ -14,11 +23,11 @@ public class CarParkEvent {
         return description;
     }
 
-    public void setCarparkIdentifier(Integer carparkIdentifier) {
+    public void setCarparkIdentifier(String carparkIdentifier) {
         this.carparkIdentifier = carparkIdentifier;
     }
 
-    public Integer getCarparkIdentifier() {
+    public String getCarparkIdentifier() {
         return carparkIdentifier;
     }
 

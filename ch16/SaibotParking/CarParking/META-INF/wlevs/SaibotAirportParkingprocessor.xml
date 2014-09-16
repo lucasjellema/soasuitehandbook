@@ -3,15 +3,34 @@
   <processor>
     <name>carParkEventProcessor</name>
     <rules>
+
+ <!--
+   <![CDATA[
+         RStream(select T.player, T.matchId as matchId, R.player0||'-'||R.player1 as lineup 
+         from SetPoints[now] as T, carparkCache as R 
+         where to_char(T.matchId)= R.identifier)
+       ]]> 
+       -->
+ 
           <view id="CarparkStatus"><![CDATA[ 
- IStream(select sum(car.entryOrExit) as carCount, car.carparkIdentifier from carInputChannel as car 
+ IStream(select sum(car.entryOrExit) as carCount, car.carparkIdentifier 
+ from carInputChannel as car 
  group by carparkIdentifier) ]]></view>
     
-      <query id="CarparkQuery"><![CDATA[ 
+ <!--     <query id="CarparkQuery"><![CDATA[ 
  select  carCount, carparkIdentifier, carParkNames.carparkName as description from CarparkStatus[now]  as car 
  , TABLE(saibot.airport.facilities.parking.CarParkManager.getCarparkDetails(
   car.carparkIdentifier) 
    AS carparkName OF CHAR) AS carParkNames
+  ]]></query>
+  
+  -->
+      <query id="CarparkQuery"><![CDATA[ 
+ RStream(  select  carCount, carparkIdentifier, R.name as description , (carCount/R.capacity) as percentageFull
+ from CarparkStatus[now]  as car 
+ , carparkCache as R 
+         where carparkIdentifier = R.identifier
+         )
   ]]></query>
     </rules>
   </processor>

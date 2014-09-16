@@ -10,8 +10,8 @@ public class CarParkReporter implements StreamSink {
     public void onInsertEvent(Object event) {
         if (event instanceof CarParkEvent) {
             CarParkEvent cpe = (CarParkEvent)event;
-//            System.out.println("Current number of cars parked in Car Park "+cpe.getCarparkIdentifier()+" : "+cpe.getCarCount()
-//                               + " - " +cpe.getDescription());
+            System.out.println("Current number of cars parked in Car Park "+cpe.getCarparkIdentifier()+" : "+cpe.getCarCount()
+                               + " - " +cpe.getDescription()+" percentage full "+(100*cpe.getPercentageFull())+"%");
         }
     }
 }
