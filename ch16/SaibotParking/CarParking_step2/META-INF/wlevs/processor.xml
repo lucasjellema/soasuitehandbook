@@ -8,13 +8,6 @@
                 from     carInputChannel as car 
  `              group by carparkIdentifier) ]]>
       </view>
-      <view id="CompletedCarstaysView"><![CDATA[ 
-        IStream(select carparkIdentifier as carparkIdentifier 
-                ,      avg(carstayDuration)+2318 as avgCarstayDuration
-                from carstayDoneChannel [rows 100]
-                group by carparkIdentifier
-                
-       )]]></view>
       <view id="CarparkStatusView"><![CDATA[ 
         RStream(  select carCount, car.carparkIdentifier as carparkIdentifier
                   ,      R.name as description 
@@ -32,12 +25,13 @@
         )
       ]]></query> 
       <query id="CarparkAvgStayQuery"><![CDATA[ 
-        RStream(  select  -1 as carCount
-                  ,       ccs.carparkIdentifier as carparkIdentifier
-                  ,       '' as description 
-                  ,        avgCarstayDuration as averageStayDuration
-                  from    CompletedCarstaysView[now]  as ccs
-        )
+        IStream(select -1 as carCount
+                ,       carparkIdentifier as carparkIdentifier 
+                ,       '' as description 
+                ,       avg(carstayDuration) as averageStayDuration
+                from carstayDoneChannel [rows 100]
+                group by carparkIdentifier                
+       )
       ]]></query>
 <!--      <query id="CarparkQuery"><![CDATA[ 
         RStream(  select  carCount
