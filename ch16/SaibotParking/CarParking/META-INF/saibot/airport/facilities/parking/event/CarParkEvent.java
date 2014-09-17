@@ -5,6 +5,15 @@ public class CarParkEvent {
     private String carparkIdentifier;
     private Integer carCount;
     private Float percentageFull;
+    private Long averageStayDuration;
+
+    public void setAverageStayDuration(Long averageStayDuration) {
+        this.averageStayDuration = averageStayDuration;
+    }
+
+    public Long getAverageStayDuration() {
+        return averageStayDuration;
+    }
 
     public void setPercentageFull(Float percentageFull) {
         this.percentageFull = percentageFull;

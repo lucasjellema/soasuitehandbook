@@ -35,12 +35,15 @@
         <wlevs:event-type type-name="CarParkNearFullEvent">
       <wlevs:class>saibot.airport.facilities.parking.event.CarParkNearFullEvent</wlevs:class>
     </wlevs:event-type>
-    
+    <wlevs:event-type type-name="CarstayDoneEvent">
+      <wlevs:class>saibot.airport.facilities.parking.event.CarStayDoneEvent</wlevs:class>
+    </wlevs:event-type>
   </wlevs:event-type-repository>
   <wlevs:adapter id="carMovementAdapter" class="saibot.airport.facilities.parking.CarMovementController">
     <wlevs:listener ref="carInputChannel"/>
   </wlevs:adapter>
   <wlevs:channel id="carInputChannel" event-type="CarMovementEvent">
+    <wlevs:listener ref="carstayDoneProcessor"/>
     <wlevs:listener ref="carParkNearlyFullProcessor"/>
     <wlevs:listener ref="carParkEventProcessor"/>
     <wlevs:listener ref="abandonedCarsProcessor"/>
@@ -74,4 +77,9 @@
     <wlevs:listener ref="carParkReporter"/>
     <wlevs:source ref="carParkNearlyFullProcessor"/>
   </wlevs:channel>
+  <wlevs:channel id="carstayDoneChannel" event-type="CarstayDoneEvent">
+    <wlevs:listener ref="carParkReporter"/>
+    <wlevs:source ref="carstayDoneProcessor"/>
+  </wlevs:channel>
+  <wlevs:processor id="carstayDoneProcessor"/>
 </beans>
