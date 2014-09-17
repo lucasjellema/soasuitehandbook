@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wlevs:config xmlns:wlevs="http://www.bea.com/ns/wlevs/config/application">
+  <processor>
+    <name>carParkEventProcessor</name>
+    <rules>
+      <view id="CarparkStatus"><![CDATA[ 
+        IStream(select   sum(car.entryOrExit) as carCount, car.carparkIdentifier 
+                from     carInputChannel as car 
+ `              group by carparkIdentifier) ]]>
+      </view>
+      <view id="CompletedCarstaysView"><![CDATA[ 
+        IStream(select carparkIdentifier as carparkIdentifier 
+                ,      avg(carstayDuration)+2318 as avgCarstayDuration
+                from carstayDoneChannel [rows 100]
+                group by carparkIdentifier
+                
+       )]]></view>
+      <view id="CarparkStatusView"><![CDATA[ 
+        RStream(  select carCount, car.carparkIdentifier as carparkIdentifier
+                  ,      R.name as description 
+                  from   CarparkStatus[now]  as car 
+                  ,      carparkCache as R 
+                  where car.carparkIdentifier = R.identifier        
+               )
+       ]]></view>
+      <query id="CarparkQuery"><![CDATA[ 
+        RStream(  select  carCount as carCount
+                  ,       car.carparkIdentifier as carparkIdentifier
+                  ,       description as description 
+                  ,       -1 as averageStayDuration
+                  from   CarparkStatusView[now]  as car                   
+        )
+      ]]></query> 
+      <query id="CarparkAvgStayQuery"><![CDATA[ 
+        RStream(  select  -1 as carCount
+                  ,       ccs.carparkIdentifier as carparkIdentifier
+                  ,       '' as description 
+                  ,        avgCarstayDuration as averageStayDuration
+                  from    CompletedCarstaysView[now]  as ccs
+        )
+      ]]></query>
+<!--      <query id="CarparkQuery"><![CDATA[ 
+        RStream(  select  carCount
+                  ,       car.carparkIdentifier as carparkIdentifier
+                  ,       description 
+                  ,       avgCarstayDuration as averageStayDuration
+                  from    CarparkStatusView[now]  as car 
+                          LEFT OUTER JOIN 
+                          CompletedCarstaysView[now]  as ccs
+                          ON car.carparkIdentifier = ccs.carparkIdentifier        
+        )
+      ]]></query>
+      
+      -->
+    </rules>
+  </processor>
+  <processor>
+    <name>carstayDoneProcessor</name>
+    <rules>
+      <query id="CarstayDoneQuery"><![CDATA[ 
+        IStream(select carparkIdentifier as carparkIdentifier 
+        ,      licencePlate as licencePlate 
+        ,      stayduration as carstayDuration
+        ,      arrivalTime as arrivalTime
+        from   carInputChannel
+        match_recognize ( 
+          partition by carparkIdentifier, licencePlate
+          measures A.licencePlate as licencePlate  
+          ,        A.carparkIdentifier as carparkIdentifier
+          ,        A.arrivalTime as arrivalTime
+          ,        B.element_time - A.element_time as stayduration
+          pattern (A B)
+          define 
+            A as entryOrExit= 1 
+          , B AS entryOrExit = -1
+        ) as stayed
+        )
+      ]]></query>
+    </rules>
+  </processor>
+</wlevs:config>
