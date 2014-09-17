@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wlevs:config xmlns:wlevs="http://www.bea.com/ns/wlevs/config/application">
+    <processor>
+        <name>carMovementProcessor</name>
+        <rules>
+            <query id="CarparkSummary"><![CDATA[ 
+        IStream(select   sum(car.entryOrExit) as carCount, car.carparkIdentifier 
+                from     carMovementInputChannel [range 1 DAY slide 5 second] as car 
+ `              group by carparkIdentifier) ]]>
+            </query>
+        </rules>
+    </processor>
+</wlevs:config>

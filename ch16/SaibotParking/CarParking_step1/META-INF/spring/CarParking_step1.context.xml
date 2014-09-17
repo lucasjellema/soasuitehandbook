@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:wlevs="http://www.bea.com/ns/wlevs/spring"
+       xmlns:jdbc="http://www.oracle.com/ns/ocep/jdbc"
+       xmlns:hadoop="http://www.oracle.com/ns/oep/hadoop"
+       xmlns:nosqldb="http://www.oracle.com/ns/oep/nosqldb"
+       xsi:schemaLocation="
+  http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/osgi
+  http://www.springframework.org/schema/osgi/spring-osgi.xsd
+  http://www.bea.com/ns/wlevs/spring
+  http://www.bea.com/ns/wlevs/spring/ocep-epn.xsd
+  http://www.oracle.com/ns/ocep/jdbc
+  http://www.oracle.com/ns/ocep/jdbc/ocep-jdbc.xsd
+  http://www.oracle.com/ns/oep/hadoop
+  http://www.oracle.com/ns/oep/hadoop/oep-hadoop.xsd
+  http://www.oracle.com/ns/oep/nosqldb
+  http://www.oracle.com/ns/oep/nosqldb/oep-nosqldb.xsd">
+  <wlevs:event-type-repository>
+    <wlevs:event-type type-name="CarMovementEvent">
+      <wlevs:class>saibot.airport.facilities.parking.event.CarMovementEvent</wlevs:class>
+    </wlevs:event-type>
+    <wlevs:event-type type-name="CarParkEvent">
+      <wlevs:class>saibot.airport.facilities.parking.event.CarParkEvent</wlevs:class>
+    </wlevs:event-type>
+  </wlevs:event-type-repository>
+  <wlevs:adapter id="carMovementEventGenerator" class="saibot.airport.facilities.parking.CarMovementController">
+    <wlevs:listener ref="carMovementInputChannel"/>
+  </wlevs:adapter>
+  <wlevs:channel id="carMovementInputChannel" event-type="CarMovementEvent">
+    <wlevs:listener ref="carParkReporter"/>
+    <wlevs:listener ref="carMovementProcessor"/>
+  </wlevs:channel>
+  <wlevs:processor id="carMovementProcessor"/>
+  <wlevs:channel id="carParEventChannel" event-type="CarParkEvent">
+    <wlevs:listener ref="carParkReporter"/>
+    <wlevs:source ref="carMovementProcessor"/>
+  </wlevs:channel>
+  <bean id="carParkReporter" class="saibot.airport.facilities.parking.CarParkReporter"/>
+</beans>
