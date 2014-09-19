@@ -26,6 +26,8 @@
       <hash><url n="URL" path="CarParking_step1/CarParking_step1.jpr"/></hash>
       <hash><url n="URL" path="CarParking_step2/CarParking_step2.jpr"/></hash>
       <hash><url n="URL" path="CarParking_step3/CarParking_step3.jpr"/></hash>
+      <hash><url n="URL" path="CarParking_step4/CarParking_step4.jpr"/></hash>
       <hash><url n="URL" path="CarParking/CarParking.jpr"/></hash>
+      <hash><url n="URL" path="CarParkNearlyFullQueueListener/CarParkNearlyFullQueueListener.jpr"/></hash>
    </list>
 </jws:workspace>

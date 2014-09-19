@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wlevs:config xmlns:wlevs="http://www.bea.com/ns/wlevs/config/application">
+  <processor>
+    <name>carParkEventProcessor</name>
+    <rules>
+      <view id="CarparkStatus"><![CDATA[ 
+        IStream(select   sum(car.entryOrExit) as carCount, car.carparkIdentifier 
+                from     carInputChannel as car 
+ `              group by carparkIdentifier) ]]>
+      </view>
+      <view id="CompletedCarstaysQuery"><![CDATA[ 
+        IStream(select carparkIdentifier as carparkIdentifier 
+                ,      avg(stayduration) as avgCarstayDuration
+                from carInputChannel
+                match_recognize ( 
+                  partition by carparkIdentifier, licencePlate
+                  measures A.carparkIdentifier as carparkIdentifier
+                  ,        B.element_time - A.element_time as stayduration
+                  pattern (A B)
+                  define 
+                    A as entryOrExit= 1 
+                  , B AS entryOrExit = -1
+                ) as stayed
+                group by carparkIdentifier
+       )]]></view>
+ <!--     <query id="CarparkQuery"><![CDATA[ 
+ select  carCount, carparkIdentifier, carParkNames.carparkName as description from CarparkStatus[now]  as car 
+ , TABLE(saibot.airport.facilities.parking.CarParkManager.getCarparkDetails(
+  car.carparkIdentifier) 
+   AS carparkName OF CHAR) AS carParkNames
+  ]]></query>
+  
+  -->
+      <view id="CarparkStatusView"><![CDATA[ 
+        RStream(  select carCount, car.carparkIdentifier as carparkIdentifier
+                  ,      R.name as description 
+                  ,      to_char(100*carCount/R.capacity) as percentageFull
+                  from   CarparkStatus[now]  as car 
+                  ,      carparkCache as R 
+                  where car.carparkIdentifier = R.identifier        
+               )
+       ]]></view>
+      <query id="CarparkQuery"><![CDATA[ 
+        RStream(  select  carCount
+                  ,       car.carparkIdentifier as carparkIdentifier
+                  ,       description 
+                  ,       percentageFull
+                  ,       avgCarstayDuration as averageStayDuration
+                  from    CarparkStatusView[now]  as car 
+                          LEFT OUTER JOIN 
+                          CompletedCarstaysQuery[now]  as ccs
+                          ON car.carparkIdentifier = ccs.carparkIdentifier        
+        )
+      ]]></query>
+    </rules>
+  </processor>
+ <processor>
+    <name>abandonedCarsProcessor</name>
+    <rules>
+      <query id="AbandonedCarsQuery"><![CDATA[ 
+        select abandoned.licencePlate
+        ,      abandoned.carparkIdentifier
+        ,      abandoned.arrivalTime as arrivalDate 
+        from   carInputChannel 
+        match_recognize ( 
+          partition by carparkIdentifier, licencePlate
+          measures A.licencePlate as licencePlate  
+          ,        A.carparkIdentifier as carparkIdentifier
+          ,        A.arrivalTime as arrivalTime
+          INCLUDE TIMER EVENTS
+          pattern (A NotExit*)
+          duration 120 seconds
+          define 
+            A as entryOrExit= 1 
+          , NotExit AS entryOrExit!= -1
+       ) as abandoned
+      ]]></query>
+    </rules>
+  </processor>
+  <processor>
+    <name>carParkNearlyFullProcessor</name>
+    <rules>
+      <view id="CarparkStatus"><![CDATA[ 
+         IStream(select   sum(car.entryOrExit) as carCount
+                 ,        car.carparkIdentifier 
+                 from     carInputChannel as car 
+                 group by carparkIdentifier) ]]>
+      </view>
+      <view id="CarparkNearlyFullView"><![CDATA[ 
+         RStream(  select  car.carCount
+                   ,       car.carparkIdentifier
+                   ,       R.name as description 
+                   ,       to_char(100*car.carCount/R.capacity) as percentageFull
+                   ,       R.capacity as carParkCapacity
+                   from    CarparkStatus [now]  as car 
+                   ,       carparkCache as R 
+                   where   car.carparkIdentifier = R.identifier
+         )
+      ]]></view>
+      <view id="CarparkStatusView"><![CDATA[ 
+         RStream(  select  min(carCount) as recentLowCarCount
+                   ,       carparkIdentifier
+                   from    CarparkStatus [range 30 second]  as car 
+                   group by carparkIdentifier
+                )
+      ]]></view>
+
+      <query id="CarparkNearlyFullQuery"><![CDATA[ 
+        IStream(  select  carCount
+                  ,       c1.carparkIdentifier as carparkIdentifier
+                  ,       description  as description
+                  ,       percentageFull
+                  ,       carParkCapacity as capacity
+                  ,       recentLowCarCount as lowestRecentCount
+                  from    CarparkNearlyFullView[now] as c1
+                  ,       CarparkStatusView[now] as c2
+                  where   c1.carparkIdentifier = c2.carparkIdentifier
+                  and     percentageFull >= 50
+                  and     (100*c2.recentLowCarCount/c1.carParkCapacity) >= 15
+        )
+      ]]></query>
+    </rules>
+  </processor>
+  <processor>
+    <name>carstayDoneProcessor</name>
+    <rules>
+      <query id="CarstayDoneQuery"><![CDATA[ 
+        select carparkIdentifier as carparkIdentifier 
+        ,      licencePlate as licencePlate 
+        ,      stayduration as carstayDuration
+        ,      arrivalTime as arrivalTime
+        from   carInputChannel
+        match_recognize ( 
+          partition by carparkIdentifier, licencePlate
+          measures A.licencePlate as licencePlate  
+          ,        A.carparkIdentifier as carparkIdentifier
+          ,        A.arrivalTime as arrivalTime
+          ,        B.element_time - A.element_time as stayduration
+          pattern (A B)
+          define 
+            A as entryOrExit= 1 
+          , B AS entryOrExit = -1
+        ) as stayed
+      ]]></query>
+    </rules>
+  </processor>
+  <jms-adapter>
+    <name>carpark-nearly-full-jms-outbound-adapter</name>
+    <!-- either event type or message converter <event-type>CarParkNearFullEvent</event-type> -->
+    <jndi-provider-url>t3://soa2admin2:8001</jndi-provider-url>
+    <jndi-factory>weblogic.jndi.WLInitialContextFactory</jndi-factory>
+    <connection-jndi-name>jms/finance/FinanceConnectionFactory</connection-jndi-name>
+    <destination-jndi-name>jms/facilities/CarParkNearlyFullQueue</destination-jndi-name>
+    <user>weblogic</user>
+    <password>weblogic1</password>
+    <session-transacted>false</session-transacted>
+  </jms-adapter>
+</wlevs:config>
