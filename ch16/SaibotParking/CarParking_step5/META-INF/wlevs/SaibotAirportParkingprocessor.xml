@@ -115,8 +115,8 @@
                   from    CarparkNearlyFullView[now] as c1
                   ,       CarparkStatusView[now] as c2
                   where   c1.carparkIdentifier = c2.carparkIdentifier
-                  and     percentageFull >= 90
-                  and     (100*c2.recentLowCarCount/c1.carParkCapacity) >= 85
+                  and     percentageFull >= 50
+                  and     (100*c2.recentLowCarCount/c1.carParkCapacity) >= 15
         )
       ]]></query>
     </rules>
@@ -144,6 +144,24 @@
       ]]></query>
     </rules>
   </processor>
+  <processor>
+    <name>carParkNearlyFullEventToEDNProcessor</name>
+    <rules>   
+    <query id="CarParkAlmostFullEventEDNEventQuery"><![CDATA[ 
+        select XMLELEMENT(
+            NAME "CarParkAlmostFullEvent",XMLATTRIBUTES('saibot.airport/facilities' as "xmlns"),
+            XMLELEMENT(NAME "CarParkIdentifier"
+            , ''||carparkIdentifier), 
+            XMLELEMENT(NAME "CarParkName"
+            , description),
+            XMLELEMENT(NAME "PercentageFull" ,to_char(percentageFull)),            
+            XMLELEMENT(NAME "Capacity" ,to_char(capacity)),            
+            XMLELEMENT(NAME "CurrentCarCount" ,to_char(lowestRecentCount)),            
+            XMLELEMENT(NAME "LowestRecentCarCount" ,to_char(percentageFull))            
+        ) as xmlContent
+        from carParkNearlyFullChannel [now] ]]></query>        
+    </rules>
+  </processor>
   <jms-adapter>
     <name>carpark-nearly-full-jms-outbound-adapter</name>
     <!-- either event type or message converter <event-type>CarParkNearFullEvent</event-type> -->
@@ -155,4 +173,13 @@
     <password>weblogic1</password>
     <session-transacted>false</session-transacted>
   </jms-adapter>
+  <edn-adapter>
+    <name>CarparkAlmostFull-edn-outbound-adapter</name>
+    <edl-file>FacilitiesEvents.edl</edl-file>
+    <raw-xml-content>true</raw-xml-content>
+    <jndi-provider-url>t3://soa2admin2:8001</jndi-provider-url>
+    <jndi-factory>weblogic.jndi.WLInitialContextFactory</jndi-factory>
+    <user>weblogic</user>
+    <password>weblogic1</password>
+  </edn-adapter>
 </wlevs:config>

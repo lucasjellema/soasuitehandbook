@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<definitions xmlns="http://schemas.oracle.com/events/edl" targetNamespace="saibot.airport/facilities">
+   <schema-import location="../Schemas/FacilitiesEvents.xsd" namespace="saibot.airport/facilities"/>
+   <event-definition name="CarParkAlmostFullEvent">
+      <content xmlns:ns1="saibot.airport/facilities" element="ns1:CarParkAlmostFullEvent"/>
+   </event-definition>
+</definitions>

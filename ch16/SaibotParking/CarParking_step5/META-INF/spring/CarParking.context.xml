@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:wlevs="http://www.bea.com/ns/wlevs/spring"
+       xmlns:jdbc="http://www.oracle.com/ns/ocep/jdbc" xmlns:hadoop="http://www.oracle.com/ns/oep/hadoop"
+       xmlns:nosqldb="http://www.oracle.com/ns/oep/nosqldb"
+       xsi:schemaLocation="   http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd   http://www.springframework.org/schema/osgi   http://www.springframework.org/schema/osgi/spring-osgi.xsd   http://www.bea.com/ns/wlevs/spring   http://www.bea.com/ns/wlevs/spring/ocep-epn.xsd   http://www.oracle.com/ns/ocep/jdbc   http://www.oracle.com/ns/ocep/jdbc/ocep-jdbc.xsd   http://www.oracle.com/ns/oep/hadoop   http://www.oracle.com/ns/oep/hadoop/oep-hadoop.xsd   http://www.oracle.com/ns/oep/nosqldb   http://www.oracle.com/ns/oep/nosqldb/oep-nosqldb.xsd">
+    <wlevs:event-type-repository>
+        <wlevs:event-type type-name="CarMovementEvent">
+            <wlevs:class>saibot.airport.facilities.parking.event.CarMovementEvent</wlevs:class>
+        </wlevs:event-type>
+        <wlevs:event-type type-name="CarParkEvent">
+            <wlevs:class>saibot.airport.facilities.parking.event.CarParkEvent</wlevs:class>
+        </wlevs:event-type>
+        <wlevs:event-type type-name="CarPark">
+            <wlevs:class>saibot.airport.facilities.parking.CarPark</wlevs:class>
+        </wlevs:event-type>
+        <wlevs:event-type type-name="AbandonedCarEvent">
+            <wlevs:class>saibot.airport.facilities.parking.event.AbandonedCarEvent</wlevs:class>
+        </wlevs:event-type>
+        <wlevs:event-type type-name="CarParkNearFullEvent">
+            <wlevs:class>saibot.airport.facilities.parking.event.CarParkNearFullEvent</wlevs:class>
+        </wlevs:event-type>
+        <wlevs:event-type type-name="CarstayDoneEvent">
+            <wlevs:class>saibot.airport.facilities.parking.event.CarStayDoneEvent</wlevs:class>
+        </wlevs:event-type>
+    </wlevs:event-type-repository>
+    <wlevs:adapter id="carMovementAdapter" class="saibot.airport.facilities.parking.CarMovementController">
+        <wlevs:listener ref="carInputChannel"/>
+    </wlevs:adapter>
+    <wlevs:channel id="carInputChannel" event-type="CarMovementEvent">
+        <wlevs:listener ref="carstayDoneProcessor"/>
+        <wlevs:listener ref="carParkNearlyFullProcessor"/>
+        <wlevs:listener ref="carParkEventProcessor"/>
+        <wlevs:listener ref="abandonedCarsProcessor"/>
+    </wlevs:channel>
+    <wlevs:processor id="carParkEventProcessor">
+        <wlevs:cache-source ref="carparkCache"/>
+    </wlevs:processor>
+    <wlevs:channel id="carParkOutputChannel" event-type="CarParkEvent">
+        <wlevs:listener ref="carParkReporter"/>
+        <wlevs:source ref="carParkEventProcessor"/>
+    </wlevs:channel>
+    <bean id="carParkReporter" class="saibot.airport.facilities.parking.CarParkReporter"/>
+    <bean id="abandonedCarsMonitorBean" class="saibot.airport.facilities.parking.AbandonedCarsMonitor"/>
+    <wlevs:channel id="abandonedCarsOutputChannel" event-type="AbandonedCarEvent">
+        <wlevs:listener ref="abandonedCarsMonitorBean"/>
+        <wlevs:source ref="abandonedCarsProcessor"/>
+    </wlevs:channel>
+    <wlevs:processor id="abandonedCarsProcessor"/>
+    <wlevs:caching-system id="carparkLocalCachingSystem"/>
+    <wlevs:cache id="carparkCache" key-properties="identifier" value-type="CarPark">
+        <wlevs:caching-system ref="carparkLocalCachingSystem"/>
+        <wlevs:cache-loader ref="carparksCacheLoader"/>
+    </wlevs:cache>
+    <bean id="carparksCacheLoader" class="saibot.airport.facilities.parking.CarParkCacheLoader"/>
+    <wlevs:processor id="carParkNearlyFullProcessor">
+        <wlevs:cache-source ref="carparkCache"/>
+    </wlevs:processor>
+    <wlevs:channel id="carParkNearlyFullChannel" event-type="CarParkNearFullEvent">
+        <wlevs:listener ref="carpark-nearly-full-jms-outbound-adapter"/>
+        <wlevs:listener ref="carParkReporter"/>
+        <wlevs:listener ref="carParkNearlyFullEventToEDNProcessor"/>
+        <wlevs:source ref="carParkNearlyFullProcessor"/>
+    </wlevs:channel>
+    <wlevs:channel id="carstayDoneChannel" event-type="CarstayDoneEvent">
+        <wlevs:listener ref="carParkReporter"/>
+        <wlevs:source ref="carstayDoneProcessor"/>
+    </wlevs:channel>
+    <wlevs:processor id="carstayDoneProcessor"/>
+    <bean id="carParkNearlyFullEventConverter"
+          class="saibot.airport.facilities.parking.jms.CarParkNearlyFullEventConverter"/>
+    <wlevs:adapter id="carpark-nearly-full-jms-outbound-adapter" provider="jms-outbound">
+        <wlevs:instance-property name="converterBean" ref="carParkNearlyFullEventConverter"/>
+    </wlevs:adapter>
+    
+     <wlevs:processor id="carParkNearlyFullEventToEDNProcessor"/>
+    <wlevs:channel id="CarParkAlmostFullEventChannel" event-type="CarParkAlmostFullEvent">
+        <wlevs:listener ref="CarparkAlmostFull-edn-outbound-adapter"/>
+        <wlevs:source ref="carParkNearlyFullEventToEDNProcessor"/>
+    </wlevs:channel>
+
+    
+  <wlevs:adapter id="CarparkAlmostFull-edn-outbound-adapter" provider="edn-outbound">
+    <wlevs:instance-property name="eventType" value="CarParkAlmostFullEvent"/>
+  </wlevs:adapter>
+
+</beans>
