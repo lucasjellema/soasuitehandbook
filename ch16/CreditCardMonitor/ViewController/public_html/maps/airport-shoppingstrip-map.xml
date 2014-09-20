@@ -1,0 +1,37 @@
+<basemap id='airportShoppingStripMap'>
+  <layer id='shops'>
+    <image height='664' width='1303' source='/images/airportShoppingArea.png'/>
+  </layer>
+  <points>
+    <point x='946' y='354' name='1' longLabel='Jewellery For Real'/>
+    <point x='914' y='338' name='2' longLabel='Hot Bakery'/>
+    <point x='761' y='428' name='3' longLabel='Suits that suit you'/>
+    <point x='857' y='319' name='4' longLabel='About time - Watches and Stuff'/>
+    <point x='814' y='300' name='5' longLabel='Books and Magazines'/>
+    <point x='722' y='375' name='6' longLabel='Suitcases 2000'/>
+    <point x='680' y='361' name='7' longLabel='Jack and Jill'/>
+    <point x='773' y='287' name='8' longLabel='That smells nice...'/>
+    <point x='738' y='276' name='9' longLabel='Mobility on the go'/>
+    <point x='581' y='355' name='10' longLabel='Gadgets and gear'/>
+    <point x='544' y='337' name='11' longLabel='Adventure 3.0'/>
+    <point x='509' y='324' name='12' longLabel='Burger Emperor'/>
+    <point x='571' y='305' name='13' longLabel='Daft Dresses'/>
+    <point x='523' y='286' name='14' longLabel='American Express Outlet Store'/>
+    <point x='648' y='243' name='15' longLabel='Music Express'/>
+    <point x='617' y='226' name='16' longLabel='Tourist Dream Express'/>
+    <point x='593' y='211' name='17' longLabel='The Original Boot Legger'/>
+    <point x='547' y='192' name='18' longLabel='Virgins'/>
+    <point x='494' y='170' name='19' longLabel='Great Games'/>
+    <point x='377' y='259' name='20' longLabel='Perfume'/>
+    <point x='343' y='242' name='21' longLabel='Go Nuts'/>
+    <point x='301' y='191' name='22' longLabel='Wine Wonders'/>
+    <point x='399' y='138' name='23' longLabel='Beyond Candy'/>
+    <point x='364' y='160' name='24' longLabel='Cha Cha Chocolate'/>
+    <point x='356' y='134' name='25' longLabel='Nerdy Nasties'/>
+    <point x='323' y='127' name='26' longLabel='Eat and Drink'/>
+    <point x='242' y='156' name='27' longLabel='Carpe Diem'/>
+    <point x='286' y='109' name='28' longLabel='Mirrors and Beads'/>
+    <point x='205' y='151' name='29' longLabel='Guns for Fun'/>
+    <point x='174' y='138' name='30' longLabel='Toys for Girls'/>
+  </points>
+</basemap>

@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <af:document title="CreditCardMonitor.jsf" id="d1">
+        <af:form id="f1">
+            <af:panelStretchLayout id="psl1">
+                <f:facet name="bottom"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout id="pgl1">
+                        <af:poll id="refresher" interval="5000"/>
+                        <af:panelFormLayout id="pfl1" partialTriggers="refresher">
+                            <af:inputText id="it1" label="Number of Transactions"
+                                          value="#{creditCardPurchaseCoordinator.totalNumberOfTransactions}"/>
+                            <af:inputText id="it2" label="Number of distinct Credit Cards"
+                                          value="#{creditCardPurchaseCoordinator.numberOfDistinctCreditCards}"/>
+                            <af:inputText id="it3" label="Total Amount"
+                                          value="#{creditCardPurchaseCoordinator.totalAmount}"/>
+                            <af:inputText id="it4" label="Number of Shops Involved"
+                                          value="#{creditCardPurchaseCoordinator.numberOfShopsInvolved}"/>
+                            <f:facet name="footer"/>
+                        </af:panelFormLayout>
+                        <dvt:thematicMap basemap="airportShoppingStripMap" id="tm1"
+                                         partialTriggers="::refresher ::resetMapButton"
+                                         source="/maps/airport-shoppingstrip-map.xml"
+                                         summary="Airport Shopping Strip - indicating suspicious credit card purchases"
+                                         inlineStyle="height:800px;width:1200px;">
+                            <dvt:areaLayer layer="shops" id="al1">
+                                <dvt:pointDataLayer id="pdl1" selectionMode="single"
+                                                    value="#{creditCardPurchaseCoordinator.creditCardPurchases}"
+                                                    var="row" animationOnDataChange="alphaFade" varStatus="rowStatus">
+                                    <dvt:pointLocation id="pl1" pointName="#{row.shopIdentifier}" type="pointName">
+                                        <dvt:marker id="m12" shape="human" scaleX="#{row.amount*0.05}"
+                                                    scaleY="#{row.amount*0.05}"
+                                                    fillColor="#{helperBean.colors[row.transactionSeq]}"
+                                                    shortDesc="$ #{row.amount} (purchase ##{row.sequence} in transaction #{row.transactionSeq} )"/>
+                                    </dvt:pointLocation>
+                                </dvt:pointDataLayer>
+                            </dvt:areaLayer>
+                        </dvt:thematicMap>
+                        <dvt:lineChart id="chart1" value="#{creditCardPurchaseCoordinator.snapshots}" var="row"
+                        zoomAndScroll="live" partialTriggers="::refresher">
+                            <f:facet name="dataStamp">
+                                <af:group id="g1">
+                                    <dvt:chartDataItem value="#{row.numberOfPurchases}" group="#{row.timestamp}"/>
+                                    <dvt:chartDataItem value="#{row.sumAmounts}" group="#{row.timestamp}"/>
+                                </af:group>
+                            </f:facet>
+                            <dvt:chartLegend id="leg1" rendered="true"/>
+                            <f:facet name="overview" >
+<dvt:overview id="over" />
+</f:facet>
+                        </dvt:lineChart>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="start"/>
+                <f:facet name="end"/>
+                <f:facet name="top">
+                    <af:panelHeader text="CreditCard Monitor" id="ph1">
+                        <f:facet name="context"/>
+                        <f:facet name="menuBar"/>
+                        <f:facet name="toolbar">
+                            <af:button text="reset" id="resetMapButton" partialSubmit="true"
+                                       actionListener="#{viewScope.creditCardPurchaseCoordinator.resetMap}"/>
+                        </f:facet>
+                        <f:facet name="legend"/>
+                        <f:facet name="info"></f:facet>
+                    </af:panelHeader>
+                </f:facet>
+            </af:panelStretchLayout>
+        </af:form>
+    </af:document>
+    <!--oracle-jdev-comment:preferred-managed-bean-name:creditCardPurchaseCoordinator-->
+</f:view>

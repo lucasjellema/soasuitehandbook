@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <managed-bean id="__1">
+    <managed-bean-name>creditCardPurchaseCoordinator</managed-bean-name>
+    <managed-bean-class>saibot.airport.security.monitor.view.CreditCardPurchaseCoordinator</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property id="__3">
+      <property-name>ccql</property-name>
+      <property-class>saibot.airport.security.monitor.jms.CreditCardQueueListener</property-class>
+      <value>#{creditCardQueueListener}</value>
+    </managed-property>
+  </managed-bean>
+  <managed-bean id="__2">
+    <managed-bean-name>creditCardQueueListener</managed-bean-name>
+    <managed-bean-class>saibot.airport.security.monitor.jms.CreditCardQueueListener</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__4">
+    <managed-bean-name>helperBean</managed-bean-name>
+    <managed-bean-class>saibot.airport.security.monitor.view.HelperBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+</adfc-config>
