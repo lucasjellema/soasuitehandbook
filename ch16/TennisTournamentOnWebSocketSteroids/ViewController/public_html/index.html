@@ -5,25 +5,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <script src="resources/js/TennisSocketLib.js"></script>
     </head>
-    <body>
-        <h1>WebSockets and JMS</h1>
+    <body onload="open();">
+        <h1>Tennis Tournament</h1>
         <table id="grandScoreboard">
-            <tr id="matches">
-                <td id="match0"></td>
+            <tr id="matches"  style="vertical-align: top;">
+                <td id="match0" style="vertical-align: top;"></td>
                 <td id="match1"></td>
                 <td id="match2"></td>
                 <td id="match3"></td>
                 <td id="match4"></td>
             </tr>
         </table>
-        <ul>
-            <li>First open a session</li>
-            <li>Send messages and wait for replies</li>
-            <li>Check server's log</li>
-        </ul>
+ 
         <br/>
-         
-        <a href="javascript:open();">Open Session</a>
+         <a href="javascript:open();">Open Session</a>
          
         <br/>
          
@@ -36,6 +31,7 @@
         <a href="javascript:close();">Close Session</a>
          
         <br/>
+        
          
         <h3>WebSocket messages received:</h3>
         <div id="websocketMessages" style="border: 1px solid"></div>
