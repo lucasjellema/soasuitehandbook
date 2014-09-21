@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tennis Tournament powered by WebSockets</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="resources/js/TennisSocketLib.js"></script>
+</head>
+<body>
+<h1>WebSockets and JMS</h1>
+<ul>
+<li>First open a session</li>
+<li>Send messages and wait for replies</li>
+<li>Check server's log</li>
+</ul> <br/>
+<a href="javascript:open();">Open Session</a>
+<br/>
+<input id="message" type="text" name="message" placeholder="Message" />
+<a href="javascript:sendMessage(document.getElementById('message').value)">Send message</a>
+<br/>
+<a href="javascript:close();">Close Session</a>
+<br/>
+<h3>WebSocket messages received:</h3>
+<div id="websocketMessages" style="border: 1px solid">
+</div>
+</body>
+</html>
