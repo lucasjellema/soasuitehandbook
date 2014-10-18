@@ -13,24 +13,16 @@
            xmlns:sca-ext="http://xmlns.oracle.com/sca/1.0-ext">
   <import namespace="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService"
           location="WSDLs/AircraftServiceWrapper.wsdl" importType="wsdl"/>
-  <import namespace="http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/BPELProcess1"
-          location="WSDLs/BPELProcess1.wsdl" importType="wsdl"/>
   <import namespace="saibot.airport/operational/aircraftserviceprovider" location="WSDLs/ComposeProposal.wsdl"
           importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/bpel/workflow/taskService"
+          location="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl" importType="wsdl"/>
   <service name="AircraftServiceProvider_ep" ui:wsdlLocation="WSDLs/AircraftServiceWrapper.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService#wsdl.interface(AircraftService)"
                     callbackInterface="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService#wsdl.interface(AircraftServiceCallback)"/>
     <binding.ws port="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService#wsdl.endpoint(AircraftServiceProvider_ep/AircraftService_pt)"/>
     <callback>
       <binding.ws port="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService#wsdl.endpoint(AircraftServiceProvider_ep/AircraftServiceCallback_pt)"/>
-    </callback>
-  </service>
-  <service name="bpelprocess1_client_ep" ui:wsdlLocation="WSDLs/BPELProcess1.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/BPELProcess1#wsdl.interface(BPELProcess1)"
-                    callbackInterface="http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/BPELProcess1#wsdl.interface(BPELProcess1Callback)"/>
-    <binding.ws port="http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/BPELProcess1#wsdl.endpoint(bpelprocess1_client_ep/BPELProcess1_pt)"/>
-    <callback>
-      <binding.ws port="http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/BPELProcess1#wsdl.endpoint(bpelprocess1_client_ep/BPELProcess1Callback_pt)"/>
     </callback>
   </service>
   <property name="productVersion" type="xs:string" many="false">12.1.3.0.0</property>
@@ -46,16 +38,16 @@
         <interface.wsdl interface="saibot.airport/operational/aircraftserviceprovider#wsdl.interface(ComposeProposal)"
                         callbackInterface="saibot.airport/operational/aircraftserviceprovider#wsdl.interface(ComposeProposalCallback)"/>
       </reference>
-    </componentType>
-    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
-  </component>
-  <component name="BPELProcess1" version="2.0">
-    <implementation.bpel src="BPEL/BPELProcess1.bpel"/>
-    <componentType>
-      <service name="bpelprocess1_client" ui:wsdlLocation="WSDLs/BPELProcess1.wsdl">
-        <interface.wsdl interface="http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/BPELProcess1#wsdl.interface(BPELProcess1)"
-                        callbackInterface="http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/BPELProcess1#wsdl.interface(BPELProcess1Callback)"/>
-      </service>
+      <reference name="AssessProposal.TaskService_1"
+                 ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                        callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+      </reference>
+      <reference name="HandcraftProposal.TaskService_1"
+                 ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                        callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+      </reference>
     </componentType>
     <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
   </component>
@@ -69,16 +61,38 @@
     </componentType>
     <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
   </component>
+  <component name="AssessProposal">
+    <implementation.workflow src="HumanTasks/AssessProposal.task"/>
+    <componentType>
+      <service name="TaskService" ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                        callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+      </service>
+    </componentType>
+  </component>
+  <component name="HandcraftProposal">
+    <implementation.workflow src="HumanTasks/HandcraftProposal.task"/>
+    <componentType>
+      <service name="TaskService" ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                        callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+      </service>
+    </componentType>
+  </component>
   <wire>
     <source.uri>AircraftServiceProvider_ep</source.uri>
     <target.uri>AircraftServiceRequestProcessor/AircraftServiceProvider</target.uri>
   </wire>
   <wire>
-    <source.uri>bpelprocess1_client_ep</source.uri>
-    <target.uri>BPELProcess1/bpelprocess1_client</target.uri>
-  </wire>
-  <wire>
     <source.uri>AircraftServiceRequestProcessor/ComposeProposal.ComposeProposal</source.uri>
     <target.uri>ComposeProposal/ComposeProposal</target.uri>
+  </wire>
+  <wire>
+    <source.uri>AircraftServiceRequestProcessor/AssessProposal.TaskService_1</source.uri>
+    <target.uri>AssessProposal/TaskService</target.uri>
+  </wire>
+  <wire>
+    <source.uri>AircraftServiceRequestProcessor/HandcraftProposal.TaskService_1</source.uri>
+    <target.uri>HandcraftProposal/TaskService</target.uri>
   </wire>
 </composite>
