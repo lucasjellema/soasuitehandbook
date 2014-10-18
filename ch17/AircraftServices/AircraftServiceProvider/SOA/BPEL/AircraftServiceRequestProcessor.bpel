@@ -30,7 +30,11 @@
          xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
          xmlns:ns3="http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/BPELProcess1"
-         xmlns:ns4="saibot.airport/operational/aircraftserviceprovider">
+         xmlns:ns4="saibot.airport/operational/aircraftserviceprovider"
+         xmlns:task="http://xmlns.oracle.com/bpel/workflow/task"
+         xmlns:taskservice="http://xmlns.oracle.com/bpel/workflow/taskService"
+         xmlns:wfcommon="http://xmlns.oracle.com/bpel/workflow/common"
+         xmlns:wf="http://schemas.oracle.com/bpel/extensions/workflow">
 
     <!-- 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,6 +54,10 @@
         <partnerLink name="AircraftServiceProvider" partnerLinkType="ns1:AircraftServiceRequestProcessor" myRole="AircraftService" partnerRole="AircraftServiceCallback"/>
         <partnerLink name="ComposeProposal.ComposeProposal" partnerLinkType="ns4:ComposeProposal"
                      partnerRole="ComposeProposalProvider" myRole="ComposeProposalRequester"/>
+        <partnerLink name="AssessProposal.TaskService_1" partnerLinkType="taskservice:TaskService"
+                     partnerRole="TaskService" myRole="TaskServiceCallbackListener"/>
+        <partnerLink name="HandcraftProposal.TaskService_1" partnerLinkType="taskservice:TaskService"
+                     partnerRole="TaskService" myRole="TaskServiceCallbackListener"/>
     </partnerLinks>
 
     <!-- 
@@ -64,6 +72,8 @@
 
         <!-- Reference to the message that will be sent back to the requester during callback -->
         <variable name="outputVariable" messageType="ns1:submitProposalCallbackMessage"/>
+        <variable name="AssessProposal1_globalVariable" messageType="taskservice:taskMessage"/>
+        <variable name="HandcraftProposal1_globalVariable" messageType="taskservice:taskMessage"/>
     </variables>
 
     <!-- 
@@ -103,6 +113,202 @@
                 </assign>
             </sequence>
         </scope>
+        <scope name="AssessProposal1" xmlns:wf="http://schemas.oracle.com/bpel/extensions/workflow"
+               wf:key="AssessProposal1_globalVariable">
+            <bpelx:annotation>
+                <bpelx:pattern patternName="bpelx:workflow"></bpelx:pattern>
+            </bpelx:annotation>
+            <variables>
+                <variable name="initiateTaskInput" messageType="taskservice:initiateTaskMessage"/>
+                <variable name="initiateTaskResponseMessage" messageType="taskservice:initiateTaskResponseMessage"/>
+            </variables>
+            <sequence>
+                <assign name="AssessProposal1_AssignTaskAttributes">
+                    <copy>
+                        <from>number(3)</from>
+                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:priority</query></to>
+                    </copy>
+                    <copy>
+                        <from><literal><payload xmlns="http://xmlns.oracle.com/bpel/workflow/task">
+	<RequestProposalMessage xmlns="saibot.airport/operational/aircraftservice"/> 
+	<SubmitProposalCallbackMessage xmlns="saibot.airport/operational/aircraftservice"/> 
+</payload></literal></from>
+                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload</query></to>
+                    </copy>
+                    <copy>
+                        <from variable="inputVariable" part="part1"/>
+                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/ns2:RequestProposalMessage</query></to>
+                    </copy>
+                    <copy>
+                        <from variable="outputVariable" part="part1"/>
+                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/ns2:SubmitProposalCallbackMessage</query></to>
+                    </copy>
+                </assign>
+                <invoke name="initiateTask_AssessProposal1" partnerLink="AssessProposal.TaskService_1"
+                        operation="initiateTask" portType="taskservice:TaskService" inputVariable="initiateTaskInput"
+                        outputVariable="initiateTaskResponseMessage"/>
+                <receive name="receiveCompletedTask_AssessProposal1" partnerLink="AssessProposal.TaskService_1"
+                         portType="taskservice:TaskServiceCallback" operation="onTaskCompleted"
+                         variable="AssessProposal1_globalVariable" createInstance="no"/>
+            </sequence>
+        </scope>
+        <if name="taskIf">
+            <documentation>
+                <![CDATA[Task outcome is APPROVE]]>
+            </documentation>
+            <condition>$AssessProposal1_globalVariable.payload/task:systemAttributes/task:outcome = 'APPROVE'</condition>
+            <sequence>
+                <assign name="CopyPayloadFromTask">
+                    <copy>
+                        <from variable="AssessProposal1_globalVariable" part="payload"><query>task:payload/ns2:RequestProposalMessage</query></from>
+                        <to variable="inputVariable" part="part1"/>
+                    </copy>
+                    <copy>
+                        <from variable="AssessProposal1_globalVariable" part="payload"><query>task:payload/ns2:SubmitProposalCallbackMessage</query></from>
+                        <to variable="outputVariable" part="part1"/>
+                    </copy>
+                </assign>
+            </sequence>
+            <elseif>
+                <documentation>
+                    <![CDATA[Task outcome is REJECT]]>
+                </documentation>
+                <condition>$AssessProposal1_globalVariable.payload/task:systemAttributes/task:outcome = 'REJECT'</condition>
+                <sequence>
+                    <assign name="CopyPayloadFromTask">
+                        <copy>
+                            <from variable="AssessProposal1_globalVariable" part="payload"><query>task:payload/ns2:RequestProposalMessage</query></from>
+                            <to variable="inputVariable" part="part1"/>
+                        </copy>
+                        <copy>
+                            <from variable="AssessProposal1_globalVariable" part="payload"><query>task:payload/ns2:SubmitProposalCallbackMessage</query></from>
+                            <to variable="outputVariable" part="part1"/>
+                        </copy>
+                    </assign>
+                    <scope name="HandcraftProposal1" xmlns:wf="http://schemas.oracle.com/bpel/extensions/workflow"
+                           wf:key="HandcraftProposal1_globalVariable">
+                        <bpelx:annotation>
+                            <bpelx:pattern patternName="bpelx:workflow"></bpelx:pattern>
+                        </bpelx:annotation>
+                        <variables>
+                            <variable name="initiateTaskInput" messageType="taskservice:initiateTaskMessage"/>
+                            <variable name="initiateTaskResponseMessage"
+                                      messageType="taskservice:initiateTaskResponseMessage"/>
+                        </variables>
+                        <sequence>
+                            <assign name="HandcraftProposal1_AssignTaskAttributes">
+                                <copy>
+                                    <from>number(3)</from>
+                                    <to variable="initiateTaskInput" part="payload"><query>task:task/task:priority</query></to>
+                                </copy>
+                                <copy>
+                                    <from><literal><payload xmlns="http://xmlns.oracle.com/bpel/workflow/task">
+ <RequestAircraftServiceInRFP xmlns="http://xmlns.oracle.com/bpel/workflow/task"/>
+ <HandcraftedProposal xmlns="http://xmlns.oracle.com/bpel/workflow/task"/>
+</payload></literal></from>
+                                    <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload</query></to>
+                                </copy>
+                                <copy>
+                                    <from variable="inputVariable" part="part1"/>
+                                    <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/task:RequestAircraftServiceInRFP</query></to>
+                                </copy>
+                                <copy>
+                                    <from variable="outputVariable" part="part1"/>
+                                    <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/task:HandcraftedProposal</query></to>
+                                </copy>
+                            </assign>
+                            <invoke name="initiateTask_HandcraftProposal1" partnerLink="HandcraftProposal.TaskService_1"
+                                    operation="initiateTask" portType="taskservice:TaskService"
+                                    inputVariable="initiateTaskInput" outputVariable="initiateTaskResponseMessage"/>
+                            <receive name="receiveCompletedTask_HandcraftProposal1"
+                                     partnerLink="HandcraftProposal.TaskService_1"
+                                     portType="taskservice:TaskServiceCallback" operation="onTaskCompleted"
+                                     variable="HandcraftProposal1_globalVariable" createInstance="no"/>
+                        </sequence>
+                    </scope>
+                    <if name="taskIf">
+                        <documentation>
+                            <![CDATA[Task outcome is APPROVE]]>
+                        </documentation>
+                        <condition>$HandcraftProposal1_globalVariable.payload/task:systemAttributes/task:outcome = 'APPROVE'</condition>
+                        <sequence>
+                            <assign name="CopyPayloadFromTask">
+                                <copy>
+                                    <from variable="HandcraftProposal1_globalVariable" part="payload"><query>task:payload/task:RequestAircraftServiceInRFP</query></from>
+                                    <to variable="inputVariable" part="part1"/>
+                                </copy>
+                                <copy>
+                                    <from variable="HandcraftProposal1_globalVariable" part="payload"><query>task:payload/task:HandcraftedProposal</query></from>
+                                    <to variable="outputVariable" part="part1"/>
+                                </copy>
+                            </assign>
+                        </sequence>
+                        <elseif>
+                            <documentation>
+                                <![CDATA[Task outcome is REJECT]]>
+                            </documentation>
+                            <condition>$HandcraftProposal1_globalVariable.payload/task:systemAttributes/task:outcome = 'REJECT'</condition>
+                            <sequence>
+                                <assign name="CopyPayloadFromTask">
+                                    <copy>
+                                        <from variable="HandcraftProposal1_globalVariable" part="payload"><query>task:payload/task:RequestAircraftServiceInRFP</query></from>
+                                        <to variable="inputVariable" part="part1"/>
+                                    </copy>
+                                    <copy>
+                                        <from variable="HandcraftProposal1_globalVariable" part="payload"><query>task:payload/task:HandcraftedProposal</query></from>
+                                        <to variable="outputVariable" part="part1"/>
+                                    </copy>
+                                </assign>
+                                <assign name="WithdrawProposal">
+                                    <copy>
+                                        <from>false()</from>
+                                        <to>$outputVariable.part1/ns2:CanDo</to>
+                                    </copy>
+                                    <extensionAssignOperation>
+                                        <bpelx:remove>
+                                            <bpelx:target>$outputVariable.part1/ns2:Price</bpelx:target>
+                                        </bpelx:remove>
+                                    </extensionAssignOperation>
+                                    <extensionAssignOperation>
+                                        <bpelx:remove>
+                                            <bpelx:target>$outputVariable.part1/ns2:ProposalExpiryDate</bpelx:target>
+                                        </bpelx:remove>
+                                    </extensionAssignOperation>
+                                </assign>
+                            </sequence>
+                        </elseif>
+                        <else>
+                            <sequence>
+                                <assign name="CopyPayloadFromTask">
+                                    <copy>
+                                        <from variable="HandcraftProposal1_globalVariable" part="payload"><query>task:payload/task:RequestAircraftServiceInRFP</query></from>
+                                        <to variable="inputVariable" part="part1"/>
+                                    </copy>
+                                    <copy>
+                                        <from variable="HandcraftProposal1_globalVariable" part="payload"><query>task:payload/task:HandcraftedProposal</query></from>
+                                        <to variable="outputVariable" part="part1"/>
+                                    </copy>
+                                </assign>
+                            </sequence>
+                        </else>
+                    </if>
+                </sequence>
+            </elseif>
+            <else>
+                <sequence>
+                    <assign name="CopyPayloadFromTask">
+                        <copy>
+                            <from variable="AssessProposal1_globalVariable" part="payload"><query>task:payload/ns2:RequestProposalMessage</query></from>
+                            <to variable="inputVariable" part="part1"/>
+                        </copy>
+                        <copy>
+                            <from variable="AssessProposal1_globalVariable" part="payload"><query>task:payload/ns2:SubmitProposalCallbackMessage</query></from>
+                            <to variable="outputVariable" part="part1"/>
+                        </copy>
+                    </assign>
+                </sequence>
+            </else>
+        </if>
         <wait name="WaitToAppearNotTooEager">
             <for>'PT20S'</for>
         </wait>

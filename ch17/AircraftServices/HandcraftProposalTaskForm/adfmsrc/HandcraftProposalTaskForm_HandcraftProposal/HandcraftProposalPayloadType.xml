@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="12.1.3.10.8" id="HandcraftProposalPayloadType"
+          Package="HandcraftProposalTaskForm_HandcraftProposal"
+          BeanClass="HandcraftProposalTaskForm_HandcraftProposal.HandcraftProposalPayloadType" isJavaBased="false">
+  <AccessorAttribute id="RequestAircraftServiceInRFP" IsCollection="true"
+                     BeanClass="HandcraftProposalTaskForm_HandcraftProposal.requestProposalMessageType"
+                     CollectionBeanClass="HandcraftProposalTaskForm_HandcraftProposal.requestProposalMessageType_RequestAircraftServiceInRFP_Operations">
+    <Properties>
+      <Property Name="nextSiblingNamespace" Value="http://xmlns.oracle.com/bpel/workflow/task"/>
+      <Property Name="nextSibling" Value="HandcraftedProposal"/>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Request Aircraft Service In RFP"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="RequestAircraftServiceInRFP"/>
+      <Property Name="targetNamespace" Value="http://xmlns.oracle.com/bpel/workflow/task"/>
+    </Properties>
+  </AccessorAttribute>
+  <AccessorAttribute id="HandcraftedProposal" IsCollection="true"
+                     BeanClass="HandcraftProposalTaskForm_HandcraftProposal.submitProposalCallbackMessageType"
+                     CollectionBeanClass="HandcraftProposalTaskForm_HandcraftProposal.submitProposalCallbackMessageType_HandcraftedProposal_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Handcrafted Proposal"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="HandcraftedProposal"/>
+      <Property Name="targetNamespace" Value="http://xmlns.oracle.com/bpel/workflow/task"/>
+    </Properties>
+  </AccessorAttribute>
+</JavaBean>

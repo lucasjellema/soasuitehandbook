@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="12.1.3.10.8" id="getTaskDetails"
+          Package="HandcraftProposalTaskForm_HandcraftProposal"
+          BeanClass="HandcraftProposalTaskForm_HandcraftProposal.getTaskDetails" isJavaBased="false">
+  <AccessorAttribute id="task" IsCollection="true" BeanClass="HandcraftProposalTaskForm_HandcraftProposal.task"
+                     CollectionBeanClass="HandcraftProposalTaskForm_HandcraftProposal.getTaskDetails_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Task"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="task"/>
+      <Property Name="targetNamespace" Value="http://xmlns.oracle.com/bpel/workflow/task"/>
+    </Properties>
+  </AccessorAttribute>
+</JavaBean>

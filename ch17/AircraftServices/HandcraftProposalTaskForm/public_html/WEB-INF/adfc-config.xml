@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="Empty1_jspx">
+    <page>/Empty1.jspx</page>
+  </view>
+  <control-flow-rule id="__1">
+    <from-activity-id>*</from-activity-id>
+    <control-flow-case id="__2">
+      <from-outcome>done</from-outcome>
+      <to-activity-id>Empty1_jspx</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__3">
+      <from-outcome>refresh</from-outcome>
+      <to-activity-id>Empty1_jspx</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__4">
+      <from-outcome>previous</from-outcome>
+      <to-activity-id>Empty1_jspx</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__5">
+      <from-outcome>next</from-outcome>
+      <to-activity-id>Empty1_jspx</to-activity-id>
+    </control-flow-case>
+    <control-flow-case id="__6">
+      <from-outcome>new</from-outcome>
+      <to-activity-id>Empty1_jspx</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+</adfc-config>

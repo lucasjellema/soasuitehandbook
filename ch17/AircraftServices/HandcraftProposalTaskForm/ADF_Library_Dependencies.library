@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<JLibraryNode nselem="JLibraryNode" class="oracle.jdeveloper.library.JLibraryNode" deployedByDefault="true" xmlns="http://xmlns.oracle.com/jdeveloper/110000jlibrarynode">
+   <classPath>
+      <entries>
+         <Item protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/lib/commonj.jar!/"/>
+         <Item protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/composer/soaComposerTemplates.jar!/"/>
+         <Item protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/jrf/jps-api.jar!/"/>
+         <Item protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/jrf/jps-unsupported-api.jar!/"/>
+         <Item protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/oracle.soa.worklist_11.1.1/common-userprefs.jar!/"/>
+         <Item protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/rulesComponents/adflibGenericDCs.jar!/"/>
+         <Item protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/rulesComponents/adflibRulesSharedDC.jar!/"/>
+         <Item protocol="jar" path="file:/C:/Oracle/FMW_12_1_3Middleware/Oracle_Home/soa/soa/modules/rulesComponents/rulesSharedUtils.jar!/"/>
+      </entries>
+   </classPath>
+   <docPath/>
+   <locked>true</locked>
+   <name>ADF Library Dependencies</name>
+   <sourcePath/>
+</JLibraryNode>

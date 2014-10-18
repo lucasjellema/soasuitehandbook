@@ -4,14 +4,26 @@
    <annotationfile/>
    <iconize/>
    <partnerlink_locations>
-      <partnerlink name="AircraftServiceProvider" x="0" y="234" side="left"/>
-      <partnerlink name="ComposeProposal.ComposeProposal" x="0" y="20" side="left"/>
+      <partnerlink name="AircraftServiceProvider" x="0" y="684" side="left"/>
+      <partnerlink name="AssessProposal.TaskService_1" x="0" y="20" side="left"/>
+      <partnerlink name="ComposeProposal.ComposeProposal" x="0" y="79" side="left"/>
+      <partnerlink name="HandcraftProposal.TaskService_1" x="1559" y="20" side="right"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,0,1251,554" show_swimlanes="true">
+   <graph_layout viewport="364,579,1115,447" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
-      <layout_item collapsed="true" xpath="/process/sequence/scope" type="scope" showhandlers="true"/>
-      <layout_item collapsed="false" xpath="/process/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/scope[1]" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope[1]/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/scope[2]" type="human task" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope[2]/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/if/elseif/sequence/scope" type="human task" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/elseif/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/else/sequence" type="sequence"/>
    </graph_layout>
    <bookmarks/>
 </graphics>

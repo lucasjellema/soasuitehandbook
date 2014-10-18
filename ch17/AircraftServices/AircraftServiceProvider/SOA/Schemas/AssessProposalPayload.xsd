@@ -1,0 +1,10 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema targetNamespace="http://xmlns.oracle.com/bpel/workflow/task" xmlns:tns="http://xmlns.oracle.com/bpel/workflow/task" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns0="saibot.airport/operational/aircraftservice">
+   <import namespace="saibot.airport/operational/aircraftservice" schemaLocation="AircraftService.xsd"/>
+   <complexType name="AssessProposalPayloadType">
+      <sequence>
+         <element ref="ns0:RequestProposalMessage"/>
+         <element ref="ns0:SubmitProposalCallbackMessage"/>
+      </sequence>
+   </complexType>
+</schema>
