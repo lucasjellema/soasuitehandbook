@@ -43,6 +43,7 @@
          <parallel collaboration="true" name="ParallelStages">
             <vote>
                <defaultOutcome type="STATIC">REJECT</defaultOutcome>
+               <outcomePercentage outcome="APPROVE" type="STATIC">100</outcomePercentage>
                <outcomePercentage outcome="REJECT" type="STATIC">1</outcomePercentage>
             </vote>
             <routingSlip>
@@ -61,15 +62,14 @@
             <routingSlip>
                <participants>
                   <stage name="HandcraftedProposals" disabled="false">
-                     <parallel disabled="false" collaboration="false" name="Peer">
+                     <parallel disabled="false" collaboration="false" name="Peer"
+                               skipCondition="/task:task/task:payload/ns0:SubmitProposalCallbackMessage/ns0:CanDo='true'">
                         <vote>
                            <defaultOutcome type="STATIC">REJECT</defaultOutcome>
-                           <outcomePercentage type="STATIC">51</outcomePercentage>
+                           <outcomePercentage outcome="APPROVE" type="STATIC">66</outcomePercentage>
+                           <outcomePercentage outcome="REJECT" type="STATIC">35</outcomePercentage>
                         </vote>
-                        <resource type="STATIC" identityType="group">Account Manager</resource>
-                        <dynamicAssignment identityTypeToSelect="group">
-                           <assignmentPattern patternName="LEAST_BUSY" isGlobalPattern="false"/>
-                        </dynamicAssignment>
+                        <resource type="XPATH" identityType="user">ids:getUsersInGroup('Account Manager',true())</resource>
                      </parallel>
                      <participant disabled="false" name="SalesManagerCheckOnLargerApprovals"
                                   skipCondition="/task:task/task:payload/ns0:SubmitProposalCallbackMessage/ns0:Price &lt; 1500 or /task:task/task:payload/ns0:SubmitProposalCallbackMessage/ns0:CanDo='true'">
@@ -105,13 +105,7 @@
          <action name="ASSIGN" recipient="ASSIGNEES">
             <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
          </action>
-         <action name="COMPLETE" recipient="CREATOR">
-            <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
-         </action>
-         <action name="ERROR" recipient="OWNER">
-            <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
-         </action>
-         <action name="ALL_OTHER_ACTIONS" recipient="ASSIGNEES">
+         <action name="ASSIGN" recipient="REVIEWERS">
             <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
          </action>
          <groupNotificationConfiguration>SEND_INDIVIDUAL_NOTIFICATION</groupNotificationConfiguration>
@@ -120,7 +114,6 @@
       <reviewer>
          <resource type="STATIC" identityType="group">Auditor</resource>
       </reviewer>
-      <excludedParticipants/>
    </routingSlip>
    <workflowConfiguration features="ucm,RSCUSTOMIZATION" xmlns:ns0="saibot.airport/operational/aircraftservice" xmlns="http://xmlns.oracle.com/bpel/workflow/configuration">
       <outcomes>
