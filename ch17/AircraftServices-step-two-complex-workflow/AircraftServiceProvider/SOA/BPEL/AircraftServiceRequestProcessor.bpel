@@ -309,8 +309,15 @@
                                             <from variable="AssessProposal2_globalVariable" part="payload"><query>task:payload/ns2:SubmitProposalCallbackMessage</query></from>
                                             <to variable="outputVariable" part="part1"/>
                                         </copy>
-                                    </assign>
-                                </sequence>
+                                    </assign><assign name="SetCanDoTrue"
+                                                     xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+   <copy>
+         <from>true()</from>
+         <to>$outputVariable.part1/ns2:CanDo</to>
+      </copy></assign></sequence>
                                 <elseif>
                                     <documentation>
                                         <![CDATA[Task outcome is REJECT]]>

@@ -34,6 +34,9 @@
             <numberOfTimesEscalated type="STATIC">40</numberOfTimesEscalated>
             <titleOfLastUser type="STATIC"/>
          </escalationPolicy>
+         <earlyCompletion inherit="root">
+            <outcome>REJECT</outcome>
+         </earlyCompletion>
          <dueDateDuration duration="PT10M" type="STATIC"/>
          <sharePayloadConfiguration>
             <type>USE_SYSTEM_WIDE_GLOBAL_CONFIGURATION</type>
@@ -62,11 +65,11 @@
             <routingSlip>
                <participants>
                   <stage name="HandcraftedProposals" disabled="false">
-                     <parallel disabled="false" collaboration="false" name="Peer"
+                     <parallel disabled="false" collaboration="false" name="PeerReviewOfHandcraftedProposal"
                                skipCondition="/task:task/task:payload/ns0:SubmitProposalCallbackMessage/ns0:CanDo='true'">
                         <vote>
                            <defaultOutcome type="STATIC">REJECT</defaultOutcome>
-                           <outcomePercentage outcome="APPROVE" type="STATIC">66</outcomePercentage>
+                           <outcomePercentage outcome="APPROVE" type="STATIC">51</outcomePercentage>
                            <outcomePercentage outcome="REJECT" type="STATIC">35</outcomePercentage>
                         </vote>
                         <resource type="XPATH" identityType="user">ids:getUsersInGroup('Account Manager',true())</resource>
@@ -84,7 +87,7 @@
             <routingSlip>
                <participants>
                   <stage name="FinanceOnHandCraftedProposals" disabled="false">
-                     <participant disabled="false" name="FinanceCheckingHandcraftedProposals" expirationDuration="PT1H"
+                     <participant disabled="false" name="FinanceCheckingHandcraftedProposals"
                                   skipCondition="/task:task/task:payload/ns0:SubmitProposalCallbackMessage/ns0:Price &lt; 1000 or /task:task/task:payload/ns0:SubmitProposalCallbackMessage/ns0:CanDo='true'">
                         <resource type="STATIC" identityType="group">Finance</resource>
                      </participant>
@@ -114,6 +117,7 @@
       <reviewer>
          <resource type="STATIC" identityType="group">Auditor</resource>
       </reviewer>
+      <excludedParticipants/>
    </routingSlip>
    <workflowConfiguration features="ucm,RSCUSTOMIZATION" xmlns:ns0="saibot.airport/operational/aircraftservice" xmlns="http://xmlns.oracle.com/bpel/workflow/configuration">
       <outcomes>

@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<hwTaskFlows xmlns="http://xmlns.oracle.com/bpel/workflow/hwTaskFlowProperties">
+   <ApplicationName>worklist</ApplicationName>
+   <LookupType>LOCAL</LookupType>
+   <TaskFlowDeploy>false</TaskFlowDeploy>
+   <TaskFlowServer>
+      <hostName/>
+      <httpPort/>
+      <httpsPort/>
+   </TaskFlowServer>
+<hwTaskFlow><WorkflowName>AssessProposal</WorkflowName><TaskDefinitionNamespace>http://xmlns.oracle.com/AircraftServices/AircraftServiceProvider/AssessProposal</TaskDefinitionNamespace><TaskFlowId>AssessProposal_TaskFlow</TaskFlowId><TaskFlowFileName>WEB-INF/AssessProposal_TaskFlow.xml</TaskFlowFileName></hwTaskFlow></hwTaskFlows>
