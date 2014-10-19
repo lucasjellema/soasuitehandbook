@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.1.3.10.8" id="DataBindings"
+             SeparateXMLFiles="false" Package="assessproposaltaskform" ClientType="Generic">
+  <pageMap>
+    <page path="/taskDetails1.jspx" usageId="assessproposaltaskform_taskDetails1PageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="assessproposaltaskform_taskDetails1PageDef" path="assessproposaltaskform.pageDefs.taskDetails1PageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="AssessProposalTaskForm_AssessProposal" path="assessproposaltaskform.AssessProposalTaskForm_AssessProposal"/>
+  </dataControlUsages>
+</Application>

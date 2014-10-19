@@ -1,0 +1,729 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema targetNamespace="http://xmlns.oracle.com/bpel/workflow/task" xmlns:tns="http://xmlns.oracle.com/bpel/workflow/task" xmlns:evidence="http://xmlns.oracle.com/bpel/workflow/TaskEvidenceService" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="1.0" elementFormDefault="qualified" blockDefault="#all"><xsd:include schemaLocation="AssessProposalPayload.xsd" xmlns=""/>
+     
+  <xsd:annotation>
+    <xsd:appinfo>
+      <jaxb:globalBindings generateElementProperty="false"/>
+      <jaxb:schemaBindings>
+        <jaxb:package name="oracle.bpel.services.workflow.task.model"/>
+      </jaxb:schemaBindings>
+  </xsd:appinfo>
+  </xsd:annotation>
+
+    <import namespace="http://xmlns.oracle.com/bpel/workflow/TaskEvidenceService" schemaLocation="oramds:///soa/shared/workflow/TaskEvidenceService.xsd"/>
+
+    <element name="task">
+      <complexType>
+        <sequence>
+          <element name="title" type="xsd:string" minOccurs="0"/>
+          <element name="payload" type="tns:AssessProposalPayloadType" minOccurs="0" maxOccurs="1"/>
+          <element name="taskDefinitionURI" type="xsd:string" minOccurs="0"/> <!-- Deprecated: Use taskDefinitionId instead -->
+          <element name="creator" type="xsd:string" minOccurs="0"/>
+          <element name="ownerUser" type="xsd:string" minOccurs="0"/>
+          <element name="ownerGroup" type="xsd:string" minOccurs="0"/>
+          <element name="ownerRole" minOccurs="0" type="xsd:string"/>
+          <element name="priority" type="tns:priorityType" minOccurs="0"/>
+          <element name="identityContext" type="xsd:string" minOccurs="0"/>
+          <element name="userComment" type="tns:commentType" minOccurs="0" maxOccurs="unbounded"/>
+          <element name="attachment" type="tns:attachmentType" minOccurs="0" maxOccurs="unbounded"/>
+          <element name="document" type="tns:documentType" minOccurs="0" maxOccurs="unbounded"/>
+          <element name="processInfo" type="tns:processType" minOccurs="0"/>
+          <element name="systemAttributes" type="tns:systemAttributesType" minOccurs="0"/>
+          <element name="systemMessageAttributes" type="tns:systemMessageAttributesType" minOccurs="0"/>
+          <element name="titleResourceKey" type="xsd:string" minOccurs="0"/>
+          <element name="callback" type="tns:callbackType" minOccurs="0"/>
+          <element name="identificationKey" type="xsd:string" minOccurs="0"/>
+          <element name="category" type="xsd:string" minOccurs="0"/>
+          <element name="startDate" type="xsd:dateTime" minOccurs="0"/>
+          <element name="dueDate" type="xsd:dateTime" minOccurs="0"/>
+          <element name="isPublic" type="xsd:boolean" minOccurs="0"/>
+          <element name="percentageComplete" type="xsd:double" minOccurs="0"/>
+          <element name="sca" type="tns:scaType" minOccurs="0"/>
+          <element name="applicationContext" type="xsd:string" minOccurs="0"/>
+	      <element name="evidence" type="evidence:EvidenceType" minOccurs="0" maxOccurs="1"/>
+          <element name="taskDefinitionId" type="xsd:string" minOccurs="0"/> 
+          <element name="subcategory" type="xsd:string" minOccurs="0"/>
+          <element name="taskDisplayUrl" type="xsd:string" minOccurs="0"/>
+          <element name="documentPackageId" type="xsd:string" minOccurs="0"/>
+          <element name="correlationId" type="xsd:string" minOccurs="0"/>
+          <element name="mdsLabel" type="xsd:string" minOccurs="0"/>
+          <element name="creatorDisplayName" type="xsd:string" minOccurs="0"/>
+          <element name="ownerUserDisplayName" type="xsd:string" minOccurs="0"/>
+          <element name="ownerGroupDisplayName" type="xsd:string" minOccurs="0"/>
+          <element name="ownerRoleDisplayName" type="xsd:string" minOccurs="0"/>
+          <element name="customAttributes" type="tns:customAttributesType" minOccurs="0"/>
+          <element name="shortSummary" type="xsd:string" minOccurs="0"/>
+          <element name="longSummary" type="xsd:string" minOccurs="0"/>
+          <element name="notificationMode" type="tns:taskNotificationMode" minOccurs="0"/>
+        </sequence>
+      </complexType>
+    </element>
+
+    <complexType name="commentType">
+      <sequence>
+        <element name="comment" type="xsd:string" minOccurs="0"/>
+        <element name="updatedBy" type="tns:identityType" minOccurs="0"/>
+        <element name="updatedDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="displayNameLanguage" type="xsd:string" minOccurs="0"/>
+        <element name="action" type="xsd:string" minOccurs="0"/>
+        <element name="systemVersionFlag" type="xsd:string" minOccurs="0"/>
+        <element name="acl" type="xsd:string" minOccurs="0"/>
+        <element name="doesBelongToParent" type="xsd:boolean" minOccurs="0"/>
+        <element name="isSystemComment" type="xsd:boolean" minOccurs="0"/>
+        <element name="taskId" type="xsd:string" minOccurs="0"/>
+        <element name="commentScope" type="tns:scopeTypeEnum" minOccurs="0"/>
+        <element name="id" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="operation" type="tns:operationTypeEnum" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <complexType name="processType">
+      <sequence>
+        <element name="domainId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="instanceId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="processId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="processName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="processType" type="tns:processTypeEnum" minOccurs="0" maxOccurs="1"/>
+        <element name="processVersion" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <complexType name="scaType">
+      <sequence>
+        <element name="applicationName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="componentName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="compositeDN" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="compositeInstanceId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="compositeName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="compositeVersion" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="ecId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="parentComponentInstanceId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="parentComponentInstanceRefId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="headerProperties" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="invokedComponent" type="xsd:string" minOccurs="0" maxOccurs="1">        
+          <annotation>
+            <documentation>
+              Records the component invoked to create this Task version instance.
+              E.g. the decision component invoked for advanced routing rules.
+            </documentation>
+          </annotation>
+        </element>
+        <element name="compositeCreatedTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+        <element name="componentInstanceId" type="xsd:long" minOccurs="0" maxOccurs="1"/>
+        <element name="flowId" type="xsd:long" minOccurs="0" maxOccurs="1"/>
+        <element name="scaPartitionId" type="xsd:long" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+    </complexType>
+
+    <simpleType name="processTypeEnum">
+      <restriction base="xsd:string">
+        <enumeration value="BPEL"/>
+        <enumeration value="OWF"/>
+        <enumeration value="OTHER"/>
+      </restriction>
+    </simpleType>
+
+    <complexType name="callbackType">
+      <sequence>
+        <element name="context" type="xsd:string" minOccurs="0"/>
+        <element name="id" type="xsd:string" minOccurs="0"/>
+        <element name="type" type="xsd:string" minOccurs="0"/>
+        <element name="converstationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <element name="attachment" type="tns:attachmentType"/>
+
+    <complexType name="attachmentType">
+      <sequence>
+        <element name="content" type="xsd:string" minOccurs="0"/>
+        <element name="mimeType" type="xsd:string" minOccurs="0"/>
+        <element name="name" type="xsd:string" minOccurs="0"/>
+        <element name="updatedBy" type="xsd:string" minOccurs="0"/>
+        <element name="URI" type="xsd:string" minOccurs="0"/>
+        <element name="systemVersionFlag" type="xsd:string" minOccurs="0"/>
+        <element name="taskId" type="xsd:string" minOccurs="0"/>
+        <element name="version" type="xsd:integer" minOccurs="0"/>
+        <element name="acl" type="xsd:string" minOccurs="0"/>
+        <element name="doesBelongToParent" type="xsd:boolean" minOccurs="0"/>
+        <element name="updatedDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="correlationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="size" type="xsd:long" minOccurs="0" maxOccurs="1"/>
+        <element name="description" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="storageType" type="tns:storageTypeEnum" minOccurs="0" maxOccurs="1"/>
+        <element name="ucmDocType" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="securityGroup" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="account" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="revision" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="releaseDate" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+        <element name="expirationDate" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+        <element name="title" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="ucmMetadataItem" type="tns:ucmMetadataItemType" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="attachmentScope" type="tns:scopeTypeEnum" minOccurs="0"/>
+	<element name="isContentEncoded" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+        <element name="updatedByDisplayName" type="xsd:string" minOccurs="0"/>
+        <element name="id" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="operation" type="tns:operationTypeEnum" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+    
+    <complexType name="ucmMetadataItemType">
+      <sequence>
+        <element name="name" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="type" type="tns:metadataTypeEnum" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <simpleType name="scopeTypeEnum">
+      <restriction base="xsd:string">
+        <enumeration value="TASK"/>
+        <enumeration value="PARENT_TASK"/>
+        <enumeration value="BPM"/>
+        <enumeration value="CASE"/>
+      </restriction>
+    </simpleType>
+
+    <simpleType name="operationTypeEnum">
+      <restriction base="xsd:string">
+        <enumeration value="ADD"/>
+        <enumeration value="UPDATE"/>
+        <enumeration value="DELETE"/>
+      </restriction>
+    </simpleType>
+
+    <simpleType name="storageTypeEnum">
+      <restriction base="xsd:string">
+        <enumeration value="TASK"/>
+        <enumeration value="UCM"/>
+        <enumeration value="URL"/>
+      </restriction>
+    </simpleType>
+
+    <simpleType name="metadataTypeEnum">
+      <restriction base="xsd:string">
+        <enumeration value="DATE"/>
+        <enumeration value="STRING"/>
+        <enumeration value="NUMBER"/>
+      </restriction>
+    </simpleType>
+
+    <element name="document" type="tns:documentType"/> 
+    
+    <complexType name="documentType">
+      <sequence>
+        <element name="name" type="xsd:string"/>
+        <element name="content" type="xsd:string" minOccurs="0"/>
+        <element name="mimeType" type="xsd:string" minOccurs="0"/>
+        <element name="URI" type="xsd:string"/>
+        <element name="updatedBy" type="xsd:string" minOccurs="0"/>
+        <element name="updatedDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="ucmDocumentType" type="xsd:string" minOccurs="0"/>
+        <element name="UUID" type="xsd:string"/>
+      </sequence>
+    </complexType>
+
+    <complexType name="identityType">
+      <sequence>
+        <element name="id" type="xsd:string" minOccurs="0"/>
+        <element name="displayName" type="xsd:string" minOccurs="0"/>
+        <element name="type" type="tns:identityTypeEnum" minOccurs="0"/>
+        <element name="systemVersionFlag" type="xsd:string" minOccurs="0"/>
+      </sequence>
+    </complexType>
+
+    <simpleType name="identityTypeEnum">
+      <restriction base="xsd:string">
+        <enumeration value="user"/>
+        <enumeration value="group"/>
+        <enumeration value="application_role"/>
+        <enumeration value="position"/>
+      </restriction>
+    </simpleType>
+
+    <complexType name="systemAttributesType">
+      <sequence>
+        <element name="accessKey" type="xsd:string" minOccurs="0"/>
+        <element name="acquiredBy" type="xsd:string" minOccurs="0"/>
+        <element name="approvalDuration" type="xsd:long" minOccurs="0"/>
+        <element name="approvers" type="xsd:string" minOccurs="0"/>
+        <element name="assignedDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="assigneeGroups" type="tns:identityType" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="assigneeUsers" type="tns:identityType" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="createdDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="customActions" type="tns:actionType" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="digitalSignatureRequired" type="xsd:boolean" minOccurs="0"/>
+        <element name="displayInfo" type="tns:displayInfoType" maxOccurs="unbounded" minOccurs="0"/>
+        <element name="elapsedTime" type="xsd:long" minOccurs="0"/>
+        <element name="endDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="expirationDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="expirationDuration" type="xsd:duration" minOccurs="0"/>
+        <element name="fromUser" type="tns:identityType" minOccurs="0"/>
+        <element name="hasSubTasks" type="xsd:boolean" minOccurs="0"/>
+        <element name="inShortHistory" type="xsd:boolean" minOccurs="0"/>
+        <element name="isGroup" type="xsd:boolean" minOccurs="0"/>
+        <element name="language" type="xsd:string" minOccurs="0"/>
+        <element name="mailStatus" type="tns:mailStatusEnum" minOccurs="0"/>
+        <element name="numberOfTimesModified" type="xsd:integer" minOccurs="0"/>
+        <element name="originalAssigneeUser" type="xsd:string" minOccurs="0"/>
+        <element name="outcome" type="xsd:string" minOccurs="0"/>
+        <element name="parallelOutcomeCount" type="xsd:string" minOccurs="0"/>
+        <element name="passwordRequiredOnUpdate" type="xsd:boolean" minOccurs="0"/>
+        <element name="pushbackSequence" type="xsd:string" minOccurs="0"/>
+        <element name="secureNotifications" type="xsd:boolean" minOccurs="0"/>
+        <element name="shortHistory" type="tns:shortHistoryType" minOccurs="0"/>
+        <element name="state" type="tns:stateEnum" minOccurs="0"/>
+        <element name="substate" type="tns:substateEnum" minOccurs="0"/>
+        <element name="systemActions" type="tns:actionType" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="systemString1" type="xsd:string" minOccurs="0"/>
+        <element name="systemString2" type="xsd:string" minOccurs="0"/>
+        <element name="systemString3" type="xsd:string" minOccurs="0"/>
+        <element name="taskGroupId" type="xsd:string" minOccurs="0"/>
+        <element name="taskId" type="xsd:string" minOccurs="0"/>
+        <element name="taskNumber" type="xsd:integer" minOccurs="0"/>
+        <element name="updatedBy" type="tns:identityType" minOccurs="0"/>
+        <element name="updatedDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="version" type="xsd:integer" minOccurs="0"/>
+        <element name="versionReason" type="xsd:string" minOccurs="0"/>
+        <element name="taskDefinitionId" type="xsd:string" minOccurs="0"/> <!-- This is deprecated and moved as an attribute that can be set by clients -->
+        <element name="taskDefinitionName" type="xsd:string" minOccurs="0"/>
+        <element name="workflowPattern" type="xsd:string" minOccurs="0"/>
+        <element name="isTestTask" type="xsd:boolean" minOccurs="0"/>
+        <element name="participantName" type="xsd:string" minOccurs="0"/>
+        <element name="readByUsers" type="xsd:string" minOccurs="0"/>
+        <element name="reviewers" type="tns:identityType" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="assignees" type="tns:identityType" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="taskGroupInstanceId" type="xsd:string" minOccurs="0"/>
+        <element name="subTaskGroupInstanceId" type="xsd:string" minOccurs="0"/>
+        <element name="parentTaskVersion" type="xsd:integer" minOccurs="0"/>
+        <!-- Activity Guide elements -->
+        <element name="agRootId" type="xsd:long" minOccurs="0"/>
+        <element name="agMileStonePath" type="xsd:string" minOccurs="0"/>
+        <element name="rootTaskId" type="xsd:string" minOccurs="0"/>
+        <element name="parentTaskId" type="xsd:string" minOccurs="0"/>
+        <element name="systemStringActions" type="xsd:string" minOccurs="0"/>
+        <element name="restrictedActions" type="tns:actionType" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="updatedNotificationId" type="xsd:string" minOccurs="0"/>
+        <element name="stage" type="xsd:string" minOccurs="0"/>
+        <element name="assignmentContext" type="tns:assignmentContextType" minOccurs="0" maxOccurs="unbounded"/>
+        <element ref="tns:collectionTarget" minOccurs="0" maxOccurs="unbounded"/>
+        <element name="preActionUserSteps" type="tns:preActionUserStepsType" minOccurs="0" maxOccurs="1"/>
+        <element name="aggregationTaskId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="isTemplateTask" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+        <element name="taskViewContext" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="taskNamespace" type="xsd:string" minOccurs="0"/>
+        <element name="actionDisplayName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="timers" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="componentType" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="activityName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="activityId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="processDueDate" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+        <element name="thread" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+        <element name="parentThread" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+        <element name="step" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+        <element name="visibilityRuleConditionValues" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="isPartialTask" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+        <element name="organizationalUnitId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="tenantId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="listBuilderId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="caseId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="organizationalUnitName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="swimlaneRole" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="excludedParticipants" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="timersSuspended" type="xsd:boolean" default="false" minOccurs="0" maxOccurs="1"/>
+        <element name="tenantIdNumber" type="xsd:long" minOccurs="0" maxOccurs="1" default="-1"/>
+	<element name="taskAgeFromCreatedDate" type="xsd:duration" minOccurs="0" maxOccurs="1"/>
+        <element name="taskAgeFromAssignedDate" type="xsd:duration" minOccurs="0" maxOccurs="1"/>
+        <element name="taskTimeRemaining" type="xsd:duration" minOccurs="0" maxOccurs="1"/>
+        <element name="isDecomposedTask" type="xsd:boolean" default="false" minOccurs="0" maxOccurs="1"/>
+        <element name="formName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="decomposedTaskGroupInstanceId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="startTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+        <element name="stopTime" type="xsd:dateTime" minOccurs="0" maxOccurs="1"/>
+        <element name="workingDuration" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+        <element name="acquiredByDisplayName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="originalAssigneeUserDisplayName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="approversDisplayNames" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="imageUrl" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <element name="collectionTarget" type="tns:collectionTargetType"/>
+
+    <complexType name="collectionTargetType">
+      <sequence>
+        <element name="id" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <element name="xpath" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <element name="collectionName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <element name="type" type="tns:collectionTargetTypeEnum" minOccurs="1" maxOccurs="1"/>
+        <choice minOccurs="1" maxOccurs="1">
+          <element name="targetIndex" type="xsd:integer"/>
+          <element ref="tns:keyList"/>
+        </choice>
+        <element name="referencedTaskId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="taskAggregationId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="action" type="tns:collectionTargetActionType" minOccurs="0" maxOccurs="1"/>
+        <element name="status" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="displayName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <simpleType name="collectionTargetTypeEnum">
+      <restriction base="xsd:string">
+        <enumeration value="PRIMARY"/>
+        <enumeration value="AGGREGATED"/>
+      </restriction>
+    </simpleType>
+
+    <element name="keyList" type="tns:keyListType"/>
+
+    <complexType name="keyListType">
+      <sequence>
+        <element name="key" type="tns:keyType" minOccurs="1" maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+
+    <complexType name="keyType">
+      <sequence>
+        <element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <element name="value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <complexType name="collectionTargetActionType">
+      <simpleContent>
+        <extension base="xsd:string">
+          <attribute name="name" type="xsd:string" use="required"/>
+          <attribute name="params" type="xsd:string" use="optional"/>
+          <attribute name="completed" type="xsd:boolean" use="optional"/>
+        </extension>
+      </simpleContent>
+    </complexType>
+
+    <complexType name="actionType">
+      <sequence>
+        <element name="action" type="xsd:string" minOccurs="0"/>
+        <element name="displayName" type="xsd:string" minOccurs="0"/>
+      </sequence>
+    </complexType>      
+
+    <complexType name="shortHistoryType">
+      <sequence>
+        <element name="task" type="tns:shortHistoryTaskType" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+
+    <complexType name="shortHistoryTaskType">
+      <sequence>
+        <element name="state" type="xsd:string" minOccurs="0"/>
+        <element name="outcome" type="xsd:string" minOccurs="0"/>
+        <element name="comments" type="xsd:string" minOccurs="0"/>
+        <element name="updatedBy" type="tns:identityType" minOccurs="0"/>
+        <element name="updatedDate" type="xsd:dateTime" minOccurs="0"/>
+        <element name="version" type="xsd:integer" minOccurs="0"/>
+        <element name="versionReason" type="xsd:string" minOccurs="0"/>
+      </sequence>
+    </complexType>
+
+    <complexType name="displayInfoType">
+      <sequence>
+        <element name="applicationName" type="xsd:string"/>
+        <element name="hostname" type="xsd:string"/>
+        <element name="httpPort" type="xsd:string"/>
+        <element name="httpsPort" type="xsd:string"/>
+        <element name="uri" type="xsd:string"/>
+      </sequence>
+    </complexType>
+
+    <simpleType name="stateEnum">
+      <restriction base="xsd:string">
+        <enumeration value="ASSIGNED"/>
+        <enumeration value="ALERTED"/>
+        <enumeration value="COMPLETED"/>
+        <enumeration value="ERRORED"/>
+        <enumeration value="EXPIRED"/>
+        <enumeration value="INFO_REQUESTED"/>
+        <enumeration value="OUTCOME_UPDATED"/>
+        <enumeration value="STALE"/>
+        <enumeration value="SUSPENDED"/>
+        <enumeration value="WITHDRAWN"/>
+      </restriction>
+    </simpleType>
+
+    <simpleType name="substateEnum">
+      <restriction base="xsd:string">
+        <enumeration value="ACQUIRED"/>
+        <enumeration value="ADHOC_ROUTED"/>
+        <enumeration value="ASSIGNED"/>
+        <enumeration value="DELEGATED"/>
+        <enumeration value="ESCALATED"/>
+        <enumeration value="INFO_SUBMITTED"/>
+        <enumeration value="PUSHED_BACK"/>
+        <enumeration value="REASSIGNED"/>
+        <enumeration value="RELEASED"/>
+        <enumeration value="RENEWED"/>
+        <enumeration value="RESUMED"/>
+        <enumeration value="ROUTED"/>
+      </restriction>
+    </simpleType>
+
+    <simpleType name="taskActionEnum">
+      <restriction base="xsd:string">
+        <enumeration value="ACQUIRE"/>
+        <enumeration value="ADHOC_ROUTE"/>
+        <enumeration value="AUTO_RELEASE"/>
+        <enumeration value="COMPLETE"/>
+        <enumeration value="DELEGATE"/>
+        <enumeration value="ERROR"/>
+        <enumeration value="ESCALATE"/>
+        <enumeration value="EXPIRE"/>
+        <enumeration value="INFO_REQUEST"/>
+        <enumeration value="INFO_SUBMIT"/>
+        <enumeration value="INITIATE"/>
+        <enumeration value="OUTCOME_UPDATE"/>
+        <enumeration value="OUTCOME_UPDATE_ROUTE"/>
+        <enumeration value="OVERRIDE_ROUTING_SLIP"/>
+        <enumeration value="PUSH_BACK"/>
+        <enumeration value="REASSIGN"/>
+        <enumeration value="REINITIATE"/>
+        <enumeration value="RELEASE"/>
+        <enumeration value="RENEW"/>
+        <enumeration value="RESUME"/>
+        <enumeration value="SKIP_CURRENT_ASSIGNMENT"/>
+        <enumeration value="SUBTASK_OUTCOME_UPDATE"/>
+        <enumeration value="SUSPEND"/>
+        <enumeration value="UPDATE"/>
+        <enumeration value="WITHDRAW"/>
+      </restriction>
+    </simpleType>
+
+    <simpleType name="mailStatusEnum">
+      <restriction base="xsd:string">
+        <enumeration value="ERRORED"/>
+        <enumeration value="RETRY"/>
+        <enumeration value="SENT"/>
+      </restriction>
+    </simpleType>
+
+    <complexType name="customAttributesType">
+      <sequence>
+        <element name="customAttributeString1" type="xsd:string" minOccurs="0"/>
+        <element name="customAttributeString2" type="xsd:string" minOccurs="0"/>
+        <element name="customAttributeNumber1" type="xsd:double" minOccurs="0"/>
+        <element name="customAttributeNumber2" type="xsd:double" minOccurs="0"/>
+        <element name="customAttributeDate1" type="xsd:dateTime" minOccurs="0"/>
+        <element name="customAttributeDate2" type="xsd:dateTime" minOccurs="0"/>
+      </sequence>
+    </complexType>
+    
+    <complexType name="systemMessageAttributesType">
+      <sequence>
+        <element name="textAttribute1" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute2" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute3" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute4" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute5" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute6" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute7" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute8" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute9" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute10" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute11" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute12" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute13" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute14" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute15" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute16" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute17" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute18" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute19" type="xsd:string" minOccurs="0"/>
+        <element name="textAttribute20" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute1" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute2" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute3" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute4" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute5" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute6" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute7" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute8" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute9" type="xsd:string" minOccurs="0"/>
+        <element name="formAttribute10" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute1" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute2" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute3" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute4" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute5" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute6" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute7" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute8" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute9" type="xsd:string" minOccurs="0"/>
+        <element name="urlAttribute10" type="xsd:string" minOccurs="0"/>
+        <element name="dateAttribute1" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute2" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute3" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute4" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute5" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute6" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute7" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute8" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute9" type="xsd:dateTime" minOccurs="0"/>
+        <element name="dateAttribute10" type="xsd:dateTime" minOccurs="0"/>
+        <element name="numberAttribute1" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute2" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute3" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute4" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute5" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute6" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute7" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute8" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute9" type="xsd:double" minOccurs="0"/>
+        <element name="numberAttribute10" type="xsd:double" minOccurs="0"/>
+        <element name="protectedTextAttribute1" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute2" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute3" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute4" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute5" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute6" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute7" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute8" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute9" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute10" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute11" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute12" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute13" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute14" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute15" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute16" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute17" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute18" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute19" type="xsd:string" minOccurs="0"/>
+        <element name="protectedTextAttribute20" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute1" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute2" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute3" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute4" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute5" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute6" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute7" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute8" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute9" type="xsd:string" minOccurs="0"/>
+        <element name="protectedFormAttribute10" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute1" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute2" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute3" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute4" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute5" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute6" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute7" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute8" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute9" type="xsd:string" minOccurs="0"/>
+        <element name="protectedURLAttribute10" type="xsd:string" minOccurs="0"/>
+        <element name="protectedDateAttribute1" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute2" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute3" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute4" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute5" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute6" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute7" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute8" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute9" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedDateAttribute10" type="xsd:dateTime" minOccurs="0"/>
+        <element name="protectedNumberAttribute1" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute2" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute3" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute4" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute5" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute6" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute7" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute8" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute9" type="xsd:double" minOccurs="0"/>
+        <element name="protectedNumberAttribute10" type="xsd:double" minOccurs="0"/>
+        <element name="flexfieldMappings" type="tns:flexfieldMappingType" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+    
+    <complexType name="flexfieldMappingType">
+      <sequence>
+        <element name="attributeLabel" type="xsd:string"/>
+        <element name="flexfield" type="xsd:string"/>
+        <element name="description" maxOccurs="1" minOccurs="0" type="xsd:string"/>
+      </sequence>
+    </complexType>
+
+    <simpleType name="priorityType">
+      <restriction base="xsd:integer">
+        <minInclusive value="1"/>
+      </restriction>
+    </simpleType> 
+
+    <complexType name="preActionUserStepsType">
+      <sequence>
+        <element name="preActionUserStep" type="tns:preActionUserStepType" minOccurs="0" maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+
+    <complexType name="preActionUserStepType">
+      <sequence>
+        <element name="userStep" type="tns:preActionUserStepEnum"/>
+        <element name="outcome" type="xsd:string"/>
+      </sequence>
+    </complexType>
+
+    <simpleType name="preActionUserStepEnum">
+      <restriction base="xsd:string">
+        <enumeration value="VIEW_DETAILS"/>
+        <enumeration value="PROVIDE_COMMENTS"/>
+      </restriction>
+    </simpleType>
+
+    <simpleType name="assignmentContextCreatorEnum">
+      <restriction base="xsd:string">
+        <enumeration value="SYSTEM"/>
+        <enumeration value="USER"/>
+      </restriction>
+    </simpleType>
+
+    <simpleType name="assignmentContextValueEnum">
+      <restriction base="xsd:string">
+        <enumeration value="RESOURCE"/>
+        <enumeration value="STATIC"/>
+        <enumeration value="XPATH"/>
+      </restriction>
+    </simpleType>
+
+    <complexType name="assignmentContextTypeValueType">
+      <simpleContent>
+        <extension base="xsd:string">
+          <attribute name="type" type="tns:assignmentContextValueEnum" use="required"/>
+        </extension>
+      </simpleContent>
+    </complexType>
+
+    <complexType name="assignmentContextType">
+      <sequence>
+        <element name="name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        <element name="value" type="tns:assignmentContextTypeValueType" minOccurs="1" maxOccurs="1"/>
+        <element name="type" type="tns:assignmentContextCreatorEnum" minOccurs="1" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <element name="decomposeTaskInfo" type="tns:decomposeTaskInfoType"/>
+
+    <complexType name="decomposeTaskInfoType">
+      <sequence>
+        <element name="formName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="title" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        <element name="priority" type="tns:priorityType" minOccurs="0" maxOccurs="1"/>
+        <element ref="tns:collectionTarget" minOccurs="0" maxOccurs="1"/>
+        <element name="comment" type="tns:commentType" minOccurs="0" maxOccurs="1"/>
+      </sequence>
+    </complexType>
+
+    <simpleType name="taskNotificationMode">
+      <restriction base="xsd:string">
+        <enumeration value="DEFAULT"/>
+        <enumeration value="NONE"/>
+      </restriction>
+    </simpleType>
+
+</schema>

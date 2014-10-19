@@ -1,0 +1,35 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<graphics>
+   <diagram optimizeLayout="false" fixedWidthSwimlanes="true" roundedPartnerlinks="true" centerZoom="true" validateOnLoad="true" confirmBeforeDelete="true" selectedPartnerLinkColor="49,105,198" swimlaneBackground="240,240,240" swimlaneDividerBackground="218,218,218" graphBackground="255,255,255" selectedBorderBackground="49,105,198" connectedPartnerLinkColor="204,204,255" connectablePartnerLinkColor="0,0,255" unconnectedPartnerLinkColor="192,192,192"/>
+   <annotationfile/>
+   <iconize/>
+   <partnerlink_locations>
+      <partnerlink name="AircraftServiceProvider" x="0" y="934" side="left"/>
+      <partnerlink name="AssessProposal.TaskService_1" x="0" y="20" side="left"/>
+      <partnerlink name="AssessProposal.TaskService_2" x="0" y="79" side="left"/>
+      <partnerlink name="ComposeProposal.ComposeProposal" x="0" y="138" side="left"/>
+      <partnerlink name="HandcraftProposal.TaskService_1" x="2074" y="20" side="right"/>
+   </partnerlink_locations>
+   <graph_layout viewport="442,567,1137,454" show_swimlanes="true">
+      <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/scope[1]" type="scope" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope[1]/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/scope[2]" type="human task" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/scope[2]/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/if/elseif/sequence/scope" type="human task" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="true" xpath="/process/sequence/if/elseif/sequence/if/sequence/scope" type="human task" showhandlers="true"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/sequence/scope/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/sequence/if/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/sequence/if/elseif/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/sequence/if/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/elseif/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/elseif/sequence/if/else/sequence" type="sequence"/>
+      <layout_item collapsed="false" xpath="/process/sequence/if/else/sequence" type="sequence"/>
+   </graph_layout>
+   <bookmarks/>
+</graphics>

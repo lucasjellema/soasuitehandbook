@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8" id="taskDetails1PageDef"
+                Package="assessproposaltaskform.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <methodIterator Binds="getTaskDetails.result" DataControl="AssessProposalTaskForm_AssessProposal" RangeSize="25"
+                    BeanClass="AssessProposalTaskForm_AssessProposal.getTaskDetails" id="getTaskDetailsIterator"/>
+    <accessorIterator MasterBinding="getTaskDetailsIterator" Binds="task" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.task" id="taskIterator" StateValidation="false"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="systemAttributes" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.systemAttributesType"
+                      id="systemAttributesIterator"/>
+    <accessorIterator MasterBinding="systemAttributesIterator" Binds="systemActions" RangeSize="50"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.actionType" id="systemActionsIterator"
+                      StateValidation="false"/>
+    <accessorIterator MasterBinding="systemAttributesIterator" Binds="customActions" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.actionType" id="customActionsIterator"/>
+    <accessorIterator MasterBinding="systemAttributesIterator" Binds="fromUser" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.identityType" id="fromUserIterator"/>
+    <accessorIterator MasterBinding="systemAttributesIterator" Binds="assignees" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.identityType" id="assigneesIterator"
+                      StateValidation="false"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="payload" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.AssessProposalPayloadType" id="payloadIterator"/>
+    <accessorIterator MasterBinding="payloadIterator" Binds="RequestProposalMessage" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.requestProposalMessageType"
+                      id="RequestProposalMessageIterator"/>
+    <accessorIterator MasterBinding="RequestProposalMessageIterator" Binds="Flight" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.flightType" id="FlightIterator"/>
+    <accessorIterator MasterBinding="RequestProposalMessageIterator" Binds="Services" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.Services" id="ServicesIterator"/>
+    <accessorIterator MasterBinding="ServicesIterator" Binds="ServiceRequirement" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.serviceRequirementType"
+                      id="ServiceRequirementIterator"/>
+    <accessorIterator MasterBinding="payloadIterator" Binds="SubmitProposalCallbackMessage" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.submitProposalCallbackMessageType"
+                      id="SubmitProposalCallbackMessageIterator"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="userComment" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.commentType" id="userCommentIterator"
+                      StateValidation="false"/>
+    <accessorIterator MasterBinding="userCommentIterator" Binds="updatedBy" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.identityType" id="updatedByIterator"
+                      StateValidation="false"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="attachment" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.attachmentType" id="attachmentIterator"
+                      StateValidation="false"/>
+    <accessorIterator MasterBinding="attachmentIterator" Binds="ucmMetadataItem" RangeSize="25"
+                      DataControl="AssessProposalTaskForm_AssessProposal"
+                      BeanClass="AssessProposalTaskForm_AssessProposal.ucmMetadataItemType"
+                      id="ucmMetadataItemIterator" StateValidation="false"/>
+  </executables>
+  <bindings>
+    <methodAction id="getTaskDetails" RequiresUpdateModel="true" Action="invokeMethod" MethodName="getTaskDetails"
+                  IsViewObjectMethod="false" DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="data.AssessProposalTaskForm_AssessProposal"
+                  ReturnName="data.AssessProposalTaskForm_AssessProposal.methodResults.getTaskDetails_AssessProposalTaskForm_AssessProposal_getTaskDetails_result">
+      <NamedData NDName="bpmWorklistContext" NDType="java.lang.String" NDValue=""/>
+      <NamedData NDName="bpmWorklistTaskId" NDType="java.lang.String" NDValue=""/>
+      <NamedData NDName="bpmWorklistTaskVersion" NDType="java.lang.String" NDValue=""/>
+    </methodAction>
+    <methodAction IterBinding="taskIterator" id="UpdateAction" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="UpdateAction" IsViewObjectMethod="false"
+                  DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider" IsLocalObjectReference="true">
+      <NamedData NDName="action" NDType="java.lang.String" NDValue=""/>
+    </methodAction>
+    <attributeValues IterBinding="taskIterator" id="title">
+      <AttrNames>
+        <Item Value="title"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction IterBinding="taskIterator" id="update" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="update" IsViewObjectMethod="false" DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <navigationlist IterBinding="systemActionsIterator" ListOperMode="navigation" ListIter="systemActionsIterator"
+                    id="systemActions">
+      <AttrNames>
+        <Item Value="action"/>
+        <Item Value="displayName"/>
+      </AttrNames>
+    </navigationlist>
+    <attributeValues IterBinding="systemAttributesIterator" id="digitalSignatureRequired">
+      <AttrNames>
+        <Item Value="digitalSignatureRequired"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="passwordRequiredOnUpdate">
+      <AttrNames>
+        <Item Value="passwordRequiredOnUpdate"/>
+      </AttrNames>
+    </attributeValues>
+    <navigationlist IterBinding="customActionsIterator" ListOperMode="navigation" ListIter="customActionsIterator"
+                    id="customActions">
+      <AttrNames>
+        <Item Value="action"/>
+        <Item Value="displayName"/>
+      </AttrNames>
+    </navigationlist>
+    <methodAction IterBinding="taskIterator" id="Claim" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Claim" IsViewObjectMethod="false" DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="Acknowledge" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Acknowledge" IsViewObjectMethod="false"
+                  DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="Resume" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Resume" IsViewObjectMethod="false" DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="Withdraw" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Withdraw" IsViewObjectMethod="false" DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="APPROVE" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="APPROVE" IsViewObjectMethod="false" DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="REJECT" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="REJECT" IsViewObjectMethod="false" DataControl="AssessProposalTaskForm_AssessProposal"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <attributeValues IterBinding="taskIterator" id="creator">
+      <AttrNames>
+        <Item Value="creator"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="ownerUser">
+      <AttrNames>
+        <Item Value="ownerUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="priority">
+      <AttrNames>
+        <Item Value="priority"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="dueDate">
+      <AttrNames>
+        <Item Value="dueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="creatorDisplayName">
+      <AttrNames>
+        <Item Value="creatorDisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="ownerUserDisplayName">
+      <AttrNames>
+        <Item Value="ownerUserDisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="acquiredBy">
+      <AttrNames>
+        <Item Value="acquiredBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="assignedDate">
+      <AttrNames>
+        <Item Value="assignedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="createdDate">
+      <AttrNames>
+        <Item Value="createdDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="expirationDate">
+      <AttrNames>
+        <Item Value="expirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="outcome">
+      <AttrNames>
+        <Item Value="outcome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="state">
+      <AttrNames>
+        <Item Value="state"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="taskNumber">
+      <AttrNames>
+        <Item Value="taskNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="updatedDate">
+      <AttrNames>
+        <Item Value="updatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="actionDisplayName">
+      <AttrNames>
+        <Item Value="actionDisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="activityId">
+      <AttrNames>
+        <Item Value="activityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="fromUserIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="fromUserIterator" id="displayName">
+      <AttrNames>
+        <Item Value="displayName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="assigneesIterator" id="assignees">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.identityType">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="RequestProposalMessageIterator" id="RequestingCarrierIATACode">
+      <AttrNames>
+        <Item Value="RequestingCarrierIATACode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestProposalMessageIterator" id="RFPIdentificationNumber">
+      <AttrNames>
+        <Item Value="RFPIdentificationNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestProposalMessageIterator" id="DeadlineForProposals">
+      <AttrNames>
+        <Item Value="DeadlineForProposals"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="FlightIterator" id="AircraftTypeIATACode">
+      <AttrNames>
+        <Item Value="AircraftTypeIATACode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="FlightIterator" id="EstimatedNumberOfPassengers">
+      <AttrNames>
+        <Item Value="EstimatedNumberOfPassengers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="FlightIterator" id="SlotTime">
+      <AttrNames>
+        <Item Value="SlotTime"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="FlightIterator" id="ArrivalOrDeparture">
+      <AttrNames>
+        <Item Value="ArrivalOrDeparture"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="FlightIterator" id="ConnectingAirport">
+      <AttrNames>
+        <Item Value="ConnectingAirport"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ServiceRequirementIterator" id="CreateInsert" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="ServiceRequirementIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="ServiceRequirementIterator" id="ServiceRequirement">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.serviceRequirementType" Name="ServiceRequirement0">
+        <AttrNames>
+          <Item Value="Service"/>
+          <Item Value="MinimumQualityLevel"/>
+          <Item Value="Quantity"/>
+          <Item Value="Description"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="SubmitProposalCallbackMessageIterator" id="RFPIdentificationNumber1">
+      <AttrNames>
+        <Item Value="RFPIdentificationNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SubmitProposalCallbackMessageIterator" id="CanDo">
+      <AttrNames>
+        <Item Value="CanDo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SubmitProposalCallbackMessageIterator" id="Price">
+      <AttrNames>
+        <Item Value="Price"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SubmitProposalCallbackMessageIterator" id="Comments">
+      <AttrNames>
+        <Item Value="Comments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="SubmitProposalCallbackMessageIterator" id="ProposalExpiryDate">
+      <AttrNames>
+        <Item Value="ProposalExpiryDate"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="userCommentIterator" id="userComment">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.commentType">
+        <AttrNames>
+          <Item Value="comment"/>
+          <Item Value="updatedDate"/>
+          <Item Value="displayNameLanguage"/>
+          <Item Value="action"/>
+          <Item Value="systemVersionFlag"/>
+          <Item Value="acl"/>
+          <Item Value="doesBelongToParent"/>
+          <Item Value="isSystemComment"/>
+          <Item Value="taskId"/>
+          <Item Value="commentScope"/>
+          <Item Value="id"/>
+          <Item Value="operation"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="updatedBy"/>
+        </Accessors>
+      </nodeDefinition>
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.identityType">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="userCommentIterator" id="CreateInsert1" RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="userCommentIterator" id="Delete1" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="userCommentIterator" id="comment">
+      <AttrNames>
+        <Item Value="comment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="userCommentIterator" id="commentScope">
+      <AttrNames>
+        <Item Value="commentScope"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="updatedByIterator" id="updatedBy">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.identityType">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="attachmentIterator" id="attachment">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.attachmentType">
+        <AttrNames>
+          <Item Value="content"/>
+          <Item Value="mimeType"/>
+          <Item Value="name"/>
+          <Item Value="updatedBy"/>
+          <Item Value="URI"/>
+          <Item Value="systemVersionFlag"/>
+          <Item Value="taskId"/>
+          <Item Value="version"/>
+          <Item Value="acl"/>
+          <Item Value="doesBelongToParent"/>
+          <Item Value="updatedDate"/>
+          <Item Value="correlationId"/>
+          <Item Value="size"/>
+          <Item Value="description"/>
+          <Item Value="storageType"/>
+          <Item Value="ucmDocType"/>
+          <Item Value="securityGroup"/>
+          <Item Value="account"/>
+          <Item Value="revision"/>
+          <Item Value="releaseDate"/>
+          <Item Value="expirationDate"/>
+          <Item Value="title"/>
+          <Item Value="attachmentScope"/>
+          <Item Value="isContentEncoded"/>
+          <Item Value="updatedByDisplayName"/>
+          <Item Value="id"/>
+          <Item Value="operation"/>
+        </AttrNames>
+      </nodeDefinition>
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.ucmMetadataItemType">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="value"/>
+          <Item Value="type"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="attachmentIterator" id="CreateInsert2" RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="attachmentIterator" id="Delete2" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="attachmentIterator" id="content">
+      <AttrNames>
+        <Item Value="content"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="mimeType">
+      <AttrNames>
+        <Item Value="mimeType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="name">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="updatedBy1">
+      <AttrNames>
+        <Item Value="updatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="URI">
+      <AttrNames>
+        <Item Value="URI"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="updatedDate1">
+      <AttrNames>
+        <Item Value="updatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="description">
+      <AttrNames>
+        <Item Value="description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="ucmDocType">
+      <AttrNames>
+        <Item Value="ucmDocType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="securityGroup">
+      <AttrNames>
+        <Item Value="securityGroup"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="account">
+      <AttrNames>
+        <Item Value="account"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="revision">
+      <AttrNames>
+        <Item Value="revision"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="releaseDate">
+      <AttrNames>
+        <Item Value="releaseDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="expirationDate1">
+      <AttrNames>
+        <Item Value="expirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="attachmentScope">
+      <AttrNames>
+        <Item Value="attachmentScope"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ucmMetadataItemIterator" id="CreateInsert3" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="ucmMetadataItemIterator" id="Delete3" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="ucmMetadataItemIterator" id="ucmMetadataItem">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.ucmMetadataItemType">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="value"/>
+          <Item Value="type"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="systemAttributesIterator" id="numberOfTimesModified">
+      <AttrNames>
+        <Item Value="numberOfTimesModified"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="version">
+      <AttrNames>
+        <Item Value="version"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="userCommentIterator" id="userComment1">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.commentType">
+        <AttrNames>
+          <Item Value="comment"/>
+          <Item Value="updatedDate"/>
+          <Item Value="displayNameLanguage"/>
+          <Item Value="action"/>
+          <Item Value="systemVersionFlag"/>
+          <Item Value="acl"/>
+          <Item Value="doesBelongToParent"/>
+          <Item Value="isSystemComment"/>
+          <Item Value="taskId"/>
+          <Item Value="commentScope"/>
+          <Item Value="id"/>
+          <Item Value="operation"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="updatedBy"/>
+        </Accessors>
+      </nodeDefinition>
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.identityType">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="updatedByIterator" id="updatedBy2">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.identityType">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="attachmentIterator" id="attachment1">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.attachmentType">
+        <AttrNames>
+          <Item Value="content"/>
+          <Item Value="mimeType"/>
+          <Item Value="name"/>
+          <Item Value="updatedBy"/>
+          <Item Value="URI"/>
+          <Item Value="systemVersionFlag"/>
+          <Item Value="taskId"/>
+          <Item Value="version"/>
+          <Item Value="acl"/>
+          <Item Value="doesBelongToParent"/>
+          <Item Value="updatedDate"/>
+          <Item Value="correlationId"/>
+          <Item Value="size"/>
+          <Item Value="description"/>
+          <Item Value="storageType"/>
+          <Item Value="ucmDocType"/>
+          <Item Value="securityGroup"/>
+          <Item Value="account"/>
+          <Item Value="revision"/>
+          <Item Value="releaseDate"/>
+          <Item Value="expirationDate"/>
+          <Item Value="title"/>
+          <Item Value="attachmentScope"/>
+          <Item Value="isContentEncoded"/>
+          <Item Value="updatedByDisplayName"/>
+          <Item Value="id"/>
+          <Item Value="operation"/>
+        </AttrNames>
+      </nodeDefinition>
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.ucmMetadataItemType">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="value"/>
+          <Item Value="type"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="ucmMetadataItemIterator" id="ucmMetadataItem1">
+      <nodeDefinition DefName="AssessProposalTaskForm_AssessProposal.ucmMetadataItemType">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="value"/>
+          <Item Value="type"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

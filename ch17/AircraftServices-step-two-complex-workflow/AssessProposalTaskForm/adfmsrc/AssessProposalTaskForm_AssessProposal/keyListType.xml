@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="12.1.3.10.8" id="keyListType"
+          Package="AssessProposalTaskForm_AssessProposal" BeanClass="AssessProposalTaskForm_AssessProposal.keyListType"
+          isJavaBased="false">
+  <AccessorAttribute id="key" IsCollection="true" BeanClass="AssessProposalTaskForm_AssessProposal.keyType"
+                     CollectionBeanClass="AssessProposalTaskForm_AssessProposal.keyType_key_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="2147483640"/>
+      <Property Name="LABEL" Value="Key"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="key"/>
+      <Property Name="targetNamespace" Value="http://xmlns.oracle.com/bpel/workflow/task"/>
+    </Properties>
+  </AccessorAttribute>
+</JavaBean>

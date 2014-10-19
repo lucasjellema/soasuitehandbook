@@ -1,0 +1,39 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<weblogic-web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://xmlns.oracle.com/weblogic/weblogic-web-app http://xmlns.oracle.com/weblogic/weblogic-web-app/1.5/weblogic-web-app.xsd"
+                  xmlns="http://xmlns.oracle.com/weblogic/weblogic-web-app">
+  <ejb-reference-description>
+    <ejb-ref-name>ejb/bpel/services/workflow/TaskServiceBean</ejb-ref-name>
+    <jndi-name>ejb/bpel/services/workflow/TaskServiceBean</jndi-name>
+  </ejb-reference-description>
+  <ejb-reference-description>
+    <ejb-ref-name>ejb/bpel/services/workflow/TaskMetadataServiceBean</ejb-ref-name>
+    <jndi-name>ejb/bpel/services/workflow/TaskMetadataServiceBean</jndi-name>
+  </ejb-reference-description>
+  <ejb-reference-description>
+    <ejb-ref-name>TaskReportServiceBean</ejb-ref-name>
+    <jndi-name>TaskReportServiceBean</jndi-name>
+  </ejb-reference-description>
+  <ejb-reference-description>
+    <ejb-ref-name>TaskEvidenceServiceBean</ejb-ref-name>
+    <jndi-name>TaskEvidenceServiceBean</jndi-name>
+  </ejb-reference-description>
+  <ejb-reference-description>
+    <ejb-ref-name>TaskQueryService</ejb-ref-name>
+    <jndi-name>TaskQueryService</jndi-name>
+  </ejb-reference-description>
+  <ejb-reference-description>
+    <ejb-ref-name>RuntimeConfigService</ejb-ref-name>
+    <jndi-name>RuntimeConfigService</jndi-name>
+  </ejb-reference-description>
+  <ejb-reference-description>
+    <ejb-ref-name>UserMetadataService</ejb-ref-name>
+    <jndi-name>UserMetadataService</jndi-name>
+  </ejb-reference-description>
+  <session-descriptor>
+    <persistent-store-type>replicated_if_clustered</persistent-store-type>
+  </session-descriptor>
+  <library-ref>
+    <library-name>oracle.soa.worklist.webapp</library-name>
+  </library-ref>
+</weblogic-web-app>

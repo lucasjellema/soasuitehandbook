@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.1" xmlns="http://java.sun.com/xml/ns/javaee">
+  <application>
+    <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
+    <locale-config>
+      <default-locale>en</default-locale>
+    </locale-config>
+    <message-bundle>oracle.bpel.services.workflow.worklist.resources.worklist</message-bundle>
+    <resource-bundle>
+      <base-name>oracle.bpel.services.workflow.worklist.resources.worklist</base-name>
+      <var>resources</var>
+    </resource-bundle>
+  </application>
+  <converter>
+    <converter-for-class>oracle.bpel.services.datacontrol.types.Number</converter-for-class>
+    <converter-class>oracle.bpel.services.datacontrol.types.CustomNumberConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-for-class>oracle.bpel.services.datacontrol.types.XSDate</converter-for-class>
+    <converter-class>oracle.bpel.services.datacontrol.types.XSDateConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-for-class>oracle.bpel.services.datacontrol.types.XSTime</converter-for-class>
+    <converter-class>oracle.bpel.services.datacontrol.types.XSTimeConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-for-class>oracle.bpel.services.datacontrol.types.XSDateTime</converter-for-class>
+    <converter-class>oracle.bpel.services.datacontrol.types.XSDateTimeConverter</converter-class>
+  </converter>
+  <converter>
+    <converter-id>dateToStringConverter</converter-id>
+    <converter-class>oracle.bpel.services.datacontrol.types.DateToStringConverter</converter-class>
+  </converter>
+</faces-config>

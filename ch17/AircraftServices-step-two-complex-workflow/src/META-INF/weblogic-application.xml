@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<weblogic-application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://xmlns.oracle.com/weblogic/weblogic-application http://xmlns.oracle.com/weblogic/weblogic-application/1.5/weblogic-application.xsd"
+                      xmlns="http://xmlns.oracle.com/weblogic/weblogic-application">
+  <listener>
+    <listener-class>oracle.adf.share.weblogic.listeners.ADFApplicationStateListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>oracle.mds.lcm.weblogic.WLLifecycleListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>oracle.bpel.services.workflow.worklist.util.TFLifecycleListener</listener-class>
+  </listener>
+  <library-ref>
+    <library-name>adf.oracle.domain</library-name>
+  </library-ref>
+  <library-ref>
+    <library-name>oracle.soa.workflow</library-name>
+  </library-ref>
+  <library-ref>
+    <library-name>oracle.soa.bpel</library-name>
+  </library-ref>
+</weblogic-application>

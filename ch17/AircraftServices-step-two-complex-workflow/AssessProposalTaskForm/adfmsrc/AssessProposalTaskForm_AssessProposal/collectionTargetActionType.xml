@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="12.1.3.10.8" id="collectionTargetActionType"
+          Package="AssessProposalTaskForm_AssessProposal"
+          BeanClass="AssessProposalTaskForm_AssessProposal.collectionTargetActionType" isJavaBased="false">
+  <Attribute Name="action_text" Type="java.lang.String">
+    <Properties>
+      <CustomProperties>
+        <Property Name="type" Value="java.lang.String"/>
+      </CustomProperties>
+    </Properties>
+  </Attribute>
+  <Attribute Name="name_Attr" IsUpdateable="0" Type="java.lang.String">
+    <Properties>
+      <CustomProperties>
+        <Property Name="dcAttributeType" Value="XSDAttribute"/>
+        <Property Name="LABEL" Value="Name"/>
+        <Property Name="originalName" Value="name"/>
+        <Property Name="targetNamespace" Value="http://www.w3.org/2001/XMLSchema"/>
+        <Property Name="type" Value="java.lang.String"/>
+      </CustomProperties>
+    </Properties>
+  </Attribute>
+  <Attribute Name="params_Attr" IsUpdateable="0" Type="java.lang.String">
+    <Properties>
+      <CustomProperties>
+        <Property Name="dcAttributeType" Value="XSDAttribute"/>
+        <Property Name="LABEL" Value="Params"/>
+        <Property Name="originalName" Value="params"/>
+        <Property Name="targetNamespace" Value="http://www.w3.org/2001/XMLSchema"/>
+        <Property Name="type" Value="java.lang.String"/>
+      </CustomProperties>
+    </Properties>
+  </Attribute>
+  <Attribute Name="completed_Attr" IsUpdateable="0" Type="java.lang.Boolean">
+    <Properties>
+      <CustomProperties>
+        <Property Name="dcAttributeType" Value="XSDAttribute"/>
+        <Property Name="LABEL" Value="Completed"/>
+        <Property Name="originalName" Value="completed"/>
+        <Property Name="targetNamespace" Value="http://www.w3.org/2001/XMLSchema"/>
+        <Property Name="type" Value="java.lang.Boolean"/>
+      </CustomProperties>
+    </Properties>
+  </Attribute>
+</JavaBean>
