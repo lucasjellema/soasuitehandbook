@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<definitions xmlns="http://schemas.oracle.com/events/edl" targetNamespace="http://xmlns.oracle.com/TennisEventHandler/TennisEventHandler/TennisEvents">
+   <schema-import location="../Schemas/TennisTournament.xsd" namespace="http://www.example.org"/>
+   <event-definition name="MatchInterruptedEvent">
+      <content xmlns:ns1="http://www.example.org" element="ns1:TennisMatchEvent"/>
+   </event-definition>
+</definitions>
