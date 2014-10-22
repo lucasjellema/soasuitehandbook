@@ -1,0 +1,28 @@
+<wsdl:definitions
+     name="createUserAccount"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/createUserAccount"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/createUserAccount"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:imp1="http://platform.integration.oracle/blocks/adapter/fw/metadata/createUserAccount"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="add_plt" >
+    <plt:role name="add_role" >
+      <plt:portType name="tns:add_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/createUserAccount" schemaLocation="../Schemas/createUserAccount.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="add_request_msg">
+        <wsdl:part name="body" element="imp1:addRequest"/>
+    </wsdl:message>
+    <wsdl:portType name="add_ptt">
+        <wsdl:operation name="add">
+            <wsdl:input message="tns:add_request_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

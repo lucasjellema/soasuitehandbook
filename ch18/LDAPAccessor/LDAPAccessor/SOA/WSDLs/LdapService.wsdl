@@ -1,0 +1,19 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="LdapService"
+                  targetNamespace="http://oracle.com/sca/soapservice/LDAPAccessor/LDAPAccessor/LdapService"
+                  xmlns:tns="http://oracle.com/sca/soapservice/LDAPAccessor/LDAPAccessor/LdapService"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="saibot.airport/security">
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/security" schemaLocation="../Schemas/LdapService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="requestMessage">
+    <wsdl:part name="part1" element="sec:UserAccountRequest"/>
+  </wsdl:message>
+  <wsdl:portType name="LdapService">
+    <wsdl:operation name="addUserAccount">
+      <wsdl:input message="tns:requestMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

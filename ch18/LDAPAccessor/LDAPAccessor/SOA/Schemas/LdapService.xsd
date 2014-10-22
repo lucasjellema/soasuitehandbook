@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/security"
+            xmlns:sec="saibot.airport/security" targetNamespace="saibot.airport/security"
+            elementFormDefault="qualified">
+  <xsd:element name="UserAccountRequest" type="sec:userAccount">
+ </xsd:element>
+  <xsd:complexType name="userAccount">
+    <xsd:sequence>
+      <xsd:element name="UserId" type="xsd:string"/>
+      <xsd:element name="Password" type="xsd:string"/>
+      <xsd:element name="EmailAddress" type="xsd:string"/>
+      <xsd:element name="ManagerId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="MobileTelephone" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
