@@ -24,7 +24,9 @@
                        <element name="employeeNumber" type="string"/>
                        <element name="givenName" type="tns:multiValueAttribute"/>
                        <element name="mail" type="tns:multiValueAttribute"/>
+                       <element name="manager" type="tns:multiValueAttribute"/>
                        <element name="mobile" type="tns:multiValueAttribute"/>
+                       <element name="ou" type="tns:multiValueAttribute"/>
                        <element name="uid" type="tns:multiValueAttribute"/>
                      </sequence>
                      <attribute name="index" type="integer"/>

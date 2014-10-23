@@ -41,11 +41,20 @@
       <tns:UserId>
         <xsl:value-of select="/ns0:searchResponse/searchResultEntry/uid/value"/>
       </tns:UserId>
+      <tns:GivenName>
+        <xsl:value-of select="/ns0:searchResponse/searchResultEntry/givenName/value"/>
+      </tns:GivenName>
       <tns:EmailAddress>
         <xsl:value-of select="/ns0:searchResponse/searchResultEntry/mail/value"/>
       </tns:EmailAddress>
-      <tns:ManagerId>
+      <tns:EmployeeNumber>
         <xsl:value-of select="/ns0:searchResponse/searchResultEntry/employeeNumber"/>
+      </tns:EmployeeNumber>
+      <tns:OrganizationUnit>
+        <xsl:value-of select="/ns0:searchResponse/searchResultEntry/ou/value"/>
+      </tns:OrganizationUnit>
+      <tns:ManagerId>
+        <xsl:value-of select="/ns0:searchResponse/searchResultEntry/manager/value"/>
       </tns:ManagerId>
       <tns:MobileTelephone>
         <xsl:value-of select="/ns0:searchResponse/searchResultEntry/mobile/value"/>

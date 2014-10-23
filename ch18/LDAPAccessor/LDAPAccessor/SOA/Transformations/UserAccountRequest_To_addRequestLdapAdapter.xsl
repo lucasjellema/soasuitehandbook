@@ -52,6 +52,16 @@
             <xsl:value-of select="/ns0:UserAccountRequest/ns0:UserId"/>
           </value>
         </sn>
+        <employeeNumber>
+          <value>
+            <xsl:value-of select="/ns0:UserAccountRequest/ns0:EmployeeNumber"/>
+          </value>
+        </employeeNumber>
+        <givenName>
+          <value>
+            <xsl:value-of select="/ns0:UserAccountRequest/ns0:GivenName"/>
+          </value>
+        </givenName>
         <mail>
           <value>
             <xsl:value-of select="/ns0:UserAccountRequest/ns0:EmailAddress"/>
@@ -69,6 +79,11 @@
             <xsl:value-of select="/ns0:UserAccountRequest/ns0:MobileTelephone"/>
           </value>
         </mobile>
+        <ou>
+          <value>
+            <xsl:value-of select="concat('organizationalUnitName=',/ns0:UserAccountRequest/ns0:OrganizationUnit,',ou=BusinessPartners,o=saibot.airport')"/>
+          </value>
+        </ou>
         <uid>
           <value>
             <xsl:value-of select="/ns0:UserAccountRequest/ns0:UserId"/>

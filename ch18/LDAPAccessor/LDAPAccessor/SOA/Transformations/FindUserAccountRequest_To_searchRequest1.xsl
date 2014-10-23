@@ -38,10 +38,10 @@
   <!--User Editing allowed BELOW this line - DO NOT DELETE THIS LINE-->
   <xsl:template match="/">
     <tns:searchRequest>
-     <baseDN>ou=ExternalStaff,o=saibot.airport</baseDN>
+      <baseDN>ou=ExternalStaff,o=saibot.airport</baseDN>
       <searchFilter>
         <xsl:value-of select="concat('(&amp;(objectClass=person)(uid=',/ns0:FindUserAccountRequest/ns0:UserId,'))')"/>
       </searchFilter>
-      </tns:searchRequest>
+    </tns:searchRequest>
   </xsl:template>
 </xsl:stylesheet>

@@ -16,8 +16,11 @@
   <xsd:complexType name="userAccount">
     <xsd:sequence>
       <xsd:element name="UserId" type="xsd:string"/>
+      <xsd:element name="GivenName" type="xsd:string"/>
       <xsd:element name="Password" type="xsd:string"/>
       <xsd:element name="EmailAddress" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="OrganizationUnit" type="xsd:string"/>
       <xsd:element name="ManagerId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
       <xsd:element name="MobileTelephone" type="xsd:string"/>
     </xsd:sequence>

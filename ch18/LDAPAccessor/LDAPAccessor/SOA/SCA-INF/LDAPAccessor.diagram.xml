@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
     <dgm:gService name="LdapService">
-        <dgm:body borderWidth="2" arcRad="20" X="21" Y="41" width="137" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="99" width="137" height="96">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="11" Y="34" width="156" height="98">
+        <dgm:shadow arcRad="20" X="11" Y="92" width="156" height="110">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:outputPort name="LdapService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://oracle.com/sca/soapservice/LDAPAccessor/LDAPAccessor/LdapService#wsdl.interface(LdapService)"/>
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
         <dgm:operations>
             <dgm:item>addUserAccount</dgm:item>
+            <dgm:item>findUserAccount</dgm:item>
         </dgm:operations>
     </dgm:gService>
     <dgm:gReference name="createUserAccount">
-        <dgm:body borderWidth="2" arcRad="20" X="744" Y="41" width="136" height="84">
+        <dgm:body borderWidth="2" arcRad="20" X="816" Y="26" width="136" height="84">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="734" Y="34" width="156" height="98">
+        <dgm:shadow arcRad="20" X="806" Y="19" width="156" height="98">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="createUserAccount" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/createUserAccount#wsdl.interface(add_ptt)"/>
@@ -28,26 +29,50 @@
             <dgm:item>add</dgm:item>
         </dgm:operations>
     </dgm:gReference>
+    <dgm:gReference name="findUserAccount">
+        <dgm:body borderWidth="2" arcRad="20" X="816" Y="144" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="806" Y="137" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="findUserAccount" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/findUserAccount#wsdl.interface(search_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ldap_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>search</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
     <dgm:gComponent name="LdapMediator">
-        <dgm:body borderWidth="2" arcRad="20" X="386" Y="26" width="130" height="61">
+        <dgm:body borderWidth="2" arcRad="20" X="422" Y="84" width="130" height="86">
             <dgm:borderColor r="128" g="92" b="148"/>
             <dgm:lightBgColor r="208" g="169" b="227"/>
             <dgm:darkBgColor r="183" g="132" b="212"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="376" Y="19" width="150" height="77">
+        <dgm:shadow arcRad="20" X="412" Y="77" width="150" height="102">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="LdapMediator" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://oracle.com/sca/soapservice/LDAPAccessor/LDAPAccessor/LdapService#wsdl.interface(LdapService)"/>
         <dgm:outputPort name="createUserAccount" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/createUserAccount#wsdl.interface(add_ptt)"/>
+        <dgm:outputPort name="findUserAccount" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/findUserAccount#wsdl.interface(search_ptt)"/>
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gWireLink source="LdapService" target="LdapMediator/LdapMediator" width="2">
-        <dgm:gSegment X1="168" Y1="51" X2="376" Y2="51"/>
+        <dgm:gSegment X1="168" Y1="109" X2="412" Y2="109"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="LdapMediator/createUserAccount" target="createUserAccount" width="2">
-        <dgm:gSegment X1="526" Y1="51" X2="734" Y2="51"/>
+        <dgm:gSegment X1="562" Y1="109" X2="586" Y2="109"/>
+        <dgm:gSegment X1="586" Y1="109" X2="586" Y2="36"/>
+        <dgm:gSegment X1="586" Y1="36" X2="806" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LdapMediator/findUserAccount" target="findUserAccount" width="2">
+        <dgm:gSegment X1="562" Y1="134" X2="586" Y2="134"/>
+        <dgm:gSegment X1="586" Y1="134" X2="586" Y2="154"/>
+        <dgm:gSegment X1="586" Y1="154" X2="806" Y2="154"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
