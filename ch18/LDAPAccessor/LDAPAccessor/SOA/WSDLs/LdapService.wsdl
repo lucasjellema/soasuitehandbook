@@ -11,9 +11,19 @@
   <wsdl:message name="requestMessage">
     <wsdl:part name="part1" element="sec:UserAccountRequest"/>
   </wsdl:message>
+  <wsdl:message name="findUserRequestMessage">
+    <wsdl:part name="part1" element="sec:FindUserAccountRequest"/>
+  </wsdl:message>
+  <wsdl:message name="findUserResponseMessage">
+    <wsdl:part name="part1" element="sec:FindUserAccountResponse"/>
+  </wsdl:message>
   <wsdl:portType name="LdapService">
     <wsdl:operation name="addUserAccount">
       <wsdl:input message="tns:requestMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="findUserAccount">
+      <wsdl:input message="tns:findUserRequestMessage"/>
+      <wsdl:output message="tns:findUserResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

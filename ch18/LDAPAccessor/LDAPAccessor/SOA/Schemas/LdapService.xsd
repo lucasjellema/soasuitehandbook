@@ -2,8 +2,17 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/security"
             xmlns:sec="saibot.airport/security" targetNamespace="saibot.airport/security"
             elementFormDefault="qualified">
-  <xsd:element name="UserAccountRequest" type="sec:userAccount">
- </xsd:element>
+  <xsd:element name="UserAccountRequest" type="sec:userAccount"/>
+  <xsd:element name="FindUserAccountRequest" type="sec:userAccountSearchDetails"/>
+  <xsd:element name="FindUserAccountResponse" type="sec:userAccount"/>
+  
+  <xsd:complexType name="userAccountSearchDetails">
+    <xsd:sequence>
+      <xsd:element name="UserId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
   <xsd:complexType name="userAccount">
     <xsd:sequence>
       <xsd:element name="UserId" type="xsd:string"/>

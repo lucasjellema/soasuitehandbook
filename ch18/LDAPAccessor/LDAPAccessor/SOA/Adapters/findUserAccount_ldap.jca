@@ -1,0 +1,18 @@
+<adapter-config name="findUserAccount" adapter="ldap" wsdlLocation="../WSDLs/findUserAccount.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/ldap/SaibotLdap"/>
+  <endpoint-interaction portType="search_ptt" operation="search">
+    <interaction-spec className="oracle.tip.adapter.ldap.outbound.sync.LdapSearchInteractionSpec">
+      <property name="SearchScope" value="wholeSubtree"/>
+      <property name="TimeLimit" value="0"/>
+      <property name="FollowReferrals" value="ignore"/>
+      <property name="ReturnAttributes" value="cn,destinationIndicator,employeeNumber,givenName,mail,mobile,uid"/>
+      <property name="AliasDereferencing" value="never"/>
+      <property name="SizeLimit" value="1000"/>
+      <property name="HopLimit" value="1"/>
+      <property name="ReturnAttributesDelimiter" value=","/>
+      <property name="TypesOnly" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

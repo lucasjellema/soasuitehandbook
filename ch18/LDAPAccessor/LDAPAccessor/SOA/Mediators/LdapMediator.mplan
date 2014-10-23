@@ -15,4 +15,25 @@
       </case>
     </switch>
   </operation>
+  <operation name="findUserAccount" deliveryPolicy="AllOrNothing" priority="4" validateSchema="false">
+    <switch>
+      <case executionType="sequential" name="findUserAccount.search">
+        <action>
+          <transform>
+            <part name="$out.body"
+                  function="xslt(../Transformations/FindUserAccountRequest_To_searchRequest1.xsl, $in.part1)"/>
+          </transform>
+          <invoke reference="findUserAccount" operation="search">
+            <onReply>
+              <transform>
+                <part name="$out.part1"
+                      function="xslt(../Transformations/searchResponse_To_FindUserAccountResponse1.xsl, $in.body)"/>
+              </transform>
+              <reply/>
+            </onReply>
+          </invoke>
+        </action>
+      </case>
+    </switch>
+  </operation>
 </Mediator>

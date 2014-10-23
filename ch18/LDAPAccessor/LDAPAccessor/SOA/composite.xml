@@ -15,6 +15,8 @@
           location="WSDLs/createUserAccount.wsdl" importType="wsdl"/>
   <import namespace="http://oracle.com/sca/soapservice/LDAPAccessor/LDAPAccessor/LdapService"
           location="WSDLs/LdapService.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/findUserAccount"
+          location="WSDLs/findUserAccount.wsdl" importType="wsdl"/>
   <service name="LdapService" ui:wsdlLocation="WSDLs/LdapService.wsdl">
     <interface.wsdl interface="http://oracle.com/sca/soapservice/LDAPAccessor/LDAPAccessor/LdapService#wsdl.interface(LdapService)"/>
     <binding.ws port="http://oracle.com/sca/soapservice/LDAPAccessor/LDAPAccessor/LdapService#wsdl.endpoint(LdapService/LdapService_pt)">
@@ -32,11 +34,18 @@
       <reference name="createUserAccount" ui:wsdlLocation="WSDLs/createUserAccount.wsdl">
         <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/createUserAccount#wsdl.interface(add_ptt)"/>
       </reference>
+      <reference name="findUserAccount" ui:wsdlLocation="WSDLs/findUserAccount.wsdl">
+        <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/findUserAccount#wsdl.interface(search_ptt)"/>
+      </reference>
     </componentType>
   </component>
   <reference name="createUserAccount" ui:wsdlLocation="WSDLs/createUserAccount.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/createUserAccount#wsdl.interface(add_ptt)"/>
     <binding.jca config="Adapters/createUserAccount_ldap.jca"/>
+  </reference>
+  <reference name="findUserAccount" ui:wsdlLocation="WSDLs/findUserAccount.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/LDAPAccessor/LDAPAccessor/findUserAccount#wsdl.interface(search_ptt)"/>
+    <binding.jca config="Adapters/findUserAccount_ldap.jca"/>
   </reference>
   <wire>
     <source.uri>LdapService</source.uri>
@@ -45,5 +54,9 @@
   <wire>
     <source.uri>LdapMediator/createUserAccount</source.uri>
     <target.uri>createUserAccount</target.uri>
+  </wire>
+  <wire>
+    <source.uri>LdapMediator/findUserAccount</source.uri>
+    <target.uri>findUserAccount</target.uri>
   </wire>
 </composite>
