@@ -1,0 +1,215 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Sat Oct 25 07:34:31 CEST 2014
+  Author:  lucas_j
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="AirportAccreditationRequestProcessor"
+         targetNamespace="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="saibot.airport/security">
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <import namespace="saibot.airport/security" location="../WSDLs/AirportAccreditationServiceWrapper.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="AirportAccreditationService" partnerLinkType="ns1:AirportAccreditationService"
+                     partnerRole="AirportAccreditationServiceCallback" myRole="AirportAccreditationService"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="ns1:requestForAirportAccreditationRequestMessage"/>
+        <variable name="synchOutputVariable" messageType="ns1:requestForAirportAccreditationRequestMessage"/>
+        <variable name="faultVariable" messageType="ns1:requestForAirportAccreditationFaultMessage"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="asynchOutputVariable" messageType="ns1:requestForAirportAccreditationFinalResponseMessage"/>
+    </variables>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in AirportAccreditationRequestProcessor.wsdl) -->
+        <receive name="receiveInput" partnerLink="AirportAccreditationService"
+                 portType="ns1:AirportAccreditationService" operation="requestAirportAccreditation" variable="inputVariable" createInstance="yes"/>
+        <scope name="AirportSecurityAccreditationProcess">
+            <eventHandlers>
+                <onEvent partnerLink="AirportAccreditationService"
+                         operation="retrieveStatusOfAirportAccreditationRequest"
+                         portType="ns1:AirportAccreditationService" variable="retrieveStatusRequest"
+                         element="ns1:RetrieveStatusOfAirportAccreditationRequestRequest">
+                    <scope name="ReplyToStatusRequest">
+                        <empty name="Empty18"/>
+                    </scope>
+                </onEvent>
+                <onEvent bpelx:name="RequestToCancel" partnerLink="AirportAccreditationService"
+                         operation="cancelRequestForAirportAccreditation" portType="ns1:AirportAccreditationService"
+                         variable="cancelRequest" element="ns1:CancelRequestForAirportAccreditationRequest">
+                    <scope name="HandleCancelRequest">
+                        <empty name="Empty19"/>
+                    </scope>
+                </onEvent>
+            </eventHandlers>
+            <sequence>
+                <scope name="InitializationandValidation">
+                    <sequence name="Sequence3">
+                        <scope name="ValidateRequest">
+                            <empty name="Empty16"/>
+                        </scope>
+                        <scope name="RetrieveRequestorAndCompany">
+                            <sequence name="Sequence4">
+                                <empty name="Empty17"/>
+                            </sequence>
+                        </scope>
+                        <scope name="ReturnSynchronousResponse">
+                            <empty name="Empty20"/>
+                        </scope>
+                    </sequence>
+                </scope>
+                <scope name="SecurityChecks">
+                    <sequence>
+                        <flow name="PerformSecurityChecks">
+                            <sequence name="RandomThoroughCheck">
+                                <scope name="DetermineIfDoRandom">
+                                    <empty name="Empty15"/>
+                                </scope>
+                                <if name="IfDoRandom">
+                                    <condition>false()</condition>
+                                    <scope name="DoThoroughBackgroundCheck">
+                                        <empty name="Empty10"/>
+                                    </scope>
+                                    <else>
+                                        <empty name="DoNothing"/>
+                                    </else>
+                                </if>
+                            </sequence>
+                            <sequence name="NationalSecurityCheck">
+                                <while name="WhileNotClear">
+                                    <condition>false()</condition>
+                                    <sequence>
+                                        <scope name="RequestNationalSecurityCheck">
+                                            <empty name="Empty14"/>
+                                        </scope>
+                                        <if name="IfOutCome">
+                                            <documentation>
+                                                <![CDATA[OK]]>
+                                            </documentation>
+                                            <condition>true()</condition>
+                                            <empty name="Empty8"/>
+                                            <elseif>
+                                                <documentation>
+                                                    <![CDATA[NOK]]>
+                                                </documentation>
+                                                <condition>true()</condition>
+                                                <empty name="Empty7"/>
+                                            </elseif>
+                                            <else>
+                                                <documentation>
+                                                    <![CDATA[Unclear]]>
+                                                </documentation>
+                                                <scope name="Discuss">
+                                                    <empty name="Empty9"/>
+                                                </scope>
+                                            </else>
+                                        </if>
+                                    </sequence>
+                                </while>
+                            </sequence>
+                            <sequence name="InternalScreening">
+                                <scope name="DetermineScreeningIntensity">
+                                    <empty name="Empty13"/>
+                                </scope>
+                                <flow name="Flow2">
+                                    <sequence name="Sequence">
+                                        <scope name="AutomatedEvaluation">
+                                            <empty name="Empty11"/>
+                                        </scope>
+                                    </sequence>
+                                    <sequence name="Sequence1">
+                                        <if name="IfAutomatedProcessing">
+                                            <condition>true()</condition>
+                                            <empty name="DoNothing"/>
+                                            <else>
+                                                <documentation>
+                                                    <![CDATA[manualEvaluation]]>
+                                                </documentation>
+                                                <scope name="ManualRequestScreening">
+                                                    <empty name="Empty12"/>
+                                                </scope>
+                                            </else>
+                                        </if>
+                                    </sequence>
+                                </flow>
+                            </sequence>
+                        </flow>
+                    </sequence>
+                </scope>
+                <scope name="Registration">
+                    <sequence name="Sequence2">
+                        <flow name="Flow1">
+                            <sequence name="RecordInLDAP">
+                                <empty name="Empty1"/>
+                            </sequence>
+                            <sequence name="RegisterWithPersonnelService">
+                                <empty name="Empty2"/>
+                            </sequence>
+                            <sequence name="PrepareBadge">
+                                <empty name="Empty3"/>
+                            </sequence>
+                        </flow>
+                        <flow name="Notification">
+                            <sequence name="PublishBusinessEventAboutNewStaffMember">
+                                <empty name="Empty5"/>
+                            </sequence>
+                            <sequence name="NotifyNewStaffMember">
+                                <empty name="Empty6"/>
+                            </sequence>
+                            <sequence name="NotifyRequestorAndCompany">
+                                <empty name="Empty4"/>
+                            </sequence>
+                        </flow>
+                    </sequence>
+                </scope>
+            </sequence>
+        </scope>
+
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="AirportAccreditationService"
+                portType="ns1:AirportAccreditationServiceCallback" operation="reportAirportAccreditationRequestOutcome" inputVariable="asynchOutputVariable"
+                bpelx:invokeAsDetail="no"/>
+    </sequence>
+</process>
