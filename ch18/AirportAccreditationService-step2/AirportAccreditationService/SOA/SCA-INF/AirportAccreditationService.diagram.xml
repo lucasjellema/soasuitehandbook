@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="AirportAccreditationService">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="168" width="137" height="120">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="161" width="156" height="134">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="AirportAccreditationService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security#wsdl.interface(AirportAccreditationService)" callbackInterface="saibot.airport/security#wsdl.interface(AirportAccreditationServiceCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>requestAirportAccreditation</dgm:item>
+            <dgm:item>retrieveStatusOfAirportAccreditationRequest</dgm:item>
+            <dgm:item>cancelRequestForAirportAccreditation</dgm:item>
+            <dgm:item>reportAirportAccreditationRequestOutcome</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="LDAPMediator_ep">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="26" width="137" height="108">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="19" width="156" height="122">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="LDAPMediator_ep" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>getUser</dgm:item>
+            <dgm:item>getOrganization</dgm:item>
+            <dgm:item>addUser</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="RetrieveUser">
+        <dgm:body borderWidth="2" arcRad="20" X="886" Y="53" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="876" Y="46" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="RetrieveUser" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser#wsdl.interface(search_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ldap_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>search</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="AddUser">
+        <dgm:body borderWidth="2" arcRad="20" X="886" Y="171" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="876" Y="164" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="AddUser" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/AddUser#wsdl.interface(add_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ldap_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>add</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="AirportAccreditationRequestProcessor">
+        <dgm:body borderWidth="2" arcRad="20" X="314" Y="153" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="304" Y="146" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="AirportAccreditationService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security#wsdl.interface(AirportAccreditationService)" callbackInterface="saibot.airport/security#wsdl.interface(AirportAccreditationServiceCallback)"/>
+        <dgm:outputPort name="LDAPMediator.LDAPMediator" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="LDAPMediator">
+        <dgm:body borderWidth="2" arcRad="20" X="600" Y="111" width="130" height="86">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="590" Y="104" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="LDAPMediator" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+        <dgm:outputPort name="RetrieveUser" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser#wsdl.interface(search_ptt)"/>
+        <dgm:outputPort name="AddUser" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/AddUser#wsdl.interface(add_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="AirportAccreditationService" target="AirportAccreditationRequestProcessor/AirportAccreditationService" width="2">
+        <dgm:gSegment X1="168" Y1="178" X2="304" Y2="178"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LDAPMediator_ep" target="LDAPMediator/LDAPMediator" width="2">
+        <dgm:gSegment X1="168" Y1="36" X2="493" Y2="36"/>
+        <dgm:gSegment X1="493" Y1="36" X2="493" Y2="136"/>
+        <dgm:gSegment X1="493" Y1="136" X2="590" Y2="136"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LDAPMediator/RetrieveUser" target="RetrieveUser" width="2">
+        <dgm:gSegment X1="740" Y1="136" X2="764" Y2="136"/>
+        <dgm:gSegment X1="764" Y1="136" X2="764" Y2="63"/>
+        <dgm:gSegment X1="764" Y1="63" X2="876" Y2="63"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AirportAccreditationRequestProcessor/LDAPMediator.LDAPMediator" target="LDAPMediator/LDAPMediator" width="2">
+        <dgm:gSegment X1="454" Y1="178" X2="478" Y2="178"/>
+        <dgm:gSegment X1="478" Y1="178" X2="478" Y2="136"/>
+        <dgm:gSegment X1="478" Y1="136" X2="590" Y2="136"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LDAPMediator/AddUser" target="AddUser" width="2">
+        <dgm:gSegment X1="740" Y1="161" X2="764" Y2="161"/>
+        <dgm:gSegment X1="764" Y1="161" X2="764" Y2="181"/>
+        <dgm:gSegment X1="764" Y1="181" X2="876" Y2="181"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

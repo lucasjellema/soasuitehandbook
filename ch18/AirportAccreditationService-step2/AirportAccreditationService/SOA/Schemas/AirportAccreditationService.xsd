@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/security"
+            xmlns:sec="saibot.airport/security" targetNamespace="saibot.airport/security"
+            elementFormDefault="qualified">
+  <xsd:element name="RequestForAirportAccreditationRequest" type="sec:requestForAirportAccreditationRequestType"/>
+  <xsd:element name="RequestForAirportAccreditationResponse" type="sec:requestForAirportAccreditationResponseType"/>
+  <xsd:element name="RequestForAirportAccreditationFault" type="sec:requestForAirportAccreditationFaultType"/>
+  <xsd:element name="CancelRequestForAirportAccreditationRequest"
+               type="sec:cancelRequestForAirportAccreditationRequestType"/>
+  <xsd:element name="CancelRequestForAirportAccreditationResponse"
+               type="sec:cancelRequestForAirportAccreditationResponseType"/>
+  <xsd:element name="RetrieveStatusOfAirportAccreditationRequestRequest"
+               type="sec:retrieveStatusOfAirportAccreditationRequestRequestType"/>
+  <xsd:element name="RetrieveStatusOfAirportAccreditationRequestResponse"
+               type="sec:retrieveStatusOfAirportAccreditationRequestResponseType"/>
+  <xsd:element name="RequestForAirportAccreditationFinalResponse"
+               type="sec:requestForAirportAccreditationFinalResponseType"/>
+  <xsd:complexType name="requestForAirportAccreditationRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequestingOrganizationId" type="xsd:string"/>
+      <xsd:element name="RequestorId" type="xsd:string"/>
+      <xsd:element name="StaffMemberToAccredit" type="sec:staffMemberType"/>
+      <xsd:element name="RequiredSecurityLevel" type="xsd:int"/>
+      <xsd:element name="StartDate" type="xsd:date"/>
+      <xsd:element name="EndDate" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="Motivation" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="StaffReferences" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="StaffMemberId" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="staffMemberType">
+    <xsd:sequence>
+      <xsd:element name="FirstName" type="xsd:string"/>
+      <xsd:element name="LastName" type="xsd:string"/>
+      <xsd:element name="EmailAddress" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="ManagerId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="MobileTelephone" type="xsd:string"/>
+      <xsd:element name="FunctionTitle" type="xsd:string"/>
+      <xsd:element name="IdentityDetails" type="staffIdentityDetailsType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="staffIdentityDetailsType">
+    <xsd:sequence>
+      <xsd:element name="BirthDate" type="xsd:date"/>
+      <xsd:element name="SocialSecurityNumber" type="xsd:string"/>
+      <xsd:element name="Gender" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="PassportId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="DriversLicenseId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Picture" type="xsd:base64Binary" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="requestForAirportAccreditationResponseType">
+    <xsd:sequence>
+      <xsd:element name="RequestingOrganizationId" type="xsd:string"/>
+      <xsd:element name="RequestorId" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="AirportAccreditationRequestIdentifier" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="requestForAirportAccreditationFaultType">
+    <xsd:sequence>
+      <xsd:element name="RequestingOrganizationId" type="xsd:string"/>
+      <xsd:element name="RequestorId" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="FaultDescription" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="cancelRequestForAirportAccreditationRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequestingOrganizationId" type="xsd:string"/>
+      <xsd:element name="RequestorId" type="xsd:string"/>
+      <xsd:element name="AirportAccreditationRequestIdentifier" type="xsd:string"/>
+      <xsd:element name="Motivation" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="cancelRequestForAirportAccreditationResponseType">
+    <xsd:sequence>
+      <xsd:element name="AirportAccreditationRequestIdentifier" type="xsd:string"/>
+      <xsd:element name="RequestorId" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="CancellationStatus" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="retrieveStatusOfAirportAccreditationRequestRequestType">
+    <xsd:sequence>
+      <xsd:element name="RequestingOrganizationId" type="xsd:string"/>
+      <xsd:element name="RequestorId" type="xsd:string"/>
+      <xsd:element name="AirportAccreditationRequestIdentifier" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="retrieveStatusOfAirportAccreditationRequestResponseType">
+    <xsd:sequence>
+      <xsd:element name="AirportAccreditationRequestIdentifier" type="xsd:string"/>
+      <xsd:element name="RequestorId" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="ProcessStatus" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="requestForAirportAccreditationFinalResponseType">
+    <xsd:sequence>
+      <xsd:element name="AirportAccreditationRequestIdentifier" type="xsd:string"/>
+      <xsd:element name="RequestorId" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="StaffMemberUserId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="BadgeNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="OutcomeOfAccreditationRequest" type="xsd:string"/>
+      <xsd:element name="Motivation" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
