@@ -1,0 +1,57 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="AirportAccreditationService"
+                  targetNamespace="saibot.airport/security"
+                  xmlns:tns="saibot.airport/security"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="saibot.airport/security">
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/security" schemaLocation="../Schemas/AirportAccreditationService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="requestForAirportAccreditationRequestMessage">
+    <wsdl:part name="part1" element="sec:RequestForAirportAccreditationRequest"/>
+  </wsdl:message>
+  <wsdl:message name="requestForAirportAccreditationResponseMessage">
+    <wsdl:part name="part1" element="sec:RequestForAirportAccreditationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="requestForAirportAccreditationFaultMessage">
+    <wsdl:part name="part1" element="sec:RequestForAirportAccreditationFault"/>
+  </wsdl:message>
+  <wsdl:message name="cancelRequestForAirportAccreditationRequestMessage">
+    <wsdl:part name="part1" element="sec:CancelRequestForAirportAccreditationRequest"/>
+  </wsdl:message>
+  <wsdl:message name="cancelRequestForAirportAccreditationResponseMessage">
+    <wsdl:part name="part1" element="sec:CancelRequestForAirportAccreditationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="retrieveStatusOfAirportAccreditationRequestRequestMessage">
+    <wsdl:part name="part1" element="sec:RetrieveStatusOfAirportAccreditationRequestRequest"/>
+  </wsdl:message>
+  <wsdl:message name="retrieveStatusOfAirportAccreditationRequestResponseMessage">
+    <wsdl:part name="part1" element="sec:RetrieveStatusOfAirportAccreditationRequestResponse"/>
+  </wsdl:message>
+  <wsdl:message name="requestForAirportAccreditationFinalResponseMessage">
+    <wsdl:part name="part1" element="sec:RequestForAirportAccreditationFinalResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="AirportAccreditationService">
+    <wsdl:operation name="requestAirportAccreditation">
+      <wsdl:input message="tns:requestForAirportAccreditationRequestMessage"/>
+      <wsdl:output message="tns:requestForAirportAccreditationResponseMessage"/>
+      <wsdl:fault name="invalidAccreditationRequest"
+      message="tns:requestForAirportAccreditationFaultMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="retrieveStatusOfAirportAccreditationRequest">
+      <wsdl:input message="tns:retrieveStatusOfAirportAccreditationRequestRequestMessage"/>
+      <wsdl:output message="tns:retrieveStatusOfAirportAccreditationRequestResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="cancelRequestForAirportAccreditation">
+      <wsdl:input message="tns:cancelRequestForAirportAccreditationRequestMessage"/>
+      <wsdl:output message="tns:cancelRequestForAirportAccreditationResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+      <wsdl:portType name="AirportAccreditationServiceCallback">
+        <wsdl:operation name="reportAirportAccreditationRequestOutcome">
+            <wsdl:input message="tns:requestForAirportAccreditationFinalResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+</wsdl:definitions>
