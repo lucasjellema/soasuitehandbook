@@ -1,0 +1,32 @@
+<wsdl:definitions
+     name="RetrieveUser"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:imp1="http://platform.integration.oracle/blocks/adapter/fw/metadata/RetrieveUser"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="search_plt" >
+    <plt:role name="search_role" >
+      <plt:portType name="tns:search_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/RetrieveUser" schemaLocation="../Schemas/RetrieveUser.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="search_request_msg">
+        <wsdl:part name="body" element="imp1:searchRequest"/>
+    </wsdl:message>
+    <wsdl:message name="search_response_msg">
+        <wsdl:part name="body" element="imp1:searchResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="search_ptt">
+        <wsdl:operation name="search">
+            <wsdl:input message="tns:search_request_msg"/>
+            <wsdl:output message="tns:search_response_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

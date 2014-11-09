@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<decisionServices xmlns="http://xmlns.oracle.com/bpel/rules" name="InternalSecurityScreeningEvaluation">
+    <ruleEngineProvider provider="Oracle_11.0.0.0.0" name="OracleRulesSDK">
+        <repository type="SCA-Archive">
+            <path>AirportAccreditationService/oracle/rules/airportaccreditationservice/InternalSecurityScreeningEvaluation.rules</path>
+        </repository>
+    </ruleEngineProvider>
+    <decisionService name="InternalSecurityScreeningEvaluation_DecisionService" ruleEngineProviderReference="OracleRulesSDK" targetNamespace="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService">
+        <catalog>InternalSecurityScreeningEvaluation</catalog>
+        <pattern name="CallFunctionStateless">
+            <arguments>
+                <call>airportaccreditationservice.InternalSecurityScreeningEvaluation.DecisionService</call>
+            </arguments>
+        </pattern>
+        <pattern name="CallFunctionStateful">
+            <arguments>
+                <call>airportaccreditationservice.InternalSecurityScreeningEvaluation.DecisionService</call>
+            </arguments>
+        </pattern>
+    </decisionService>
+    <schemaInformation>
+        <dictionary fqnPackage="airportaccreditationservice" fqnName="InternalSecurityScreeningEvaluation" updateNumber="154">
+            <schemaBrowser>
+                <package>airport.saibot.security</package>
+                <namespace>saibot.airport/security</namespace>
+            </schemaBrowser>
+            <schemaImport namespace="saibot.airport/security" localPart="AirportAccreditationService.xsd" schemaLocation="Schemas/AirportAccreditationService.xsd">
+                <import namespace="saibot.airport/security" localPart="AirportAccreditationService.xsd" schemaLocation="Schemas/AirportAccreditationService.xsd"/>
+            </schemaImport>
+        </dictionary>
+    </schemaInformation>
+</decisionServices>

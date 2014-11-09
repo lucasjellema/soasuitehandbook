@@ -1,0 +1,1156 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Sat Oct 25 07:34:31 CEST 2014
+  Author:  lucas_j
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="AirportAccreditationRequestProcessor"
+         targetNamespace="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="saibot.airport/security" xmlns:ns2="saibot.airport/security/ldap"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns3="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService"
+         xmlns:ns4="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck"
+         xmlns:ns5="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/PersonnelService"
+         xmlns:ns6="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService"
+         xmlns:ns7="http://xmlns.oracle.com/ias/pcbpel/NotificationService" xmlns:ns8="saibot.airport/events/security"
+         xmlns:task="http://xmlns.oracle.com/bpel/workflow/task"
+         xmlns:taskservice="http://xmlns.oracle.com/bpel/workflow/taskService"
+         xmlns:wfcommon="http://xmlns.oracle.com/bpel/workflow/common"
+         xmlns:wf="http://schemas.oracle.com/bpel/extensions/workflow"
+         xmlns:ns10="http://xmlns.oracle.com/bpel"
+         xmlns:ns11="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService"
+         xmlns:ns9="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor/correlationset"
+         xmlns:ns12="myNamespace" xmlns:ns13="my">
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <bpelx:annotation>
+        <bpelx:analysis>
+            <bpelx:property name="propertiesFile">
+                <![CDATA[../WSDLs/AirportAccreditationRequestProcessor_properties.wsdl]]>
+            </bpelx:property>
+        </bpelx:analysis>
+    </bpelx:annotation>
+    <import namespace="saibot.airport/security" location="../WSDLs/AirportAccreditationService.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="saibot.airport/security" location="../Schemas/SecurityEvents.xsd"
+            importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="saibot.airport/security" location="../Schemas/AirportAccreditationService.xsd"
+            importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="saibot.airport/security" location="../WSDLs/AirportAccreditationServiceWrapper.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="AirportAccreditationService" partnerLinkType="ns1:AirportAccreditationService"
+                     partnerRole="AirportAccreditationServiceCallback" myRole="AirportAccreditationService"/>
+        <partnerLink name="LDAPMediator.LDAPMediator" partnerLinkType="ns2:LDAPMediator.LDAPMediator"
+                     partnerRole="LdapService"/>
+        <partnerLink name="NationalSecurityCheckService.NationalSecurityCheckService"
+                     partnerLinkType="ns3:NationalSecurityCheckService"
+                     partnerRole="NationalSecurityCheckServiceProvider" myRole="NationalSecurityCheckServiceRequester"/>
+        <partnerLink name="ThoroughBackgroundCheck.thoroughbackgroundcheck_client"
+                     partnerLinkType="ns4:ThoroughBackgroundCheck" partnerRole="ThoroughBackgroundCheckProvider"
+                     myRole="ThoroughBackgroundCheckRequester"/>
+        <partnerLink name="PersonnelService.PersonnelService" partnerLinkType="ns5:PersonnelService"
+                     partnerRole="PersonnelServiceProvider"/>
+        <partnerLink name="BadgeService.BadgeService" partnerLinkType="ns6:BadgeService"
+                     partnerRole="BadgeServiceProvider" myRole="BadgeServiceRequester"/>
+        <partnerLink name="NotificationService1" partnerLinkType="ns7:NotificationServiceLink"
+                     partnerRole="NotificationServiceProvider"/>
+        <partnerLink name="DiscussNationalSecurityCheckRequest.TaskService_1" partnerLinkType="taskservice:TaskService"
+                     partnerRole="TaskService" myRole="TaskServiceCallbackListener"/>
+        <partnerLink name="ManualScreeningOfSecurityAccreditationRequest.TaskService_1"
+                     partnerLinkType="taskservice:TaskService" partnerRole="TaskService"
+                     myRole="TaskServiceCallbackListener"/>
+        <partnerLink name="InternalSecurityScreeningEvaluation.InternalSecurityScreeningEvaluation_DecisionService"
+                     partnerLinkType="ns11:InternalSecurityScreeningEvaluation.InternalSecurityScreeningEvaluation_DecisionService"
+                     partnerRole="IDecisionService"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="ns1:requestForAirportAccreditationRequestMessage"/>
+        <variable name="synchOutputVariable" messageType="ns1:requestForAirportAccreditationRequestMessage"/>
+        <variable name="faultVariable" messageType="ns1:requestForAirportAccreditationFaultMessage"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="asynchOutputVariable" messageType="ns1:requestForAirportAccreditationFinalResponseMessage"/>
+        <variable name="AirportAccreditationRequestIdentifier" type="xsd:string"/>
+        <variable name="DiscussNationalSecurityCheckRequest1_globalVariable" messageType="taskservice:taskMessage"/>
+        <variable name="ManualScreeningOfSecurityAccreditationRequest1_globalVariable"
+                  messageType="taskservice:taskMessage"/>
+ <variable name="globalProcessStatus" type="xsd:string"/>
+                <variable name="globalProcessState" type="ns1:AirportAccreditationProcessStateType"/>
+    </variables>
+            <correlationSets>
+                <correlationSet name="AirportAccreditationRequestSet"
+                                properties="ns9:AirportAccreditationRequestIdentifier"/>
+            </correlationSets>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+<!-- Receive input from requestor. (Note: This maps to operation defined in AirportAccreditationRequestProcessor.wsdl) -->
+        <receive name="receiveInput" partnerLink="AirportAccreditationService"
+                 portType="ns1:AirportAccreditationService" operation="requestAirportAccreditation" variable="inputVariable" createInstance="yes"/>
+        <assign name="initialization">
+            <copy>
+                <from>concat( xp20:current-dateTime(),':' ,oraext:generate-guid())</from>
+                <to>$AirportAccreditationRequestIdentifier</to>
+            </copy>
+        </assign>
+        <scope name="SynchronousInitialization">
+            <variables>
+                <variable name="ReplyFault_requestAirportAccreditation_OutputVariable"
+                          messageType="ns1:requestForAirportAccreditationResponseMessage"/>
+            </variables>
+            <faultHandlers>
+                <catch bpelx:name="handleOrganizationNotFound" faultName="ns12:requestingOrganizationNotFound" faultVariable="organizationNotFoundVariable"
+                       faultMessageType="ns1:requestForAirportAccreditationFaultMessage">
+                    <sequence name="Sequence19">
+                        <reply name="ReplyFault" faultName="ns1:invalidAccreditationRequest"
+                               variable="organizationNotFoundVariable"
+                               partnerLink="AirportAccreditationService" portType="ns1:AirportAccreditationService"
+                               operation="requestAirportAccreditation"/>
+                        <exit name="TerminateProcessDueToUnknownRequestingOrganization"/>
+                    </sequence>
+                </catch>
+                <catch bpelx:name="handleRequestingUserNotFound" faultName="ns12:RequestorNotFound" faultVariable="requestorNotFoundVariable"
+                       faultMessageType="ns1:requestForAirportAccreditationFaultMessage">
+                    <sequence name="Sequence19b">
+                        <reply name="ReplyFault" faultName="ns1:invalidAccreditationRequest"
+                               variable="requestorNotFoundVariable"
+                               partnerLink="AirportAccreditationService" portType="ns1:AirportAccreditationService"
+                               operation="requestAirportAccreditation"/>
+                        <exit name="TerminateProcessDueToUnknownRequestingUser"/>
+                    </sequence>
+                </catch>
+            </faultHandlers>
+            <sequence>
+                <scope name="ValidateRequest">
+                    <empty name="Empty16"/>
+                </scope>
+                <scope name="RetrieveRequestorAndCompany">
+                    <variables>
+                        <variable name="RetrieveRequestor_getUser_InputVariable"
+                                  messageType="ns2:getUserRequestMessage"/>
+                        <variable name="RetrieveRequestor_getUser_OutputVariable"
+                                  messageType="ns2:getUserResponseMessage"/>
+                        <variable name="RetrieveCompany_getOrganization_InputVariable"
+                                  messageType="ns2:getOrganizationRequestMessage"/>
+                        <variable name="RetrieveCompany_getOrganization_OutputVariable"
+                                  messageType="ns2:getOrganizationResponseMessage"/>
+                        <variable name="faultVariable" messageType="ns1:requestForAirportAccreditationFaultMessage"/>
+                    </variables>
+                    <sequence name="Sequence4">
+                        <assign name="AssignRequestorUserId">
+                            <copy>
+                                <from>$inputVariable.part1/ns1:RequestorId</from>
+                                <to>$RetrieveRequestor_getUser_InputVariable.part1/ns2:UserId</to>
+                            </copy>
+                        </assign>
+                        <invoke name="RetrieveRequestor" bpelx:invokeAsDetail="no"
+                                partnerLink="LDAPMediator.LDAPMediator" portType="ns2:LdapService" operation="getUser"
+                                inputVariable="RetrieveRequestor_getUser_InputVariable"
+                                outputVariable="RetrieveRequestor_getUser_OutputVariable"/>
+                        <if name="IfUserNotFound">
+                            <documentation>
+                                <![CDATA[requestor not found]]>
+                            </documentation>
+                            <condition>string-length($RetrieveRequestor_getUser_OutputVariable.part1/ns2:EmployeeNumber)=0</condition>
+                            <sequence name="Sequence18">
+                                <assign name="SetFaultVariable">
+                                    <copy>
+                                        <from>concat("Requesting user could not be found ",$inputVariable.part1/ns1:RequestorId)</from>
+                                        <to>$faultVariable.part1/ns1:FaultDescription</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:RequestorId</from>
+                                        <to>$faultVariable.part1/ns1:RequestorId</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:RequestingOrganizationId</from>
+                                        <to>$faultVariable.part1/ns1:RequestingOrganizationId</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmployeeNumber</from>
+                                        <to>$faultVariable.part1/ns1:EmployeeNumber</to>
+                                    </copy>
+                                </assign>
+                                <throw name="ThrowRequestorNotFound" faultName="ns12:RequestorNotFound"
+                                       faultVariable="faultVariable"/>
+                            </sequence>
+                            <else>
+                                <empty name="Empty23"/>
+                            </else>
+                        </if>
+                        <assign name="AssignCompanyId">
+                            <copy>
+                                <from>$inputVariable.part1/ns1:RequestingOrganizationId</from>
+                                <to>$RetrieveCompany_getOrganization_InputVariable.part1/ns2:OrganizationId</to>
+                            </copy>
+                        </assign>
+                        <invoke name="RetrieveCompany" bpelx:invokeAsDetail="no" partnerLink="LDAPMediator.LDAPMediator"
+                                portType="ns2:LdapService" operation="getOrganization"
+                                inputVariable="RetrieveCompany_getOrganization_InputVariable"
+                                outputVariable="RetrieveCompany_getOrganization_OutputVariable"/>
+                        <if name="IfCompanyNotFound">
+                            <condition>string-length($RetrieveCompany_getOrganization_OutputVariable.part1/ns2:SaibotAirportSecurity)=0</condition>
+                            <sequence name="Sequence17">
+                                <assign name="SetFaultVariable">
+                                    <copy>
+                                        <from>concat("Company could not be found ",$inputVariable.part1/ns1:RequestingOrganizationId)</from>
+                                        <to>$faultVariable.part1/ns1:FaultDescription</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:RequestingOrganizationId</from>
+                                        <to>$faultVariable.part1/ns1:RequestingOrganizationId</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:RequestorId</from>
+                                        <to>$faultVariable.part1/ns1:RequestorId</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmployeeNumber</from>
+                                        <to>$faultVariable.part1/ns1:EmployeeNumber</to>
+                                    </copy>
+                                </assign>
+                                <throw name="ThrowRequestingOrganizationNotFound"
+                                       faultName="ns12:requestingOrganizationNotFound" faultVariable="faultVariable"/>
+                            </sequence>
+                            <else>
+                                <documentation>
+                                    <![CDATA[CompanyIsFound]]>
+                                </documentation>
+                                <empty name="Empty24"/>
+                            </else>
+                        </if>
+                        <assign name="SetProcessStatusLdapRetrieved"
+                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <copy>
+                                <from>'requestor and company retrieved from LDAP'</from>
+                                <to>$globalProcessStatus</to>
+                            </copy>
+                        </assign>
+                        <assign name="UpdateProcessState">
+                            <copy ignoreMissingFromData="yes">
+                                <from>$RetrieveRequestor_getUser_OutputVariable.part1/ns2:EmailAddress</from>
+                                <to>$globalProcessState/ns1:RequestorEmailId</to>
+                            </copy>
+                            <copy>
+                                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmployeeNumber</from>
+                                <to>$globalProcessState/ns1:EmployeeNumber</to>
+                            </copy>
+                            <copy ignoreMissingFromData="yes">
+                                <from>$RetrieveRequestor_getUser_OutputVariable.part1/ns2:SaibotAirportSecurity</from>
+                                <to>$globalProcessState/ns1:RequestorSASEC</to>
+                            </copy>
+                            <copy>
+                                <from>$inputVariable.part1/ns1:RequestorId</from>
+                                <to>$globalProcessState/ns1:RequestorId</to>
+                            </copy>
+                            <copy>
+                                <from>$inputVariable.part1/ns1:RequestingOrganizationId</from>
+                                <to>$globalProcessState/ns1:RequestingOrganizationId</to>
+                            </copy>
+                            <copy ignoreMissingFromData="yes">
+                                <from>$RetrieveCompany_getOrganization_OutputVariable.part1/ns2:SaibotAirportSecurity</from>
+                                <to>$globalProcessState/ns1:CompanySASEC</to>
+                            </copy>
+                        </assign>
+                    </sequence>
+                </scope>
+                <scope name="ReturnSynchronousResponse">
+                    <variables>
+                        <variable name="SynchronousReply_requestAirportAccreditation_OutputVariable"
+                                  messageType="ns1:requestForAirportAccreditationResponseMessage"/>
+                    </variables>
+                    <sequence name="Sequence5">
+                        <assign name="SetProcessStatusSynchReplied"
+                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+                            <copy>
+                                <from>'synchronous response was sent'</from>
+                                <to>$globalProcessStatus</to>
+                            </copy>
+                        </assign>
+                        <assign name="AssignSynchronousOutput">
+                            <copy>
+                                <from>$AirportAccreditationRequestIdentifier</from>
+                                <to>$SynchronousReply_requestAirportAccreditation_OutputVariable.part1/ns1:AirportAccreditationRequestIdentifier</to>
+                            </copy>
+                            <copy>
+                                <from>$inputVariable.part1/ns1:RequestingOrganizationId</from>
+                                <to>$SynchronousReply_requestAirportAccreditation_OutputVariable.part1/ns1:RequestingOrganizationId</to>
+                            </copy>
+                            <copy>
+                                <from>$inputVariable.part1/ns1:RequestorId</from>
+                                <to>$SynchronousReply_requestAirportAccreditation_OutputVariable.part1/ns1:RequestorId</to>
+                            </copy>
+                            <copy>
+                                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmployeeNumber</from>
+                                <to>$SynchronousReply_requestAirportAccreditation_OutputVariable.part1/ns1:EmployeeNumber</to>
+                            </copy>
+                        </assign>
+                        <reply name="SynchronousReply"
+                               variable="SynchronousReply_requestAirportAccreditation_OutputVariable"
+                               partnerLink="AirportAccreditationService" portType="ns1:AirportAccreditationService"
+                               operation="requestAirportAccreditation">
+                            <correlations>
+                                <correlation set="AirportAccreditationRequestSet" initiate="yes"/>
+                            </correlations>
+                        </reply>
+                    </sequence>
+                </scope>
+            </sequence>
+        </scope>
+        <scope name="AirportSecurityAccreditationProcess">
+            <faultHandlers>
+                <catch faultName="ns12:ExitProcess">
+                    <sequence>
+                      <compensateScope name="CompensateScopeRegistration" target="Registration"/>
+                      <exit name="Exit1"/>
+                    </sequence>
+                </catch>
+            </faultHandlers>
+            <eventHandlers>
+                <onEvent partnerLink="AirportAccreditationService"
+                         operation="retrieveStatusOfAirportAccreditationRequest"
+                         portType="ns1:AirportAccreditationService" variable="retrieveStatusRequest"
+                         element="ns1:RetrieveStatusOfAirportAccreditationRequestRequest">
+                    <correlations>
+                        <correlation set="AirportAccreditationRequestSet" initiate="no"/>
+                    </correlations>
+                    <scope name="ReplyToStatusRequest">
+                        <variables>
+                            <variable name="ReplyWithCurrentStatus_retrieveStatusOfAirportAccreditationRequest_OutputVariable"
+                                      messageType="ns1:retrieveStatusOfAirportAccreditationRequestResponseMessage"/>
+                        </variables>
+                        <sequence name="Sequence15">
+                            <assign name="AssignStatus">
+                                <copy>
+                                    <from>$retrieveStatusRequest/ns1:AirportAccreditationRequestIdentifier</from>
+                                    <to>$ReplyWithCurrentStatus_retrieveStatusOfAirportAccreditationRequest_OutputVariable.part1/ns1:AirportAccreditationRequestIdentifier</to>
+                                </copy>
+                                <copy>
+                                    <from>$globalProcessStatus</from>
+                                    <to>$ReplyWithCurrentStatus_retrieveStatusOfAirportAccreditationRequest_OutputVariable.part1/ns1:ProcessStatus</to>
+                                </copy>
+                                <copy>
+                                    <from>$globalProcessState/ns1:EmployeeNumber</from>
+                                    <to>$ReplyWithCurrentStatus_retrieveStatusOfAirportAccreditationRequest_OutputVariable.part1/ns1:EmployeeNumber</to>
+                                </copy>
+                                <copy>
+                                    <from>$globalProcessState/ns1:RequestorId</from>
+                                    <to>$ReplyWithCurrentStatus_retrieveStatusOfAirportAccreditationRequest_OutputVariable.part1/ns1:RequestorId</to>
+                                </copy>
+                            </assign>
+                            <reply name="ReplyWithCurrentStatus"
+                                   variable="ReplyWithCurrentStatus_retrieveStatusOfAirportAccreditationRequest_OutputVariable"
+                                   partnerLink="AirportAccreditationService"
+                                   portType="ns1:AirportAccreditationService"
+                                   operation="retrieveStatusOfAirportAccreditationRequest"/>
+                        </sequence>
+                    </scope>
+                </onEvent>
+                <onEvent bpelx:name="RequestToCancel" partnerLink="AirportAccreditationService"
+                         operation="cancelRequestForAirportAccreditation" portType="ns1:AirportAccreditationService"
+                         variable="cancelRequest" element="ns1:CancelRequestForAirportAccreditationRequest">
+                    <correlations>
+                        <correlation set="AirportAccreditationRequestSet" initiate="no"/>
+                    </correlations>
+                    <scope name="HandleCancelRequest">
+                        <variables>
+                            <variable name="ReplyToCancellationRequest_cancelRequestForAirportAccreditation_OutputVariable"
+                                      messageType="ns1:cancelRequestForAirportAccreditationResponseMessage"/>
+                        </variables>
+                        <sequence name="Sequence16">
+                            <assign name="AssignResponse">
+                                <copy>
+                                    <from>$globalProcessState/ns1:EmployeeNumber</from>
+                                    <to>$ReplyToCancellationRequest_cancelRequestForAirportAccreditation_OutputVariable.part1/ns1:EmployeeNumber</to>
+                                </copy>
+                                <copy>
+                                    <from>$AirportAccreditationRequestIdentifier</from>
+                                    <to>$ReplyToCancellationRequest_cancelRequestForAirportAccreditation_OutputVariable.part1/ns1:AirportAccreditationRequestIdentifier</to>
+                                </copy>
+                                <copy>
+                                    <from>$globalProcessState/ns1:RequestorId</from>
+                                    <to>$ReplyToCancellationRequest_cancelRequestForAirportAccreditation_OutputVariable.part1/ns1:RequestorId</to>
+                                </copy>
+                                <copy>
+                                    <from>concat("Accreditation Request was cancelled while at status ",$globalProcessStatus)</from>
+                                    <to>$ReplyToCancellationRequest_cancelRequestForAirportAccreditation_OutputVariable.part1/ns1:CancellationStatus</to>
+                                </copy>
+                            </assign>
+                            <reply name="ReplyToCancellationRequest"
+                                   variable="ReplyToCancellationRequest_cancelRequestForAirportAccreditation_OutputVariable"
+                                   partnerLink="AirportAccreditationService"
+                                   portType="ns1:AirportAccreditationService"
+                                   operation="cancelRequestForAirportAccreditation"/>
+                            <throw name="ThrowExitProcess" faultName="ns12:ExitProcess"/>
+                        </sequence>
+                    </scope>
+                </onEvent>
+            </eventHandlers>
+            <sequence>
+                <assign name="InitProcessStatus">
+                    <copy>
+                        <from>'initialized'</from>
+                        <to>$globalProcessStatus</to>
+                    </copy>
+                </assign>
+                <scope name="InitializationandValidation">
+                    <sequence name="Sequence3"><assign name="SetProcessStatusValidated"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <copy>
+         <from>'validation complete'</from>
+         <to>$globalProcessStatus</to>
+      </copy></assign>
+                    </sequence>
+                </scope>
+                <scope name="SecurityChecks">
+                    <variables>
+                        <variable name="NationalSecurityCheckResult" type="xsd:string"/>
+                        <variable name="DoThoroughBackgroundCheck" type="xsd:boolean"/>
+                        <variable name="ScrutinyLevel" type="xsd:int"/>
+                    </variables>
+                    <sequence>
+                        <flow name="PerformSecurityChecks">
+                            <sequence name="RandomThoroughCheck">
+                                <scope name="DetermineIfDoRandom">
+                                    <variables>
+                                        <variable name="DecisionNumber" type="xsd:int"/>
+                                    </variables>
+                                    <sequence name="Sequence8">
+                                  
+       
+                                    <extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+     
+      <bpelx:exec name="GenerateDecisionNumber" xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <![CDATA[// Generate random number from java
+try {
+        java.util.Random random = new java.util.Random();
+        int randInt = random.nextInt(100);
+        setVariableData("DecisionNumber", randInt);       
+ 
+}
+// end Generate random number from java
+catch(Exception e){}]]>
+      </bpelx:exec>
+   </extensionActivity>
+                                        <assign name="AssignDoThoroughBackgroundCheck">
+                                            <copy>
+                                                <from>$DecisionNumber &gt;95</from>
+                                                <to>$DoThoroughBackgroundCheck</to>
+                                            </copy>
+                                        </assign>
+                                    </sequence></scope>
+                                <if name="IfDoRandom">
+                                    <condition>$DoThoroughBackgroundCheck</condition>
+                                    <scope name="DoThoroughBackgroundCheck">
+                                        <variables>
+                                            <variable name="InvokeThoroughBackgroundCheck_process_InputVariable"
+                                                      messageType="ns4:ThoroughBackgroundCheckRequestMessage"/>
+                                            <variable name="ReceiveOutcomeThoroughBackgroundCheck_processResponse_InputVariable"
+                                                      messageType="ns4:ThoroughBackgroundCheckResponseMessage"/>
+                                        </variables>
+                                        <sequence name="Sequence7">
+                                            <invoke name="InvokeThoroughBackgroundCheck" bpelx:invokeAsDetail="no"
+                                                    partnerLink="ThoroughBackgroundCheck.thoroughbackgroundcheck_client"
+                                                    portType="ns4:ThoroughBackgroundCheck" operation="process"
+                                                    inputVariable="InvokeThoroughBackgroundCheck_process_InputVariable"/>
+                                            <empty name="Empty10"/>
+                                            <receive name="ReceiveOutcomeThoroughBackgroundCheck"
+                                                     partnerLink="ThoroughBackgroundCheck.thoroughbackgroundcheck_client"
+                                                     portType="ns4:ThoroughBackgroundCheckCallback"
+                                                     operation="processResponse"
+                                                     variable="ReceiveOutcomeThoroughBackgroundCheck_processResponse_InputVariable"/>
+                                        </sequence>
+                                    </scope>
+                                    <else>
+                                        <empty name="DoNothing"/>
+                                    </else>
+                                </if>
+                            </sequence>
+                            <sequence name="NationalSecurityCheck">
+                                <assign name="InitializeOutcome">
+                                    <copy>
+                                        <from>'Unclear'</from>
+                                        <to>$NationalSecurityCheckResult</to>
+                                    </copy>
+                                </assign>
+                                <while name="WhileNotClear">
+                                    <condition>$NationalSecurityCheckResult = 'Unclear'</condition>
+                                    <sequence>
+                                        <scope name="RequestNationalSecurityCheck">
+                                            <variables>
+                                                <variable name="InvokeNationalSecurityRequestService_process_InputVariable"
+                                                          messageType="ns3:NationalSecurityCheckServiceRequestMessage"/>
+                                                <variable name="ReceiveNationalSecurityCheckOutcome_processResponse_InputVariable"
+                                                          messageType="ns3:NationalSecurityCheckServiceResponseMessage"/>
+                                            </variables>
+                                            <sequence name="Sequence6">
+                                                <assign name="PrepareNationalSecurityCheck">
+                                                    <copy>
+                                                        <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmployeeNumber</from>
+                                                        <to>$InvokeNationalSecurityRequestService_process_InputVariable.payload/ns3:input</to>
+                                                    </copy>
+                                                </assign>
+                                                <invoke name="InvokeNationalSecurityRequestService"
+                                                        bpelx:invokeAsDetail="no"
+                                                        partnerLink="NationalSecurityCheckService.NationalSecurityCheckService"
+                                                        portType="ns3:NationalSecurityCheckService"
+                                                        operation="process"
+                                                        inputVariable="InvokeNationalSecurityRequestService_process_InputVariable"/>
+                                                <receive name="ReceiveNationalSecurityCheckOutcome"
+                                                         partnerLink="NationalSecurityCheckService.NationalSecurityCheckService"
+                                                         portType="ns3:NationalSecurityCheckServiceCallback"
+                                                         operation="processResponse"
+                                                         variable="ReceiveNationalSecurityCheckOutcome_processResponse_InputVariable"/>
+                                                <assign name="SetNationalSecurityCheckResult">
+                                                    <copy>
+                                                        <from>$ReceiveNationalSecurityCheckOutcome_processResponse_InputVariable.payload/ns3:result</from>
+                                                        <to>$NationalSecurityCheckResult</to>
+                                                    </copy>
+                                                </assign>
+                                            </sequence>
+                                        </scope>
+                                        <if name="IfOutCome">
+                                            <documentation>
+                                                <![CDATA[OK]]>
+                                            </documentation>
+                                            <condition>$NationalSecurityCheckResult='OK'</condition>
+                                            <empty name="Empty8"/>
+                                            <elseif>
+                                                <documentation>
+                                                    <![CDATA[NOK]]>
+                                                </documentation>
+                                                <condition>$NationalSecurityCheckResult='NOTOK'</condition>
+                                                <empty name="Empty7"/>
+                                            </elseif>
+                                            <else>
+                                                <documentation>
+                                                    <![CDATA[Unclear]]>
+                                                </documentation>
+                                                <scope name="Discuss">
+                                                    <sequence name="Sequence10">
+                                                        <empty name="Empty9"/>
+                                                        <scope name="DiscussNationalSecurityCheckRequest1"
+                                                               xmlns:wf="http://schemas.oracle.com/bpel/extensions/workflow"
+                                                               wf:key="DiscussNationalSecurityCheckRequest1_globalVariable">
+                                                            <bpelx:annotation>
+                                                                <bpelx:pattern patternName="bpelx:workflow"></bpelx:pattern>
+                                                            </bpelx:annotation>
+                                                            <variables>
+                                                                <variable name="initiateTaskInput"
+                                                                          messageType="taskservice:initiateTaskMessage"/>
+                                                                <variable name="initiateTaskResponseMessage"
+                                                                          messageType="taskservice:initiateTaskResponseMessage"/>
+                                                            </variables>
+                                                            <sequence>
+                                                                <assign name="DiscussNationalSecurityCheckRequest1_AssignTaskAttributes">
+                                                                    <copy>
+                                                                        <from>concat(string('Discuss national security check for '), concat($inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName, ' ', $inputVariable.part1/ns1:StaffMemberToAccredit/ns1:LastName,' SSN: ', $inputVariable.part1/ns1:StaffMemberToAccredit/ns1:IdentityDetails/ns1:SocialSecurityNumber), string(' - currently deemed unclear'))</from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:title</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from>number(3)</from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:priority</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from><literal><payload xmlns="http://xmlns.oracle.com/bpel/workflow/task">
+ <SubjectToCheck xmlns="http://xmlns.oracle.com/bpel/workflow/task"/>
+</payload></literal></from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from variable="inputVariable" part="part1"><query>ns1:StaffMemberToAccredit</query></from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/task:SubjectToCheck</query></to>
+                                                                    </copy>
+                                                                </assign>
+                                                                <invoke name="initiateTask_DiscussNationalSecurityCheckRequest1"
+                                                                        partnerLink="DiscussNationalSecurityCheckRequest.TaskService_1"
+                                                                        operation="initiateTask"
+                                                                        portType="taskservice:TaskService"
+                                                                        inputVariable="initiateTaskInput"
+                                                                        outputVariable="initiateTaskResponseMessage"/>
+                                                                <receive name="receiveCompletedTask_DiscussNationalSecurityCheckRequest1"
+                                                                         partnerLink="DiscussNationalSecurityCheckRequest.TaskService_1"
+                                                                         portType="taskservice:TaskServiceCallback"
+                                                                         operation="onTaskCompleted"
+                                                                         variable="DiscussNationalSecurityCheckRequest1_globalVariable"
+                                                                         createInstance="no"/>
+                                                            </sequence>
+                                                        </scope>
+                                                        <if name="taskIf">
+                                                            <documentation>
+                                                                <![CDATA[Task outcome is OK]]>
+                                                            </documentation>
+                                                            <condition>$DiscussNationalSecurityCheckRequest1_globalVariable.payload/task:systemAttributes/task:outcome = 'OK'</condition>
+                                                            <sequence>
+                                                                <assign name="CopyPayloadFromTask">
+                                                                    <copy>
+                                                                        <from variable="DiscussNationalSecurityCheckRequest1_globalVariable"
+                                                                              part="payload"><query>task:payload/task:SubjectToCheck</query></from>
+                                                                        <to variable="inputVariable" part="part1"><query>ns1:StaffMemberToAccredit</query></to>
+                                                                    </copy>
+                                                                </assign>
+                                                            </sequence>
+                                                            <else>
+                                                                <sequence>
+                                                                    <assign name="CopyPayloadFromTask">
+                                                                        <copy>
+                                                                            <from variable="DiscussNationalSecurityCheckRequest1_globalVariable"
+                                                                                  part="payload"><query>task:payload/task:SubjectToCheck</query></from>
+                                                                            <to variable="inputVariable" part="part1"><query>ns1:StaffMemberToAccredit</query></to>
+                                                                        </copy>
+                                                                    </assign>
+                                                                </sequence>
+                                                            </else>
+                                                        </if>
+                                                    </sequence>
+                                                </scope>
+                                            </else>
+                                        </if>
+                                    </sequence>
+                                </while>
+                            </sequence>
+                            <sequence name="InternalScreening">
+                                <scope name="DetermineScreeningIntensity">
+                                    <variables>
+                                        <variable name="decideInternalScreeningLevelInput"
+                                                  element="ns1:DecideInternalScreeningLevelInput"/>
+                                        <variable name="decideInternalScreeningLevelOutput"
+                                                  element="ns1:DecideInternalScreeningLevelOutput"/>
+                                    </variables>
+                                    <sequence name="Sequence11">
+                                        <assign name="SetDecideInternalScreeningLevelInput">
+                                            <copy>
+                                                <from>$inputVariable.part1/ns1:RequiredSecurityLevel</from>
+                                                <to>$decideInternalScreeningLevelInput/ns1:RequiredSecurityLevel</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$globalProcessState/ns1:RequestorSASEC</from>
+                                                <to>$decideInternalScreeningLevelInput/ns1:RequestorSASECLevel</to>
+                                            </copy>
+                                            <copy>
+                                                <from>number(substring($globalProcessState/ns1:RequestorSASEC,7,1))</from>
+                                                <to>$decideInternalScreeningLevelInput/ns1:RequestorSASECLevel</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$globalProcessState/ns1:CompanySASEC</from>
+                                                <to>$decideInternalScreeningLevelInput/ns1:RequestingOrganizationSASECLevel</to>
+                                            </copy>
+                                            <copy>
+                                                <from>number(substring($globalProcessState/ns1:CompanySASEC,7,1))</from>
+                                                <to>$decideInternalScreeningLevelInput/ns1:RequestingOrganizationSASECLevel</to>
+                                            </copy>
+                                        </assign>
+
+                                        <scope name="DecideOnScrutinyLevel2">
+                                            <bpelx:annotation>
+                                                <bpelx:pattern patternName="bpelx:decide"></bpelx:pattern>
+                                            </bpelx:annotation>
+                                            <variables>
+                                                <variable name="dsIn" messageType="ns11:callFunctionStatelessMessage"/>
+                                                <variable name="dsOut"
+                                                          messageType="ns11:callFunctionStatelessDecisionMessage"/>
+                                            </variables>
+                                            <sequence name="Sequence14">
+                                                <assign name="Facts_To_Rule_Service">                                                    <copy>
+                                                        <from>$decideInternalScreeningLevelInput</from>
+                                                        <to>$dsIn.payload/ns11:parameterList/ns1:DecideInternalScreeningLevelInput</to>
+                                                    </copy>
+</assign>
+                                                <assign name="BPEL_Header">
+                                                    <copy>
+                                                        <from>"InternalSecurityScreeningEvaluation_DecisionService"</from>
+                                                        <to variable="dsIn" part="payload"><query>@name</query></to>
+                                                    </copy>
+                                                </assign>
+                                                <invoke name="Invoke"
+                                                        partnerLink="InternalSecurityScreeningEvaluation.InternalSecurityScreeningEvaluation_DecisionService"
+                                                        portType="ns11:IDecisionService"
+                                                        operation="callFunctionStateless" inputVariable="dsIn"
+                                                        outputVariable="dsOut"/>
+                                                <assign name="Rule_Service_To_Facts">  <copy>
+                                                        <from variable="dsOut" part="payload"><query>ns11:resultList/ns1:DecideInternalScreeningLevelOutput</query></from>
+                                                        <to variable="decideInternalScreeningLevelOutput"/>
+                                                    </copy></assign>
+                                            </sequence>
+                                        </scope>
+                                        <assign name="SetScrutinyLevel">
+                                            <copy>
+                                                <from>$decideInternalScreeningLevelOutput/ns1:InternalScrutinyLevel</from>
+                                                <to>$ScrutinyLevel</to>
+                                            </copy>
+                                        </assign>
+                                    </sequence>
+                                </scope>
+                                <flow name="Flow2">
+                                    <sequence name="Sequence">
+                                        <scope name="AutomatedEvaluation">
+                                            <empty name="Empty11"/>
+                                        </scope>
+                                    </sequence>
+                                    <sequence name="Sequence1">
+                                        <if name="IfAutomatedProcessing">
+                                            <condition>$ScrutinyLevel=0</condition>
+                                            <empty name="DoNothing"/>
+                                            <else>
+                                                <documentation>
+                                                    <![CDATA[manualEvaluation]]>
+                                                </documentation>
+                                                <scope name="ManualRequestScreening">
+                                                    <sequence name="Sequence12">
+                                                        <scope name="ManualScreeningOfSecurityAccreditationRequest1"
+                                                               xmlns:wf="http://schemas.oracle.com/bpel/extensions/workflow"
+                                                               wf:key="ManualScreeningOfSecurityAccreditationRequest1_globalVariable">
+                                                            <bpelx:annotation>
+                                                                <bpelx:pattern patternName="bpelx:workflow"></bpelx:pattern>
+                                                            </bpelx:annotation>
+                                                            <variables>
+                                                                <variable name="initiateTaskInput"
+                                                                          messageType="taskservice:initiateTaskMessage"/>
+                                                                <variable name="initiateTaskResponseMessage"
+                                                                          messageType="taskservice:initiateTaskResponseMessage"/>
+                                                            </variables>
+                                                            <sequence>
+                                                                <assign name="ManualScreeningOfSecurityAccreditationRequest1_AssignTaskAttributes">
+                                                                    <copy>
+                                                                        <from>number(3)</from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:priority</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from><literal><payload xmlns="http://xmlns.oracle.com/bpel/workflow/task">
+ <SecurityAccreditationRequest xmlns="http://xmlns.oracle.com/bpel/workflow/task"/>
+ <RequestorSaibotSecurityLevel xmlns="http://xmlns.oracle.com/bpel/workflow/task"/>
+ <CompanySaibotSecurityLevel xmlns="http://xmlns.oracle.com/bpel/workflow/task"/>
+ <ScrutinyLevel xmlns="http://xmlns.oracle.com/bpel/workflow/task"/>
+</payload></literal></from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from variable="inputVariable" part="part1"/>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/task:SecurityAccreditationRequest</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from variable="globalProcessState"><query>ns1:RequestorSASEC</query></from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/task:RequestorSaibotSecurityLevel</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from variable="globalProcessState"><query>ns1:CompanySASEC</query></from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/task:CompanySaibotSecurityLevel</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from variable="ScrutinyLevel"/>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:payload/task:ScrutinyLevel</query></to>
+                                                                    </copy>
+                                                                    <copy>
+                                                                        <from>concat(string('Perform Manual Security Screening for '), $inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName)</from>
+                                                                        <to variable="initiateTaskInput" part="payload"><query>task:task/task:title</query></to>
+                                                                    </copy>
+                                                                </assign>
+                                                                <invoke name="initiateTask_ManualScreeningOfSecurityAccreditationRequest1"
+                                                                        partnerLink="ManualScreeningOfSecurityAccreditationRequest.TaskService_1"
+                                                                        operation="initiateTask"
+                                                                        portType="taskservice:TaskService"
+                                                                        inputVariable="initiateTaskInput"
+                                                                        outputVariable="initiateTaskResponseMessage"/>
+                                                                <receive name="receiveCompletedTask_ManualScreeningOfSecurityAccreditationRequest1"
+                                                                         partnerLink="ManualScreeningOfSecurityAccreditationRequest.TaskService_1"
+                                                                         portType="taskservice:TaskServiceCallback"
+                                                                         operation="onTaskCompleted"
+                                                                         variable="ManualScreeningOfSecurityAccreditationRequest1_globalVariable"
+                                                                         createInstance="no"/>
+                                                            </sequence>
+                                                        </scope>
+                                                        <if name="taskIf">
+                                                            <documentation>
+                                                                <![CDATA[Task outcome is APPROVE]]>
+                                                            </documentation>
+                                                            <condition>$ManualScreeningOfSecurityAccreditationRequest1_globalVariable.payload/task:systemAttributes/task:outcome = 'APPROVE'</condition>
+                                                            <sequence>
+                                                                <empty name="Empty20"/>
+                                                            </sequence>
+                                                            <elseif>
+                                                                <documentation>
+                                                                    <![CDATA[Task outcome is REJECT]]>
+                                                                </documentation>
+                                                                <condition>$ManualScreeningOfSecurityAccreditationRequest1_globalVariable.payload/task:systemAttributes/task:outcome = 'REJECT'</condition><sequence xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <empty name="Empty21"/></sequence></elseif>
+                                                            <else>
+                                                                <sequence>
+                                                                    <empty name="Empty22"/>
+                                                                </sequence>
+                                                            </else>
+                                                        </if>
+                                                    </sequence>
+                                                </scope>
+                                            </else>
+                                        </if>
+                                    </sequence>
+                                </flow>
+                            </sequence>
+                        </flow>
+                    </sequence>
+                </scope><assign name="SetProcessStatusChecksComplete"
+                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <copy>
+         <from>'security checks are complete'</from>
+         <to>$globalProcessStatus</to>
+      </copy></assign><scope name="Registration">
+                    <variables>
+                        <variable name="InvokeAddUser_addUser_InputVariable" messageType="ns2:addUserRequestMessage"/>
+                        <variable name="InvokePersonnelService_process_InputVariable"
+                                  messageType="ns5:PersonnelServiceRequestMessage"/>
+                        <variable name="InvokePersonnelService_process_OutputVariable"
+                                  messageType="ns5:PersonnelServiceResponseMessage"/>
+                        <variable name="RequestBadgePreparation_process_InputVariable"
+                                  messageType="ns6:BadgeServiceRequestMessage"/>
+                        <variable name="ReceiveBadgePreparationResponse_processResponse_InputVariable"
+                                  messageType="ns6:BadgeServiceResponseMessage"/>
+                        <variable name="PublishEDNEvent_InputVariable" element="ns1:NewStaffMemberAnnouncement"/>
+                    </variables>
+                    <compensationHandler>
+                        <compensateScope name="CompensateScopeRecordInLDAP" target="ScopeRecordInLDAP"/>
+                    </compensationHandler>
+                    <sequence name="Sequence2">
+                        <flow name="Registration">
+                            <sequence name="RecordInLDAP">
+                                <scope name="ScopeRecordInLDAP">
+                                    <variables>
+                                        <variable name="Invoke1_removeUser_InputVariable"
+                                                  messageType="ns2:removeUserRequestMessage"/>
+                                    </variables>
+                                    <compensationHandler>
+                                        <sequence name="Sequence21">
+                                            <assign name="AssignUserId">
+                                                <copy>
+                                                    <from>concat($inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName,'.',$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:LastName)</from>
+                                                    <to>$Invoke1_removeUser_InputVariable.part1/ns2:UserId</to>
+                                                </copy>
+                                            </assign>
+                                            <invoke name="UndoUserAccountRegistration" bpelx:invokeAsDetail="no"
+                                                    partnerLink="LDAPMediator.LDAPMediator" portType="ns2:LdapService"
+                                                    operation="removeUser"
+                                                    inputVariable="Invoke1_removeUser_InputVariable"/>
+                                        </sequence>
+                                    </compensationHandler>
+                                    <sequence>
+                                        <assign name="PrepareAddUserInput">
+                                            <copy>
+                                                <from>concat($inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName,'.',$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:LastName)</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:UserId</to>
+                                            </copy>
+                                            <copy>
+                                                <from>'SASEC=0'</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:SaibotAirportSecurity</to>
+                                            </copy>
+                                            <copy>
+                                                <from>concat($inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName,' ',$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:LastName)</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:GivenName</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmailAddress</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:EmailAddress</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmployeeNumber</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:EmployeeNumber</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:ManagerId</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:ManagerId</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:MobileTelephone</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:MobileTelephone</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$inputVariable.part1/ns1:RequestingOrganizationId</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:OrganizationId</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FunctionTitle</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:FunctionTitle</to>
+                                            </copy>
+                                            <copy>
+                                                <from>concat('Welcome',$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName,'123##')</from>
+                                                <to>$InvokeAddUser_addUser_InputVariable.part1/ns2:TemporaryPassword</to>
+                                            </copy>
+                                        </assign>
+                                        <invoke name="InvokeAddUser" bpelx:invokeAsDetail="no"
+                                                partnerLink="LDAPMediator.LDAPMediator" portType="ns2:LdapService"
+                                                operation="addUser"
+                                                inputVariable="InvokeAddUser_addUser_InputVariable"/>
+                                    </sequence>
+                                </scope>
+                            </sequence>
+                            <sequence name="RegisterWithPersonnelService">
+                                <assign name="SetInputToPersonnelService">
+                                    <copy>
+                                        <from>concat('Could you please register new staff member ', $globalProcessState/ns1:EmployeeNumber, ' for company ',$globalProcessState/ns1:RequestingOrganizationId)</from>
+                                        <to>$InvokePersonnelService_process_InputVariable.payload/ns5:input</to>
+                                    </copy>
+                                </assign>
+                                <invoke name="InvokePersonnelService" bpelx:invokeAsDetail="no"
+                                        partnerLink="PersonnelService.PersonnelService"
+                                        portType="ns5:PersonnelService" operation="process"
+                                        inputVariable="InvokePersonnelService_process_InputVariable"
+                                        outputVariable="InvokePersonnelService_process_OutputVariable"/>
+                            </sequence>
+                            <sequence name="PrepareBadge">
+                                <assign name="PrepareBadgePreparationRequest">
+                                    <copy>
+                                        <from>'please prepare badge for new staff member'</from>
+                                        <to>$RequestBadgePreparation_process_InputVariable.payload/ns6:input</to>
+                                    </copy>
+                                </assign>
+                                <invoke name="RequestBadgePreparation" bpelx:invokeAsDetail="no"
+                                        partnerLink="BadgeService.BadgeService" portType="ns6:BadgeService"
+                                        operation="process"
+                                        inputVariable="RequestBadgePreparation_process_InputVariable"/>
+                                <receive name="ReceiveBadgePreparationResponse"
+                                         partnerLink="BadgeService.BadgeService" portType="ns6:BadgeServiceCallback"
+                                         operation="processResponse"
+                                         variable="ReceiveBadgePreparationResponse_processResponse_InputVariable"/>
+                                <throw name="Throw1" faultName="ns13:SomeFault"/>
+                                <assign name="RetrieveBadgeId">
+                                    <copy>
+                                        <from>$ReceiveBadgePreparationResponse_processResponse_InputVariable.payload/ns6:badgeId</from>
+                                        <to>$globalProcessState/ns1:BadgeId</to>
+                                    </copy>
+                                </assign>
+                            </sequence>
+                        </flow><assign name="SetProcessStatusRegistrationDone"
+                                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <copy>
+         <from>'registration of new user complete'</from>
+         <to>$globalProcessStatus</to>
+      </copy></assign><flow name="Notification">
+                            <sequence name="PublishBusinessEventAboutNewStaffMember">
+                                <assign name="PrepareEventPayload">
+                                    <copy>
+                                        <from>$globalProcessState/ns1:RequestingOrganizationId</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:WorksForOrganizationId</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$globalProcessState/ns1:EmployeeNumber</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:EmployeeNumber</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$globalProcessState/ns1:BadgeId</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:BadgeId</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:RequiredSecurityLevel</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:SecurityLevel</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:StartDate</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:StartDate</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                        <from>$inputVariable.part1/ns1:EndDate</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:EndDate</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:FirstName</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:LastName</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:LastName</to>
+                                    </copy>
+                                    <copy ignoreMissingFromData="yes">
+                                        <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FunctionTitle</from>
+                                        <to>$PublishEDNEvent_InputVariable/ns1:FunctionTitle</to>
+                                    </copy>
+                                </assign>
+                                <invoke name="PublishEDNEvent" bpelx:invokeAsDetail="no"
+                                        bpelx:eventName="ns8:NewStaffMemberAnnouncement"
+                                        inputVariable="PublishEDNEvent_InputVariable"/>
+                            </sequence>
+                            <sequence name="NotifyNewStaffMember">
+                                <scope name="SendEmailToNewStaffMember">
+                                    <bpelx:annotation>
+                                        <bpelx:pattern patternName="bpelx:email"></bpelx:pattern>
+                                    </bpelx:annotation>
+                                    <variables>
+                                        <variable name="varNotificationReq" messageType="ns7:EmailNotificationRequest"/>
+                                        <variable name="varNotificationResponse" messageType="ns7:ArrayOfResponse"/>
+                                        <variable name="NotificationServiceFaultVariable"
+                                                  messageType="ns7:NotificationServiceErrorMessage"/>
+                                    </variables>
+                                    <sequence name="Sequence9">
+                                        <assign name="EmailParamsAssign">
+                                            <copy>
+                                                <from>string('Default')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:FromAccountName</query></to>
+                                            </copy>
+                                            <copy>
+                                                <from>string('')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Bcc</query></to>
+                                            </copy>
+                                            <copy>
+                                                <from>string('')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Cc</query></to>
+                                            </copy>
+                                            <copy>
+                                                <from>string('')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:ReplyToAddress</query></to>
+                                            </copy>
+                                            <copy>
+                                                <from>string('Welcome at Saibot Airport')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Subject</query></to>
+                                            </copy>
+                                            <copy>
+                                                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmailAddress</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:To</query></to>
+                                            </copy>
+                                            <copy>
+                                                <from>concat( 'Dear ', $inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName,' ',$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:LastName, 'We would like to welcome you as new staff member at Saibot Airport, Lexville. Your security badge has id ',$globalProcessState/ns1:BadgeId,'. There is much more we would like to say to you - but that will come at some later stage.  Sincerely, Your friends at Saibot Airport')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Content/ns7:ContentBody</query></to>
+                                            </copy>
+                                            <copy>
+                                                <from>string('text/html; charset=UTF-8')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Content/ns7:MimeType</query></to>
+                                            </copy>
+                                        </assign>
+                                        <invoke name="InvokeNotificationService" portType="ns7:NotificationService"
+                                                partnerLink="NotificationService1" inputVariable="varNotificationReq"
+                                                outputVariable="varNotificationResponse"
+                                                operation="sendEmailNotification"/>
+                                    </sequence>
+                                </scope>
+                            </sequence>
+                            <sequence name="NotifyRequestorAndCompany"><scope name="SendEmailToNewRequestor"
+                                                                              xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <bpelx:annotation xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+         <bpelx:pattern patternName="bpelx:email"></bpelx:pattern>
+      </bpelx:annotation>
+      <variables>
+         <variable name="varNotificationReq" messageType="ns7:EmailNotificationRequest"/>
+         <variable name="varNotificationResponse" messageType="ns7:ArrayOfResponse"/>
+         <variable name="NotificationServiceFaultVariable" messageType="ns7:NotificationServiceErrorMessage"/>
+      </variables>
+      <sequence name="Sequence9">
+         <assign name="EmailParamsAssign">
+            
+            
+            
+            
+            
+            
+            
+            
+         <copy>
+                                                <from>string('Default')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:FromAccountName</query></to>
+                                            </copy><copy>
+                                                <from>string('')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Bcc</query></to>
+                                            </copy><copy>
+                                                <from>string('')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Cc</query></to>
+                                            </copy><copy>
+                                                <from>string('')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:ReplyToAddress</query></to>
+                                            </copy><copy>
+                                                <from>string('Request for Security Accreditation at Saibot Airport has been approved ')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Subject</query></to>
+                                            </copy>
+                                                                                        <copy>
+                                                <from>$globalProcessState/ns1:RequestorEmailId</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:To</query></to>
+                                            </copy>
+
+                                          <copy>
+                                                <from>concat('Dear Requestor, Your security accreditation request for ', $inputVariable.part1/ns1:StaffMemberToAccredit/ns1:FirstName, ' ', $inputVariable.part1/ns1:StaffMemberToAccredit/ns1:LastName, ' has been approved. The allocated security badge has id ', $globalProcessState/ns1:BadgeId, '. The new staff member has been notified in a separate email.  Sincerely, Your friends at Saibot Airport')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Content/ns7:ContentBody</query></to>
+                                            </copy><copy>
+                                                <from>string('text/html; charset=UTF-8')</from>
+                                                <to variable="varNotificationReq" part="EmailPayload"><query>ns7:Content/ns7:MimeType</query></to>
+                                            </copy></assign>
+         <invoke name="InvokeNotificationService" portType="ns7:NotificationService" partnerLink="NotificationService1"
+                 inputVariable="varNotificationReq" outputVariable="varNotificationResponse"
+                 operation="sendEmailNotification"/>
+      </sequence>
+   </scope>
+                            </sequence>
+                        </flow><assign name="SetProcessStatusNotificationsComplete"
+                                       xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <copy>
+         <from>'notifications complete'</from>
+         <to>$globalProcessStatus</to>
+      </copy></assign>
+                    </sequence>
+                </scope>
+                 <wait name="Wait1">
+                            <for>'PT1H'</for>
+                        </wait>
+                       
+            </sequence>
+        </scope>
+        <assign name="PrepareAsynchResponse">
+            <copy>
+                <from>$inputVariable.part1/ns1:RequestorId</from>
+                <to>$asynchOutputVariable.part1/ns1:RequestorId</to>
+            </copy>
+            <copy>
+                <from>$inputVariable.part1/ns1:StaffMemberToAccredit/ns1:EmployeeNumber</from>
+                <to>$asynchOutputVariable.part1/ns1:EmployeeNumber</to>
+            </copy>
+        </assign>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="AirportAccreditationService"
+                portType="ns1:AirportAccreditationServiceCallback" operation="reportAirportAccreditationRequestOutcome" inputVariable="asynchOutputVariable"
+                bpelx:invokeAsDetail="no"/>
+    </sequence>
+</process>
