@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/bpel/rules" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:tns="http://xmlns.oracle.com/bpel/rules" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpelpm="http://xmlns.oracle.com/bpel" xmlns:rules="http://xmlns.oracle.com/bpel/rules">
+   <element name="int" type="xsd:int"/>
+   <element name="double" type="xsd:double"/>
+   <element name="string" type="xsd:string"/>
+   <element name="boolean" type="xsd:boolean"/>
+   <element name="byte" type="xsd:byte"/>
+   <element name="short" type="xsd:short"/>
+   <element name="long" type="xsd:long"/>
+   <element name="float" type="xsd:float"/>
+   <element name="integer" type="xsd:integer"/>
+   <element name="decimal" type="xsd:decimal"/>
+   <element name="dateTime" type="xsd:dateTime"/>
+   <element name="duration" type="xsd:duration"/>
+</schema>

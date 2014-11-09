@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/security"
+            targetNamespace="saibot.airport/security" elementFormDefault="qualified">
+    <xsd:element name="NewStaffMemberAnnouncement" type="newStaffMemberAnnouncementType"/>
+    <xsd:complexType name="newStaffMemberAnnouncementType">
+        <xsd:sequence>
+      <xsd:element name="FirstName" type="xsd:string"/>
+      <xsd:element name="LastName" type="xsd:string"/>
+      <xsd:element name="WorksForOrganizationId" type="xsd:string"/>
+      <xsd:element name="SecurityLevel" type="xsd:int"/>
+      <xsd:element name="StartDate" type="xsd:date"/>
+      <xsd:element name="EndDate" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="FunctionTitle" type="xsd:string"/>
+      <xsd:element name="BadgeId" type="xsd:string" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="SuspectCreditCardEvent" type="suspectCreditCardEventType"/>
+    <xsd:complexType name="suspectCreditCardEventType">
+        <xsd:sequence>
+            <xsd:element name="SumAmounts" type="xsd:float"/>
+            <xsd:element name="CreditCardNumber" type="xsd:string"/>
+            <xsd:element name="ShoppingDuration" type="xsd:integer"/>
+            <xsd:element name="PurchasesList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Purchase" minOccurs="3" maxOccurs="unbounded">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="Amount" type="xsd:float"/>
+                                    <xsd:element name="ShopIdentifier" type="xsd:integer"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
