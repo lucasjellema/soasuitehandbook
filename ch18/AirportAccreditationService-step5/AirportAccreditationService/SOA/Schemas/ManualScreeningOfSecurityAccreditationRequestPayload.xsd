@@ -1,0 +1,12 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema targetNamespace="http://xmlns.oracle.com/bpel/workflow/task" xmlns:tns="http://xmlns.oracle.com/bpel/workflow/task" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="saibot.airport/security">
+   <import namespace="saibot.airport/security" schemaLocation="AirportAccreditationService.xsd"/>
+   <complexType name="ManualScreeningOfSecurityAccreditationRequestPayloadType">
+      <sequence>
+         <element name="SecurityAccreditationRequest" type="ns0:requestForAirportAccreditationRequestType"/>
+         <element name="RequestorSaibotSecurityLevel" type="xsd:string"/>
+         <element name="CompanySaibotSecurityLevel" type="xsd:string"/>
+         <element name="ScrutinyLevel" type="xsd:int"/>
+      </sequence>
+   </complexType>
+</schema>

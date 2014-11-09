@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<properties>
+   <entry key="AG}-465be623:149934c8ae6:-7c14">ScrutinyLevel</entry>
+   <entry key="DG}-465be623:149934c8ae6:-7c1a">This rule set evaluates a request for awarding a certain Saibot Security Level to a new Staff Member working for a company with a specific SASEC level; the requestor SASEC level is also part of the input</entry>
+   <entry key="AG}-465be623:149934c8ae6:-7c10">SaibotSecurityLevel</entry>
+   <entry key="AG}-465be623:149934c8ae6:-7c12">SASECLevel</entry>
+   <entry key="AG}-465be623:149934c8ae6:-7c1a">InternalSecurityEvaluation</entry>
+</properties>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/security/ldap"
+            xmlns:ldap="saibot.airport/security/ldap" targetNamespace="saibot.airport/security/ldap"
+            elementFormDefault="qualified">
+  <xsd:element name="GetUserRequest" type="ldap:getUserRequestType"/>
+  <xsd:element name="GetUserResponse" type="ldap:getUserResponseType"/>
+  <xsd:element name="GetUserNotFoundFault" type="ldap:getUserNotFoundFaultType"/>
+  <xsd:element name="GetOrganizationRequest" type="ldap:getOrganizationRequestType"/>
+  <xsd:element name="GetOrganizationResponse" type="ldap:getOrganizationResponseType"/>
+  <xsd:element name="GetOrganizationNotFoundFault" type="ldap:getOrganizationNotFoundFaultType"/>
+  <xsd:element name="AddUserRequest" type="ldap:addUserRequestType"/>
+
+
+  <xsd:complexType name="getUserRequestType">
+    <xsd:sequence>
+      <xsd:element name="UserId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="getUserResponseType">
+    <xsd:sequence>
+      <xsd:element name="GivenName" type="xsd:string"/>
+      <xsd:element name="EmailAddress" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="ManagerId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="MobileTelephone" type="xsd:string"  minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="SaibotAirportSecurity" type="xsd:string"  minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="OrganizationUnit" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="addUserRequestType">
+    <xsd:sequence>
+      <xsd:element name="UserId" type="xsd:string"/>
+      <xsd:element name="GivenName" type="xsd:string"/>
+      <xsd:element name="EmailAddress" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="ManagerId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="MobileTelephone" type="xsd:string"  minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="SaibotAirportSecurity" type="xsd:string"  minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="OrganizationId" type="xsd:string"/>
+      <xsd:element name="FunctionTitle" type="xsd:string"/>
+      <xsd:element name="TemporaryPassword" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="getUserNotFoundFaultType">
+    <xsd:sequence>
+      <xsd:element name="FaultDescription" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="getOrganizationRequestType">
+    <xsd:sequence>
+      <xsd:element name="OrganizationId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="getOrganizationResponseType">
+    <xsd:sequence>
+      <xsd:element name="GivenName" type="xsd:string"/>
+      <xsd:element name="EmailAddress" type="xsd:string"/>
+      <xsd:element name="EmployeeNumber" type="xsd:string"/>
+      <xsd:element name="ManagerId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="MobileTelephone" type="xsd:string"/>
+      <xsd:element name="SaibotAirportSecurity" type="xsd:string"/>
+      <xsd:element name="OrganizationUnit" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="getOrganizationNotFoundFaultType">
+    <xsd:sequence>
+      <xsd:element name="FaultDescription" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+</xsd:schema>
