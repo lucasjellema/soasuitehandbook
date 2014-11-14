@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema targetNamespace="http://xmlns.oracle.com/bpel/workflow/task" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlns.oracle.com/bpel/workflow/task">
+   <element name="HumanTaskPayload" type="tns:DiscussNationalSecurityCheckRequestPayloadType"><annotation><appinfo><globalElement xmlns="http://www.frevvo.com/appinfo">true</globalElement></appinfo></annotation></element><complexType name="DiscussNationalSecurityCheckRequestPayloadType">
+      <sequence><element name="SubjectToCheck" type="xsd:string"/></sequence>
+   </complexType>
+</schema>

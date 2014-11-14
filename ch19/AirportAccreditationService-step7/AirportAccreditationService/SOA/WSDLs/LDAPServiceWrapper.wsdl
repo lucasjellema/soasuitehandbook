@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="LDAPService"
+     targetNamespace="saibot.airport/security/ldap"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="saibot.airport/security/ldap"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="LDAPMediator.LDAPMediator">
+        <plnk:role name="LdapService" portType="tns:LdapService"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="saibot.airport/security/ldap" location="LDAPService.wsdl"/>
+</wsdl:definitions>

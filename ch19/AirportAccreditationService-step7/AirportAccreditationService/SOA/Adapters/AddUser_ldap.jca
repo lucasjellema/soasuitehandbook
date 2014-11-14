@@ -1,0 +1,11 @@
+<adapter-config name="AddUser" adapter="ldap" wsdlLocation="../WSDLs/AddUser.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/ldap/SaibotLdap"/>
+  <endpoint-interaction portType="add_ptt" operation="add">
+    <interaction-spec className="oracle.tip.adapter.ldap.outbound.async.LdapAddInteractionSpec">
+      <property name="SuppressEntryAlreadyExists" value="false"/>
+      <property name="objectClass" value="inetOrgPerson,organizationalPerson,person"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

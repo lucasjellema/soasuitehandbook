@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>43</line>
+      <col/>
+      <file>BPEL/AirportAccreditationRequestProcessor.bpel</file>
+      <name>BPEL/AirportAccreditationRequestProcessor.bpel</name>
+      <fix>Fix the process to be *either* durable or synchronous.</fix>
+      <msg>Process "AirportAccreditationRequestProcessor" is both durable (onMessage,Receive,Wait) and synchronous.</msg>
+   </Fault>
+</Faults>

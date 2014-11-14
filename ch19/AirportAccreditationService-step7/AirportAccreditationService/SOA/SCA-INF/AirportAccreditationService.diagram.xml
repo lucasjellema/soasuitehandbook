@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="AirportAccreditationService">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="431" width="137" height="120">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="424" width="156" height="134">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="AirportAccreditationService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security#wsdl.interface(AirportAccreditationService)" callbackInterface="saibot.airport/security#wsdl.interface(AirportAccreditationServiceCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>requestAirportAccreditation</dgm:item>
+            <dgm:item>retrieveStatusOfAirportAccreditationRequest</dgm:item>
+            <dgm:item>cancelRequestForAirportAccreditation</dgm:item>
+            <dgm:item>reportAirportAccreditationRequestOutcome</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="LDAPMediator_ep">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="192" width="137" height="120">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="185" width="156" height="134">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="LDAPMediator_ep" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>getUser</dgm:item>
+            <dgm:item>getOrganization</dgm:item>
+            <dgm:item>addUser</dgm:item>
+            <dgm:item>removeUser</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gService name="SecurityCheckProcess.service">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="62" width="137" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="55" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="SecurityCheckProcess.service" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortType)" callbackInterface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortTypeCallBack)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>start</dgm:item>
+            <dgm:item>end</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="RetrieveUser">
+        <dgm:body borderWidth="2" arcRad="20" X="1184" Y="26" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1174" Y="19" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="RetrieveUser" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser#wsdl.interface(search_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ldap_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>search</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="AddUser">
+        <dgm:body borderWidth="2" arcRad="20" X="1184" Y="144" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1174" Y="137" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="AddUser" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/AddUser#wsdl.interface(add_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ldap_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>add</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="NotificationService1">
+        <dgm:body borderWidth="2" arcRad="20" X="1184" Y="643" width="136" height="168">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1174" Y="636" width="156" height="182">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="NotificationService1" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/ias/pcbpel/NotificationService#wsdl.interface(NotificationService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>sendIMNotification</dgm:item>
+            <dgm:item>sendFaxNotification</dgm:item>
+            <dgm:item>sendVoiceNotification</dgm:item>
+            <dgm:item>sendSMSNotification</dgm:item>
+            <dgm:item>sendPagerNotification</dgm:item>
+            <dgm:item>sendURINotification</dgm:item>
+            <dgm:item>sendEmailNotification</dgm:item>
+            <dgm:item>sendNotificationToUser</dgm:item>
+            <dgm:item>sendNotificationToGroup</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="UndoUserCreation">
+        <dgm:body borderWidth="2" arcRad="20" X="1184" Y="262" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1174" Y="255" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="UndoUserCreation" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/UndoUserCreation#wsdl.interface(delete_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ldap_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>delete</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="RetrieveOrganization">
+        <dgm:body borderWidth="2" arcRad="20" X="1184" Y="380" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1174" Y="373" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="RetrieveOrganization" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/RetrieveOrganization#wsdl.interface(search_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ldap_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>search</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="AirportAccreditationRequestProcessor">
+        <dgm:body borderWidth="2" arcRad="20" X="317" Y="294" width="130" height="310">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="307" Y="287" width="150" height="326">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="AirportAccreditationService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security#wsdl.interface(AirportAccreditationService)" callbackInterface="saibot.airport/security#wsdl.interface(AirportAccreditationServiceCallback)"/>
+        <dgm:outputPort name="LDAPMediator.LDAPMediator" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+        <dgm:outputPort name="NationalSecurityCheckService.NationalSecurityCheckService" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService#wsdl.interface(NationalSecurityCheckService)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService#wsdl.interface(NationalSecurityCheckServiceCallback)"/>
+        <dgm:outputPort name="ThoroughBackgroundCheck.thoroughbackgroundcheck_client" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck#wsdl.interface(ThoroughBackgroundCheck)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck#wsdl.interface(ThoroughBackgroundCheckCallback)"/>
+        <dgm:outputPort name="PersonnelService.PersonnelService" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/PersonnelService#wsdl.interface(PersonnelService)"/>
+        <dgm:outputPort name="BadgeService.BadgeService" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService#wsdl.interface(BadgeService)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService#wsdl.interface(BadgeServiceCallback)"/>
+        <dgm:outputPort name="NotificationService1" X="120" Y="140" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/ias/pcbpel/NotificationService#wsdl.interface(NotificationService)"/>
+        <dgm:outputPort name="DiscussNationalSecurityCheckRequest.TaskService_1" X="120" Y="165" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)" callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+        <dgm:outputPort name="ManualScreeningOfSecurityAccreditationRequest.TaskService_1" X="120" Y="190" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)" callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+        <dgm:outputPort name="InternalSecurityScreeningEvaluation.InternalSecurityScreeningEvaluation_DecisionService" X="120" Y="215" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService#wsdl.interface(IDecisionService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="23" Y="4" width="20" height="20"/>
+        <dgm:publishEvents>
+            <dgm:item>NewStaffMemberAnnouncement</dgm:item>
+        </dgm:publishEvents>
+        <dgm:publishPort name="" X="120" Y="240" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/circleEvent.png"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="LDAPMediator">
+        <dgm:body borderWidth="2" arcRad="20" X="895" Y="177" width="130" height="136">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="885" Y="170" width="150" height="152">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="LDAPMediator" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+        <dgm:outputPort name="RetrieveUser" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser#wsdl.interface(search_ptt)"/>
+        <dgm:outputPort name="AddUser" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/AddUser#wsdl.interface(add_ptt)"/>
+        <dgm:outputPort name="UndoUserCreation" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/UndoUserCreation#wsdl.interface(delete_ptt)"/>
+        <dgm:outputPort name="RetrieveOrganization" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/RetrieveOrganization#wsdl.interface(search_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="NationalSecurityCheckService">
+        <dgm:body borderWidth="2" arcRad="20" X="606" Y="281" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="596" Y="274" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="NationalSecurityCheckService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService#wsdl.interface(NationalSecurityCheckService)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService#wsdl.interface(NationalSecurityCheckServiceCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="ThoroughBackgroundCheck">
+        <dgm:body borderWidth="2" arcRad="20" X="606" Y="376" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="596" Y="369" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="thoroughbackgroundcheck_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck#wsdl.interface(ThoroughBackgroundCheck)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck#wsdl.interface(ThoroughBackgroundCheckCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="PersonnelService">
+        <dgm:body borderWidth="2" arcRad="20" X="606" Y="471" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="596" Y="464" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="PersonnelService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/PersonnelService#wsdl.interface(PersonnelService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="BadgeService">
+        <dgm:body borderWidth="2" arcRad="20" X="606" Y="566" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="596" Y="559" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="BadgeService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService#wsdl.interface(BadgeService)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService#wsdl.interface(BadgeServiceCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="InternalSecurityScreeningEvaluation">
+        <dgm:body borderWidth="2" arcRad="20" X="606" Y="683" width="130" height="61">
+            <dgm:borderColor r="178" g="138" b="53"/>
+            <dgm:lightBgColor r="255" g="226" b="142"/>
+            <dgm:darkBgColor r="255" g="198" b="77"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="596" Y="676" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="InternalSecurityScreeningEvaluation_DecisionService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService#wsdl.interface(IDecisionService)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/rules/plugins/resources/images/soa/decision_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="SecurityCheckProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="317" Y="47" width="130" height="61">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="307" Y="40" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="SecurityCheckProcess.service" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortType)" callbackInterface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortTypeCallBack)"/>
+        <dgm:nodeIcon URI="/oracle/bpm/fusion/soa/msg/images/bpmncomponent20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="AirportAccreditationService" target="AirportAccreditationRequestProcessor/AirportAccreditationService" width="2">
+        <dgm:gSegment X1="168" Y1="441" X2="192" Y2="441"/>
+        <dgm:gSegment X1="192" Y1="441" X2="192" Y2="319"/>
+        <dgm:gSegment X1="192" Y1="319" X2="307" Y2="319"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LDAPMediator_ep" target="LDAPMediator/LDAPMediator" width="2">
+        <dgm:gSegment X1="168" Y1="202" X2="885" Y2="202"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LDAPMediator/RetrieveUser" target="RetrieveUser" width="2">
+        <dgm:gSegment X1="1035" Y1="202" X2="1059" Y2="202"/>
+        <dgm:gSegment X1="1059" Y1="202" X2="1059" Y2="36"/>
+        <dgm:gSegment X1="1059" Y1="36" X2="1174" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AirportAccreditationRequestProcessor/LDAPMediator.LDAPMediator" target="LDAPMediator/LDAPMediator" width="2">
+        <dgm:gSegment X1="457" Y1="319" X2="481" Y2="319"/>
+        <dgm:gSegment X1="481" Y1="319" X2="481" Y2="202"/>
+        <dgm:gSegment X1="481" Y1="202" X2="885" Y2="202"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LDAPMediator/AddUser" target="AddUser" width="2">
+        <dgm:gSegment X1="1035" Y1="227" X2="1074" Y2="227"/>
+        <dgm:gSegment X1="1074" Y1="227" X2="1074" Y2="154"/>
+        <dgm:gSegment X1="1074" Y1="154" X2="1174" Y2="154"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AirportAccreditationRequestProcessor/NationalSecurityCheckService.NationalSecurityCheckService" target="NationalSecurityCheckService/NationalSecurityCheckService" width="2">
+        <dgm:gSegment X1="457" Y1="344" X2="496" Y2="344"/>
+        <dgm:gSegment X1="496" Y1="344" X2="496" Y2="306"/>
+        <dgm:gSegment X1="496" Y1="306" X2="596" Y2="306"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AirportAccreditationRequestProcessor/ThoroughBackgroundCheck.thoroughbackgroundcheck_client" target="ThoroughBackgroundCheck/thoroughbackgroundcheck_client" width="2">
+        <dgm:gSegment X1="457" Y1="369" X2="541" Y2="369"/>
+        <dgm:gSegment X1="541" Y1="369" X2="541" Y2="401"/>
+        <dgm:gSegment X1="541" Y1="401" X2="596" Y2="401"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AirportAccreditationRequestProcessor/PersonnelService.PersonnelService" target="PersonnelService/PersonnelService" width="2">
+        <dgm:gSegment X1="457" Y1="394" X2="526" Y2="394"/>
+        <dgm:gSegment X1="526" Y1="394" X2="526" Y2="496"/>
+        <dgm:gSegment X1="526" Y1="496" X2="596" Y2="496"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AirportAccreditationRequestProcessor/BadgeService.BadgeService" target="BadgeService/BadgeService" width="2">
+        <dgm:gSegment X1="457" Y1="419" X2="511" Y2="419"/>
+        <dgm:gSegment X1="511" Y1="419" X2="511" Y2="591"/>
+        <dgm:gSegment X1="511" Y1="591" X2="596" Y2="591"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AirportAccreditationRequestProcessor/NotificationService1" target="NotificationService1" width="2">
+        <dgm:gSegment X1="457" Y1="444" X2="496" Y2="444"/>
+        <dgm:gSegment X1="496" Y1="444" X2="496" Y2="653"/>
+        <dgm:gSegment X1="496" Y1="653" X2="1174" Y2="653"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="AirportAccreditationRequestProcessor/InternalSecurityScreeningEvaluation.InternalSecurityScreeningEvaluation_DecisionService" target="InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService" width="2">
+        <dgm:gSegment X1="457" Y1="519" X2="481" Y2="519"/>
+        <dgm:gSegment X1="481" Y1="519" X2="481" Y2="708"/>
+        <dgm:gSegment X1="481" Y1="708" X2="596" Y2="708"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LDAPMediator/UndoUserCreation" target="UndoUserCreation" width="2">
+        <dgm:gSegment X1="1035" Y1="252" X2="1074" Y2="252"/>
+        <dgm:gSegment X1="1074" Y1="252" X2="1074" Y2="272"/>
+        <dgm:gSegment X1="1074" Y1="272" X2="1174" Y2="272"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="LDAPMediator/RetrieveOrganization" target="RetrieveOrganization" width="2">
+        <dgm:gSegment X1="1035" Y1="277" X2="1059" Y2="277"/>
+        <dgm:gSegment X1="1059" Y1="277" X2="1059" Y2="390"/>
+        <dgm:gSegment X1="1059" Y1="390" X2="1174" Y2="390"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="SecurityCheckProcess.service" target="SecurityCheckProcess/SecurityCheckProcess.service" width="2">
+        <dgm:gSegment X1="168" Y1="72" X2="307" Y2="72"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>
