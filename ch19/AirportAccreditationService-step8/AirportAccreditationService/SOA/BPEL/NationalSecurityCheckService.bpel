@@ -91,7 +91,7 @@ catch(Exception e){}]]>
             <documentation>
                 <![CDATA[LessThan80IsOK]]>
             </documentation>
-            <condition>$DecisionNumber  &lt; 80</condition>
+            <condition>$DecisionNumber &lt; 80</condition>
             <assign name="AssignDecisionOutcome">
                 <copy>
                     <from>'OK'</from>

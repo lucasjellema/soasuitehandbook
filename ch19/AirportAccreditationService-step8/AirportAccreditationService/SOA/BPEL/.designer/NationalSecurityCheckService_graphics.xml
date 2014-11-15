@@ -6,7 +6,7 @@
    <partnerlink_locations>
       <partnerlink name="NationalSecurityCheckService" x="0" y="437" side="left"/>
    </partnerlink_locations>
-   <graph_layout viewport="0,467,1361,412" show_swimlanes="true">
+   <graph_layout viewport="0,184,1100,564" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
    </graph_layout>

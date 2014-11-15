@@ -363,7 +363,7 @@
             <bpmn:extensionElements>
                 <bpmnext:OracleExtensions>
                     <bpmnext:GraphicsAttributes>
-                        <bpmnext:Position x="330" y="224"/>
+                        <bpmnext:Position x="294" y="226"/>
                     </bpmnext:GraphicsAttributes>
                     <bpmnext:FeatureSet>
                         <bpmnext:BooleanFeature value="false" name="inputValidation"/>
@@ -560,7 +560,6 @@
                         <bpmnext:StringFeature value="USE_PROCESS_PERMISSION" name="sealType"/>
                         <bpmnext:StringFeature value="REUSE_PAYLOAD" name="reinitiatorPolicy"/>
                         <bpmnext:StringFeature value="SIMPLE" name="humanTaskType"/>
-                        <bpmnext:StringFeature value="" name="reinitiateSource"/>
                     </bpmnext:FeatureSet>
                     <bpmnext:HumanTask>
                         <bpmnext:humanTaskRef refType="namespaced" name="ManualScreeningOfSecurityAccreditationRequest" namespace="http://xmlns.oracle.com/AirportAccreditationService-step8/AirportAccreditationService/ManualScreeningOfSecurityAccreditationRequest" elementType="TYPE" implementationType="humanTask"/>
@@ -962,6 +961,87 @@
                 <bpmn:extensionElements>
                     <bpmnext:OracleExtensions/>
                 </bpmn:extensionElements>
+                <bpmn:targetRef>internalScreeningOutcome</bpmn:targetRef>
+                <bpmn:assignment>
+                    <bpmn:extensionElements>
+                        <bpmnext:OracleExtensions>
+                            <bpmnext:DataAssignment operation="copy" ignoreMissingData="false"/>
+                        </bpmnext:OracleExtensions>
+                    </bpmn:extensionElements>
+                    <bpmn:from xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">true()
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:from>
+                    <bpmn:to xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xpathns:bpmn="http://www.omg.org/bpmn20" xmlns:xpathns="http://xmlns.oracle.com/bpm/XPathNamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">bpmn:getDataObject('internalScreeningOutcome')
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:to>
+                </bpmn:assignment>
+            </bpmn:dataOutputAssociation>
+            <bpmn:dataOutputAssociation>
+                <bpmn:extensionElements>
+                    <bpmnext:OracleExtensions/>
+                </bpmn:extensionElements>
+                <bpmn:targetRef>nationalSecurityCheckOutcome</bpmn:targetRef>
+                <bpmn:assignment>
+                    <bpmn:extensionElements>
+                        <bpmnext:OracleExtensions>
+                            <bpmnext:DataAssignment operation="copy" ignoreMissingData="false"/>
+                        </bpmnext:OracleExtensions>
+                    </bpmn:extensionElements>
+                    <bpmn:from xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'UNKNOWN'
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:from>
+                    <bpmn:to xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xpathns:bpmn="http://www.omg.org/bpmn20" xmlns:xpathns="http://xmlns.oracle.com/bpm/XPathNamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">bpmn:getDataObject('nationalSecurityCheckOutcome')
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:to>
+                </bpmn:assignment>
+            </bpmn:dataOutputAssociation>
+            <bpmn:dataOutputAssociation>
+                <bpmn:extensionElements>
+                    <bpmnext:OracleExtensions/>
+                </bpmn:extensionElements>
+                <bpmn:targetRef>thoroughCheckOutcome</bpmn:targetRef>
+                <bpmn:assignment>
+                    <bpmn:extensionElements>
+                        <bpmnext:OracleExtensions>
+                            <bpmnext:DataAssignment operation="copy" ignoreMissingData="false"/>
+                        </bpmnext:OracleExtensions>
+                    </bpmn:extensionElements>
+                    <bpmn:from xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">true()
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:from>
+                    <bpmn:to xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xpathns:bpmn="http://www.omg.org/bpmn20" xmlns:xpathns="http://xmlns.oracle.com/bpm/XPathNamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">bpmn:getDataObject('thoroughCheckOutcome')
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:to>
+                </bpmn:assignment>
+            </bpmn:dataOutputAssociation>
+            <bpmn:dataOutputAssociation>
+                <bpmn:extensionElements>
+                    <bpmnext:OracleExtensions/>
+                </bpmn:extensionElements>
                 <bpmn:sourceRef>ValidatedAccreditationDetails</bpmn:sourceRef>
                 <bpmn:targetRef>accreditationProcessState</bpmn:targetRef>
                 <bpmn:assignment>
@@ -1012,6 +1092,9 @@
                         <bpmnext:Label>
                             <bpmnext:LocalizedContent language="en">End</bpmnext:LocalizedContent>
                         </bpmnext:Label>
+                        <bpmnext:Description>
+                            <bpmnext:LocalizedContent language="en"></bpmnext:LocalizedContent>
+                        </bpmnext:Description>
                     </bpmnext:Localization>
                     <bpmnext:Conversational conversation="CONVERSATION114219278542">
                         <bpmnext:DefineInterfaceConversationalDefinition definedOperationName="end"/>
@@ -1034,13 +1117,74 @@
                     </bpmnext:OracleExtensions>
                 </bpmn:extensionElements>
             </bpmn:dataInput>
+            <bpmn:dataInputAssociation>
+                <bpmn:extensionElements>
+                    <bpmnext:OracleExtensions/>
+                </bpmn:extensionElements>
+                <bpmn:sourceRef>internalScreeningOutcome</bpmn:sourceRef>
+                <bpmn:sourceRef>nationalSecurityCheckOutcome</bpmn:sourceRef>
+                <bpmn:sourceRef>thoroughCheckOutcome</bpmn:sourceRef>
+                <bpmn:sourceRef>needForRandomThoroughCheck</bpmn:sourceRef>
+                <bpmn:targetRef>AccreditationApproved</bpmn:targetRef>
+                <bpmn:assignment>
+                    <bpmn:extensionElements>
+                        <bpmnext:OracleExtensions>
+                            <bpmnext:DataAssignment operation="copy" ignoreMissingData="false"/>
+                        </bpmnext:OracleExtensions>
+                    </bpmn:extensionElements>
+                    <bpmn:from xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xpathns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xpathns:bpmn="http://www.omg.org/bpmn20" xmlns:xpathns="http://xmlns.oracle.com/bpm/XPathNamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">(((xp20:matches(string(bpmn:getDataObject('internalScreeningOutcome')), '\s*(?i:true|1)\s*') = true()) and (bpmn:getDataObject('nationalSecurityCheckOutcome') = 'OK')) and ((xp20:matches(string(bpmn:getDataObject('thoroughCheckOutcome')), '\s*(?i:true|1)\s*') = true()) or (xp20:matches(string(bpmn:getDataObject('needForRandomThoroughCheck')), '\s*(?i:true|1)\s*') = false())))
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:from>
+                    <bpmn:to xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xpathns:bpmn="http://www.omg.org/bpmn20" xmlns:xpathns="http://xmlns.oracle.com/bpm/XPathNamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">bpmn:getDataInput('AccreditationApproved')
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:to>
+                </bpmn:assignment>
+            </bpmn:dataInputAssociation>
+            <bpmn:dataInputAssociation>
+                <bpmn:extensionElements>
+                    <bpmnext:OracleExtensions/>
+                </bpmn:extensionElements>
+                <bpmn:sourceRef>nationalSecurityCheckOutcome</bpmn:sourceRef>
+                <bpmn:sourceRef>internalScreeningOutcome</bpmn:sourceRef>
+                <bpmn:sourceRef>thoroughCheckOutcome</bpmn:sourceRef>
+                <bpmn:targetRef>SecurityCheckComment</bpmn:targetRef>
+                <bpmn:assignment>
+                    <bpmn:extensionElements>
+                        <bpmnext:OracleExtensions>
+                            <bpmnext:DataAssignment operation="copy" ignoreMissingData="false"/>
+                        </bpmnext:OracleExtensions>
+                    </bpmn:extensionElements>
+                    <bpmn:from xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xpathns:bpmn="http://www.omg.org/bpmn20" xmlns:xpathns="http://xmlns.oracle.com/bpm/XPathNamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">concat('National Security Check ', bpmn:getDataObject('nationalSecurityCheckOutcome'), ' Internal Screening:', bpmn:getDataObject('internalScreeningOutcome'), ' Thourough Check:', bpmn:getDataObject('thoroughCheckOutcome'))
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:from>
+                    <bpmn:to xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xpathns:bpmn="http://www.omg.org/bpmn20" xmlns:xpathns="http://xmlns.oracle.com/bpm/XPathNamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">bpmn:getDataInput('SecurityCheckComment')
+                        <bpmn:extensionElements>
+                            <bpmnext:OracleExtensions>
+                                <bpmnext:Expression mode="simple"/>
+                            </bpmnext:OracleExtensions>
+                        </bpmn:extensionElements>
+                    </bpmn:to>
+                </bpmn:assignment>
+            </bpmn:dataInputAssociation>
             <bpmn:inputSet id="EVT11421927854172_uniqueInputSet">
                 <bpmn:dataInputRefs>AccreditationApproved</bpmn:dataInputRefs>
                 <bpmn:dataInputRefs>SecurityCheckComment</bpmn:dataInputRefs>
             </bpmn:inputSet>
             <bpmn:messageEventDefinition/>
         </bpmn:endEvent>
-        <bpmn:parallelGateway gatewayDirection="Diverging" name="Parallel  Security Checks" id="PARALLEL_GATEWAY_1415817148845">
+        <bpmn:parallelGateway gatewayDirection="Diverging" name="Parallel Security Checks" id="PARALLEL_GATEWAY_1415817148845">
             <bpmn:extensionElements>
                 <bpmnext:OracleExtensions>
                     <bpmnext:GraphicsAttributes>
@@ -1057,20 +1201,24 @@
                     </bpmnext:FeatureSet>
                     <bpmnext:Localization>
                         <bpmnext:Label>
-                            <bpmnext:LocalizedContent language="en">Parallel  Security Checks</bpmnext:LocalizedContent>
+                            <bpmnext:LocalizedContent language="en">Parallel Security Checks</bpmnext:LocalizedContent>
                         </bpmnext:Label>
+                        <bpmnext:Description>
+                            <bpmnext:LocalizedContent language="en"></bpmnext:LocalizedContent>
+                        </bpmnext:Description>
                     </bpmnext:Localization>
                     <bpmnext:FlowNodeProperties/>
                 </bpmnext:OracleExtensions>
             </bpmn:extensionElements>
         </bpmn:parallelGateway>
-        <bpmn:parallelGateway gatewayDirection="Converging" name="Collect Check Results" id="PARALLEL_GATEWAY_1415817148845M">
+        <bpmn:complexGateway gatewayDirection="Converging" name="Collect Check Results" id="PARALLEL_GATEWAY_1415817148845M">
             <bpmn:extensionElements>
                 <bpmnext:OracleExtensions>
                     <bpmnext:GraphicsAttributes>
                         <bpmnext:Position x="946" y="102"/>
                     </bpmnext:GraphicsAttributes>
                     <bpmnext:FeatureSet>
+                        <bpmnext:BooleanFeature value="true" name="isAbortPendingFlows"/>
                         <bpmnext:BooleanFeature value="false" name="hasCheckpoint"/>
                         <bpmnext:StringFeature value="[]" name="TagFeature"/>
                         <bpmnext:StringFeature value="PROCESS_DEFAULT" name="generatesEvents"/>
@@ -1083,11 +1231,21 @@
                         <bpmnext:Label>
                             <bpmnext:LocalizedContent language="en">Collect Check Results</bpmnext:LocalizedContent>
                         </bpmnext:Label>
+                        <bpmnext:Description>
+                            <bpmnext:LocalizedContent language="en"></bpmnext:LocalizedContent>
+                        </bpmnext:Description>
                     </bpmnext:Localization>
                     <bpmnext:FlowNodeProperties/>
                 </bpmnext:OracleExtensions>
             </bpmn:extensionElements>
-        </bpmn:parallelGateway>
+            <bpmn:activationCondition xsi:type="bpmn:tFormalExpression" language="http://www.w3.org/1999/XPath" xpathns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xpathns:bpmn="http://www.omg.org/bpmn20" xmlns:xpathns="http://xmlns.oracle.com/bpm/XPathNamespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">((bpmn:getGatewayInstanceAttribute('activationCount') &gt; 0) and (((bpmn:getDataObject('nationalSecurityCheckOutcome') = 'NOTOK') or (xp20:matches(string(bpmn:getDataObject('internalScreeningOutcome')), '\s*(?i:true|1)\s*') = false())) or ((xp20:matches(string(bpmn:getDataObject('thoroughCheckOutcome')), '\s*(?i:true|1)\s*') = false()) and (xp20:matches(string(bpmn:getDataObject('needForRandomThoroughCheck')), '\s*(?i:true|1)\s*') = true()))))
+                <bpmn:extensionElements>
+                    <bpmnext:OracleExtensions>
+                        <bpmnext:Expression mode="simple"/>
+                    </bpmnext:OracleExtensions>
+                </bpmn:extensionElements>
+            </bpmn:activationCondition>
+        </bpmn:complexGateway>
         <bpmn:exclusiveGateway gatewayDirection="Unspecified" name="Perform Thorough Check?" id="EXCLUSIVE_GATEWAY_1415817204957">
             <bpmn:extensionElements>
                 <bpmnext:OracleExtensions>

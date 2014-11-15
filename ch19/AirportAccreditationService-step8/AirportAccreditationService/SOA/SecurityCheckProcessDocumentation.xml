@@ -80,16 +80,25 @@
             <labels>
                <label locale="en">End</label>
             </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
          </topicDocumentation>
          <topicDocumentation name="PARALLEL_GATEWAY_1415817148845">
             <labels>
-               <label locale="en">Parallel  Security Checks</label>
+               <label locale="en">Parallel Security Checks</label>
             </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
          </topicDocumentation>
          <topicDocumentation name="PARALLEL_GATEWAY_1415817148845M">
             <labels>
                <label locale="en">Collect Check Results</label>
             </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
          </topicDocumentation>
          <topicDocumentation name="EXCLUSIVE_GATEWAY_1415817204957">
             <labels>
