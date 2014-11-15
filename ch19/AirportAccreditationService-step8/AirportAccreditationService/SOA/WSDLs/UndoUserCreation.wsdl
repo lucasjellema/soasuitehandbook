@@ -1,0 +1,28 @@
+<wsdl:definitions
+     name="UndoUserCreation"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/UndoUserCreation"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/UndoUserCreation"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:imp1="http://platform.integration.oracle/blocks/adapter/fw/metadata/UndoUserCreation"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="delete_plt" >
+    <plt:role name="delete_role" >
+      <plt:portType name="tns:delete_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/UndoUserCreation" schemaLocation="../Schemas/UndoUserCreation.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="delete_request_msg">
+        <wsdl:part name="body" element="imp1:deleteRequest"/>
+    </wsdl:message>
+    <wsdl:portType name="delete_ptt">
+        <wsdl:operation name="delete">
+            <wsdl:input message="tns:delete_request_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:Actions xmlns:ns0="http://xmlns.oracle.com/bpm/analytics/measurementV20">
+   <ns0:compositeDN>AirportAccreditationService</ns0:compositeDN>
+   <ns0:action name="BAMCommand" enabled="false">
+      <ns0:interfaceName>oracle.bpm.analytics.bam.action.BAMActionMDB</ns0:interfaceName>
+      <ns0:measurementElementName>AirportAccreditationService</ns0:measurementElementName>
+   </ns0:action>
+   <ns0:action name="ProcessMetrics" enabled="true">
+      <ns0:interfaceName>oracle.bpm.analytics.beam.action.BeamActionMDB</ns0:interfaceName>
+      <ns0:measurementElementName>AirportAccreditationService</ns0:measurementElementName>
+   </ns0:action>
+</ns0:Actions>

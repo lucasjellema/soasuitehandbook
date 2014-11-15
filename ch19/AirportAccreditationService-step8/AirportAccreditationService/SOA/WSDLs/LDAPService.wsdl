@@ -1,0 +1,56 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="LDAPService"
+                  targetNamespace="saibot.airport/security/ldap"
+                  xmlns:tns="saibot.airport/security/ldap"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ldap="saibot.airport/security/ldap">
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/security/ldap" schemaLocation="../Schemas/LDAPService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getUserRequestMessage">
+    <wsdl:part name="part1" element="ldap:GetUserRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getUserResponseMessage">
+    <wsdl:part name="part1" element="ldap:GetUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="userNotFoundFaultMessage">
+    <wsdl:part name="part1" element="ldap:GetUserNotFoundFault"/>
+  </wsdl:message>
+  <wsdl:message name="getOrganizationRequestMessage">
+    <wsdl:part name="part1" element="ldap:GetOrganizationRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getOrganizationResponseMessage">
+    <wsdl:part name="part1" element="ldap:GetOrganizationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="organizationNotFoundFaultMessage">
+    <wsdl:part name="part1" element="ldap:GetOrganizationNotFoundFault"/>
+  </wsdl:message>  
+    <wsdl:message name="addUserRequestMessage">
+    <wsdl:part name="part1" element="ldap:AddUserRequest"/>
+  </wsdl:message>
+    <wsdl:message name="removeUserRequestMessage">
+    <wsdl:part name="part1" element="ldap:RemoveUserRequest"/>
+  </wsdl:message>
+
+  <wsdl:portType name="LdapService">
+    <wsdl:operation name="getUser">
+      <wsdl:input message="tns:getUserRequestMessage"/>
+      <wsdl:output message="tns:getUserResponseMessage"/>
+      <wsdl:fault name="userNotFoundFault"
+      message="tns:userNotFoundFaultMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="getOrganization">
+      <wsdl:input message="tns:getOrganizationRequestMessage"/>
+      <wsdl:output message="tns:getOrganizationResponseMessage"/>
+      <wsdl:fault name="organizationNotFoundFault"
+      message="tns:organizationNotFoundFaultMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="addUser">
+      <wsdl:input message="tns:addUserRequestMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="removeUser">
+      <wsdl:input message="tns:removeUserRequestMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,10 @@
+<adapter-config name="UndoUserCreation" adapter="ldap" wsdlLocation="../WSDLs/UndoUserCreation.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/ldap/SaibotLdap"/>
+  <endpoint-interaction portType="delete_ptt" operation="delete">
+    <interaction-spec className="oracle.tip.adapter.ldap.outbound.async.LdapDeleteInteractionSpec">
+      <property name="SuppressEntryDoesNotExist" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
