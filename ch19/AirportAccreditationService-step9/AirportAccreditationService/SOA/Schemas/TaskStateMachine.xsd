@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://xmlns.oracle.com/bpel/workflow/task"
+            targetNamespace="http://xmlns.oracle.com/bpel/workflow/task"
+            elementFormDefault="qualified">
+  <xsd:element name="previousOutcome">
+    <xsd:annotation>
+      <xsd:documentation>
+        A sample element
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="outcome" type="xsd:string"/>
+        <xsd:element name="logicalParticipant" type="xsd:string"/>
+        <xsd:element name="actualParticipant" type="xsd:string"/>
+        <xsd:element name="level" maxOccurs="1" minOccurs="0"
+                     type="xsd:int"/>
+        <xsd:element name="totalNumberOfApprovals" type="xsd:int"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="taskAction">
+    <xsd:complexType>
+      <xsd:attribute name="action" type="taskActionType" use="required"/>
+      <xsd:attribute name="targetParticipant" use="optional" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:simpleType name="taskActionType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="GOFORWARD"/>
+      <xsd:enumeration value="PUSHBACK"/>
+      <xsd:enumeration value="COMPLETE"/>
+      <xsd:enumeration value="ESCALATE"/>
+      <xsd:enumeration value="GOTO"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

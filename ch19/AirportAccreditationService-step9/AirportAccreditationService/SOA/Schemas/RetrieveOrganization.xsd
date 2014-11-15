@@ -1,0 +1,37 @@
+<?xml version= "1.0" encoding= "UTF-8" ?>
+<schema targetNamespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/RetrieveOrganization"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://platform.integration.oracle/blocks/adapter/fw/metadata/RetrieveOrganization"
+            elementFormDefault="unqualified">
+  <element name="searchRequest">
+     <complexType>
+         <sequence>
+               <element name="baseDN" type="string" default="ou=BusinessPartners,o=saibot.airport"/>
+               <element name="searchFilter" type="string" default="(objectClass=*)"/>
+         </sequence>
+     </complexType>
+  </element>
+  <element name="searchResponse">
+     <complexType>
+         <sequence>
+             <element name="entriesReturned" type="string" minOccurs="0"/>
+             <element name="referral" type="anyURI" minOccurs="0" maxOccurs="unbounded"/>
+             <element name="searchResultEntry" maxOccurs="unbounded" minOccurs="0">
+                 <complexType>
+                     <sequence>
+                       <element name="description" type="tns:multiValueAttribute"/>
+                       <element name="destinationIndicator" type="tns:multiValueAttribute"/>
+                     </sequence>
+                     <attribute name="index" type="integer"/>
+                     <attribute name="dn" type="string"/>
+                 </complexType>
+             </element>
+         </sequence>
+     </complexType>
+  </element>
+<complexType name="multiValueAttribute">
+   <sequence>
+       <element name="value" type="string" maxOccurs="unbounded"/>
+   </sequence>
+</complexType>
+</schema>

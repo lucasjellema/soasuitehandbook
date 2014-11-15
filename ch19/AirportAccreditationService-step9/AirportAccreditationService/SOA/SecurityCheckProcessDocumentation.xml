@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?oracleBPM version="12.1.3.0.0.00.00" fileRevision="20120601"?>
+<processDocumentation xmlns="http://xmlns.oracle.com/bpm/taskMetadataService/processDocumentation">
+   <component name="SecurityCheckProcess">
+      <topicDocumentations>
+         <topicDocumentation name="SecurityCheckProcess"/>
+         <topicDocumentation name="ABSTRACT_ACTIVITY_1415817233285">
+            <labels>
+               <label locale="en">Perform Thorough Check</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="ABSTRACT_ACTIVITY_1415817288366">
+            <labels>
+               <label locale="en">Perform National Security Check</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="ABSTRACT_ACTIVITY_1415817388719">
+            <labels>
+               <label locale="en">Discuss National SecurityCheck</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="ABSTRACT_ACTIVITY_1415818461108">
+            <labels>
+               <label locale="en">Determine Required Screening Intensity</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="ABSTRACT_ACTIVITY_1415818599604">
+            <labels>
+               <label locale="en">AutomatedEvaluation</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="ABSTRACT_ACTIVITY_1415818663774">
+            <labels>
+               <label locale="en">ManualScreening</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="ACT11439401462588">
+            <labels>
+               <label locale="en">ReceiveTask</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="ACT1143997421702">
+            <labels>
+               <label locale="en">ReceiveResultThoroughCheck</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="ACT11443995044353">
+            <labels>
+               <label locale="en">Decide On RandomThorough Check</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="EVT11421927854011">
+            <labels>
+               <label locale="en">Start</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="EVT11421927854172">
+            <labels>
+               <label locale="en">End</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="PARALLEL_GATEWAY_1415817148845">
+            <labels>
+               <label locale="en">Parallel Security Checks</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="PARALLEL_GATEWAY_1415817148845M">
+            <labels>
+               <label locale="en">Collect Check Results</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="EXCLUSIVE_GATEWAY_1415817204957">
+            <labels>
+               <label locale="en">Perform Thorough Check?</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="EXCLUSIVE_GATEWAY_1415817354331">
+            <labels>
+               <label locale="en">Evaluate Outcome Of Security Check</label>
+            </labels>
+         </topicDocumentation>
+         <topicDocumentation name="PARALLEL_GATEWAY_1415818585265">
+            <labels>
+               <label locale="en">Do Automated and Manual Evaluation</label>
+            </labels>
+         </topicDocumentation>
+         <topicDocumentation name="PARALLEL_GATEWAY_1415818585265M">
+            <labels>
+               <label locale="en">Merge results from internal screening</label>
+            </labels>
+         </topicDocumentation>
+         <topicDocumentation name="EXCLUSIVE_GATEWAY_1415818648872">
+            <labels>
+               <label locale="en">Need Manual Check?</label>
+            </labels>
+         </topicDocumentation>
+         <topicDocumentation name="ACT11445592834464">
+            <labels>
+               <label locale="en">Cancellation</label>
+            </labels>
+         </topicDocumentation>
+         <topicDocumentation name="EVT11445593145534">
+            <labels>
+               <label locale="en">Cancel Security Checks</label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="EVT11445593145624">
+            <labels>
+               <label locale="en">End</label>
+            </labels>
+         </topicDocumentation>
+         <topicDocumentation name="sf11445593145630"/>
+         <topicDocumentation name="sf11421927854271"/>
+         <topicDocumentation name="sf_1415817097567"/>
+         <topicDocumentation name="sf_1415817148848"/>
+         <topicDocumentation name="sf_1415817179577"/>
+         <topicDocumentation name="sf_1415817218907">
+            <labels>
+               <label locale="en"></label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="sf_1415817222255">
+            <labels>
+               <label locale="en"></label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="sf_1415817233286"/>
+         <topicDocumentation name="sf_1415817288367"/>
+         <topicDocumentation name="sf_1415817354333"/>
+         <topicDocumentation name="sf_1415817380505">
+            <labels>
+               <label locale="en"></label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="sf_1415817388720"/>
+         <topicDocumentation name="sf_1415818464956"/>
+         <topicDocumentation name="sf_1415818585269"/>
+         <topicDocumentation name="sf_1415818589111"/>
+         <topicDocumentation name="sf_1415818599605"/>
+         <topicDocumentation name="sf_1415818655903"/>
+         <topicDocumentation name="sf_1415818660482"/>
+         <topicDocumentation name="sf_1415818685257">
+            <labels>
+               <label locale="en"></label>
+            </labels>
+            <descriptions>
+               <description locale="en"></description>
+            </descriptions>
+         </topicDocumentation>
+         <topicDocumentation name="sf_1415818688290"/>
+         <topicDocumentation name="sf_1415818708086"/>
+         <topicDocumentation name="sf11439423116439"/>
+         <topicDocumentation name="sf11439980020581"/>
+         <topicDocumentation name="sf11443997603422"/>
+      </topicDocumentations>
+   </component>
+</processDocumentation>

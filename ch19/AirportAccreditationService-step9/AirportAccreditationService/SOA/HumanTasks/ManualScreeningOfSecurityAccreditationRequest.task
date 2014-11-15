@@ -1,0 +1,36 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<taskDefinition targetNamespace="http://xmlns.oracle.com/AirportAccreditationService-step8/AirportAccreditationService/ManualScreeningOfSecurityAccreditationRequest" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:task="http://xmlns.oracle.com/bpel/workflow/task" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://xmlns.oracle.com/bpel/workflow/taskDefinition" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions">
+   <name>ManualScreeningOfSecurityAccreditationRequest</name>
+   <id/>
+   <title type="STATIC"><value>Perform Manual Screening of Accreditation Request</value></title>
+   <priority>3</priority>
+   <process processId="" processVersion=""/>
+   <routingSlip routingType="TEMPLATE" xmlns="http://xmlns.oracle.com/bpel/workflow/routingSlip">
+      <globalConfiguration><applicationContext>OracleBPMProcessRolesApp</applicationContext><taskOwner type="STATIC" identityType="application_role">AirportAccreditationService.ProcessOwner</taskOwner></globalConfiguration><participants>
+         <stage name="Stage1"><participant name="default.DefaultPerformer"><resource type="XPATH" identityType="application_role">bpm:getPerformer()</resource></participant></stage>
+      </participants>
+      <notification actionable="false">
+         <action name="ASSIGN" recipient="ASSIGNEES">
+            <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
+         </action>
+         <action name="COMPLETE" recipient="CREATOR">
+            <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
+         </action>
+         <action name="ERROR" recipient="OWNER">
+            <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
+         </action>
+      </notification>
+   </routingSlip>
+   <workflowConfiguration features="ucm,RSCUSTOMIZATION" xmlns:ns0="saibot.airport/security" xmlns="http://xmlns.oracle.com/bpel/workflow/configuration">
+      <outcomes>
+         <outcome>APPROVE</outcome>
+         <outcome>REJECT</outcome>
+      </outcomes>
+      <payload xmlSchemaDefinition="../Schemas/ManualScreeningOfSecurityAccreditationRequestPayload.xsd" typedTaskSchemaLocation="../Schemas/ManualScreeningOfSecurityAccreditationRequestWorkflowTask.xsd">
+         <messageAttribute name="RequestForAirportAccreditationRequest" attributeType="ELEMENT" type="ns0:RequestForAirportAccreditationRequest" updatable="false" external="false"/>
+         <messageAttribute name="accreditationProcessState" attributeType="COMPLEX_TYPE" type="ns0:AirportAccreditationProcessStateType" updatable="false" external="false"/>
+      </payload>
+      <showCompleteGraphicalHistory>true</showCompleteGraphicalHistory>
+      <enableAutoClaim>true</enableAutoClaim>
+   </workflowConfiguration>
+</taskDefinition>
