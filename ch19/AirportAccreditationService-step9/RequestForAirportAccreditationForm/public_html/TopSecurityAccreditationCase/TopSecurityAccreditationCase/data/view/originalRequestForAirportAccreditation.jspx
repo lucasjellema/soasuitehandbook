@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="originalRequestForAirportAccreditation.jspx" id="d1">
+            <af:form id="f1">
+                <af:panelGroupLayout layout="horizontal" inlineStyle="padding: 5px;" id="pgl1">
+                    <af:panelGroupLayout layout="vertical" id="pgl2">
+                        <af:panelFormLayout labelAlignment="start" id="pfl1">
+                            <af:inputText value="#{bindings.requestingOrganizationId.inputValue}"
+                                          label="#{bindings.requestingOrganizationId.hints.label}"
+                                          required="#{bindings.requestingOrganizationId.hints.mandatory}"
+                                          columns="#{bindings.requestingOrganizationId.hints.displayWidth}"
+                                          maximumLength="#{bindings.requestingOrganizationId.hints.precision}"
+                                          shortDesc="#{bindings.requestingOrganizationId.hints.tooltip}"
+                                          disabled="#{param.mode eq 'r'}" id="it1">
+                                <f:validator binding="#{bindings.requestingOrganizationId.validator}"/>
+                            </af:inputText>
+                            <af:inputText value="#{bindings.requestorId.inputValue}"
+                                          label="#{bindings.requestorId.hints.label}"
+                                          required="#{bindings.requestorId.hints.mandatory}"
+                                          columns="#{bindings.requestorId.hints.displayWidth}"
+                                          maximumLength="#{bindings.requestorId.hints.precision}"
+                                          shortDesc="#{bindings.requestorId.hints.tooltip}"
+                                          disabled="#{param.mode eq 'r'}" id="it2">
+                                <f:validator binding="#{bindings.requestorId.validator}"/>
+                            </af:inputText>
+                            <af:inputText value="#{bindings.requiredSecurityLevel.inputValue}"
+                                          label="#{bindings.requiredSecurityLevel.hints.label}"
+                                          required="#{bindings.requiredSecurityLevel.hints.mandatory}"
+                                          columns="#{bindings.requiredSecurityLevel.hints.displayWidth}"
+                                          maximumLength="#{bindings.requiredSecurityLevel.hints.precision}"
+                                          shortDesc="#{bindings.requiredSecurityLevel.hints.tooltip}"
+                                          disabled="#{param.mode eq 'r'}" id="it3">
+                                <f:validator binding="#{bindings.requiredSecurityLevel.validator}"/>
+                            </af:inputText>
+                            <af:inputDate value="#{bindings.startDate.inputValue}"
+                                          label="#{bindings.startDate.hints.label}"
+                                          required="#{bindings.startDate.hints.mandatory}"
+                                          columns="#{bindings.startDate.hints.displayWidth}"
+                                          shortDesc="#{bindings.startDate.hints.tooltip}"
+                                          disabled="#{param.mode eq 'r'}" id="id1">
+                                <f:validator binding="#{bindings.startDate.validator}"/>
+                                <af:convertDateTime pattern="#{bindings.startDate.format}"/>
+                            </af:inputDate>
+                            <af:inputText value="#{bindings.endDate.inputValue}" label="#{bindings.endDate.hints.label}"
+                                          required="#{bindings.endDate.hints.mandatory}"
+                                          columns="#{bindings.endDate.hints.displayWidth}"
+                                          maximumLength="#{bindings.endDate.hints.precision}"
+                                          shortDesc="#{bindings.endDate.hints.tooltip}" disabled="#{param.mode eq 'r'}"
+                                          id="it4">
+                                <f:validator binding="#{bindings.endDate.validator}"/>
+                                <af:convertNumber groupingUsed="false" pattern="#{bindings.endDate.format}"/>
+                            </af:inputText>
+                            <af:inputText value="#{bindings.motivation.inputValue}"
+                                          label="#{bindings.motivation.hints.label}"
+                                          required="#{bindings.motivation.hints.mandatory}"
+                                          columns="#{bindings.motivation.hints.displayWidth}"
+                                          maximumLength="#{bindings.motivation.hints.precision}"
+                                          shortDesc="#{bindings.motivation.hints.tooltip}"
+                                          disabled="#{param.mode eq 'r'}" id="it5">
+                                <f:validator binding="#{bindings.motivation.validator}"/>
+                            </af:inputText>
+                        </af:panelFormLayout>
+                        <af:panelGroupLayout layout="vertical" id="pgl3">
+                            <af:outputText value="Staff Member To Accredit"
+                                           shortDesc="#{bindings.requestingOrganizationId.hints.tooltip}"
+                                           inlineStyle="font-family:Tahoma, Verdana, Helvetica, sans-serif;font-size:11px;font-weight:bold;display:inline;margin:0px;white-space:nowrap;color:#3E403D"
+                                           id="ot1"/>
+                            <af:panelFormLayout id="pfl2">
+                                <af:inputText value="#{bindings.firstName.inputValue}"
+                                              label="#{bindings.firstName.hints.label}"
+                                              required="#{bindings.firstName.hints.mandatory}"
+                                              columns="#{bindings.firstName.hints.displayWidth}"
+                                              maximumLength="#{bindings.firstName.hints.precision}"
+                                              shortDesc="#{bindings.firstName.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it6">
+                                    <f:validator binding="#{bindings.firstName.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.lastName.inputValue}"
+                                              label="#{bindings.lastName.hints.label}"
+                                              required="#{bindings.lastName.hints.mandatory}"
+                                              columns="#{bindings.lastName.hints.displayWidth}"
+                                              maximumLength="#{bindings.lastName.hints.precision}"
+                                              shortDesc="#{bindings.lastName.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it7">
+                                    <f:validator binding="#{bindings.lastName.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.emailAddress.inputValue}"
+                                              label="#{bindings.emailAddress.hints.label}"
+                                              required="#{bindings.emailAddress.hints.mandatory}"
+                                              columns="#{bindings.emailAddress.hints.displayWidth}"
+                                              maximumLength="#{bindings.emailAddress.hints.precision}"
+                                              shortDesc="#{bindings.emailAddress.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it8">
+                                    <f:validator binding="#{bindings.emailAddress.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.employeeNumber.inputValue}"
+                                              label="#{bindings.employeeNumber.hints.label}"
+                                              required="#{bindings.employeeNumber.hints.mandatory}"
+                                              columns="#{bindings.employeeNumber.hints.displayWidth}"
+                                              maximumLength="#{bindings.employeeNumber.hints.precision}"
+                                              shortDesc="#{bindings.employeeNumber.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it9">
+                                    <f:validator binding="#{bindings.employeeNumber.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.managerId.inputValue}"
+                                              label="#{bindings.managerId.hints.label}"
+                                              required="#{bindings.managerId.hints.mandatory}"
+                                              columns="#{bindings.managerId.hints.displayWidth}"
+                                              maximumLength="#{bindings.managerId.hints.precision}"
+                                              shortDesc="#{bindings.managerId.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it10">
+                                    <f:validator binding="#{bindings.managerId.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.mobileTelephone.inputValue}"
+                                              label="#{bindings.mobileTelephone.hints.label}"
+                                              required="#{bindings.mobileTelephone.hints.mandatory}"
+                                              columns="#{bindings.mobileTelephone.hints.displayWidth}"
+                                              maximumLength="#{bindings.mobileTelephone.hints.precision}"
+                                              shortDesc="#{bindings.mobileTelephone.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it11">
+                                    <f:validator binding="#{bindings.mobileTelephone.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.functionTitle.inputValue}"
+                                              label="#{bindings.functionTitle.hints.label}"
+                                              required="#{bindings.functionTitle.hints.mandatory}"
+                                              columns="#{bindings.functionTitle.hints.displayWidth}"
+                                              maximumLength="#{bindings.functionTitle.hints.precision}"
+                                              shortDesc="#{bindings.functionTitle.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it12">
+                                    <f:validator binding="#{bindings.functionTitle.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="pgl4">
+                            <af:outputText value="Staff Member To Accredit  -  Identity Details"
+                                           shortDesc="#{bindings.requestingOrganizationId.hints.tooltip}"
+                                           inlineStyle="font-family:Tahoma, Verdana, Helvetica, sans-serif;font-size:11px;font-weight:bold;display:inline;margin:0px;white-space:nowrap;color:#3E403D"
+                                           id="ot2"/>
+                            <af:panelFormLayout id="pfl3">
+                                <af:inputDate value="#{bindings.birthDate.inputValue}"
+                                              label="#{bindings.birthDate.hints.label}"
+                                              required="#{bindings.birthDate.hints.mandatory}"
+                                              columns="#{bindings.birthDate.hints.displayWidth}"
+                                              shortDesc="#{bindings.birthDate.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="id2">
+                                    <f:validator binding="#{bindings.birthDate.validator}"/>
+                                    <af:convertDateTime pattern="#{bindings.birthDate.format}"/>
+                                </af:inputDate>
+                                <af:inputText value="#{bindings.socialSecurityNumber.inputValue}"
+                                              label="#{bindings.socialSecurityNumber.hints.label}"
+                                              required="#{bindings.socialSecurityNumber.hints.mandatory}"
+                                              columns="#{bindings.socialSecurityNumber.hints.displayWidth}"
+                                              maximumLength="#{bindings.socialSecurityNumber.hints.precision}"
+                                              shortDesc="#{bindings.socialSecurityNumber.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it13">
+                                    <f:validator binding="#{bindings.socialSecurityNumber.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.gender.inputValue}"
+                                              label="#{bindings.gender.hints.label}"
+                                              required="#{bindings.gender.hints.mandatory}"
+                                              columns="#{bindings.gender.hints.displayWidth}"
+                                              maximumLength="#{bindings.gender.hints.precision}"
+                                              shortDesc="#{bindings.gender.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it14">
+                                    <f:validator binding="#{bindings.gender.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.passportId.inputValue}"
+                                              label="#{bindings.passportId.hints.label}"
+                                              required="#{bindings.passportId.hints.mandatory}"
+                                              columns="#{bindings.passportId.hints.displayWidth}"
+                                              maximumLength="#{bindings.passportId.hints.precision}"
+                                              shortDesc="#{bindings.passportId.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it15">
+                                    <f:validator binding="#{bindings.passportId.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.driversLicenseId.inputValue}"
+                                              label="#{bindings.driversLicenseId.hints.label}"
+                                              required="#{bindings.driversLicenseId.hints.mandatory}"
+                                              columns="#{bindings.driversLicenseId.hints.displayWidth}"
+                                              maximumLength="#{bindings.driversLicenseId.hints.precision}"
+                                              shortDesc="#{bindings.driversLicenseId.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it16">
+                                    <f:validator binding="#{bindings.driversLicenseId.validator}"/>
+                                </af:inputText>
+                                <af:inputText value="#{bindings.picture.inputValue}"
+                                              label="#{bindings.picture.hints.label}"
+                                              required="#{bindings.picture.hints.mandatory}"
+                                              columns="#{bindings.picture.hints.displayWidth}"
+                                              maximumLength="#{bindings.picture.hints.precision}"
+                                              shortDesc="#{bindings.picture.hints.tooltip}"
+                                              disabled="#{param.mode eq 'r'}" id="it17">
+                                    <f:validator binding="#{bindings.picture.validator}"/>
+                                </af:inputText>
+                            </af:panelFormLayout>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="pgl5">
+                            <af:outputText value="Staff References  -  Staff Member Id"
+                                           shortDesc="#{bindings.requestingOrganizationId.hints.tooltip}"
+                                           inlineStyle="font-family:Tahoma, Verdana, Helvetica, sans-serif;font-size:11px;font-weight:bold;display:inline;margin:0px;white-space:nowrap;color:#3E403D"
+                                           id="ot3"/>
+                            <af:panelGroupLayout layout="horizontal" id="pgl6"/>
+                            <af:panelGroupLayout layout="vertical" id="pgl7">
+                                <af:table value="#{bindings.staffMemberId.collectionModel}" var="row"
+                                          rows="#{bindings.staffMemberId.rangeSize}"
+                                          emptyText="#{bindings.staffMemberId.viewable ? 'No data to display.' : 'Access Denied.'}"
+                                          rowBandingInterval="0" fetchSize="#{bindings.staffMemberId.rangeSize}"
+                                          id="t1">
+                                    <af:column headerText="#{bindings.staffMemberId.hints.element.label}" id="c1">
+                                        <af:inputText value="#{row.bindings.element.inputValue}"
+                                                      label="#{bindings.staffMemberId.hints.element.label}"
+                                                      required="#{bindings.staffMemberId.hints.element.mandatory}"
+                                                      columns="#{bindings.staffMemberId.hints.element.displayWidth}"
+                                                      maximumLength="#{bindings.staffMemberId.hints.element.precision}"
+                                                      shortDesc="#{bindings.staffMemberId.hints.element.tooltip}"
+                                                      id="it18">
+                                            <f:validator binding="#{row.bindings.element.validator}"/>
+                                        </af:inputText>
+                                    </af:column>
+                                </af:table>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="horizontal" inlineStyle="padding: 5px;" id="pgl8">
+                    <af:toolbar id="t2">
+                        <af:button actionListener="#{bindings.save.execute}" text="#{resources.CF_SAVE}"
+                                   disabled="#{param.mode eq 'r'}" action="save" id="cfSave"/>
+                        <af:button immediate="true" text="#{resources.CF_RESET}" disabled="#{param.mode eq 'r'}"
+                                   id="cfReset">
+                            <af:resetActionListener/>
+                        </af:button>
+                    </af:toolbar>
+                    <af:spacer width="230px" id="s1"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" inlineStyle="padding: 5px;" id="pgl9">
+                    <af:outputText value="#{resources.CF_READ_ONLY_MSG}" visible="#{param.mode eq 'r'}" id="ot4"/>
+                </af:panelGroupLayout>
+            </af:form>
+        </af:document>
+    </f:view>
+</jsp:root>

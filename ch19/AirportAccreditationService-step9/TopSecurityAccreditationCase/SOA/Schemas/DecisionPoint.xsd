@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="US-ASCII" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://xmlns.oracle.com/rules/rules/decisionpoint"
+            xmlns="http://xmlns.oracle.com/rules/rules/decisionpoint"
+            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0" 
+            elementFormDefault="qualified" >
+
+
+  <xsd:annotation>
+    <xsd:appinfo>
+        <jaxb:schemaBindings>
+            <jaxb:package name="oracle.rules.sdk2.decisionpoint.wsfacts" />
+        </jaxb:schemaBindings>
+    </xsd:appinfo>
+  </xsd:annotation>            
+
+  <xsd:element name="DecisionPointInputs">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="data">
+          <xsd:complexType>
+            <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+              <xsd:element name="viewObjectRef" type="ViewObjectRef"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType mixed="true" >
+            <xsd:sequence>
+              <xsd:any processContents="skip"/>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string"
+              use="required"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="setid" type="xsd:string"/>
+      <xsd:attribute name="datasrc" type="xsd:string"/>
+      <xsd:attribute name="dictionaryName" type="xsd:string"/>
+      <xsd:attribute name="decisionFunction" type="xsd:string"/>
+      <xsd:attribute name="effectiveDate" type="xsd:dateTime"/>
+      <xsd:attribute name="currentDate" type="xsd:dateTime"/>
+      <xsd:attribute name="activationID" type="xsd:int"/>
+      <xsd:attribute name="executeRL" type="xsd:boolean" default="false"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="DecisionPointResults">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="value" minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType mixed="true" >
+            <xsd:sequence>
+              <xsd:any processContents="skip"/>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string" use="required"/>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="ViewObjectRef">
+    <xsd:sequence>
+      <xsd:element name="keyValues">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="key" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:simpleContent>
+                  <xsd:extension base="xsd:string">
+                    <xsd:attribute name="name" type="xsd:string"
+                                   use="required"/>
+                  </xsd:extension>
+                </xsd:simpleContent>
+              </xsd:complexType>             
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:string" use="required"/>
+    <xsd:attribute name="viewObjectLoader" type="xsd:string"/>
+    <xsd:attribute name="usingWhereClause" type="xsd:string"/>
+  </xsd:complexType>
+  <xsd:element name="SimpleDecisionPointInput">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="viewObjectName" type="xsd:string"/>
+        <xsd:element name="key" type="xsd:string" minOccurs="0"
+                     maxOccurs="unbounded"/>
+        <xsd:element name="value" type="xsd:string" minOccurs="0"
+                     maxOccurs="unbounded"/>
+       </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
+
+

@@ -1,0 +1,19 @@
+//Content Format Version: 1.0
+
+//########################################################################################
+//####                                                                                ####
+//####          THIS IS AN AUTO GENERATED FILE. PLEASE DO NOT MANUALLY MODIFY         ####
+//#### CHANGES TO THIS FILE MAY PRODUCE UNEXPECTED BEHAVIOR AND WOULD BE OVERWRITTEN  ####
+//####                                                                                ####
+//########################################################################################
+package oracle.scripting.catalog.caseDataModule;
+
+
+@com.oracle.scripting.lang.annotations.CatalogType(element = "E", 
+			namespace = "saibot.airport/security", 
+			name = "RequestForAirportAccreditationRequest", 
+			location = "/Schemas/AirportAccreditationService.xsd", 
+			module = "CaseDataModule") 
+public class RequestForAirportAccreditation{
+
+}

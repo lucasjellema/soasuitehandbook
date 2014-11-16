@@ -66,7 +66,7 @@
       <string v="oracle.tip.tools.ide.ess.addin.ESSContentSetProvider/ess-content"/>
       <string v="oracle.bpm.fusion.studio.BPMProjectSettings/bpmProjectsProcessesContentSet"/>
    </list>
-   <value n="defaultPackage" v="airportaccreditationservice"/>
+   <value n="defaultPackage" v="topsecurityaccreditationcase"/>
    <hash n="oracle.bpm.fusion.studio.BPMProjectSettings">
       <hash n="bpmProjectsProcessesContentSet">
          <list n="url-path">
@@ -74,19 +74,16 @@
          </list>
       </hash>
    </hash>
+   <hash n="oracle.ide.model.ResourcePaths">
+      <hash n="resourcesContentSet">
+         <list n="url-path"/>
+      </hash>
+   </hash>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
-         <string v="ADFm"/>
          <string v="BPM"/>
-         <string v="Database"/>
-         <string v="Java"/>
-         <string v="Maven"/>
          <string v="SOA"/>
-         <string v="TopLink"/>
-         <string v="WSDL"/>
-         <string v="WSPolicy"/>
          <string v="XML"/>
-         <string v="XML_SCHEMA"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.compiler.OjcConfiguration">
@@ -117,7 +114,7 @@
    </hash>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
-         <hash n="AirportAccreditationService">
+         <hash n="TopSecurityAccreditationCase">
             <hash n="archiveOptions">
                <value n="hasManifest" v="false"/>
             </hash>
@@ -192,30 +189,26 @@
                   </hash>
                </list>
             </hash>
-            <url n="jarURL" path="deploy/sca_AirportAccreditationService${composite.revision_id}.jar"/>
+            <url n="jarURL" path="deploy/sca_TopSecurityAccreditationCase${composite.revision_id}.jar"/>
             <value n="profileClass" v="oracle.tip.tools.ide.fabric.deploy.sar.SarProfile"/>
-            <value n="profileName" v="AirportAccreditationService"/>
+            <value n="profileName" v="TopSecurityAccreditationCase"/>
          </hash>
       </hash>
       <list n="profileList">
-         <string v="AirportAccreditationService"/>
+         <string v="TopSecurityAccreditationCase"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
       <url n="pomfileURL" path="pom.xml"/>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
-      <value n="j2eeWebAppName" v="AirportAccreditationService-AirportAccreditationService-webapp"/>
-      <value n="j2eeWebContextRoot" v="AirportAccreditationService-AirportAccreditationService-context-root"/>
+      <value n="j2eeWebAppName" v="AirportAccreditationService-step9-TopSecurityAccreditationCase-webapp"/>
+      <value n="j2eeWebContextRoot" v="AirportAccreditationService-step9-TopSecurityAccreditationCase-context-root"/>
    </hash>
    <hash n="oracle.jdeveloper.model.PathsConfiguration">
       <hash n="javaContentSet">
-         <list n="pattern-filters">
-            <string v="+**"/>
-         </list>
          <list n="url-path">
             <url path="SOA/SCA-INF/src/"/>
-            <url path="."/>
          </list>
       </hash>
    </hash>
@@ -260,30 +253,6 @@
             <value n="id" v="BC4J Service Runtime"/>
             <value n="isJDK" v="false"/>
          </hash>
-         <hash>
-            <value n="id" v="ADFm Designtime API"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="TopLink"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="ADF Model Runtime"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Oracle XML Parser v2"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Oracle JDBC"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Oracle Rules"/>
-            <value n="isJDK" v="false"/>
-         </hash>
       </list>
       <list n="libraryReferences">
          <hash>
@@ -310,30 +279,6 @@
             <value n="id" v="BC4J Service Runtime"/>
             <value n="isJDK" v="false"/>
          </hash>
-         <hash>
-            <value n="id" v="ADFm Designtime API"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="TopLink"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="ADF Model Runtime"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Oracle XML Parser v2"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Oracle JDBC"/>
-            <value n="isJDK" v="false"/>
-         </hash>
-         <hash>
-            <value n="id" v="Oracle Rules"/>
-            <value n="isJDK" v="false"/>
-         </hash>
       </list>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectPaths">
@@ -346,10 +291,4 @@
          </list>
       </hash>
    </hash>
-   <value n="SCA_BPEL_FOLDER_PROPERTY_NAME" v="BPEL/"/>
-   <value n="SCA_MEDIATOR_FOLDER_PROPERTY_NAME" v="Mediators/"/>
-   <value n="SCA_WORKFLOW_FOLDER_PROPERTY_NAME" v="HumanTasks/"/>
-   <value n="SOA_EVENT_FOLDER_NAME" v="Events/"/>
-   <value n="SOA_TRANSFORMATION_FOLDER_NAME" v="Transformations/"/>
-   <value n="SOA_WSDL_FOLDER_NAME" v="WSDLs/"/>
 </jpr:project>

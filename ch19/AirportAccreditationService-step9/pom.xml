@@ -10,5 +10,6 @@
     	<module>AirportAccreditationService</module>
     	<module>MyBPMProcess</module>
     	<module>SomeProject</module>
+    	<module>TopSecurityAccreditationCase</module>
     </modules>
 </project>

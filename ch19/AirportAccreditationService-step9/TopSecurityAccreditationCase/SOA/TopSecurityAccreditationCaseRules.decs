@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decisionServices xmlns="http://xmlns.oracle.com/bpel/rules" name="TopSecurityAccreditationCaseRules">
+   <ruleEngineProvider provider="Oracle_11.0.0.0.0" name="myRuleEngine">
+      <repository type="SCA-Archive">
+         <path>projectInfo/oracle/rules/TopSecurityAccreditationCaseRules.rules</path>
+      </repository>
+   </ruleEngineProvider>
+   <decisionService name="TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules" ruleEngineProviderReference="myRuleEngine" targetNamespace="http://xmlns.oracle.com/bpm/case/caseDecision/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules">
+      <catalog>TopSecurityAccreditationCaseRules</catalog>
+      <pattern name="CallFunctionStateless">
+         <arguments>
+            <call>TopSecurityAccreditationCaseRules.TopSecurityAccreditationCaseRules</call>
+         </arguments>
+      </pattern>
+      <pattern name="CallFunctionStateful">
+         <arguments>
+            <call>TopSecurityAccreditationCaseRules.TopSecurityAccreditationCaseRules</call>
+         </arguments>
+      </pattern>
+   </decisionService>
+</decisionServices>

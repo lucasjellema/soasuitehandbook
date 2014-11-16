@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html">
+    <jsp:output omit-xml-declaration="true" doctype-root-element="HTML"
+                doctype-system="http://www.oracle.com/jdeveloper/html5.dtd" doctype-public="-//DTD HTML5 //EN"/>
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            </head>
+            <body>
+                <h:form></h:form>
+            </body>
+        </html>
+    </f:view>
+</jsp:root>

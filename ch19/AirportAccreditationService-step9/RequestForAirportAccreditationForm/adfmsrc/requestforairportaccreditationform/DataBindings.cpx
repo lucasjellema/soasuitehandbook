@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.1.3.10.8" id="DataBindings"
+             SeparateXMLFiles="false" Package="requestforairportaccreditationform" ClientType="Generic">
+  <pageMap>
+    <page path="/TopSecurityAccreditationCase/TopSecurityAccreditationCase/data/view/originalRequestForAirportAccreditation.jspx"
+          usageId="requestforairportaccreditationform_originalRequestForAirportAccreditationPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="requestforairportaccreditationform_originalRequestForAirportAccreditationPageDef"
+          path="TopSecurityAccreditationCase.TopSecurityAccreditationCase.data.view.originalRequestForAirportAccreditationPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"
+        path="requestforairportaccreditationform.RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"/>
+  </dataControlUsages>
+</Application>

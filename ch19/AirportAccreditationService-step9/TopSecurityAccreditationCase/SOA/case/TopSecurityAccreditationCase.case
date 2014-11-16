@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:caseMetadata targetNamespace="http://xmlns.oracle.com/TopSecurityAccreditationCase" xmlns:ns2="http://xmlns.oracle.com/bpm/case/metadata/common" xmlns="http://xmlns.oracle.com/bpm/case/metadata/extension" xmlns:ns4="http://xmlns.oracle.com/bpm/case/activity" xmlns:ns3="http://xmlns.oracle.com/bpm/case/metadata">
+    <ns3:id>${domain_id}_${process_id}_${process_revision}_TopSecurityAccreditationCase</ns3:id>
+    <ns3:name>TopSecurityAccreditationCase</ns3:name>
+    <ns3:title translationType="STATIC">
+        <ns2:translationValue>Top Security Accreditation Case</ns2:translationValue>
+    </ns3:title>
+    <ns3:priority>3</ns3:priority>
+    <ns3:ecmFolder>
+        <ns3:parentFolder type="STATIC"></ns3:parentFolder>
+        <ns3:caseInstanceFolder type="STATIC"></ns3:caseInstanceFolder>
+        <ns3:createSubFolderOnCaseInstanceCreation>true</ns3:createSubFolderOnCaseInstanceCreation>
+    </ns3:ecmFolder>
+    <ns3:caseData>
+        <ns3:data updatable="true" external="false">
+            <ns3:name>AirportAccreditationRequestIdentifier</ns3:name>
+            <ns3:type>{http://www.w3.org/2001/XMLSchema}string</ns3:type>
+            <ns3:dataType>SIMPLE_TYPE</ns3:dataType>
+        </ns3:data>
+        <ns3:data updatable="true" external="false">
+            <ns3:name>SubjectsMobilePhone</ns3:name>
+            <ns3:type>{http://www.w3.org/2001/XMLSchema}string</ns3:type>
+            <ns3:dataType>SIMPLE_TYPE</ns3:dataType>
+        </ns3:data>
+        <ns3:data updatable="true" external="false">
+            <ns3:name>originalRequestForAirportAccreditation</ns3:name>
+            <ns3:type>{saibot.airport/security}RequestForAirportAccreditationRequest</ns3:type>
+            <ns3:dataType>ELEMENT</ns3:dataType>
+            <ns3:schema>Schemas/AirportAccreditationService.xsd</ns3:schema>
+        </ns3:data>
+    </ns3:caseData>
+    <ns3:milestones>
+        <ns3:milestone>
+            <ns3:name>documentation</ns3:name>
+            <ns3:isSoft>false</ns3:isSoft>
+            <ns3:deadline>
+                <ns3:duration type="STATIC"></ns3:duration>
+            </ns3:deadline>
+        </ns3:milestone>
+        <ns3:milestone>
+            <ns3:name>nationalCheck</ns3:name>
+            <ns3:isSoft>false</ns3:isSoft>
+            <ns3:deadline>
+                <ns3:duration type="STATIC"></ns3:duration>
+            </ns3:deadline>
+        </ns3:milestone>
+        <ns3:milestone>
+            <ns3:name>deskResearch</ns3:name>
+            <ns3:isSoft>false</ns3:isSoft>
+            <ns3:deadline>
+                <ns3:duration type="STATIC"></ns3:duration>
+            </ns3:deadline>
+        </ns3:milestone>
+        <ns3:milestone>
+            <ns3:name>referencesAssessment</ns3:name>
+            <ns3:isSoft>false</ns3:isSoft>
+            <ns3:deadline>
+                <ns3:duration type="STATIC"></ns3:duration>
+            </ns3:deadline>
+        </ns3:milestone>
+        <ns3:milestone>
+            <ns3:name>interviewSessions</ns3:name>
+            <ns3:isSoft>false</ns3:isSoft>
+            <ns3:deadline>
+                <ns3:duration type="STATIC"></ns3:duration>
+            </ns3:deadline>
+        </ns3:milestone>
+        <ns3:milestone>
+            <ns3:name>biometrics</ns3:name>
+            <ns3:isSoft>false</ns3:isSoft>
+            <ns3:deadline>
+                <ns3:duration type="STATIC"></ns3:duration>
+            </ns3:deadline>
+        </ns3:milestone>
+        <ns3:milestone>
+            <ns3:name>wrapUp</ns3:name>
+            <ns3:isSoft>false</ns3:isSoft>
+            <ns3:deadline>
+                <ns3:duration type="STATIC"></ns3:duration>
+            </ns3:deadline>
+        </ns3:milestone>
+    </ns3:milestones>
+    <ns3:outcomes>
+        <ns3:outcome>
+            <ns3:name>denied</ns3:name>
+        </ns3:outcome>
+        <ns3:outcome>
+            <ns3:name>granted</ns3:name>
+        </ns3:outcome>
+    </ns3:outcomes>
+    <ns3:permissionTags>
+        <ns3:permissionTag>
+            <ns3:customTagName>PUBLIC</ns3:customTagName>
+        </ns3:permissionTag>
+        <ns3:permissionTag>
+            <ns3:customTagName>RESTRICTED</ns3:customTagName>
+        </ns3:permissionTag>
+    </ns3:permissionTags>
+    <ns3:resourceBundle>
+        <ns3:name>TopSecurityAccreditationCaseResourceBundle</ns3:name>
+    </ns3:resourceBundle>
+    <ns3:namespacePrefixes>
+        <ns3:namespacePrefix>
+            <ns3:prefix>bpm</ns3:prefix>
+            <ns3:namespace>http://xmlns.oracle.com/bpmn20/extensions</ns3:namespace>
+        </ns3:namespacePrefix>
+    </ns3:namespacePrefixes>
+    <ns3:organizationalUnitName type="STATIC"></ns3:organizationalUnitName>
+    <ns3:dueDate>
+        <ns3:duration type="STATIC"></ns3:duration>
+    </ns3:dueDate>
+    <ns3:useBusinessCalendar>false</ns3:useBusinessCalendar>
+</ns3:caseMetadata>

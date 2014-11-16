@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="originalRequestForAirportAccreditation">
+    <data-control-scope>
+      <shared/>
+    </data-control-scope>
+  </task-flow-definition>
+</adfc-config>

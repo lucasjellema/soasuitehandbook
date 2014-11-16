@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:organization xmlns:ns2="http://xmlns.oracle.com/bpel/workflow/taskQuery" xmlns:ns1="http://xmlns.oracle.com/bpm/lpg/peopleQuery" xmlns:ns4="http://xmlns.oracle.com/bpel/workflow/task" xmlns:ns3="http://xmlns.oracle.com/bpm/identity" xmlns:ns0="http://xmlns.oracle.com/bpm/organization">
+   <ns0:updateExistingObjects>false</ns0:updateExistingObjects>
+   <ns0:organizationalUnits/>
+   <ns0:applicationRoles>
+      <ns0:applicationRole id="TopSecurityAccreditationCase.ProcessOwner" isProcessRole="true">
+         <ns3:name>TopSecurityAccreditationCase.Process Owner</ns3:name>
+         <ns0:processRole id="ProcessOwner" name="Process Owner"/>
+      </ns0:applicationRole>
+      <ns0:applicationRole id="TopSecurityAccreditationCase.ProcessReviewer" isProcessRole="true">
+         <ns3:name>TopSecurityAccreditationCase.Process Reviewer</ns3:name>
+         <ns0:processRole id="ProcessReviewer" name="Process Reviewer"/>
+      </ns0:applicationRole>
+   </ns0:applicationRoles>
+   <ns0:applicationRoleOrgUnitCalendarAssociations/>
+   <ns0:participantPropertiesList/>
+   <ns0:holidayRules/>
+   <ns0:calendarRules/>
+   <ns0:businessParameters/>
+</ns0:organization>

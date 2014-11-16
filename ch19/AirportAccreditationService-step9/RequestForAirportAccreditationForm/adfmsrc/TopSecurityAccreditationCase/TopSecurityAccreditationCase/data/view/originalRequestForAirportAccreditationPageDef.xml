@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.1.3.10.8"
+                id="originalRequestForAirportAccreditationPageDef"
+                Package="TopSecurityAccreditationCase.TopSecurityAccreditationCase.data.view">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25"
+              DataControl="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"
+              id="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"/>
+    <accessorIterator MasterBinding="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"
+                      Binds="staffMemberToAccredit" RangeSize="25"
+                      DataControl="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"
+                      BeanClass="airport.saibot.security.StaffMemberType" id="staffMemberToAccreditIterator"/>
+    <accessorIterator MasterBinding="staffMemberToAccreditIterator" Binds="identityDetails" RangeSize="25"
+                      DataControl="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"
+                      BeanClass="airport.saibot.security.StaffIdentityDetailsType" id="identityDetailsIterator"/>
+    <accessorIterator MasterBinding="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"
+                      Binds="staffReferences" RangeSize="25"
+                      DataControl="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"
+                      BeanClass="airport.saibot.security.RequestForAirportAccreditationRequestType.StaffReferences"
+                      id="staffReferencesIterator"/>
+    <accessorIterator MasterBinding="staffReferencesIterator" Binds="staffMemberId" RangeSize="25"
+                      DataControl="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"
+                      BeanClass="java.lang.String" id="staffMemberIdIterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="save" RequiresUpdateModel="true" Action="invokeMethod" MethodName="save"
+                  IsViewObjectMethod="false"
+                  DataControl="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"
+                  InstanceName="data.RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation.dataProvider"
+                  ReturnName="data.RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation.methodResults.save_RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation_dataProvider_save_result"/>
+    <attributeValues IterBinding="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"
+                     id="requestingOrganizationId">
+      <AttrNames>
+        <Item Value="requestingOrganizationId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"
+                     id="requestorId">
+      <AttrNames>
+        <Item Value="requestorId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"
+                     id="requiredSecurityLevel">
+      <AttrNames>
+        <Item Value="requiredSecurityLevel"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"
+                     id="startDate">
+      <AttrNames>
+        <Item Value="startDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"
+                     id="endDate">
+      <AttrNames>
+        <Item Value="endDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditationIterator"
+                     id="motivation">
+      <AttrNames>
+        <Item Value="motivation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="staffMemberToAccreditIterator" id="firstName">
+      <AttrNames>
+        <Item Value="firstName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="staffMemberToAccreditIterator" id="lastName">
+      <AttrNames>
+        <Item Value="lastName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="staffMemberToAccreditIterator" id="emailAddress">
+      <AttrNames>
+        <Item Value="emailAddress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="staffMemberToAccreditIterator" id="employeeNumber">
+      <AttrNames>
+        <Item Value="employeeNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="staffMemberToAccreditIterator" id="managerId">
+      <AttrNames>
+        <Item Value="managerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="staffMemberToAccreditIterator" id="mobileTelephone">
+      <AttrNames>
+        <Item Value="mobileTelephone"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="staffMemberToAccreditIterator" id="functionTitle">
+      <AttrNames>
+        <Item Value="functionTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="identityDetailsIterator" id="birthDate">
+      <AttrNames>
+        <Item Value="birthDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="identityDetailsIterator" id="socialSecurityNumber">
+      <AttrNames>
+        <Item Value="socialSecurityNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="identityDetailsIterator" id="gender">
+      <AttrNames>
+        <Item Value="gender"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="identityDetailsIterator" id="passportId">
+      <AttrNames>
+        <Item Value="passportId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="identityDetailsIterator" id="driversLicenseId">
+      <AttrNames>
+        <Item Value="driversLicenseId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="identityDetailsIterator" id="picture">
+      <AttrNames>
+        <Item Value="picture"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="staffMemberIdIterator" id="staffMemberId">
+      <nodeDefinition Name="staffMemberId0">
+        <AttrNames>
+          <Item Value="element"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

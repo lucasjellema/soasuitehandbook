@@ -1,0 +1,45 @@
+<wsdl:definitions
+     name="TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules"
+     targetNamespace="http://xmlns.oracle.com/bpm/case/caseDecision/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules"
+     xmlns:tns="http://xmlns.oracle.com/bpm/case/caseDecision/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:java="http://schemas.xmlsoap.org/wsdl/java/"
+     xmlns:format="http://schemas.xmlsoap.org/wsdl/formatbinding/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/bpm/case/caseDecision/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules">
+            <include schemaLocation="../Schemas/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRulesMessageTypes.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="callFunctionStatelessMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStateless"/>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatelessDecisionMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStatelessDecision"/>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatefulMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStateful"/>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatefulDecisionMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStatefulDecision"/>
+    </wsdl:message>
+    <wsdl:message name="decisionServiceError">
+        <wsdl:part name="payload" element="tns:errorInfo"/>
+    </wsdl:message>
+    <wsdl:portType name="IDecisionService">
+        <wsdl:operation name="callFunctionStateless">
+            <wsdl:input name="callFunctionStatelessInput" message="tns:callFunctionStatelessMessage"/>
+            <wsdl:output name="callFunctionStatelessOutput" message="tns:callFunctionStatelessDecisionMessage"/>
+            <wsdl:fault name="operationErroredFault" message="tns:decisionServiceError"/>
+        </wsdl:operation>
+        <wsdl:operation name="callFunctionStateful">
+            <wsdl:input name="callFunctionStatefulInput" message="tns:callFunctionStatefulMessage"/>
+            <wsdl:output name="callFunctionStatefulOutput" message="tns:callFunctionStatefulDecisionMessage"/>
+            <wsdl:fault name="operationErroredFault" message="tns:decisionServiceError"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
