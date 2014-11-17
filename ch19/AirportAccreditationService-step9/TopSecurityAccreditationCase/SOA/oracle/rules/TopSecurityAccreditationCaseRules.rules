@@ -5521,16 +5521,391 @@
       <RuleFiringLimitError>true</RuleFiringLimitError>
       <UniqueRulesets>false</UniqueRulesets>
     </DecisionFunction>
-    <UpdateNumber>6</UpdateNumber>
-    <ValidationUpdateNumber>6</ValidationUpdateNumber>
+    <UpdateNumber>11</UpdateNumber>
+    <ValidationUpdateNumber>11</ValidationUpdateNumber>
     <UpdateTime>0</UpdateTime>
   </DataModel>
   <RuleSet id="G}-6d6ab7cf:149b915705a:-7c2f">
     <Name>TopSecurityAccreditationCaseRules</Name>
     <Alias>TopSecurityAccreditationCaseRules</Alias>
-    <ValidationUpdateNumber>2</ValidationUpdateNumber>
+    <ValidationUpdateNumber>46</ValidationUpdateNumber>
     <Active>true</Active>
     <CalendarForm>DateTime</CalendarForm>
+    <RuleSheet id="G}6ac775e6:149ba4448f8:-7c27">
+      <Name>MilestoneRules</Name>
+      <Alias>MilestoneRules</Alias>
+      <ValidationUpdateNumber>23</ValidationUpdateNumber>
+      <Priority>medium</Priority>
+      <Active>true</Active>
+      <CalendarForm>DateTime</CalendarForm>
+      <TreeMode>false</TreeMode>
+      <Visible>true</Visible>
+      <SimpleTest id="L}577">
+        <FactType>CaseEvent</FactType>
+        <IDofFactType>J}oracle.bpm.casemgmt.metadata.event.model.TCaseEvent</IDofFactType>
+        <FactPath>CaseEvent</FactPath>
+        <FactPathIDs>L}577</FactPathIDs>
+        <Form>FormIsA</Form>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>false</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <ShowPatterns>false</ShowPatterns>
+      <Logical>false</Logical>
+      <Dimension id="L}568">
+        <IDofSharedBucketSet>G}10fcf3ea:144766625c7:-7b02</IDofSharedBucketSet>
+        <DimensionNode id="L}570">
+          <BucketIDTable>G}10fcf3ea:144766625c7:-7aff</BucketIDTable>
+          <Values>COMPLETED</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes>L}586</ChildDimensionNodes>
+        </DimensionNode>
+        <PrivateBucketSet id="G}6ac775e6:149ba4448f8:-7c26">
+          <Visible>true</Visible>
+          <CreationUpdateNumber>10</CreationUpdateNumber>
+          <IDofType>J}oracle.bpm.casemgmt.metadata.caseinstance.model.TCase</IDofType>
+          <ListContentID>B}nil</ListContentID>
+          <Type>Case</Type>
+          <Form>Default</Form>
+          <Bucket id="G}6ac775e6:149ba4448f8:-7c25">
+            <Name>otherwise</Name>
+            <Alias>otherwise</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>10</CreationUpdateNumber>
+            <Inclusive>true</Inclusive>
+            <Otherwise>true</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}573">
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <CalendarForm>Date</CalendarForm>
+          <Excluded>false</Excluded>
+          <ValidationUpdateNumber>-1</ValidationUpdateNumber>
+        </PrivateBucketSet>
+        <SharedBucketSet>TActivityEvent</SharedBucketSet>
+        <Expression id="L}569">
+          <Value>CaseEvent.activityEvent.activityEvent</Value>
+          <ResolvedValue>`L}577`.`J}oracle.bpm.casemgmt.metadata.event.model.TCaseEvent.{activityEvent}`.`J}oracle.bpm.casemgmt.metadata.event.model.TCaseActivityEvent.{activityEvent}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Dimension>
+      <Dimension id="L}584">
+        <IDofSharedBucketSet>B}nil</IDofSharedBucketSet>
+        <DimensionNode id="L}586">
+          <BucketIDTable>G}6ac775e6:149ba4448f8:-7c1d</BucketIDTable>
+          <Values>&quot;GatherIdentificationPapers&quot;</Values>
+          <ParentDimensionNode>L}570</ParentDimensionNode>
+          <ChildDimensionNodes></ChildDimensionNodes>
+        </DimensionNode>
+        <PrivateBucketSet id="G}6ac775e6:149ba4448f8:-7c24">
+          <Visible>true</Visible>
+          <CreationUpdateNumber>13</CreationUpdateNumber>
+          <IDofType>J}java.lang.String</IDofType>
+          <ListContentID>B}nil</ListContentID>
+          <Type>String</Type>
+          <Form>Default</Form>
+          <Bucket id="G}6ac775e6:149ba4448f8:-7c23">
+            <Name>otherwise</Name>
+            <Alias>otherwise</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>13</CreationUpdateNumber>
+            <Inclusive>true</Inclusive>
+            <Otherwise>true</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}588">
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}6ac775e6:149ba4448f8:-7c22">
+            <Name>&quot;gatherIdentificationPapers&quot;</Name>
+            <Alias>&quot;gatherIdentificationPapers&quot;</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>15</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}593">
+              <Value>&quot;gatherIdentificationPapers&quot;</Value>
+              <ResolvedValue>&quot;gatherIdentificationPapers&quot;</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}6ac775e6:149ba4448f8:-7c1d">
+            <Name>&quot;GatherIdentificationPapers&quot;</Name>
+            <Alias>&quot;GatherIdentificationPapers&quot;</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>22</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}616">
+              <Value>&quot;GatherIdentificationPapers&quot;</Value>
+              <ResolvedValue>&quot;GatherIdentificationPapers&quot;</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <CalendarForm>Date</CalendarForm>
+          <Excluded>false</Excluded>
+          <ValidationUpdateNumber>22</ValidationUpdateNumber>
+        </PrivateBucketSet>
+        <Expression id="L}585">
+          <Value>CaseEvent.activityEvent.activityName</Value>
+          <ResolvedValue>`L}577`.`J}oracle.bpm.casemgmt.metadata.event.model.TCaseEvent.{activityEvent}`.`J}oracle.bpm.casemgmt.metadata.event.model.TCaseActivityEvent.{activityName}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Dimension>
+      <DTAction id="L}598">
+        <Form>Call</Form>
+        <Target>reachMilestone</Target>
+        <ResolvedTarget>`G}10fcf3ea:144766625c7:-7a8d`</ResolvedTarget>
+        <Expression id="L}602">
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>milestoneName</ParameterAlias>
+          <ParameterID>G}10fcf3ea:144766625c7:-7a8c</ParameterID>
+          <DTActionParameterName>milestoneName</DTActionParameterName>
+        </Expression>
+        <Expression id="L}603">
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>comments</ParameterAlias>
+          <ParameterID>G}10fcf3ea:144766625c7:-7a8b</ParameterID>
+          <DTActionParameterName>comments</DTActionParameterName>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+        <AlwaysSelected>true</AlwaysSelected>
+        <DTActionNode id="L}599">
+          <Selected>false</Selected>
+          <Expression id="L}608">
+            <Value>documentation</Value>
+            <ResolvedValue>`G}-6d6ab7cf:149b915705a:-7c09`</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>milestoneName</ParameterAlias>
+            <ParameterID>G}10fcf3ea:144766625c7:-7a8c</ParameterID>
+            <DTActionParameterName>milestoneName</DTActionParameterName>
+          </Expression>
+          <Expression id="L}611">
+            <Value>&quot;All documentation is collected&quot;</Value>
+            <ResolvedValue>&quot;All documentation is collected&quot;</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>comments</ParameterAlias>
+            <ParameterID>G}10fcf3ea:144766625c7:-7a8b</ParameterID>
+            <DTActionParameterName>comments</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+      </DTAction>
+      <DTRule id="L}571">
+        <Override></Override>
+        <RunBefore></RunBefore>
+        <NoConflict></NoConflict>
+        <OverriddenBy></OverriddenBy>
+        <RunAfter></RunAfter>
+        <CreationUpdateNumber>10</CreationUpdateNumber>
+      </DTRule>
+      <AllowGaps>true</AllowGaps>
+      <ConflictPolicy>manual</ConflictPolicy>
+      <OrderRulesByBucket>false</OrderRulesByBucket>
+      <VerticalOrientation>true</VerticalOrientation>
+    </RuleSheet>
+    <RuleSheet id="G}6ac775e6:149ba4448f8:-7c14">
+      <Name>ActivityRules</Name>
+      <Alias>ActivityRules</Alias>
+      <ValidationUpdateNumber>46</ValidationUpdateNumber>
+      <Priority>medium</Priority>
+      <Active>true</Active>
+      <CalendarForm>DateTime</CalendarForm>
+      <TreeMode>false</TreeMode>
+      <Visible>true</Visible>
+      <SimpleTest id="L}635">
+        <FactType>CaseMilestoneEvent</FactType>
+        <IDofFactType>J}oracle.bpm.casemgmt.metadata.event.model.TCaseMilestoneEvent</IDofFactType>
+        <FactPath>CaseMilestoneEvent</FactPath>
+        <FactPathIDs>L}635</FactPathIDs>
+        <Form>FormIsA</Form>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>false</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <ShowPatterns>false</ShowPatterns>
+      <Logical>false</Logical>
+      <Dimension id="L}625">
+        <IDofSharedBucketSet>G}10fcf3ea:144766625c7:-7acf</IDofSharedBucketSet>
+        <DimensionNode id="L}627">
+          <BucketIDTable>G}10fcf3ea:144766625c7:-7acd</BucketIDTable>
+          <Values>REACHED</Values>
+          <ParentDimensionNode>B}nil</ParentDimensionNode>
+          <ChildDimensionNodes>L}644</ChildDimensionNodes>
+        </DimensionNode>
+        <PrivateBucketSet id="G}6ac775e6:149ba4448f8:-7c13">
+          <Visible>true</Visible>
+          <CreationUpdateNumber>26</CreationUpdateNumber>
+          <IDofType>J}java.lang.String</IDofType>
+          <ListContentID>B}nil</ListContentID>
+          <Type>String</Type>
+          <Form>Default</Form>
+          <Bucket id="G}6ac775e6:149ba4448f8:-7c12">
+            <Name>otherwise</Name>
+            <Alias>otherwise</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>26</CreationUpdateNumber>
+            <Inclusive>true</Inclusive>
+            <Otherwise>true</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}630">
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <CalendarForm>Date</CalendarForm>
+          <Excluded>false</Excluded>
+          <ValidationUpdateNumber>27</ValidationUpdateNumber>
+        </PrivateBucketSet>
+        <SharedBucketSet>TMilestoneEvent</SharedBucketSet>
+        <Expression id="L}626">
+          <Value>CaseMilestoneEvent.milestoneEvent</Value>
+          <ResolvedValue>`L}635`.`J}oracle.bpm.casemgmt.metadata.event.model.TCaseMilestoneEvent.{milestoneEvent}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Dimension>
+      <Dimension id="L}642">
+        <IDofSharedBucketSet>B}nil</IDofSharedBucketSet>
+        <DimensionNode id="L}644">
+          <BucketIDTable>G}6ac775e6:149ba4448f8:-7c0f</BucketIDTable>
+          <Values>&quot;documentation&quot;</Values>
+          <ParentDimensionNode>L}627</ParentDimensionNode>
+          <ChildDimensionNodes></ChildDimensionNodes>
+        </DimensionNode>
+        <PrivateBucketSet id="G}6ac775e6:149ba4448f8:-7c11">
+          <Visible>true</Visible>
+          <CreationUpdateNumber>30</CreationUpdateNumber>
+          <IDofType>J}java.lang.String</IDofType>
+          <ListContentID>B}nil</ListContentID>
+          <Type>String</Type>
+          <Form>Default</Form>
+          <Bucket id="G}6ac775e6:149ba4448f8:-7c10">
+            <Name>otherwise</Name>
+            <Alias>otherwise</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>30</CreationUpdateNumber>
+            <Inclusive>true</Inclusive>
+            <Otherwise>true</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}646">
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <Bucket id="G}6ac775e6:149ba4448f8:-7c0f">
+            <Name>&quot;documentation&quot;</Name>
+            <Alias>&quot;documentation&quot;</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>32</CreationUpdateNumber>
+            <Inclusive>false</Inclusive>
+            <Otherwise>false</Otherwise>
+            <Excluded>false</Excluded>
+            <Expression id="L}651">
+              <Value>&quot;documentation&quot;</Value>
+              <ResolvedValue>&quot;documentation&quot;</ResolvedValue>
+              <IsConstant>true</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+          </Bucket>
+          <CalendarForm>Date</CalendarForm>
+          <Excluded>false</Excluded>
+          <ValidationUpdateNumber>32</ValidationUpdateNumber>
+        </PrivateBucketSet>
+        <Expression id="L}643">
+          <Value>CaseMilestoneEvent.milestone</Value>
+          <ResolvedValue>`L}635`.`J}oracle.bpm.casemgmt.metadata.event.model.TCaseMilestoneEvent.{milestone}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Dimension>
+      <DTAction id="L}656">
+        <Form>Call</Form>
+        <Target>activateActivity</Target>
+        <ResolvedTarget>`G}10fcf3ea:144766625c7:-7a94`</ResolvedTarget>
+        <Expression id="L}660">
+          <Value>&quot;ExtendedNationalSecurityCheck&quot;</Value>
+          <ResolvedValue>&quot;ExtendedNationalSecurityCheck&quot;</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>activityName</ParameterAlias>
+          <ParameterID>G}10fcf3ea:144766625c7:-7a93</ParameterID>
+          <DTActionParameterName>activityName</DTActionParameterName>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+        <AlwaysSelected>true</AlwaysSelected>
+        <DTActionNode id="L}657">
+          <Selected>false</Selected>
+          <Expression id="L}665">
+            <Value>&quot;ExtendedNationalSecurityCheck&quot;</Value>
+            <ResolvedValue>&quot;ExtendedNationalSecurityCheck&quot;</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>activityName</ParameterAlias>
+            <ParameterID>G}10fcf3ea:144766625c7:-7a93</ParameterID>
+            <DTActionParameterName>activityName</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+      </DTAction>
+      <DTAction id="L}670">
+        <Form>Call</Form>
+        <Target>reachMilestone</Target>
+        <ResolvedTarget>`G}10fcf3ea:144766625c7:-7a8d`</ResolvedTarget>
+        <Expression id="L}676">
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>milestoneName</ParameterAlias>
+          <ParameterID>G}10fcf3ea:144766625c7:-7a8c</ParameterID>
+          <DTActionParameterName>milestoneName</DTActionParameterName>
+        </Expression>
+        <Expression id="L}677">
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>comments</ParameterAlias>
+          <ParameterID>G}10fcf3ea:144766625c7:-7a8b</ParameterID>
+          <DTActionParameterName>comments</DTActionParameterName>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+        <AlwaysSelected>true</AlwaysSelected>
+        <DTActionNode id="L}671">
+          <Selected>false</Selected>
+          <Expression id="L}684">
+            <Value>biometrics</Value>
+            <ResolvedValue>`G}-6d6ab7cf:149b915705a:-7bff`</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>milestoneName</ParameterAlias>
+            <ParameterID>G}10fcf3ea:144766625c7:-7a8c</ParameterID>
+            <DTActionParameterName>milestoneName</DTActionParameterName>
+          </Expression>
+          <Expression id="L}687">
+            <Value>&quot;triggered&quot;</Value>
+            <ResolvedValue>&quot;triggered&quot;</ResolvedValue>
+            <IsConstant>false</IsConstant>
+            <ParameterAlias>comments</ParameterAlias>
+            <ParameterID>G}10fcf3ea:144766625c7:-7a8b</ParameterID>
+            <DTActionParameterName>comments</DTActionParameterName>
+          </Expression>
+        </DTActionNode>
+      </DTAction>
+      <DTRule id="L}628">
+        <Override></Override>
+        <RunBefore></RunBefore>
+        <NoConflict></NoConflict>
+        <OverriddenBy></OverriddenBy>
+        <RunAfter></RunAfter>
+        <CreationUpdateNumber>26</CreationUpdateNumber>
+      </DTRule>
+      <AllowGaps>true</AllowGaps>
+      <ConflictPolicy>manual</ConflictPolicy>
+      <OrderRulesByBucket>false</OrderRulesByBucket>
+      <VerticalOrientation>true</VerticalOrientation>
+    </RuleSheet>
     <VisibilityFilterEnabled>false</VisibilityFilterEnabled>
     <CreationUpdateNumber>2</CreationUpdateNumber>
   </RuleSet>
@@ -5548,8 +5923,9 @@
     <UpdateNumber>7</UpdateNumber>
     <PrefixLinkedNames>false</PrefixLinkedNames>
   </DictionaryLink>
-  <ValidationUpdateNumber>6</ValidationUpdateNumber>
-  <UpdateNumber>6</UpdateNumber>
+  <ValidationUpdateNumber>46</ValidationUpdateNumber>
+  <UpdateNumber>46</UpdateNumber>
+  <ResourceBundle>TopSecurityAccreditationCaseRulesTranslations</ResourceBundle>
   <TestModel id="L}3">
     <ValidationUpdateNumber>1</ValidationUpdateNumber>
     <UpdateNumber>1</UpdateNumber>

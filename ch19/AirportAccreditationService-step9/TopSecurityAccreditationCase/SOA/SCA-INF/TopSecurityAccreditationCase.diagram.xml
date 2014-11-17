@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
     <dgm:gService name="TopSecurityAccreditationCase.service">
-        <dgm:body borderWidth="2" arcRad="20" X="21" Y="41" width="137" height="168">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="134" width="137" height="168">
             <dgm:borderColor r="153" g="153" b="153"/>
             <dgm:bgColor r="255" g="255" b="255"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="11" Y="34" width="156" height="182">
+        <dgm:shadow arcRad="20" X="11" Y="127" width="156" height="182">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:outputPort name="TopSecurityAccreditationCase.service" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/CaseService#wsdl.interface(CaseServicePortType)"/>
@@ -23,37 +23,71 @@
         </dgm:operations>
     </dgm:gService>
     <dgm:gComponent name="TopSecurityAccreditationCase">
-        <dgm:body borderWidth="2" arcRad="20" X="349" Y="26" width="130" height="61">
+        <dgm:body borderWidth="2" arcRad="20" X="261" Y="119" width="130" height="86">
             <dgm:borderColor r="69" g="113" b="140"/>
             <dgm:lightBgColor r="166" g="208" b="230"/>
             <dgm:darkBgColor r="99" g="162" b="201"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="339" Y="19" width="150" height="77">
+        <dgm:shadow arcRad="20" X="251" Y="112" width="150" height="102">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="TopSecurityAccreditationCase.service" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/CaseService#wsdl.interface(CaseServicePortType)"/>
         <dgm:outputPort name="TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpm/case/caseDecision/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules#wsdl.interface(IDecisionService)" callbackInterface="http://xmlns.oracle.com/bpm/case/caseDecision/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules#wsdl.interface(IDecisionService)"/>
+        <dgm:outputPort name="GatherIdentificationPapers.service.reference" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)" callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
         <dgm:nodeIcon URI="/oracle/bpm/fusion/soa/msg/images/case20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
     <dgm:gComponent name="TopSecurityAccreditationCaseRules">
-        <dgm:body borderWidth="2" arcRad="20" X="670" Y="26" width="130" height="61">
+        <dgm:body borderWidth="2" arcRad="20" X="494" Y="84" width="130" height="61">
             <dgm:borderColor r="178" g="138" b="53"/>
             <dgm:lightBgColor r="255" g="226" b="142"/>
             <dgm:darkBgColor r="255" g="198" b="77"/>
         </dgm:body>
-        <dgm:shadow arcRad="20" X="660" Y="19" width="150" height="77">
+        <dgm:shadow arcRad="20" X="484" Y="77" width="150" height="77">
             <dgm:bgColor r="196" g="228" b="240"/>
         </dgm:shadow>
         <dgm:inputPort name="TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpm/case/caseDecision/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules#wsdl.interface(IDecisionService)"/>
         <dgm:nodeIcon URI="/oracle/tip/tools/ide/rules/plugins/resources/images/soa/decision_20x20.png" X="10" Y="4" width="20" height="20"/>
     </dgm:gComponent>
+    <dgm:gComponent name="GatherIdentificationPapers">
+        <dgm:body borderWidth="2" arcRad="20" X="494" Y="179" width="130" height="61">
+            <dgm:borderColor r="109" g="136" b="65"/>
+            <dgm:lightBgColor r="201" g="224" b="155"/>
+            <dgm:darkBgColor r="157" g="195" b="93"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="484" Y="172" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TaskService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)" callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/workflow/resources/images/humantask_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="ExtendedNationalSecurityCheck">
+        <dgm:body borderWidth="2" arcRad="20" X="261" Y="26" width="130" height="61">
+            <dgm:borderColor r="109" g="136" b="65"/>
+            <dgm:lightBgColor r="201" g="224" b="155"/>
+            <dgm:darkBgColor r="157" g="195" b="93"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="251" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TaskService" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)" callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/workflow/resources/images/humantask_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
     <dgm:gWireLink source="TopSecurityAccreditationCase.service" target="TopSecurityAccreditationCase/TopSecurityAccreditationCase.service" width="2">
-        <dgm:gSegment X1="168" Y1="51" X2="339" Y2="51"/>
+        <dgm:gSegment X1="168" Y1="144" X2="251" Y2="144"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
     <dgm:gWireLink source="TopSecurityAccreditationCase/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules" target="TopSecurityAccreditationCaseRules/TopSecurityAccreditationCaseRules_TopSecurityAccreditationCaseRules" width="2">
-        <dgm:gSegment X1="489" Y1="51" X2="660" Y2="51"/>
+        <dgm:gSegment X1="401" Y1="144" X2="425" Y2="144"/>
+        <dgm:gSegment X1="425" Y1="144" X2="425" Y2="109"/>
+        <dgm:gSegment X1="425" Y1="109" X2="484" Y2="109"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="TopSecurityAccreditationCase/GatherIdentificationPapers.service.reference" target="GatherIdentificationPapers/TaskService" width="2">
+        <dgm:gSegment X1="401" Y1="169" X2="425" Y2="169"/>
+        <dgm:gSegment X1="425" Y1="169" X2="425" Y2="204"/>
+        <dgm:gSegment X1="425" Y1="204" X2="484" Y2="204"/>
         <dgm:baseColor r="153" g="153" b="153"/>
         <dgm:selectedColor r="49" g="106" b="196"/>
     </dgm:gWireLink>
