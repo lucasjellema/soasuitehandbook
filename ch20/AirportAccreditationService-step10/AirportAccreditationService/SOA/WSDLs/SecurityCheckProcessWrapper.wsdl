@@ -1,0 +1,16 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+    
+     targetNamespace="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="SecurityCheckProcess.SecurityCheckProcess.service">
+        <plnk:role name="SecurityCheckProcessPortTypeCallBack" portType="tns:SecurityCheckProcessPortTypeCallBack"/>
+        <plnk:role name="SecurityCheckProcessPortType" portType="tns:SecurityCheckProcessPortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess" location="SecurityCheckProcess.wsdl"/>
+</wsdl:definitions>

@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<graphics>
+   <ui useAntiAliasedFont="no" fontName="Tahoma" fontSize="13" keyWordFontName="Tahoma Bold" keyWordFontSize="13" ruleNameFontName="Tahoma Bold" ruleNameFontSize="13">
+      <uistate tabDisplayMode="0"/>
+   </ui>
+</graphics>

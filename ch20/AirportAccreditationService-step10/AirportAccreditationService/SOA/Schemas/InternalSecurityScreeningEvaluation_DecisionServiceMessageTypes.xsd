@@ -1,0 +1,47 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:tns="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpelpm="http://xmlns.oracle.com/bpel" xmlns:rules="http://xmlns.oracle.com/bpel/rules" xmlns:ns1="saibot.airport/security">
+   <import namespace="saibot.airport/security" schemaLocation="AirportAccreditationService.xsd"/>
+   <import namespace="http://xmlns.oracle.com/bpel/rules" schemaLocation="DecisionServicePrimitiveTypes.xsd"/>
+   <import namespace="http://xmlns.oracle.com/bpel"/>
+   <include schemaLocation="InternalSecurityScreeningEvaluation_DecisionServiceTypes.xsd"/>
+   <element name="callFunctionStateless" type="tns:callFunctionStatelessType"/>
+   <complexType name="callFunctionStatelessType">
+      <sequence>
+         <element name="configURL" type="string" minOccurs="0" maxOccurs="1"/>
+         <element name="bpelInstance" type="bpelpm:tBpelProcess" minOccurs="0" maxOccurs="1"/>
+         <element name="parameterList" minOccurs="1" maxOccurs="1" type="tns:parameterListType"/>
+      </sequence>
+      <attribute name="name" type="NCName" use="required"/>
+   </complexType>
+   <element name="callFunctionStatelessDecision" type="tns:callFunctionStatelessDecisionType"/>
+   <complexType name="callFunctionStatelessDecisionType">
+      <sequence>
+         <element name="resultList" minOccurs="1" maxOccurs="1" type="tns:resultListType"/>
+      </sequence>
+   </complexType>
+   <element name="callFunctionStateful" type="tns:callFunctionStatefulType"/>
+   <complexType name="callFunctionStatefulType">
+      <sequence>
+         <element name="configURL" type="string" minOccurs="0" maxOccurs="1"/>
+         <element name="bpelInstance" type="bpelpm:tBpelProcess" minOccurs="0" maxOccurs="1"/>
+         <element name="parameterList" minOccurs="1" maxOccurs="1" type="tns:parameterListType"/>
+      </sequence>
+      <attribute name="name" type="NCName" use="required"/>
+   </complexType>
+   <element name="callFunctionStatefulDecision" type="tns:callFunctionStatefulDecisionType"/>
+   <complexType name="callFunctionStatefulDecisionType">
+      <sequence>
+         <element name="resultList" minOccurs="1" maxOccurs="1" type="tns:resultListType"/>
+      </sequence>
+   </complexType>
+   <complexType name="parameterListType">
+      <sequence>
+         <element ref="ns1:DecideInternalScreeningLevelInput"/>
+      </sequence>
+   </complexType>
+   <complexType name="resultListType">
+      <sequence>
+         <element ref="ns1:DecideInternalScreeningLevelOutput"/>
+      </sequence>
+   </complexType>
+</schema>

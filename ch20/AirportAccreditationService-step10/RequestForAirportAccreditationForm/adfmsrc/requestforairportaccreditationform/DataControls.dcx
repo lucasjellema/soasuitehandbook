@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<DataControlConfigs xmlns="http://xmlns.oracle.com/adfm/configuration" version="12.1.3.10.8" id="DataControls"
+                    Package="requestforairportaccreditationform">
+  <AdapterDataControl id="RequestForAirportAccreditationForm_TopSecurityAccreditationCase_originalRequestForAirportAccreditation"
+                      FactoryClass="oracle.adf.model.adapter.bean.BeanDCFactoryImpl"
+                      ImplDef="oracle.bpm.datacontrol.definition.BPMBeanDefinition12C" SupportsTransactions="false"
+                      SupportsSortCollection="true" SupportsResetState="false" SupportsRangesize="false"
+                      SupportsFindMode="false" SupportsUpdates="true"
+                      Definition="airport.saibot.security.RequestForAirportAccreditationRequestType"
+                      BeanClass="airport.saibot.security.RequestForAirportAccreditationRequestType"
+                      xmlns="http://xmlns.oracle.com/adfm/datacontrol">
+    <CreatableTypes>
+      <TypeInfo FullName="airport.saibot.security.StaffMemberType"/>
+    </CreatableTypes>
+    <Source>
+      <bpm-bean-definition BeanClass="airport.saibot.security.RequestForAirportAccreditationRequestType"
+                           dataObject="originalRequestForAirportAccreditation"
+                           element="RequestForAirportAccreditationRequest" dataObjectNamespace="saibot.airport/security"
+                           serviceType="case" formType="Data"
+                           DataControlHandler="oracle.adf.model.adapter.bean.jpa.JPQLDataFilterHandler"
+                           xmlns="http://xmlns.oracle.com/adfm/adapter/bean/bpm"/>
+    </Source>
+  </AdapterDataControl>
+</DataControlConfigs>

@@ -1,0 +1,13 @@
+<?xml version= "1.0" encoding= "UTF-8" ?>
+<schema targetNamespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/UndoUserCreation"
+            xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://platform.integration.oracle/blocks/adapter/fw/metadata/UndoUserCreation"
+            elementFormDefault="unqualified">
+  <element name="deleteRequest">
+     <complexType>
+         <sequence>
+             <element name="dn" type="string"/>
+         </sequence>
+     </complexType>
+  </element>
+</schema>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:ui="http://xmlns.oracle.com/soa/designer/" xmlns:ns2="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns5="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:ns6="http://xmlns.oracle.com/sca/1.0-ext" xmlns:ns7="http://schemas.oracle.com/events/edl" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" name="AirportAccreditationService"
+           revision="2.2" label="2014-10-22_16-42-44_891" mode="active" state="on">
+   <import location="WSDLs/AirportAccreditationService.wsdl" importType="wsdl" namespace="saibot.airport/security"/>
+   <import location="WSDLs/AirportAccreditationServiceWrapper.wsdl" importType="wsdl" namespace="saibot.airport/security"/>
+   <import location="WSDLs/RetrieveUser.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser"/>
+   <import location="WSDLs/LDAPService.wsdl" importType="wsdl" namespace="saibot.airport/security/ldap"/>
+   <import location="WSDLs/LDAPServiceWrapper.wsdl" importType="wsdl" namespace="saibot.airport/security/ldap"/>
+   <import location="WSDLs/AddUser.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/AddUser"/>
+   <import location="WSDLs/NationalSecurityCheckService.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService"/>
+   <import location="WSDLs/ThoroughBackgroundCheck.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck"/>
+   <import location="WSDLs/PersonnelService.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/PersonnelService"/>
+   <import location="WSDLs/BadgeService.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService"/>
+   <import location="oramds:/soa/shared/workflow/NotificationService.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/ias/pcbpel/NotificationService"/>
+   <import location="Events/SecurityEvents.edl" importType="edl" namespace="saibot.airport/events/security"/>
+   <import location="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/bpel/workflow/taskService"/>
+   <import location="WSDLs/InternalSecurityScreeningEvaluation_DecisionService.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService"/>
+   <import location="WSDLs/UndoUserCreation.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/UndoUserCreation"/>
+   <import location="WSDLs/RetrieveOrganization.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/RetrieveOrganization"/>
+   <import location="WSDLs/SecurityCheckProcess.wsdl" importType="wsdl" namespace="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess"/>
+   <import namespace="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess"
+           location="WSDLs/SecurityCheckProcessWrapper.wsdl" importType="wsdl"/>
+   <import namespace="" location="project_properties.wsdl" importType="wsdl"/>
+   <service name="AirportAccreditationService" ui:wsdlLocation="WSDLs/AirportAccreditationService.wsdl">
+      <interface.wsdl interface="saibot.airport/security#wsdl.interface(AirportAccreditationService)" callbackInterface="saibot.airport/security#wsdl.interface(AirportAccreditationServiceCallback)"/>
+      <binding.ws port="saibot.airport/security#wsdl.endpoint(AirportAccreditationService/AirportAccreditationService_pt)">
+         <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">NEVER</property>
+      </binding.ws>
+      <callback>
+         <binding.ws port="saibot.airport/security#wsdl.endpoint(AirportAccreditationService/AirportAccreditationServiceCallback_pt)"/>
+      </callback>
+   </service>
+   <service name="LDAPMediator_ep" ui:wsdlLocation="WSDLs/LDAPService.wsdl">
+      <interface.wsdl interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+      <binding.ws port="saibot.airport/security/ldap#wsdl.endpoint(LDAPMediator_ep/LdapService_pt)"/>
+   </service>
+   <service name="SecurityCheckProcess.service" ui:wsdlLocation="WSDLs/SecurityCheckProcess.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortType)"
+                      callbackInterface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortTypeCallBack)"/>
+      <binding.ws port="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.endpoint(SecurityCheckProcess.service/SecurityCheckProcessPort)"/>
+      <callback>
+         <binding.ws port="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.endpoint(SecurityCheckProcess.service/SecurityCheckProcessPortTypeCallBack_pt)"/>
+      </callback>
+   </service>
+   <property name="productVersion" type="xs:string" many="false">12.1.3.0.0</property>
+   <property name="compositeID" type="xs:string" many="false">201f7bcc-1811-49bd-bf42-56363bb16f5c</property>
+   <component name="AirportAccreditationRequestProcessor" version="2.0">
+      <implementation.bpel src="BPEL/AirportAccreditationRequestProcessor.bpel"/>
+      <componentType>
+         <service name="AirportAccreditationService" ui:wsdlLocation="WSDLs/AirportAccreditationServiceWrapper.wsdl">
+            <interface.wsdl interface="saibot.airport/security#wsdl.interface(AirportAccreditationService)" callbackInterface="saibot.airport/security#wsdl.interface(AirportAccreditationServiceCallback)"/>
+         </service>
+         <reference name="LDAPMediator.LDAPMediator" ui:wsdlLocation="WSDLs/LDAPServiceWrapper.wsdl">
+            <interface.wsdl interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+         </reference>
+         <reference name="PersonnelService.PersonnelService" ui:wsdlLocation="WSDLs/PersonnelService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/PersonnelService#wsdl.interface(PersonnelService)"/>
+         </reference>
+         <reference name="BadgeService.BadgeService" ui:wsdlLocation="WSDLs/BadgeService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService#wsdl.interface(BadgeService)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService#wsdl.interface(BadgeServiceCallback)"/>
+         </reference>
+         <reference name="NotificationService1" ui:wsdlLocation="oramds:/soa/shared/workflow/NotificationService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/ias/pcbpel/NotificationService#wsdl.interface(NotificationService)"/>
+         </reference>
+         <reference name="SecurityCheckProcess.SecurityCheckProcess.service"
+                    ui:wsdlLocation="WSDLs/SecurityCheckProcessWrapper.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortType)"
+                            callbackInterface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortTypeCallBack)"/>
+         </reference>
+      </componentType>
+      <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+      <property name="configuration.sensorLocation" type="xs:string" many="false">BPEL/AirportAccreditationRequestProcessor_sensor.xml</property>
+      <property name="configuration.sensorActionLocation" type="xs:string" many="false">BPEL/AirportAccreditationRequestProcessor_sensorAction.xml</property>
+      <business-events>
+         <publishes xmlns:ns0="saibot.airport/events/security" name="ns0:NewStaffMemberAnnouncement" persistent="true" priority="4" timeToLive="0"/>
+      </business-events>
+   </component>
+   <component name="LDAPMediator">
+      <implementation.mediator src="Mediators/LDAPMediator.mplan"/>
+      <componentType>
+         <service name="LDAPMediator" ui:wsdlLocation="WSDLs/LDAPService.wsdl">
+            <interface.wsdl interface="saibot.airport/security/ldap#wsdl.interface(LdapService)"/>
+         </service>
+         <reference name="RetrieveUser" ui:wsdlLocation="WSDLs/RetrieveUser.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser#wsdl.interface(search_ptt)"/>
+         </reference>
+         <reference name="AddUser" ui:wsdlLocation="WSDLs/AddUser.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/AddUser#wsdl.interface(add_ptt)"/>
+         </reference>
+         <reference name="UndoUserCreation" ui:wsdlLocation="WSDLs/UndoUserCreation.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/UndoUserCreation#wsdl.interface(delete_ptt)"/>
+         </reference>
+         <reference name="RetrieveOrganization" ui:wsdlLocation="WSDLs/RetrieveOrganization.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/RetrieveOrganization#wsdl.interface(search_ptt)"/>
+         </reference>
+      </componentType>
+   </component>
+   <component name="NationalSecurityCheckService" version="2.0">
+      <implementation.bpel src="BPEL/NationalSecurityCheckService.bpel"/>
+      <componentType>
+         <service name="NationalSecurityCheckService" ui:wsdlLocation="WSDLs/NationalSecurityCheckService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService#wsdl.interface(NationalSecurityCheckService)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService#wsdl.interface(NationalSecurityCheckServiceCallback)"/>
+         </service>
+      </componentType>
+      <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+   </component>
+   <component name="ThoroughBackgroundCheck" version="2.0">
+      <implementation.bpel src="BPEL/ThoroughBackgroundCheck.bpel"/>
+      <componentType>
+         <service name="thoroughbackgroundcheck_client" ui:wsdlLocation="WSDLs/ThoroughBackgroundCheck.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck#wsdl.interface(ThoroughBackgroundCheck)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck#wsdl.interface(ThoroughBackgroundCheckCallback)"/>
+         </service>
+      </componentType>
+      <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+   </component>
+   <component name="PersonnelService" version="2.0">
+      <implementation.bpel src="BPEL/PersonnelService.bpel"/>
+      <componentType>
+         <service name="PersonnelService" ui:wsdlLocation="WSDLs/PersonnelService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/PersonnelService#wsdl.interface(PersonnelService)"/>
+         </service>
+      </componentType>
+      <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
+   </component>
+   <component name="BadgeService" version="2.0">
+      <implementation.bpel src="BPEL/BadgeService.bpel"/>
+      <componentType>
+         <service name="BadgeService" ui:wsdlLocation="WSDLs/BadgeService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService#wsdl.interface(BadgeService)" callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService#wsdl.interface(BadgeServiceCallback)"/>
+         </service>
+      </componentType>
+      <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+   </component>
+   <component name="InternalSecurityScreeningEvaluation">
+      <implementation.decision src="InternalSecurityScreeningEvaluation.decs"/>
+      <componentType>
+         <service name="InternalSecurityScreeningEvaluation_DecisionService" ui:wsdlLocation="WSDLs/InternalSecurityScreeningEvaluation_DecisionService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService#wsdl.interface(IDecisionService)"/>
+         </service>
+      </componentType>
+   </component>
+   <component name="SecurityCheckProcess">
+      <implementation.bpmn src="processes/SecurityCheckProcess.bpmn"/>
+      <componentType>
+         <service name="SecurityCheckProcess.service" ui:wsdlLocation="WSDLs/SecurityCheckProcess.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortType)"
+                            callbackInterface="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess#wsdl.interface(SecurityCheckProcessPortTypeCallBack)"/>
+            <property name="bpm.generated.service.reference" type="xs:string" many="false">SecurityCheckProcess.service</property>
+         </service>
+         <reference name="Rules.Airportaccreditationservice.InternalSecurityScreeningEvaluation.DecisionService.reference"
+                    ui:wsdlLocation="WSDLs/InternalSecurityScreeningEvaluation_DecisionService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService#wsdl.interface(IDecisionService)"/>
+         </reference>
+         <reference name="HumanTasks.DiscussNationalSecurityCheckRequest.reference"
+                    ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                            callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+         </reference>
+         <reference name="Services.BPEL.NationalSecurityCheckService.NationalSecurityCheckService.reference"
+                    ui:wsdlLocation="WSDLs/NationalSecurityCheckService.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService#wsdl.interface(NationalSecurityCheckService)"
+                            callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService#wsdl.interface(NationalSecurityCheckServiceCallback)"/>
+         </reference>
+         <reference name="Services.BPEL.ThoroughBackgroundCheck.Thoroughbackgroundcheck_client.reference"
+                    ui:wsdlLocation="WSDLs/ThoroughBackgroundCheck.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck#wsdl.interface(ThoroughBackgroundCheck)"
+                            callbackInterface="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/ThoroughBackgroundCheck#wsdl.interface(ThoroughBackgroundCheckCallback)"/>
+         </reference>
+         <reference name="HumanTasks.ManualScreeningOfSecurityAccreditationRequest.reference"
+                    ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                            callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+         </reference>
+      </componentType>
+   </component>
+   <component name="DiscussNationalSecurityCheckRequest">
+      <implementation.workflow src="HumanTasks/DiscussNationalSecurityCheckRequest.task"/>
+      <componentType>
+         <service name="TaskService" ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                            callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+         </service>
+      </componentType>
+   </component>
+   <component name="ManualScreeningOfSecurityAccreditationRequest">
+      <implementation.workflow src="HumanTasks/ManualScreeningOfSecurityAccreditationRequest.task"/>
+      <componentType>
+         <service name="TaskService" ui:wsdlLocation="oramds:/soa/shared/workflow/TaskServiceInterface.wsdl">
+            <interface.wsdl interface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskService)"
+                            callbackInterface="http://xmlns.oracle.com/bpel/workflow/taskService#wsdl.interface(TaskServiceCallback)"/>
+         </service>
+      </componentType>
+   </component>
+   <reference name="RetrieveUser" ui:wsdlLocation="WSDLs/RetrieveUser.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/RetrieveUser#wsdl.interface(search_ptt)"/>
+      <binding.jca config="Adapters/RetrieveUser_ldap.jca"/>
+   </reference>
+   <reference name="AddUser" ui:wsdlLocation="WSDLs/AddUser.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step2/AirportAccreditationService/AddUser#wsdl.interface(add_ptt)"/>
+      <binding.jca config="Adapters/AddUser_ldap.jca"/>
+   </reference>
+   <reference name="NotificationService1" ui:wsdlLocation="oramds:/soa/shared/workflow/NotificationService.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/ias/pcbpel/NotificationService#wsdl.interface(NotificationService)"/>
+      <binding.wsif port="http://xmlns.oracle.com/ias/pcbpel/NotificationService#wsdl.endpoint(NotificationService/JavaPort)" location="oramds:/soa/shared/workflow/NotificationService.wsdl"/>
+   </reference>
+   <reference name="UndoUserCreation" ui:wsdlLocation="WSDLs/UndoUserCreation.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/UndoUserCreation#wsdl.interface(delete_ptt)"/>
+      <binding.jca config="Adapters/UndoUserCreation_ldap.jca"/>
+   </reference>
+   <reference name="RetrieveOrganization" ui:wsdlLocation="WSDLs/RetrieveOrganization.wsdl">
+      <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/ldap/AirportAccreditationService-step6/AirportAccreditationService/RetrieveOrganization#wsdl.interface(search_ptt)"/>
+      <binding.jca config="Adapters/RetrieveOrganization_ldap.jca"/>
+   </reference>
+   <wire>
+      <source.uri>AirportAccreditationService</source.uri>
+      <target.uri>AirportAccreditationRequestProcessor/AirportAccreditationService</target.uri>
+   </wire>
+   <wire>
+      <source.uri>LDAPMediator_ep</source.uri>
+      <target.uri>LDAPMediator/LDAPMediator</target.uri>
+   </wire>
+   <wire>
+      <source.uri>LDAPMediator/RetrieveUser</source.uri>
+      <target.uri>RetrieveUser</target.uri>
+   </wire>
+   <wire>
+      <source.uri>AirportAccreditationRequestProcessor/LDAPMediator.LDAPMediator</source.uri>
+      <target.uri>LDAPMediator/LDAPMediator</target.uri>
+   </wire>
+   <wire>
+      <source.uri>LDAPMediator/AddUser</source.uri>
+      <target.uri>AddUser</target.uri>
+   </wire>
+   <wire>
+      <source.uri>AirportAccreditationRequestProcessor/PersonnelService.PersonnelService</source.uri>
+      <target.uri>PersonnelService/PersonnelService</target.uri>
+   </wire>
+   <wire>
+      <source.uri>AirportAccreditationRequestProcessor/BadgeService.BadgeService</source.uri>
+      <target.uri>BadgeService/BadgeService</target.uri>
+   </wire>
+   <wire>
+      <source.uri>AirportAccreditationRequestProcessor/NotificationService1</source.uri>
+      <target.uri>NotificationService1</target.uri>
+   </wire>
+   <wire>
+      <source.uri>LDAPMediator/UndoUserCreation</source.uri>
+      <target.uri>UndoUserCreation</target.uri>
+   </wire>
+   <wire>
+      <source.uri>LDAPMediator/RetrieveOrganization</source.uri>
+      <target.uri>RetrieveOrganization</target.uri>
+   </wire>
+   <wire>
+      <source.uri>SecurityCheckProcess/Rules.Airportaccreditationservice.InternalSecurityScreeningEvaluation.DecisionService.reference</source.uri>
+      <target.uri>InternalSecurityScreeningEvaluation/InternalSecurityScreeningEvaluation_DecisionService</target.uri>
+   </wire>
+   <wire>
+      <source.uri>SecurityCheckProcess/HumanTasks.DiscussNationalSecurityCheckRequest.reference</source.uri>
+      <target.uri>DiscussNationalSecurityCheckRequest/TaskService</target.uri>
+   </wire>
+   <wire>
+      <source.uri>SecurityCheckProcess/Services.BPEL.NationalSecurityCheckService.NationalSecurityCheckService.reference</source.uri>
+      <target.uri>NationalSecurityCheckService/NationalSecurityCheckService</target.uri>
+   </wire>
+   <wire>
+      <source.uri>SecurityCheckProcess/Services.BPEL.ThoroughBackgroundCheck.Thoroughbackgroundcheck_client.reference</source.uri>
+      <target.uri>ThoroughBackgroundCheck/thoroughbackgroundcheck_client</target.uri>
+   </wire>
+   <wire>
+      <source.uri>SecurityCheckProcess/HumanTasks.ManualScreeningOfSecurityAccreditationRequest.reference</source.uri>
+      <target.uri>ManualScreeningOfSecurityAccreditationRequest/TaskService</target.uri>
+   </wire>
+   <wire>
+      <source.uri>AirportAccreditationRequestProcessor/SecurityCheckProcess.SecurityCheckProcess.service</source.uri>
+      <target.uri>SecurityCheckProcess/SecurityCheckProcess.service</target.uri>
+   </wire>
+   <wire>
+      <source.uri>SecurityCheckProcess.service</source.uri>
+      <target.uri>SecurityCheckProcess/SecurityCheckProcess.service</target.uri>
+   </wire>
+</composite>

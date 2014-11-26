@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyticsDTInfo xmlns="http://www.oracle.com/bpel/analytics/analyticsDTInfo">
+   <measurementLayouts process="AirportAccreditationRequestProcessor">
+      <measurementLayout measurement="receiveInputCounter1" samplingType="COUNTER" activityName="receiveInput" deltaX="157" deltaY="48"/>
+      <measurementLayout measurement="receiveInputMeasurement1" samplingType="SNAPSHOT" activityName="receiveInput" deltaX="187" deltaY="-37"/>
+   </measurementLayouts>
+</analyticsDTInfo>

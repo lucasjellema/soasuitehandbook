@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CaseTaskFlows xmlns="http://xmlns.oracle.com/bpel/workflow/CaseTFProperties">
+   <ApplicationName>worklist</ApplicationName>
+   <CaseTaskFlowDeploy>false</CaseTaskFlowDeploy>
+   <CaseTaskFlow>
+      <CaseName>TopSecurityAccreditationCase</CaseName>
+      <CaseItemName>originalRequestForAirportAccreditation</CaseItemName>
+      <CaseDefinitionNamespace>http://xmlns.oracle.com/TopSecurityAccreditationCase</CaseDefinitionNamespace>
+      <TaskFlowId>originalRequestForAirportAccreditation</TaskFlowId>
+      <TaskFlowFileName>projectInfo/TopSecurityAccreditationCase/data/tf/originalRequestForAirportAccreditation.xml</TaskFlowFileName>
+   </CaseTaskFlow>
+   <CaseTaskFlow>
+      <CaseName>TopSecurityAccreditationCase</CaseName>
+      <CaseItemName>originalRequestForAirportAccreditation</CaseItemName>
+      <CaseDefinitionNamespace>http://xmlns.oracle.com/TopSecurityAccreditationCase</CaseDefinitionNamespace>
+      <TaskFlowId>originalRequestForAirportAccreditation</TaskFlowId>
+      <TaskFlowFileName>TopSecurityAccreditationCase/TopSecurityAccreditationCase/data/tf/originalRequestForAirportAccreditation.xml</TaskFlowFileName>
+   </CaseTaskFlow>
+</CaseTaskFlows>

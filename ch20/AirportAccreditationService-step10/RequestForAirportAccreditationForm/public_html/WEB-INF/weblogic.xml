@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<weblogic-web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://xmlns.oracle.com/weblogic/weblogic-web-app http://xmlns.oracle.com/weblogic/weblogic-web-app/1.5/weblogic-web-app.xsd"
+                  xmlns="http://xmlns.oracle.com/weblogic/weblogic-web-app">
+  <session-descriptor>
+    <persistent-store-type>replicated_if_clustered</persistent-store-type>
+  </session-descriptor>
+  <library-ref>
+    <library-name>oracle.soa.worklist.webapp</library-name>
+  </library-ref>
+</weblogic-web-app>

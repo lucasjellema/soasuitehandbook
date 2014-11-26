@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.1" xmlns="http://java.sun.com/xml/ns/javaee">
+  <application>
+    <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
+    <locale-config>
+      <default-locale>en</default-locale>
+    </locale-config>
+    <message-bundle>oracle.bpm.datacontrol.resources.CaseFormResourceBundle</message-bundle>
+    <resource-bundle>
+      <base-name>oracle.bpm.datacontrol.resources.CaseFormResourceBundle</base-name>
+      <var>resources</var>
+    </resource-bundle>
+  </application>
+</faces-config>

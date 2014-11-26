@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<actions targetNamespace="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor" xmlns="http://xmlns.oracle.com/bpel/sensor" xmlns:tns="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor" xmlns:pc="http://xmlns.oracle.com/bpel/sensor">
+   <action name="PublishSensorToEMFMW" publishName="" publishType="BpelReportsSchema" enabled="true" filter="" publishTarget="">
+      <sensorName>RequestorNotFoundSensor</sensorName>
+      <sensorName>PublishEDNEventSensor</sensorName>
+      <sensorName>FaultSensor1</sensorName>
+      <sensorName>GlobalStatusVariableSensor</sensorName>
+      <sensorName>AddUserActivitySensor</sensorName>
+      <sensorName>RegistrationSensor</sensorName>
+      <sensorName>RecordInLDAP</sensorName>
+      <sensorName>invalidAccreditationRequestFaultSensor</sensorName>
+   </action>
+</actions>
