@@ -1,0 +1,30 @@
+//Content Format Version: 1.0
+
+//########################################################################################
+//####                                                                                ####
+//####          THIS IS AN AUTO GENERATED FILE. PLEASE DO NOT MANUALLY MODIFY         ####
+//#### CHANGES TO THIS FILE MAY PRODUCE UNEXPECTED BEHAVIOR AND WOULD BE OVERWRITTEN  ####
+//####                                                                                ####
+//########################################################################################
+package oracle.scripting.bpmn.process;
+
+import java.util.Random;
+import oracle.scripting.catalog.businessObjectsModule.AirportAccreditationProcessState;
+
+
+public class SecurityCheckProcess{
+
+public void methodACT11443995044353()
+{
+	try {
+	        def java.util.Random random = new java.util.Random()
+	        def int randInt = random.nextInt(100)
+	        this.needForRandomThoroughCheck = (randInt > 50) 
+	}
+	catch(Exception e){ 
+	this.needForRandomThoroughCheck = true
+	}
+}
+
+
+}

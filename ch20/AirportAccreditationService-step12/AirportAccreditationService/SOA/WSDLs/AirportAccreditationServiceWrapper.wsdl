@@ -1,0 +1,45 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="AirportAccreditationService"
+     targetNamespace="saibot.airport/security"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="saibot.airport/security"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:cor="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor/correlationset"
+     xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"
+    >
+    <plnk:partnerLinkType name="AirportAccreditationService">
+        <plnk:role name="AirportAccreditationServiceCallback" portType="tns:AirportAccreditationServiceCallback"/>
+        <plnk:role name="AirportAccreditationService" portType="tns:AirportAccreditationService"/>
+    </plnk:partnerLinkType>
+    <vprop:propertyAlias propertyName="cor:AirportAccreditationRequestIdentifier" xmlns:tns="saibot.airport/security"
+         element="tns:RequestForAirportAccreditationResponse">
+        <vprop:query>tns:AirportAccreditationRequestIdentifier</vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="cor:AirportAccreditationRequestIdentifier" xmlns:tns="saibot.airport/security"
+         element="tns:CancelRequestForAirportAccreditationRequest">
+        <vprop:query>tns:AirportAccreditationRequestIdentifier</vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="cor:AirportAccreditationRequestIdentifier" xmlns:tns="saibot.airport/security"
+         element="tns:RetrieveStatusOfAirportAccreditationRequestRequest">
+        <vprop:query>tns:AirportAccreditationRequestIdentifier</vprop:query>
+    </vprop:propertyAlias>
+    <wsdl:import namespace="saibot.airport/security" location="AirportAccreditationService.wsdl"/>
+    <wsdl:import namespace="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor/correlationset"
+         location="AirportAccreditationRequestProcessor_properties.wsdl"/>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:tns="saibot.airport/security"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <xsd:import namespace="saibot.airport/security" schemaLocation="../Schemas/AirportAccreditationService.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:tns="saibot.airport/security"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <xsd:import namespace="saibot.airport/security" schemaLocation="../Schemas/SecurityEvents.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+</wsdl:definitions>

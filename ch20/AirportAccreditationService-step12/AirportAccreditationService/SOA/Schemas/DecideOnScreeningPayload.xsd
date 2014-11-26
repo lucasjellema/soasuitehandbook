@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<schema targetNamespace="http://xmlns.oracle.com/bpel/workflow/task" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.frevvo.com/schemas/_uKHxQGwDEeSaF6cl39KmWg" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlns.oracle.com/bpel/workflow/task">
+   <import namespace="http://www.frevvo.com/schemas/_uKHxQGwDEeSaF6cl39KmWg" schemaLocation="../forms/DecideOnScreeningForm.xsd"/><element name="HumanTaskPayload" type="tns:DecideOnScreeningPayloadType"><annotation><appinfo><globalElement xmlns="http://www.frevvo.com/appinfo">true</globalElement></appinfo></annotation></element><complexType name="DecideOnScreeningPayloadType">
+      <sequence><element ref="ns0:DecideOnScreeningForm"/></sequence>
+   </complexType>
+</schema>

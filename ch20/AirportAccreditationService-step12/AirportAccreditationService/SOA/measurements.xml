@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:measurements xmlns:ns0="http://xmlns.oracle.com/bpm/analytics/measurementV20">
+   <ns0:compositeDN>AirportAccreditationService</ns0:compositeDN>
+   <ns0:measurementElements>
+      <ns0:measurementElement name="Composite_Measurement" type="COMPOSITE" enabled="true" userDefined="false">
+         <ns0:elementSelection>
+            <ns0:specificSelection>INTERACTIVE</ns0:specificSelection>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="NationalSecurityCheckService_Measurement" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>NationalSecurityCheckService</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:noneList>NONE</ns0:noneList>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="ThoroughBackgroundCheck_Measurement" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>ThoroughBackgroundCheck</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:noneList>NONE</ns0:noneList>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="Counter" type="ELEMENT" enabled="true" userDefined="true" samplingType="COUNTER">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>ABSTRACT_ACTIVITY_1415818663774</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>MEASUREMENT_COUNTER</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true">
+            <ns0:businessIndicator>
+               <ns0:name>ManualCheckCounter</ns0:name>
+               <ns0:type>COUNTER</ns0:type>
+            </ns0:businessIndicator>
+         </ns0:businessIndicators>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="StartofNationalSecurityCheckFlow" type="ELEMENT" enabled="true" userDefined="true" samplingType="START">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>SecurityCheckProcess.Measurement</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>MEASUREMENT_START</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true">
+            <ns0:businessIndicator>
+               <ns0:name>Measure0</ns0:name>
+               <ns0:type>MEASURE</ns0:type>
+            </ns0:businessIndicator>
+         </ns0:businessIndicators>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="StartofNationalSecurityCheckFlow" type="ELEMENT" enabled="true" userDefined="true" samplingType="STOP">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>SecurityCheckProcess.Measurement1</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>MEASUREMENT_STOP</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="Counter" type="ELEMENT" enabled="true" userDefined="true" samplingType="COUNTER">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>ABSTRACT_ACTIVITY_1415818663774</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>MEASUREMENT_COUNTER</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true">
+            <ns0:businessIndicator>
+               <ns0:name>ManualCheckCounter</ns0:name>
+               <ns0:type>COUNTER</ns0:type>
+            </ns0:businessIndicator>
+         </ns0:businessIndicators>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="SecurityCheckProcess" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:specificSelection>INTERACTIVE</ns0:specificSelection>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="SecurityCheckProcess.ABSTRACT_ACTIVITY_1415817288366" type="ELEMENT" enabled="true" userDefined="false">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>ABSTRACT_ACTIVITY_1415817288366</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="SecurityCheckProcess.ABSTRACT_ACTIVITY_1415818461108" type="ELEMENT" enabled="true" userDefined="false">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>ABSTRACT_ACTIVITY_1415818461108</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="SecurityCheckProcess.ABSTRACT_ACTIVITY_1415818663774" type="ELEMENT" enabled="true" userDefined="false">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>ABSTRACT_ACTIVITY_1415818663774</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="SecurityCheckProcess.ACT11443995044353" type="ELEMENT" enabled="true" userDefined="false">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>ACT11443995044353</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+   </ns0:measurementElements>
+   <ns0:analyticsViewIdentifier>SAIBOTSECU</ns0:analyticsViewIdentifier>
+</ns0:measurements>

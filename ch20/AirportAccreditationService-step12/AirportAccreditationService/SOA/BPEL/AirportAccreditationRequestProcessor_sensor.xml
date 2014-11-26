@@ -1,0 +1,28 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<sensors targetNamespace="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor" xmlns="http://xmlns.oracle.com/bpel/sensor" xmlns:tns="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor" xmlns:pc="http://xmlns.oracle.com/bpel/sensor" xmlns:ns1="saibot.airport/security" xmlns:sns1="RequestorNotFound" xmlns:ns2="saibot.airport/security/ldap">
+   <sensor sensorName="GlobalStatusVariableSensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelVariableSensorAgent" kind="variable" target="$globalProcessStatus/*">
+      <variableConfig outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema"/>
+   </sensor>
+   <sensor sensorName="RegistrationSensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelActivitySensorAgent" kind="activity" target="Registration">
+      <activityConfig evalTime="activation">
+         <variable outputDataType="AirportAccreditationProcessStateType" outputNamespace="saibot.airport/security" target="$globalProcessState/ns1:AirportAccreditationProcessStateType/ns1:AirportAccreditationRequestIdentifier"/>
+      </activityConfig>
+   </sensor>
+   <sensor sensorName="RequestorNotFoundSensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelFaultSensorAgent" kind="fault" target="sns1:myNamespace"/>
+   <sensor sensorName="PublishEDNEventSensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelActivitySensorAgent" kind="activity" target="PublishEDNEvent">
+      <activityConfig evalTime="completion">
+         <variable outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema" target="$inputVariable/part1/ns1:RequestForAirportAccreditationRequest/ns1:StaffMemberToAccredit/ns1:LastName"/>
+      </activityConfig>
+   </sensor>
+   <sensor sensorName="invalidAccreditationRequestFaultSensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelFaultSensorAgent" kind="fault" target="ns1:invalidAccreditationRequest"/>
+   <sensor sensorName="AddUserActivitySensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelActivitySensorAgent" kind="activity" target="InvokeAddUser">
+      <activityConfig evalTime="completion">
+         <variable outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema" target="$InvokeAddUser_addUser_InputVariable/part1/ns2:AddUserRequest/ns2:UserId"/>
+      </activityConfig>
+   </sensor>
+   <sensor sensorName="RecordInLDAP" classname="oracle.tip.pc.services.reports.dca.agents.BpelActivitySensorAgent" kind="activity" target="ScopeRecordInLDAP">
+      <activityConfig evalTime="all">
+         <variable outputDataType="AirportAccreditationProcessStateType" outputNamespace="saibot.airport/security" target="$globalProcessState/ns1:AirportAccreditationProcessStateType/ns1:EmployeeNumber"/>
+      </activityConfig>
+   </sensor>
+</sensors>
