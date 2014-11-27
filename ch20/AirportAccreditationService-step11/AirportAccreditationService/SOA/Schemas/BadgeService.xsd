@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/BadgeService"
+	xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="process">
+		<complexType>
+			<sequence>
+				<element name="input" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="processResponse">
+		<complexType>
+			<sequence>
+				<element name="badgeId" type="string"/>
+				<element name="result" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

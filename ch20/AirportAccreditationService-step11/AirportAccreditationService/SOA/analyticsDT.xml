@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analyticsDTInfo xmlns="http://www.oracle.com/bpel/analytics/analyticsDTInfo">
+   <measurementLayouts process="AirportAccreditationRequestProcessor">
+      <measurementLayout measurement="SecurityChecksInterval1" samplingType="START" activityName="SecurityChecks" deltaX="175" deltaY="-28"/>
+      <measurementLayout measurement="SecurityChecksInterval1" samplingType="STOP" activityName="SecurityChecks" deltaX="-123" deltaY="-31"/>
+      <measurementLayout measurement="receiveInputCounter1" description="" samplingType="COUNTER" activityName="receiveInput" deltaX="10" deltaY="10"/>
+      <measurementLayout measurement="requestorNotFoundCounter1" samplingType="COUNTER" activityName="handleRequestingUserNotFound" deltaX="4" deltaY="-93"/>
+   </measurementLayouts>
+</analyticsDTInfo>

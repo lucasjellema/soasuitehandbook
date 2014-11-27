@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--########################################################################################-->
+<!--####                                                                                ####-->
+<!--####          THIS IS AN AUTO GENERATED FILE. PLEASE DO NOT MANUALLY MODIFY         ####-->
+<!--#### CHANGES TO THIS FILE MAY PRODUCE UNEXPECTED BEHAVIOR AND WOULD BE OVERWRITTEN  ####-->
+<!--####                                                                                ####-->
+<!--########################################################################################-->
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/bpmn/bpmnProcess/AirportAccreditationService" xmlns:tns2="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess"  xmlns:xsd="http://www.w3.org/2001/XMLSchema"  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"  xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"  xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop"  xmlns:tns="http://xmlns.oracle.com/bpmn/bpmnProcess/AirportAccreditationService" >
+    <vprop:property name="securityCheckRequestIdentifier" type="xsd:string"/>
+    <vprop:propertyAlias propertyName="tns:securityCheckRequestIdentifier" part="parameters" messageType="tns2:start">
+        <vprop:query xmlns:ns="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess" xmlns:ns1="saibot.airport/security">
+            /ns:start/ValidatedAccreditationDetails/ns1:AirportAccreditationRequestIdentifier
+        </vprop:query>
+    </vprop:propertyAlias>
+    <vprop:propertyAlias propertyName="tns:securityCheckRequestIdentifier" part="parameters" messageType="tns2:cancelSecurityChecks">
+        <vprop:query xmlns:ns="http://xmlns.oracle.com/bpmn/bpmnProcess/SecurityCheckProcess">
+            /ns:cancelSecurityChecks/accreditationRequestIdentifier
+        </vprop:query>
+    </vprop:propertyAlias>
+</wsdl:definitions>

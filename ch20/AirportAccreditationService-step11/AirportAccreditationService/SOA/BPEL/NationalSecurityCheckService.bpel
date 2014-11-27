@@ -1,0 +1,138 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Oct 28 07:12:11 CET 2014
+  Author:  lucas_j
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="NationalSecurityCheckService"
+         targetNamespace="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/AirportAccreditationService_step3/AirportAccreditationService/NationalSecurityCheckService" location="../WSDLs/NationalSecurityCheckService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="NationalSecurityCheckService" partnerLinkType="client:NationalSecurityCheckService" myRole="NationalSecurityCheckServiceProvider" partnerRole="NationalSecurityCheckServiceRequester"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="client:NationalSecurityCheckServiceRequestMessage"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="outputVariable" messageType="client:NationalSecurityCheckServiceResponseMessage"/>
+        <variable name="DecisionNumber" type="xsd:int"/>
+        <variable name="Decision" type="xsd:string"/>
+    </variables>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+<!--     <bpelx:exec import="java.util.Random"/>
+    -->
+        <!-- Receive input from requestor. (Note: This maps to operation defined in NationalSecurityCheckService.wsdl) -->
+        <receive name="receiveInput" partnerLink="NationalSecurityCheckService" portType="client:NationalSecurityCheckService" operation="process" variable="inputVariable" createInstance="yes"/>
+        <extensionActivity>
+            <bpelx:exec name="GenerateDecisionNumber">
+             <![CDATA[// Generate random number from java
+try {
+        java.util.Random random = new java.util.Random();
+        int randInt = random.nextInt(100);
+        setVariableData("DecisionNumber", randInt);       
+}
+
+// end Generate random number from java
+
+catch(Exception e){}]]>
+</bpelx:exec>
+        </extensionActivity>
+        <if name="IfSmallerThan80">
+            <documentation>
+                <![CDATA[LessThan80IsOK]]>
+            </documentation>
+            <condition>$DecisionNumber &lt; 80</condition>
+            <assign name="AssignDecisionOutcome">
+                <copy>
+                    <from>'OK'</from>
+                    <to>$Decision</to>
+                </copy>
+            </assign>
+            <elseif>
+                <documentation>
+                    <![CDATA[LessThan90IsNotOK]]>
+                </documentation>
+                <condition>$DecisionNumber &lt; 90</condition>
+                <assign name="AssignDecisionOutcome"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <copy>
+         <from>'NOTOK'</from>
+         <to>$Decision</to>
+      </copy></assign></elseif>
+            <else>
+                <documentation>
+                    <![CDATA[Unclear]]>
+                </documentation><assign name="AssignDecisionOutcome"
+                                        xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+   <copy>
+         <from>'Unclear'</from>
+         <to>$Decision</to>
+      </copy></assign></else>
+        </if>
+        <assign name="AssignResponse">
+            <copy>
+                <from>$Decision</from>
+                <to>$outputVariable.payload/client:result</to>
+            </copy>
+        </assign>
+        <wait name="SlowDownWaitALittle">
+            <for>'PT1M'</for>
+        </wait>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="NationalSecurityCheckService" portType="client:NationalSecurityCheckServiceCallback" operation="processResponse" inputVariable="outputVariable"/>
+    </sequence>
+</process>

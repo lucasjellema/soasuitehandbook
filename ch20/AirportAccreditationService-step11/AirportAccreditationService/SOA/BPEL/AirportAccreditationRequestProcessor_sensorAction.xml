@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<actions targetNamespace="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor" xmlns="http://xmlns.oracle.com/bpel/sensor" xmlns:tns="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor" xmlns:pc="http://xmlns.oracle.com/bpel/sensor">
+   <action name="DB_for_FMW" publishName="" publishType="BpelReportsSchema" enabled="true">
+      <sensorName>statusSensor</sensorName>
+      <sensorName>RequestingOrganization</sensorName>
+      <sensorName>RequiredSecurityLevel</sensorName>
+      <sensorName>SecurityChecksActivitySensor</sensorName>
+      <sensorName>invalidAccreditationRequestFaultSensor</sensorName>
+      <sensorName>ThrowRequestingOrganizationNotFoundActivitySensor</sensorName>
+   </action>
+</actions>

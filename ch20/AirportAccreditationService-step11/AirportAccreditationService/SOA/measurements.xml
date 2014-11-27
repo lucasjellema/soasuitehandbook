@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:measurements xmlns:ns0="http://xmlns.oracle.com/bpm/analytics/measurementV20">
+   <ns0:compositeDN>AirportAccreditationService</ns0:compositeDN>
+   <ns0:measurementElements>
+      <ns0:measurementElement name="Composite_Measurement" type="COMPOSITE" enabled="true" userDefined="false">
+         <ns0:elementSelection>
+            <ns0:specificSelection>INTERACTIVE</ns0:specificSelection>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="BPELProcess1_Measurement" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>BPELProcess1</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:noneList>NONE</ns0:noneList>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="NationalSecurityCheckService_Measurement" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>NationalSecurityCheckService</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:noneList>NONE</ns0:noneList>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="ThoroughBackgroundCheck_Measurement" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>ThoroughBackgroundCheck</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:noneList>NONE</ns0:noneList>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="PersonnelService_Measurement" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>PersonnelService</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:noneList>NONE</ns0:noneList>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="BadgeService_Measurement" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>BadgeService</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:noneList>NONE</ns0:noneList>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="SecurityChecksInterval1" type="ELEMENT" enabled="true" userDefined="true" samplingType="START">
+         <ns0:componentName>AirportAccreditationRequestProcessor</ns0:componentName>
+         <ns0:elementId>SecurityChecks</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>ACTIVATE</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="SecurityChecksInterval1" type="ELEMENT" enabled="true" userDefined="true" samplingType="STOP">
+         <ns0:componentName>AirportAccreditationRequestProcessor</ns0:componentName>
+         <ns0:elementId>SecurityChecks</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>COMPLETE</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true"/>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="requestorNotFoundCounter1" type="ELEMENT" enabled="true" userDefined="true" samplingType="COUNTER">
+         <ns0:componentName>AirportAccreditationRequestProcessor</ns0:componentName>
+         <ns0:elementId>handleRequestingUserNotFound</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>ACTIVATE</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true">
+            <ns0:businessIndicator>
+               <ns0:name>UnknownRequestorCounter</ns0:name>
+               <ns0:type>COUNTER</ns0:type>
+            </ns0:businessIndicator>
+         </ns0:businessIndicators>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="receiveInputCounter1" type="ELEMENT" enabled="true" userDefined="true" samplingType="COUNTER">
+         <ns0:componentName>AirportAccreditationRequestProcessor</ns0:componentName>
+         <ns0:elementId>receiveInput</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>ACTIVATE</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true">
+            <ns0:businessIndicator>
+               <ns0:name>AccreditationRequestCounter</ns0:name>
+               <ns0:type>COUNTER</ns0:type>
+            </ns0:businessIndicator>
+         </ns0:businessIndicators>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="MeasurementInterval" type="ELEMENT" enabled="true" userDefined="true" samplingType="START">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>SecurityCheckProcess.Measurement</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>MEASUREMENT_START</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true">
+            <ns0:businessIndicator>
+               <ns0:name>RequiredSecurityLevel</ns0:name>
+               <ns0:type>MEASURE</ns0:type>
+            </ns0:businessIndicator>
+         </ns0:businessIndicators>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="MeasurementInterval" type="ELEMENT" enabled="true" userDefined="true" samplingType="STOP">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementId>SecurityCheckProcess.Measurement1</ns0:elementId>
+         <ns0:elementStates>
+            <ns0:specificStates>
+               <ns0:eventType>MEASUREMENT_STOP</ns0:eventType>
+            </ns0:specificStates>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="false" allAttributes="true">
+            <ns0:businessIndicator>
+               <ns0:name>RequiredSecurityLevel</ns0:name>
+               <ns0:type>MEASURE</ns0:type>
+            </ns0:businessIndicator>
+         </ns0:businessIndicators>
+      </ns0:measurementElement>
+      <ns0:measurementElement name="SecurityCheckProcess" type="COMPONENT" enabled="true" userDefined="false">
+         <ns0:componentName>SecurityCheckProcess</ns0:componentName>
+         <ns0:elementSelection>
+            <ns0:specificSelection>INTERACTIVE</ns0:specificSelection>
+         </ns0:elementSelection>
+         <ns0:elementStates>
+            <ns0:allList>ALL</ns0:allList>
+         </ns0:elementStates>
+         <ns0:businessIndicators allDimensions="true" allMeasures="true" allAttributes="true"/>
+      </ns0:measurementElement>
+   </ns0:measurementElements>
+   <ns0:primaryProcesses>
+      <ns0:processName>AirportAccreditationRequestProcessor</ns0:processName>
+      <ns0:processName>SecurityCheckProcess</ns0:processName>
+   </ns0:primaryProcesses>
+   <ns0:analyticsViewIdentifier>SAIBOTACCR</ns0:analyticsViewIdentifier>
+</ns0:measurements>

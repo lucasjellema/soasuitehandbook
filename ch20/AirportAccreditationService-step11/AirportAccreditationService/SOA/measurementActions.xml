@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:Actions xmlns:ns0="http://xmlns.oracle.com/bpm/analytics/measurementV20">
+   <ns0:compositeDN>AirportAccreditationService</ns0:compositeDN>
+   <ns0:action name="BAMCommand" enabled="false">
+      <ns0:interfaceName>oracle.bpm.analytics.bam.action.BAMActionMDB</ns0:interfaceName>
+      <ns0:properties>
+         <ns0:property name="InBatch">false</ns0:property>
+         <ns0:property name="BAMDeploymentUseHTTPS">false</ns0:property>
+         <ns0:property name="BAMAdapterJNDIName"></ns0:property>
+         <ns0:property name="DataObjectPath">/Samples/Monitor Express</ns0:property>
+      </ns0:properties>
+      <ns0:measurementElementName>Composite_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>BPELProcess1_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>NationalSecurityCheckService_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>ThoroughBackgroundCheck_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>PersonnelService_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>BadgeService_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>SecurityChecksInterval1</ns0:measurementElementName>
+      <ns0:measurementElementName>requestorNotFoundCounter1</ns0:measurementElementName>
+      <ns0:measurementElementName>receiveInputCounter1</ns0:measurementElementName>
+      <ns0:measurementElementName>MeasurementInterval</ns0:measurementElementName>
+      <ns0:measurementElementName>SecurityCheckProcess</ns0:measurementElementName>
+   </ns0:action>
+   <ns0:action name="ProcessMetrics" enabled="true">
+      <ns0:interfaceName>oracle.bpm.analytics.beam.action.BeamActionMDB</ns0:interfaceName>
+      <ns0:measurementElementName>Composite_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>BPELProcess1_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>NationalSecurityCheckService_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>ThoroughBackgroundCheck_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>PersonnelService_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>BadgeService_Measurement</ns0:measurementElementName>
+      <ns0:measurementElementName>SecurityChecksInterval1</ns0:measurementElementName>
+      <ns0:measurementElementName>requestorNotFoundCounter1</ns0:measurementElementName>
+      <ns0:measurementElementName>receiveInputCounter1</ns0:measurementElementName>
+      <ns0:measurementElementName>MeasurementInterval</ns0:measurementElementName>
+      <ns0:measurementElementName>SecurityCheckProcess</ns0:measurementElementName>
+   </ns0:action>
+</ns0:Actions>

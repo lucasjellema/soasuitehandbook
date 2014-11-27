@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<sensors targetNamespace="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor" xmlns="http://xmlns.oracle.com/bpel/sensor" xmlns:tns="http://xmlns.oracle.com/AirportAccreditationService/AirportAccreditationService/AirportAccreditationRequestProcessor" xmlns:pc="http://xmlns.oracle.com/bpel/sensor" xmlns:ns1="saibot.airport/security">
+   <sensor sensorName="statusSensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelVariableSensorAgent" kind="variable" target="$globalProcessStatus">
+      <variableConfig outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema"/>
+   </sensor>
+   <sensor sensorName="RequestingOrganization" classname="oracle.tip.pc.services.reports.dca.agents.BpelVariableSensorAgent" kind="variable" target="$inputVariable/part1/ns1:RequestForAirportAccreditationRequest/ns1:RequestingOrganizationId">
+      <variableConfig outputDataType="string" outputNamespace="http://www.w3.org/2001/XMLSchema"/>
+   </sensor>
+   <sensor sensorName="RequiredSecurityLevel" classname="oracle.tip.pc.services.reports.dca.agents.BpelVariableSensorAgent" kind="variable" target="$inputVariable/part1/ns1:RequestForAirportAccreditationRequest/ns1:RequiredSecurityLevel">
+      <variableConfig outputDataType="int" outputNamespace="http://www.w3.org/2001/XMLSchema"/>
+   </sensor>
+   <sensor sensorName="SecurityChecksActivitySensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelActivitySensorAgent" kind="activity" target="SecurityChecks">
+      <activityConfig evalTime="all">
+         <variable outputDataType="AirportAccreditationProcessStateType" outputNamespace="saibot.airport/security" target="$globalProcessState/ns1:AirportAccreditationProcessStateType/ns1:AirportAccreditationRequestIdentifier"/>
+      </activityConfig>
+   </sensor>
+   <sensor sensorName="invalidAccreditationRequestFaultSensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelFaultSensorAgent" kind="fault" target="ns1:invalidAccreditationRequest"/>
+   <sensor sensorName="ThrowRequestingOrganizationNotFoundActivitySensor" classname="oracle.tip.pc.services.reports.dca.agents.BpelActivitySensorAgent" kind="activity" target="ThrowRequestingOrganizationNotFound">
+      <activityConfig evalTime="completion"/>
+   </sensor>
+</sensors>

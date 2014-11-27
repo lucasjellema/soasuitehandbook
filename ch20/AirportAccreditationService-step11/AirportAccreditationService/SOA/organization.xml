@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns0:organization xmlns:ns2="http://xmlns.oracle.com/bpm/lpg/peopleQuery" xmlns:ns1="http://xmlns.oracle.com/bpm/identity" xmlns:ns4="http://xmlns.oracle.com/bpel/workflow/task" xmlns:ns3="http://xmlns.oracle.com/bpel/workflow/taskQuery" xmlns:ns0="http://xmlns.oracle.com/bpm/organization">
+   <ns0:updateExistingObjects>false</ns0:updateExistingObjects>
+   <ns0:organizationalUnits/>
+   <ns0:applicationRoles>
+      <ns0:applicationRole id="AirportAccreditationService.ProcessOwner" isProcessRole="true">
+         <ns1:name>AirportAccreditationService.Process Owner</ns1:name>
+         <ns0:processRole id="ProcessOwner" name="Process Owner"/>
+      </ns0:applicationRole>
+      <ns0:applicationRole id="AirportAccreditationService.ProcessReviewer" isProcessRole="true">
+         <ns1:name>AirportAccreditationService.Process Reviewer</ns1:name>
+         <ns0:processRole id="ProcessReviewer" name="Process Reviewer"/>
+      </ns0:applicationRole>
+      <ns0:applicationRole id="AirportAccreditationService.SecurityOfficer" isProcessRole="true">
+         <ns1:name>AirportAccreditationService.SecurityOfficer</ns1:name>
+         <ns0:processRole id="SecurityOfficer" name="SecurityOfficer"/>
+      </ns0:applicationRole>
+      <ns0:applicationRole id="AirportAccreditationService.UnassignedRole" isProcessRole="true">
+         <ns1:name>AirportAccreditationService.Unassigned Role</ns1:name>
+         <ns0:processRole id="UnassignedRole" name="Unassigned Role"/>
+      </ns0:applicationRole>
+      <ns0:applicationRole id="AirportAccreditationService.AutomaticHandler" isProcessRole="true">
+         <ns1:name>AirportAccreditationService.Automatic Handler</ns1:name>
+         <ns0:processRole id="AutomaticHandler" name="Automatic Handler"/>
+      </ns0:applicationRole>
+   </ns0:applicationRoles>
+   <ns0:applicationRoleOrgUnitCalendarAssociations/>
+   <ns0:participantPropertiesList/>
+   <ns0:holidayRules/>
+   <ns0:calendarRules/>
+   <ns0:businessParameters/>
+</ns0:organization>
