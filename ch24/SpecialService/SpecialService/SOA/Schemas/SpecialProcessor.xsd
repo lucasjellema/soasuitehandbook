@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="saibot.airport.finance/SpecialProcessor"
+	xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="process">
+		<complexType>
+			<sequence>
+				<element name="name" type="string"/>
+				<element name="ssn" type="string"/>
+				<element name="amount" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="processResponse">
+		<complexType>
+			<sequence>
+				<element name="result" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+<!--
+                <element name="ComplexCredentialElement">
+            <complexType>
+                    <sequence>
+                            <element name="Username" type="string"/>
+                            <element name="Password" type="string"/>
+                    </sequence>
+            </complexType>
+        </element>
+        <element name="Username" type="string"/>
+        <element name="Password" type="string"/>
+-->
+</schema>
