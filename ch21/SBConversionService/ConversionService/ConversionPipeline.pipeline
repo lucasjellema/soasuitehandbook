@@ -13,20 +13,20 @@
         </con:xqConfiguration>
     </con:coreEntry>
     <con:router>
-        <con:pipeline type="request" name="request-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffe">
-            <con:stage id="_StageId-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffc" name="Stage1">
+        <con:pipeline type="request" name="request-N3f57c7ff.5bf57836.0.14a94b8f366.N7ff1">
+            <con:stage id="_StageId-N3f57c7ff.5bf57836.0.14a94b8f366.N7ff0" name="Stage1">
                 <con:context/>
                 <con:actions/>
             </con:stage>
         </con:pipeline>
-        <con:pipeline type="response" name="response-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffd">
-            <con:stage id="_StageId-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffb" name="Stage1">
+        <con:pipeline type="response" name="response-N3f57c7ff.5bf57836.0.14a94b8f366.N7fef">
+            <con:stage id="_StageId-N3f57c7ff.5bf57836.0.14a94b8f366.N7fee" name="Stage1">
                 <con:context>
                     <con1:userNsDecl prefix="con" namespace="saibot.airport/services/utility/conversion"/>
                 </con:context>
                 <con:actions>
                     <con2:replace varName="body" contents-only="true">
-                        <con1:id>_ActionId-N3f57c7ff.5bf57836.0.14a94b8f366.N7ff8</con1:id>
+                        <con1:id>_ActionId-N3f57c7ff.5bf57836.0.14a94b8f366.N7fed</con1:id>
                         <con2:expr>
                             <con1:xqueryText>&lt;temperatureCelsiusToFahrenheitResponseMessage xmlns="saibot.airport/services/utility/conversion">
 			&lt;temperature>{$body/con:temperatureCelsiusToFahrenheitRequestMessage/con:temperature * 1.8 + 32}&lt;/temperature>
@@ -36,11 +36,58 @@
                 </con:actions>
             </con:stage>
         </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57c7ff.5bf57836.0.14a94b8f366.N7f85">
+            <con:stage id="_StageId-N3f57c7ff.5bf57836.0.14a94b8f366.N7f84" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.5bf57836.0.14a94b8f366.N7f83">
+            <con:stage id="_StageId-N3f57c7ff.5bf57836.0.14a94b8f366.N7f82" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="con" namespace="saibot.airport/services/utility/conversion"/>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-N3f57c7ff.5bf57836.0.14a94b8f366.N7f81</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>&lt;temperatureKelvinToFahrenheitResponseMessage xmlns="saibot.airport/services/utility/conversion">
+			&lt;temperature>{(-273 + 1.0* $body/con:temperatureKelvinToFahrenheitRequestMessage/con:temperature) * 1.8 + 32}&lt;/temperature>
+		&lt;/temperatureKelvinToFahrenheitResponseMessage></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
         <con:flow>
-            <con:pipeline-node name="PipelinePairNode1">
-                <con:request>request-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffe</con:request>
-                <con:response>response-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffd</con:response>
-            </con:pipeline-node>
+            <con:branch-node type="operation" id="_FlowId-N3f57c7ff.5bf57836.0.14a94b8f366.N7ff7" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="getTemperatureCelsiusToFahrenheit">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode2">
+                                <con:request>request-N3f57c7ff.5bf57836.0.14a94b8f366.N7ff1</con:request>
+                                <con:response>response-N3f57c7ff.5bf57836.0.14a94b8f366.N7fef</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="getTemperatureKelvinToFahrenheit">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>request-N3f57c7ff.5bf57836.0.14a94b8f366.N7f85</con:request>
+                                <con:response>response-N3f57c7ff.5bf57836.0.14a94b8f366.N7f83</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
         </con:flow>
     </con:router>
 </con:pipelineEntry>

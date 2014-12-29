@@ -8,9 +8,14 @@
       <xsd:minInclusive value="-273.15"/>
     </xsd:restriction>
   </xsd:simpleType>
+  <xsd:simpleType name="baseKelvinTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
   <xsd:simpleType name="baseFahrenheitTemperatureType">
     <xsd:restriction base="xsd:float">
       <xsd:minInclusive value="-459.67"/>
     </xsd:restriction>
-  </xsd:simpleType>
+  </xsd:simpleType> 
 </xsd:schema>
