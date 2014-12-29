@@ -10,8 +10,8 @@
          <property name="location" value="./"/>
       </serviceInstance>
    </serviceInstances>
-   <jpsContexts default="SpecialService">
-      <jpsContext name="SpecialService">
+   <jpsContexts default="Common">
+      <jpsContext name="Common">
          <serviceInstanceRef ref="credstore"/>
       </jpsContext>
    </jpsContexts>

@@ -1,6 +1,6 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <jws:workspace xmlns:jws="http://xmlns.oracle.com/ide/project">
-   <value n="appTemplateId" v="SOAApplicationTemplate_1"/>
+   <value n="appTemplateId" v="sbApplicationAndProjectTemplate"/>
    <hash n="component-versions">
       <value n="oracle.adf.share.dt.migration.jps.JaznCredStoreMigratorHelper" v="11.1.1.1.0"/>
       <value n="oracle.adf.share.dt.migration.wsm.PolicyAttachmentMigratorHelper" v="12.1.2.0.0"/>
@@ -23,6 +23,25 @@
       <string v="oracle.jdeveloper.model.PathsConfiguration/ResourceBundlesContentSet"/>
    </list>
    <list n="listOfChildren">
-      <hash><url n="URL" path="SpecialService/SpecialService.jpr"/></hash>
+      <hash><url n="URL" path="CommonProject/CommonProject.jpr"/></hash>
    </list>
+   <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
+      <hash n="profileDefinitions">
+         <hash n="Common_Project1_ServiceBusProfile">
+            <value n="profileClass" v="SbAppDeployProfile"/>
+            <value n="profileName" v="Common_Project1_ServiceBusProfile"/>
+         </hash>
+      </hash>
+      <list n="profileList">
+         <string v="Common_Project1_ServiceBusProfile"/>
+      </list>
+   </hash>
+   <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
+      <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
+         <url n="pomfileURL" path="pom.xml"/>
+      </hash>
+   </hash>
+   <hash n="oracle.sb.tooling.ide.core.internal.application.SbApplication">
+      <value n="configContextSessionName" v="OSB-IDE_build_1419749906684"/>
+   </hash>
 </jws:workspace>
