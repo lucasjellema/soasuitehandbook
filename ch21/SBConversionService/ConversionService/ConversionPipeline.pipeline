@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="CommonProject/WSDLs/ConversionService"/>
+            <con:binding>
+                <con:name>ConversionServicePortTypeSOAP11Binding</con:name>
+                <con:namespace>saibot.airport/services/utility/conversion</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffe">
+            <con:stage id="_StageId-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffc" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffd">
+            <con:stage id="_StageId-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffb" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="con" namespace="saibot.airport/services/utility/conversion"/>
+                </con:context>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-N3f57c7ff.5bf57836.0.14a94b8f366.N7ff8</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText>&lt;temperatureCelsiusToFahrenheitResponseMessage xmlns="saibot.airport/services/utility/conversion">
+			&lt;temperature>{$body/con:temperatureCelsiusToFahrenheitRequestMessage/con:temperature * 1.8 + 32}&lt;/temperature>
+		&lt;/temperatureCelsiusToFahrenheitResponseMessage></con1:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffe</con:request>
+                <con:response>response-N3f57c7ff.5bf57836.0.14a94b8f366.N7ffd</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

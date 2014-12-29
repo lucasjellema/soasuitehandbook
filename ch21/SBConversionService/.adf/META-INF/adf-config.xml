@@ -2,7 +2,7 @@
 <adf-config xmlns="http://xmlns.oracle.com/adf/config" xmlns:adf="http://xmlns.oracle.com/adf/config/properties"
             xmlns:sec="http://xmlns.oracle.com/adf/security/config">
   <adf:adf-properties-child xmlns="http://xmlns.oracle.com/adf/config/properties">
-    <adf-property name="adfAppUID" value="SpecialService-1089"/>
+    <adf-property name="adfAppUID" value="SBConversionService-5014"/>
   </adf:adf-properties-child>
   <sec:adf-security-child xmlns="http://xmlns.oracle.com/adf/security/config">
     <CredentialStoreContext credentialStoreClass="oracle.adf.share.security.providers.jps.CSFCredentialStore"
@@ -12,13 +12,12 @@
     <mds-config xmlns="http://xmlns.oracle.com/mds/config">
       <persistence-config>
         <metadata-namespaces>
-          <namespace path="/soa/shared" metadata-store-usage="mstore-usage_1"/>
+          <namespace path="/apps" metadata-store-usage="mstore-usage_1"/>
         </metadata-namespaces>
         <metadata-store-usages>
           <metadata-store-usage id="mstore-usage_1">
             <metadata-store class-name="oracle.mds.persistence.stores.file.FileMetadataStore">
-              <property name="metadata-path" value="${oracle.home}/integration"/>
-              <property name="partition-name" value="seed"/>
+              <property name="metadata-path" value="${soamds.apps.home}"/>
             </metadata-store>
           </metadata-store-usage>
         </metadata-store-usages>
