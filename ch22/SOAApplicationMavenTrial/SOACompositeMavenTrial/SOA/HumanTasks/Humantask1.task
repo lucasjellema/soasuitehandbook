@@ -1,0 +1,56 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<taskDefinition targetNamespace="http://xmlns.oracle.com/SOAApplicationMavenTrial/SOACompositeMavenTrial/Humantask1" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:task="http://xmlns.oracle.com/bpel/workflow/task" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://xmlns.oracle.com/bpel/workflow/taskDefinition">
+   <name>Humantask1</name>
+   <id>${domain_id}_${process_id}_${process_revision}_Humantask1</id>
+   <title type="XPATH"><value>string('Hoi')</value></title>
+   <priority>3</priority>
+   <process processId="" processVersion=""/>
+   <routingSlip xmlns="http://xmlns.oracle.com/bpel/workflow/routingSlip" routingType="TEMPLATE">
+      <globalConfiguration>
+         <sharePayloadConfiguration>
+            <type>USE_SYSTEM_WIDE_GLOBAL_CONFIGURATION</type>
+         </sharePayloadConfiguration>
+      </globalConfiguration>
+      <participants isAdhocRoutingSupported="false">
+         <stage name="Stage1" disabled="false">
+            <participant disabled="false" name="Stage1.Participant1">
+               <resource type="STATIC" identityType="user">weblogic</resource>
+            </participant>
+         </stage>
+      </participants>
+      <notification includeTaskAttachments="false" actionable="false" secureNotifications="false"
+                    oneNotificationPerUserPerAction="false" hideWorklistUrlInEmail="false">
+         <action name="ASSIGN" recipient="ASSIGNEES">
+            <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
+         </action>
+         <action name="COMPLETE" recipient="CREATOR">
+            <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
+         </action>
+         <action name="ERROR" recipient="OWNER">
+            <![CDATA[concat(string('Task '), /task:task/task:title, string(' requires your attention.'))]]>
+         </action>
+         <groupNotificationConfiguration>SEND_INDIVIDUAL_NOTIFICATION</groupNotificationConfiguration>
+         <commentScope>TASK</commentScope>
+      </notification>
+   </routingSlip>
+   <workflowConfiguration features="ucm,RSCUSTOMIZATION" xmlns="http://xmlns.oracle.com/bpel/workflow/configuration">
+      <outcomes>
+         <outcome>APPROVE</outcome>
+         <outcome>REJECT</outcome>
+      </outcomes>
+      <payload externalSchema="false" xmlSchemaDefinition="../Schemas/Humantask1Payload.xsd"
+               typedTaskSchemaLocation="../Schemas/Humantask1WorkflowTask.xsd"/>
+      <bpelEventListener>false</bpelEventListener>
+      <bpelNoCallbacks>false</bpelNoCallbacks>
+      <showCompleteGraphicalHistory>true</showCompleteGraphicalHistory>
+      <reevalTranslatablesOnUpdate>false</reevalTranslatablesOnUpdate>
+      <preActionMandatoryUserSteps/>
+      <allowInitiatorEditParticipants>false</allowInitiatorEditParticipants>
+      <allowParticipantsEditParticipants>false</allowParticipantsEditParticipants>
+      <globalCreationTask>false</globalCreationTask>
+      <enableAutoClaim>true</enableAutoClaim>
+      <workflowConditions/>
+      <taskSequenceTypes>FUTURE</taskSequenceTypes>
+      <taskSequenceTypes>AGGREGATE</taskSequenceTypes>
+   </workflowConfiguration>
+</taskDefinition>
