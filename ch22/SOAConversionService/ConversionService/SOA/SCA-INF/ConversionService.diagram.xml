@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="ConversionService">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="41" width="137" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="34" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="ConversionService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>getTemperatureCelsiusToFahrenheit</dgm:item>
+            <dgm:item>getTemperatureKelvinToFahrenheit</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="TemperatureConversionService">
+        <dgm:body borderWidth="2" arcRad="20" X="794" Y="41" width="136" height="96">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="784" Y="34" width="156" height="110">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TemperatureConversionService" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>getTemperatureCelsiusToFahrenheit</dgm:item>
+            <dgm:item>getTemperatureKelvinToFahrenheit</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="ConversionMediator">
+        <dgm:body borderWidth="2" arcRad="20" X="411" Y="26" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="401" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ConversionMediator" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
+        <dgm:outputPort name="TemperatureConversionService" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="ConversionMediator/TemperatureConversionService" target="TemperatureConversionService" width="2">
+        <dgm:gSegment X1="551" Y1="51" X2="784" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="ConversionService" target="ConversionMediator/ConversionMediator" width="2">
+        <dgm:gSegment X1="168" Y1="51" X2="401" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>
