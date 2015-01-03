@@ -36,7 +36,7 @@
             <jca:adapter-name>File Adapter</jca:adapter-name>
             <jca:adapter-type>file</jca:adapter-type>
             <jca:dispatch-policy>SBDefaultResponseWorkManager</jca:dispatch-policy>
-            <jca:always-use-wsdl>true</jca:always-use-wsdl>
+            <jca:always-use-wsdl>false</jca:always-use-wsdl>
             <jca:connection-mode>managed</jca:connection-mode>
             <jca:outbound-properties>
                 <jca:operation-properties>
@@ -44,7 +44,7 @@
                     <jca:spec-properties>
                         <jca:property>
                             <jca:name>FileNamingConvention</jca:name>
-                            <jca:value>ServiceBusConversionLog.txt</jca:value>
+                            <jca:value>ServiceBusConversionsLogbook.txt</jca:value>
                         </jca:property>
                         <jca:property>
                             <jca:name>Append</jca:name>
