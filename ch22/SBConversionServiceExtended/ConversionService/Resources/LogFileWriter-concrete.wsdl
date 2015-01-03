@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/file/SBConversionServiceExtended/ConversionService/LogFileWriter" name="LogFileWriter-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="LogFileWriter.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/file/SBConversionServiceExtended/ConversionService/LogFileWriter"/>
+    <wsdl:binding name="Write_ptt-binding" type="log:Write_ptt" xmlns:log="http://xmlns.oracle.com/pcbpel/adapter/file/SBConversionServiceExtended/ConversionService/LogFileWriter">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="Write">
+            <soap:operation soapAction="Write"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
