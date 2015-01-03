@@ -56,13 +56,14 @@
   <reference name="TemperatureConversionService" ui:wsdlLocation="oramds:/apps/WSDLs/ConversionService.wsdl">
     <interface.wsdl interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
     <binding.ws port="saibot.airport/services/utility/conversion#wsdl.endpoint(ConversionServicePortTypeSOAP11BindingQSService/ConversionServicePortTypeSOAP11BindingQSPort)"
-                location="http://10.10.10.21:8011/ConversionService?wsdl" soapVersion="1.1"/>
+                location="http://${soasuite12c_host}:${servicebus_port}/ConversionService?wsdl" supports=""
+                soapVersion="1.1"/>
   </reference>
   <reference name="LogFileWriter" ui:wsdlLocation="WSDLs/LogFileWriter.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/file/SOAConversionServiceExtended/ConversionService/LogFileWriter#wsdl.interface(Write_ptt)"/>
     <binding.jca config="Adapters/LogFileWriter_file.jca"/>
     <property name="LOG_FILE_DIRECTORY" type="xs:string" many="false" override="may">/tmp</property>    
-    <property name="FileNamingConvention" type="xs:string" many="false" override="may">TemperatureConversionServiceLogFile.txt</property>
+    <property name="FileNamingConvention" type="xs:string" many="false" override="may">TemperatureConversionServiceLogFile${servicebus_port}.txt</property>
 
   </reference>
   <wire>
