@@ -74,6 +74,7 @@
     <variable name="ConversionOperation" type="xsd:string"/>
     <variable name="OriginalValue" type="xsd:float"/>
     <variable name="ConvertedValue" type="xsd:float"/>
+    <variable name="cKelvinCelsiusGap" type="xsd:float"/>
   </variables>
 
   <!-- 
@@ -88,7 +89,19 @@
     <!-- Receive input from requestor. (Note: This maps to operation defined in KelvinToFahrenheitProcessor.wsdl) -->
     <pick name="OperationalBranchPick" createInstance="yes">
       <onMessage variable="inputVariable" partnerLink="kelvintofahrenheitprocessor_client"
-                 portType="ns1:ConversionServicePortType" operation="getTemperatureKelvinToFahrenheit"><sequence name="Sequence4"><sequence name="Sequence2"><assign name="AssignCelsiusFromKelvin"><copy><from>$inputVariable.in/ns1:temperature - 273.15</from><to>$InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_InputVariable.in/ns1:temperature</to></copy></assign><invoke name="InvokeTemperatureConversionService"
+                 portType="ns1:ConversionServicePortType" operation="getTemperatureKelvinToFahrenheit"><sequence name="Sequence4"><sequence name="Sequence2">
+            <assign name="AssignKelvinCelsiusGap">
+              <copy>
+                <from>number(ora:getPreference('kelvinCelsiusGap'))</from>
+                <to>$cKelvinCelsiusGap</to>
+              </copy>
+            </assign>
+            <assign name="AssignCelsiusFromKelvin">
+              <copy>
+                <from>$inputVariable.in/ns1:temperature - $cKelvinCelsiusGap</from>
+                <to>$InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_InputVariable.in/ns1:temperature</to>
+              </copy>
+            </assign><invoke name="InvokeTemperatureConversionService"
                                                                                                                                                                                                                                                                                                                                                                                                         bpelx:invokeAsDetail="no"
                                                                                                                                                                                                                                                                                                                                                                                                         partnerLink="TemperatureConversionService"
                                                                                                                                                                                                                                                                                                                                                                                                         portType="ns1:ConversionServicePortType"

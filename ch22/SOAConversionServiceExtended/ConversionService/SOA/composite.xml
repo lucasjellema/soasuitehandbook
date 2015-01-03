@@ -37,6 +37,7 @@
   </component>
   <component name="KelvinToFahrenheitProcessor" version="2.0">
     <implementation.bpel src="BPEL/KelvinToFahrenheitProcessor.bpel"/>
+    
     <componentType>
       <service name="kelvintofahrenheitprocessor_client" ui:wsdlLocation="WSDLs/ConversionServiceWrapper.wsdl">
         <interface.wsdl interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
@@ -49,6 +50,7 @@
       </reference>
     </componentType>
     <property name="bpel.config.transaction" type="xs:string" many="false">required</property>
+    <property name="preference.kelvinCelsiusGap" type="xs:float">273.15</property>
   </component>
   <reference name="TemperatureConversionService" ui:wsdlLocation="oramds:/apps/WSDLs/ConversionService.wsdl">
     <interface.wsdl interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
