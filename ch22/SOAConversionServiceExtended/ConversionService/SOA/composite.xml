@@ -7,8 +7,9 @@
            xmlns:sca-ext="http://xmlns.oracle.com/sca/1.0-ext">
   <import namespace="saibot.airport/services/utility/conversion" location="oramds:/apps/WSDLs/ConversionService.wsdl"
           importType="wsdl"/>
-  <import namespace="saibot.airport/services/utility/conversion"
+<!--  <import namespace="saibot.airport/services/utility/conversion"
           location="http://10.10.10.21:8011/ConversionService?wsdl" importType="wsdl"/>
+ -->
   <import namespace="saibot.airport/services/utility/conversion" location="WSDLs/ConversionServiceWrapper.wsdl"
           importType="wsdl"/>
   <import namespace="saibot.airport/services/utility/conversion" location="WSDLs/ConversionServiceWrapper1.wsdl"
@@ -60,7 +61,9 @@
   <reference name="LogFileWriter" ui:wsdlLocation="WSDLs/LogFileWriter.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/file/SOAConversionServiceExtended/ConversionService/LogFileWriter#wsdl.interface(Write_ptt)"/>
     <binding.jca config="Adapters/LogFileWriter_file.jca"/>
-    <property name="LOG_FILE_DIRECTORY" type="xs:string" many="false" override="may">/tmp</property>
+    <property name="LOG_FILE_DIRECTORY" type="xs:string" many="false" override="may">/tmp</property>    
+    <property name="FileNamingConvention" type="xs:string" many="false" override="may">TemperatureConversionServiceLogFile.txt</property>
+
   </reference>
   <wire>
     <source.uri>ConversionService</source.uri>
