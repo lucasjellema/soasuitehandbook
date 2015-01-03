@@ -88,18 +88,39 @@
    </hash>
    <hash n="oracle.ide.model.ResourcePaths">
       <hash n="resourcesContentSet">
-         <list n="pattern-filters"/>
-         <list n="url-path">
-            <url path=".data/contentsets/"/>
+         <list n="constituent-sets">
+            <hash>
+               <list n="pattern-filters">
+                  <string v="+**"/>
+               </list>
+               <list n="url-path">
+                  <url path="."/>
+               </list>
+            </hash>
+            <hash>
+               <list n="pattern-filters">
+                  <string v="+**"/>
+               </list>
+               <list n="url-path">
+                  <url path="src/main/scripts/"/>
+               </list>
+            </hash>
+            <hash>
+               <list n="pattern-filters">
+                  <string v="+pom.xml"/>
+               </list>
+               <list n="url-path">
+                  <url path="."/>
+               </list>
+            </hash>
          </list>
+         <list n="pattern-filters"/>
+         <list n="url-path"/>
       </hash>
    </hash>
    <hash n="oracle.ide.model.TechnologyScopeConfiguration">
       <list n="technologyScope">
-         <string v="Maven"/>
          <string v="ServiceBusTechnology"/>
-         <string v="XML"/>
-         <string v="XML_SCHEMA"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.compiler.OjcConfiguration">
@@ -143,9 +164,8 @@
          </list>
       </hash>
       <hash n="javaContentSet">
-         <list n="pattern-filters"/>
          <list n="url-path">
-            <url path=".data/contentsets/src/"/>
+            <url path="."/>
          </list>
       </hash>
    </hash>
@@ -171,7 +191,7 @@
       </hash>
    </hash>
    <hash n="oracle.jdevimpl.config.JProjectPaths">
-      <url n="outputDirectory" path=".data/contentsets/classes/"/>
+      <url n="outputDirectory" path=".data/maven/classes/"/>
    </hash>
    <hash n="oracle.mds.internal.dt.ide.MDSLibraryCustCSProvider">
       <hash n="mdsContentSet">
