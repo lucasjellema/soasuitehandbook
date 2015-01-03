@@ -1,0 +1,29 @@
+<xsd:schema targetNamespace="saibot.airport/services/utility/conversion" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:conversion="saibot.airport/services/utility/conversion">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+            
+  <xsd:element name="temperatureCelsiusToFahrenheitRequestMessage" type="conversion:temperatureCelsiusType"/>
+  <xsd:element name="temperatureCelsiusToFahrenheitResponseMessage" type="conversion:temperatureFahrenheitType"/>
+
+  <xsd:element name="temperatureKelvinToFahrenheitRequestMessage" type="conversion:temperatureKelvinType"/>
+  <xsd:element name="temperatureKelvinToFahrenheitResponseMessage" type="conversion:temperatureFahrenheitType"/>
+
+
+  <xsd:complexType name="temperatureCelsiusType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseCelsiusTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="temperatureKelvinType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseKelvinTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="temperatureFahrenheitType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseFahrenheitTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
