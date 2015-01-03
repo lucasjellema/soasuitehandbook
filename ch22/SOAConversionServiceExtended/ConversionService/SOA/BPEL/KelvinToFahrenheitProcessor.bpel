@@ -1,0 +1,178 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Sat Jan 03 08:32:07 CET 2015
+  Author:  lucas_j
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="KelvinToFahrenheitProcessor"
+               targetNamespace="http://xmlns.oracle.com/SOAConversionServiceExtended/ConversionService/KelvinToFahrenheitProcessor"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SOAConversionServiceExtended/ConversionService/KelvinToFahrenheitProcessor"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="saibot.airport/services/utility/conversion"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/file/SOAConversionServiceExtended/ConversionService/LogFileWriter"
+         xmlns:ns3="saibot.airport/utilities/conversion" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="saibot.airport/services/utility/conversion" location="../WSDLs/ConversionServiceWrapper.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="kelvintofahrenheitprocessor_client" partnerLinkType="ns1:KelvinToFahrenheitProcessor" myRole="ConversionServicePortType"/>
+    <partnerLink name="TemperatureConversionService" partnerLinkType="ns1:TemperatureConversionService"
+                 partnerRole="ConversionServicePortType"/>
+    <partnerLink name="LogFileWriter" partnerLinkType="ns2:Write_plt" partnerRole="Write_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:temperatureKelvinToFahrenheitRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="OnMessage_getTemperatureCelsiusToFahrenheit_InputVariable"
+              messageType="ns1:temperatureCelsiusToFahrenheitRequestMessage"/>
+    <variable name="ReplyCelsiusToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable"
+              messageType="ns1:temperatureCelsiusToFahrenheitResponseMessage"/>
+    <variable name="InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_InputVariable"
+              messageType="ns1:temperatureCelsiusToFahrenheitRequestMessage"/>
+    <variable name="InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_OutputVariable"
+              messageType="ns1:temperatureCelsiusToFahrenheitResponseMessage"/>
+    <variable name="ReplyKelvinToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable"
+              messageType="ns1:temperatureCelsiusToFahrenheitResponseMessage"/>
+    <variable name="ConversionOperation" type="xsd:string"/>
+    <variable name="OriginalValue" type="xsd:float"/>
+    <variable name="ConvertedValue" type="xsd:float"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in KelvinToFahrenheitProcessor.wsdl) -->
+    <pick name="OperationalBranchPick" createInstance="yes">
+      <onMessage variable="inputVariable" partnerLink="kelvintofahrenheitprocessor_client"
+                 portType="ns1:ConversionServicePortType" operation="getTemperatureKelvinToFahrenheit"><sequence name="Sequence4"><sequence name="Sequence2"><assign name="AssignCelsiusFromKelvin"><copy><from>$inputVariable.in/ns1:temperature - 273.15</from><to>$InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_InputVariable.in/ns1:temperature</to></copy></assign><invoke name="InvokeTemperatureConversionService"
+                                                                                                                                                                                                                                                                                                                                                                                                        bpelx:invokeAsDetail="no"
+                                                                                                                                                                                                                                                                                                                                                                                                        partnerLink="TemperatureConversionService"
+                                                                                                                                                                                                                                                                                                                                                                                                        portType="ns1:ConversionServicePortType"
+                                                                                                                                                                                                                                                                                                                                                                                                        operation="getTemperatureCelsiusToFahrenheit"
+                                                                                                                                                                                                                                                                                                                                                                                                        inputVariable="InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_InputVariable"
+                                                                                                                                                                                                                                                                                                                                                                                                        outputVariable="InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_OutputVariable"/><assign name="AssignResponse"><copy><from>$InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_OutputVariable.return/ns1:temperature</from><to>$ReplyKelvinToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable.return/ns1:temperature</to></copy></assign><!--          <reply name="replyKelvinToFahrenheitOutput" partnerLink="kelvintofahrenheitprocessor_client"
+                 portType="ns1:ConversionServicePortType" operation="getTemperatureCelsiusToFahrenheit"
+                 variable="outputVariable"/>
+    --><reply name="ReplyKelvinToFahrenheit"
+              variable="ReplyKelvinToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable"
+              partnerLink="kelvintofahrenheitprocessor_client" portType="ns1:ConversionServicePortType"
+              operation="getTemperatureCelsiusToFahrenheit"/></sequence><assign name="AssignSummary"
+                                                                                xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      
+      
+      
+   <copy>
+         <from>'Kelvin2Fahrenheit'</from>
+         <to>$ConversionOperation</to>
+      </copy><copy>
+              <from>$InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_OutputVariable.return/ns1:temperature</from>
+              <to>$ConvertedValue</to>
+            </copy><copy>
+              <from>$inputVariable.in/ns1:temperature</from>
+              <to>$OriginalValue</to>
+            </copy></assign></sequence></onMessage>
+      <onMessage bpelx:name="celsiusToFahrenheit" variable="OnMessage_getTemperatureCelsiusToFahrenheit_InputVariable"
+                 partnerLink="kelvintofahrenheitprocessor_client" portType="ns1:ConversionServicePortType"
+                 operation="getTemperatureCelsiusToFahrenheit">
+        <sequence name="Sequence1">
+          <invoke name="InvokeTemperatureConversionService" bpelx:invokeAsDetail="no"
+                  partnerLink="TemperatureConversionService" portType="ns1:ConversionServicePortType"
+                  operation="getTemperatureCelsiusToFahrenheit"
+                  inputVariable="OnMessage_getTemperatureCelsiusToFahrenheit_InputVariable"
+                  outputVariable="ReplyCelsiusToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable"/>
+          <reply name="ReplyCelsiusToFahrenheit"
+                 variable="ReplyCelsiusToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable"
+                 partnerLink="kelvintofahrenheitprocessor_client" portType="ns1:ConversionServicePortType"
+                 operation="getTemperatureCelsiusToFahrenheit"/>
+          <assign name="AssignSummary">
+            <copy>
+              <from>'Celsius2Fahrenheit'</from>
+              <to>$ConversionOperation</to>
+            </copy>
+            <copy>
+              <from>$ReplyCelsiusToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable.return/ns1:temperature</from>
+              <to>$ConvertedValue</to>
+            </copy>
+            <copy>
+              <from>$OnMessage_getTemperatureCelsiusToFahrenheit_InputVariable.in/ns1:temperature</from>
+              <to>$OriginalValue</to>
+            </copy>
+          </assign>
+        </sequence>
+      </onMessage>
+    </pick>
+
+    <!-- Generate reply to synchronous request -->
+    <scope name="ScopeLogConversionRequest">
+      <variables>
+        <variable name="InvokeLogFileWriter_Write_InputVariable" messageType="ns2:Write_msg"/>
+      </variables>
+      <sequence name="Sequence3">
+        <assign name="AssignLogEntryValues">
+          <copy>
+            <from>xp20:current-dateTime()</from>
+            <to>$InvokeLogFileWriter_Write_InputVariable.body/ns3:ConversionRequest/ns3:Timestamp</to>
+          </copy>
+          <copy>
+            <from>$ConversionOperation</from>
+            <to>$InvokeLogFileWriter_Write_InputVariable.body/ns3:ConversionRequest/ns3:Operation</to>
+          </copy>
+          <copy>
+            <from>$OriginalValue</from>
+            <to>$InvokeLogFileWriter_Write_InputVariable.body/ns3:ConversionRequest/ns3:OriginalValue</to>
+          </copy>
+          <copy>
+            <from>$ConvertedValue</from>
+            <to>$InvokeLogFileWriter_Write_InputVariable.body/ns3:ConversionRequest/ns3:ConvertedValue</to>
+          </copy>
+        </assign>
+        <invoke name="InvokeLogFileWriter" bpelx:invokeAsDetail="no" partnerLink="LogFileWriter"
+                portType="ns2:Write_ptt" operation="Write" inputVariable="InvokeLogFileWriter_Write_InputVariable"/>
+      </sequence>
+    </scope>
+  </sequence>
+</process>

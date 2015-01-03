@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+    
+     targetNamespace="saibot.airport/services/utility/conversion"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="saibot.airport/services/utility/conversion"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="KelvinToFahrenheitProcessor">
+        <plnk:role name="ConversionServicePortType" portType="tns:ConversionServicePortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="saibot.airport/services/utility/conversion" location="oramds:/apps/WSDLs/ConversionService.wsdl"/>
+</wsdl:definitions>
