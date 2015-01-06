@@ -437,7 +437,7 @@
             <value n="custom" v="false"/>
             <value n="name" v="Default"/>
             <hash n="oracle.jdevimpl.runner.debug.DebugConfiguration">
-               <value n="remoteParameter:SOA:hostname" v="14-311-267.AMIS.local"/>
+               <value n="remoteParameter:SOA:hostname" v="soa2admin2"/>
                <value n="remoteParameter:SOA:port" v="5004"/>
                <value n="remoteProtocol" v="SOA"/>
             </hash>

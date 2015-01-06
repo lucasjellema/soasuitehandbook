@@ -8,5 +8,6 @@
     <modules>
         <!-- Add project modules -->
     	<module>ConversionService</module>
+    	<module>Project1</module>
     </modules>
 </project>

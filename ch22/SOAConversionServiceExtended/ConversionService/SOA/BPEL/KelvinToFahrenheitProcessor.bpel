@@ -75,6 +75,8 @@
     <variable name="OriginalValue" type="xsd:float"/>
     <variable name="ConvertedValue" type="xsd:float"/>
     <variable name="cKelvinCelsiusGap" type="xsd:float"/>
+    <variable name="ReplyKelvinToFahrenheit_getTemperatureKelvinToFahrenheit_OutputVariable"
+              messageType="ns1:temperatureKelvinToFahrenheitResponseMessage"/>
   </variables>
 
   <!-- 
@@ -107,13 +109,18 @@
                                                                                                                                                                                                                                                                                                                                                                                                         portType="ns1:ConversionServicePortType"
                                                                                                                                                                                                                                                                                                                                                                                                         operation="getTemperatureCelsiusToFahrenheit"
                                                                                                                                                                                                                                                                                                                                                                                                         inputVariable="InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_InputVariable"
-                                                                                                                                                                                                                                                                                                                                                                                                        outputVariable="InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_OutputVariable"/><assign name="AssignResponse"><copy><from>$InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_OutputVariable.return/ns1:temperature</from><to>$ReplyKelvinToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable.return/ns1:temperature</to></copy></assign><!--          <reply name="replyKelvinToFahrenheitOutput" partnerLink="kelvintofahrenheitprocessor_client"
+                                                                                                                                                                                                                                                                                                                                                                                                        outputVariable="InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_OutputVariable"/><assign name="AssignResponse">
+              <copy>
+                <from>$InvokeTemperatureConversionService_getTemperatureCelsiusToFahrenheit_OutputVariable.return/ns1:temperature</from>
+                <to>$ReplyKelvinToFahrenheit_getTemperatureKelvinToFahrenheit_OutputVariable.return/ns1:temperature</to>
+              </copy>
+            </assign><!--          <reply name="replyKelvinToFahrenheitOutput" partnerLink="kelvintofahrenheitprocessor_client"
                  portType="ns1:ConversionServicePortType" operation="getTemperatureCelsiusToFahrenheit"
                  variable="outputVariable"/>
     --><reply name="ReplyKelvinToFahrenheit"
-              variable="ReplyKelvinToFahrenheit_getTemperatureCelsiusToFahrenheit_OutputVariable"
+              variable="ReplyKelvinToFahrenheit_getTemperatureKelvinToFahrenheit_OutputVariable"
               partnerLink="kelvintofahrenheitprocessor_client" portType="ns1:ConversionServicePortType"
-              operation="getTemperatureCelsiusToFahrenheit"/></sequence><assign name="AssignSummary"
+              operation="getTemperatureKelvinToFahrenheit"/></sequence><assign name="AssignSummary"
                                                                                 xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
       
       
