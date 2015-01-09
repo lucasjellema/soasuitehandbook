@@ -1,0 +1,12 @@
+<adapter-config name="LogFileWriter" adapter="file" wsdlLocation="LogFileWriter.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/FileAdapter"/>
+  <endpoint-interaction portType="Write_ptt" operation="Write">
+    <interaction-spec className="oracle.tip.adapter.file.outbound.FileInteractionSpec">
+      <property name="LogicalDirectory" value="LOG_FILE_DIRECTORY"/>
+      <property name="Append" value="true"/>
+      <property name="FileNamingConvention" value="ServiceBusConversionLog.txt"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

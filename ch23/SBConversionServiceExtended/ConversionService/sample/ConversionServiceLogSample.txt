@@ -1,0 +1,2 @@
+Timestamp,Operation,OriginalValue,ConvertedValue
+20150802140823,Kelvin,273,32
