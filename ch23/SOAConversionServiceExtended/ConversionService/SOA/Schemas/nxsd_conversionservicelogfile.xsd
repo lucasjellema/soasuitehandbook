@@ -1,0 +1,26 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" xmlns:tns="saibot.airport/utilities/conversion" targetNamespace="saibot.airport/utilities/conversion" elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:stream="chars" nxsd:encoding="US-ASCII" nxsd:hasHeader="true" nxsd:headerLines="1" nxsd:headerLinesTerminatedBy="${eol}">
+
+
+  <xsd:element name="ConversionRequests">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ConversionRequest" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="Timestamp" type="xsd:dateTime" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+              <xsd:element name="Operation" type="xsd:string" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+              <xsd:element name="OriginalValue" type="xsd:float" nxsd:style="terminated" nxsd:terminatedBy="," nxsd:quotedBy="&quot;"/>
+              <xsd:element name="ConvertedValue" type="xsd:float" nxsd:style="terminated" nxsd:terminatedBy="${eol}" nxsd:quotedBy="&quot;"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+<xsd:annotation>
+      <xsd:appinfo>NXSDSAMPLE=/D:/GitHub/soasuitehandbook/ch22/SOAConversionServiceExtended/ConversionService/SOA/sample/ConversionServiceLogSample.txt</xsd:appinfo>
+      <xsd:appinfo>USEHEADER=true</xsd:appinfo>
+   </xsd:annotation>
+</xsd:schema>

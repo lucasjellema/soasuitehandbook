@@ -1,0 +1,9 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<sensors targetNamespace="http://xmlns.oracle.com/SOAConversionServiceExtended/ConversionService/KelvinToFahrenheitProcessor" xmlns="http://xmlns.oracle.com/bpel/sensor" xmlns:tns="http://xmlns.oracle.com/SOAConversionServiceExtended/ConversionService/KelvinToFahrenheitProcessor" xmlns:pc="http://xmlns.oracle.com/bpel/sensor">
+   <sensor sensorName="ActivitySensorOnReplyKelvinToFahrenheit" classname="oracle.tip.pc.services.reports.dca.agents.BpelActivitySensorAgent" kind="activity" target="ReplyKelvinToFahrenheit">
+      <activityConfig evalTime="completion"/>
+   </sensor>
+   <sensor sensorName="ActivitySensor1" classname="oracle.tip.pc.services.reports.dca.agents.BpelActivitySensorAgent" kind="activity" target="AssignKelvinCelsiusGap">
+      <activityConfig evalTime="activation"/>
+   </sensor>
+</sensors>

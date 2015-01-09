@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata"
+               xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+               xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
+               xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+  <composite name="ConversionService">
+    <!--Add search and replace rules for the import section of a composite
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888</search>
+		<replace>8889</replace>
+	<searchReplace>-->
+    <import>
+      <searchReplace>
+        <search/>
+        <replace/>
+      </searchReplace>
+    </import>
+    <service name="ConversionService">
+      <!--Add search and replace rules for the binding properties-->
+      <binding type="ws">
+        <attribute name="port">
+          <replace>saibot.airport/services/utility/conversion#wsdl.endpoint(ConversionService/ConversionServicePort)</replace>
+        </attribute>
+        <property name="weblogic.wsee.wsat.transaction.flowOption">
+          <replace>NEVER</replace>
+        </property>
+      </binding>
+    </service>
+    <service name="ConversionMediator"/>
+    <service name="kelvintofahrenheitprocessor_client"/>
+    <property name="productVersion">
+      <replace>12.1.3.0.0</replace>
+    </property>
+    <property name="compositeID">
+      <replace>834644a4-bbe1-4746-81ae-e74d0f3b2ff7</replace>
+    </property>
+    <!--Add search and replace rules for the component properties
+	For components and service/reference bindings, you can add policy references.
+	Example:
+	<component name="*">
+		<wsp:PolicyReference orawsp:category="management" orawsp:status="enabled" URI="oracle/log_policy"/>
+	</component>-->
+    <component name="KelvinToFahrenheitProcessor">
+      <property name="bpel.config.transaction">
+        <replace>required</replace>
+      </property>
+      <property name="preference.kelvinCelsiusGap">
+        <replace>273.15</replace>
+      </property>
+    </component>
+    <reference name="KelvinToFahrenheitProcessor.kelvintofahrenheitprocessor_client"/>
+    <reference name="TemperatureConversionService"/>
+    <reference name="LogFileWriter"/>
+    <reference name="TemperatureConversionService">
+      <binding type="ws">
+        <attribute name="port">
+          <replace>saibot.airport/services/utility/conversion#wsdl.endpoint(ConversionServicePortTypeSOAP11BindingQSService/ConversionServicePortTypeSOAP11BindingQSPort)</replace>
+        </attribute>
+        <attribute name="location">
+          <replace>http://10.10.10.21:8011/ConversionService?wsdl</replace>
+        </attribute>
+      </binding>
+    </reference>
+    <reference name="LogFileWriter">
+      <property name="LOG_FILE_DIRECTORY">
+        <replace>/tmp/conversionLogs</replace>
+      </property>
+      <property name="FileNamingConvention">
+        <replace>TemperatureConversionLogsbook.txt</replace>
+      </property>
+      <binding type="jca"/>
+    </reference>
+  </composite>
+  <!--To configure monitor.config: 
+	<property name="enabled"><replace>true</replace></property>
+	<property name="dataObjectsFolder"><searchReplace><search>mydev</search><replace>myproduction</replace></searchReplace></property>
+	
+	sample properties to configure for file/ftp adapter: 
+	<jca:property name="PhysicalDirectory"><replace>c:\temp</replace></jca:property>
+	<jca:property name="DeleteFile"><replace>true</replace></jca:property>
+	<jca:property name="PollingFrequency"><replace>3</replace></jca:property>
+	
+	To add search and replace rules for wsdls, xsd and jca files
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888</search>
+		<replace>8889</replace>
+	<searchReplace>
+	-->
+  <wsdlAndSchema name="Adapters/LogFileWriter_file.jca|Schemas/nxsd_conversionservicelogfile.xsd|WSDLs/ConversionServiceWrapper.wsdl|WSDLs/ConversionServiceWrapper1.wsdl|WSDLs/LogFileWriter.wsdl">
+    <searchReplace>
+      <search/>
+      <replace/>
+    </searchReplace>
+  </wsdlAndSchema>
+</SOAConfigPlan>

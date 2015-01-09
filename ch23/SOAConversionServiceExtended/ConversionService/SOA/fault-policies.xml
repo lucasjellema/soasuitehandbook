@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faultPolicies xmlns="http://schemas.oracle.com/bpel/faultpolicy" 
+xmlns:bpel1="http://schemas.xmlsoap.org/ws/2003/03/business-process/" 
+xmlns:bpel1ex="http://schemas.oracle.com/bpel/extension" xmlns:bpel2="http://docs.oasis-open.org/wsbpel/2.0/process/executable" 
+xmlns:medns="http://schemas.oracle.com/mediator/faults">
+    <faultPolicy id="SynchronousMediatorPolicy">
+        <Conditions>
+            <faultName name="medns:mediatorFault"
+                       description="XDS Validation fault in request message for synchronous echo ">
+                <condition>
+                    <action ref="abortInstance"/>
+                    <test>contains($fault/message, "01303")</test>
+                    <alert ref="alertToJMS"/>
+                </condition>
+            </faultName>
+            <faultName name="medns:mediatorFault" xmlns:medns="http://schemas.oracle.com/mediator/faults">
+                <condition>
+                    <action ref="abortInstance"/>
+                    <test>contains($fault.mediatorErrorCode, "TYPE_DATA_VALIDATION")</test>
+                    <alert ref="emailToSaibotAirportAdmin"/>
+                    <alert ref="alertLog"/>
+                </condition>
+            </faultName>
+            <faultName name="medns:mediatorFault"
+                       description="Some fault in synchronous processing (not data validation)">
+                <condition>
+                    <action ref="default-rethrow"/>
+                    <alert ref="alertLog"/>
+                </condition>
+            </faultName>
+        </Conditions>
+        <Alerts>
+            <Alert id="alertToJMS">
+                <JMS propertySet="set1"/>
+            </Alert>
+            <Alert id="emailToSaibotAirportAdmin">
+                <email>
+                    <To>lucasjellema@gmail.com</To>
+                    <CC></CC>
+                </email>
+            </Alert>
+            <Alert id="alertLog">
+                <log propertySet="set1">
+                    <Logger>oracle.soa.SensorDataPublisher</Logger>
+                    <SupplementaryAttributes>
+                        <Attr name="relatie">mijnTante</Attr>
+                    </SupplementaryAttributes>
+                </log>
+            </Alert>
+        </Alerts>
+        <Actions>
+            <Action id="default-termination">
+                <abort/>
+            </Action>
+            <Action id="default-manual">
+                <humanIntervention/>
+            </Action>
+            <Action id="default-retry">
+                <retry>
+                    <retryCount>1</retryCount>
+                    <retryInterval>1</retryInterval>
+                </retry>
+            </Action>
+            <Action id="default-rethrow">
+                <rethrowFault/>
+            </Action>
+            <Action id="abortInstance">
+                <abort/>
+            </Action>
+        </Actions>
+        <Properties>
+            <propertySet name="set1">
+                <property name="property1">value</property>
+            </propertySet>
+        </Properties>
+    </faultPolicy>
+</faultPolicies>

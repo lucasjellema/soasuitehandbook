@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<actions targetNamespace="http://xmlns.oracle.com/SOAConversionServiceExtended/ConversionService/KelvinToFahrenheitProcessor" xmlns="http://xmlns.oracle.com/bpel/sensor" xmlns:tns="http://xmlns.oracle.com/SOAConversionServiceExtended/ConversionService/KelvinToFahrenheitProcessor" xmlns:pc="http://xmlns.oracle.com/bpel/sensor">
+   <action name="SensorDataPublisher" publishName="" publishType="Custom" enabled="true" filter="" publishTarget="oracle.soa.SensorDataPublisher">
+      <sensorName>ActivitySensor1</sensorName>
+      <sensorName>ActivitySensorOnReplyKelvinToFahrenheit</sensorName>
+   </action>
+</actions>
