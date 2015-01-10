@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="AsynchKelvinToFahrenheitProcessor"
+             targetNamespace="saibot.airport/utilities/ConversionService"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:client="saibot.airport/utilities/ConversionService"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+             xmlns:tns="saibot.airport/services/utility/conversion" xmlns:conversion="saibot.airport/services/utility/conversion">
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	TYPE DEFINITION - List of services participating in this BPEL process
+	The default output of the BPEL designer uses strings as input and 
+	output to the BPEL Process. But you can define or import any XML 
+	Schema type and use them as part of the message types.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
+    <wsdl:types>
+        <xsd:schema elementFormDefault="qualified">
+            <xsd:import namespace="saibot.airport/services/utility/conversion" schemaLocation="oramds:/apps/Schemas/ConversionService.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="temperatureKelvinToFahrenheitRequestMessage">
+        <wsdl:part name="in" element="conversion:temperatureKelvinToFahrenheitRequestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="temperatureKelvinToFahrenheitResponseMessage">
+        <wsdl:part name="return" element="conversion:temperatureKelvinToFahrenheitResponseMessage"/>
+    </wsdl:message>
+
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	PORT TYPE DEFINITION - A port type groups a set of operations into
+	a logical service unit.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- portType implemented by the AsynchKelvinToFahrenheitProcessor BPEL process -->
+	<wsdl:portType name="AsynchKelvinToFahrenheitProcessor">
+		<wsdl:operation name="requestKelvinToFahrenheitConversion">
+			<wsdl:input message="client:temperatureKelvinToFahrenheitRequestMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- portType implemented by the requester of AsynchKelvinToFahrenheitProcessor BPEL process
+	for asynchronous callback purposes
+	-->
+	<wsdl:portType name="AsynchKelvinToFahrenheitProcessorCallback">
+		<wsdl:operation name="replyKelvinToFahrenheitConversion">
+			<wsdl:input message="client:temperatureKelvinToFahrenheitResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	PARTNER LINK TYPE DEFINITION
+	the AsynchKelvinToFahrenheitProcessor partnerLinkType binds the provider and
+	requester portType into an asynchronous conversation.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<plnk:partnerLinkType name="AsynchKelvinToFahrenheitProcessor">
+		<plnk:role name="AsynchKelvinToFahrenheitProcessorProvider" portType="client:AsynchKelvinToFahrenheitProcessor"/>
+		<plnk:role name="AsynchKelvinToFahrenheitProcessorRequester" portType="client:AsynchKelvinToFahrenheitProcessorCallback"/>
+	</plnk:partnerLinkType>
+</wsdl:definitions>

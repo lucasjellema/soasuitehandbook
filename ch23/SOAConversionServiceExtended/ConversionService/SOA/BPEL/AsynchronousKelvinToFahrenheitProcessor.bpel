@@ -1,0 +1,93 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Sat Jan 10 07:43:57 CET 2015
+  Author:  lucas_j
+  Type: BPEL 2.0 Process
+  Purpose: Asynchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="AsynchronousKelvinToFahrenheitProcessor"
+         targetNamespace="saibot.airport/utilities/ConversionProcessor"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="saibot.airport/utilities/ConversionProcessor"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns1="saibot.airport/utilities/ConversionService"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer" xmlns:ns2="saibot.airport/services/utility/conversion">
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <import namespace="saibot.airport/utilities/ConversionService"
+            location="../WSDLs/AsynchKelvinToFahrenheitProcessor.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+            ui:processWSDL="true"/>
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="AsynchronousConversionService" partnerLinkType="ns1:AsynchKelvinToFahrenheitProcessor" myRole="AsynchKelvinToFahrenheitProcessorProvider" partnerRole="AsynchKelvinToFahrenheitProcessorRequester"/>
+        <partnerLink name="ConversionMediator.ConversionMediator"
+                     partnerLinkType="ns2:ConversionMediator.ConversionMediator"
+                     partnerRole="ConversionServicePortType"/>
+    </partnerLinks>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        VARIABLES                                                        
+        List of messages and XML documents used within this BPEL process 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="ns1:temperatureKelvinToFahrenheitRequestMessage"/>
+
+        <!-- Reference to the message that will be sent back to the requester during callback -->
+        <variable name="outputVariable" messageType="ns1:temperatureKelvinToFahrenheitResponseMessage"/>
+        <variable name="InvokeKelvin2FahrenheitConversion_getTemperatureKelvinToFahrenheit_InputVariable"
+                  messageType="ns2:temperatureKelvinToFahrenheitRequestMessage"/>
+        <variable name="InvokeKelvin2FahrenheitConversion_getTemperatureKelvinToFahrenheit_OutputVariable"
+                  messageType="ns2:temperatureKelvinToFahrenheitResponseMessage"/>
+    </variables>
+
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC                                               
+       Set of activities coordinating the flow of messages across the    
+       services integrated within this business process                  
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in AsynchronousKelvinToFahrenheitProcessor.wsdl) -->
+        <receive name="receiveInput" partnerLink="AsynchronousConversionService" portType="ns1:AsynchKelvinToFahrenheitProcessor" operation="requestKelvinToFahrenheitConversion" variable="inputVariable" createInstance="yes"/>
+        <assign name="Assign1">
+            <copy>
+                <from>$inputVariable.in/ns2:temperature</from>
+                <to>$InvokeKelvin2FahrenheitConversion_getTemperatureKelvinToFahrenheit_InputVariable.in/ns2:temperature</to>
+            </copy>
+        </assign>
+        <invoke name="InvokeKelvin2FahrenheitConversion" bpelx:invokeAsDetail="no"
+                partnerLink="ConversionMediator.ConversionMediator" portType="ns2:ConversionServicePortType"
+                operation="getTemperatureKelvinToFahrenheit"
+                inputVariable="InvokeKelvin2FahrenheitConversion_getTemperatureKelvinToFahrenheit_InputVariable"
+                outputVariable="InvokeKelvin2FahrenheitConversion_getTemperatureKelvinToFahrenheit_OutputVariable"/>
+        <assign name="Assign2">
+            <copy>
+                <from>$InvokeKelvin2FahrenheitConversion_getTemperatureKelvinToFahrenheit_OutputVariable.return/ns2:temperature</from>
+                <to>$outputVariable.return/ns2:temperature</to>
+            </copy>
+        </assign>
+        <!-- 
+          Asynchronous callback to the requester. (Note: the callback location and correlation id is transparently handled using WS-addressing.)
+        -->
+        <invoke name="callbackClient" partnerLink="AsynchronousConversionService" portType="ns1:AsynchKelvinToFahrenheitProcessorCallback" operation="replyKelvinToFahrenheitConversion" inputVariable="outputVariable"/>
+    </sequence>
+</process>

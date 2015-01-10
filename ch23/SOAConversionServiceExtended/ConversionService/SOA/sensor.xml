@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sensors xmlns="http://xmlns.oracle.com/bpel/sensor">
+    <sensor sensorName="KelvinSensor" kind="service" target="undefined" filter="" xmlns:tns="saibot.airport/services/utility/conversion">
+        <serviceConfig service="ConversionService" expression="$in.in/tns:temperatureKelvinToFahrenheitRequestMessage/tns:temperature" operation="getTemperatureKelvinToFahrenheit" outputDataType="" outputNamespace=""/>
+    </sensor>
+</sensors>

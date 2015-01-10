@@ -16,11 +16,23 @@
           importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/pcbpel/adapter/file/SOAConversionServiceExtended/ConversionService/LogFileWriter"
           location="WSDLs/LogFileWriter.wsdl" importType="wsdl"/>
+  <import namespace="saibot.airport/utilities/ConversionService" location="WSDLs/AsynchKelvinToFahrenheitProcessor.wsdl"
+          importType="wsdl"/>
+  <import namespace="saibot.airport/services/utility/conversion" location="WSDLs/ConversionServiceWrapper3.wsdl"
+          importType="wsdl"/>
   <service name="ConversionService" ui:wsdlLocation="oramds:/apps/WSDLs/ConversionService.wsdl">
     <interface.wsdl interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
     <binding.ws port="saibot.airport/services/utility/conversion#wsdl.endpoint(ConversionService/ConversionServicePort)">
       <property name="weblogic.wsee.wsat.transaction.flowOption" type="xs:string" many="false">NEVER</property>
     </binding.ws>
+  </service>
+  <service name="AsynchronousConversionService_ep" ui:wsdlLocation="WSDLs/AsynchKelvinToFahrenheitProcessor.wsdl">
+    <interface.wsdl interface="saibot.airport/utilities/ConversionService#wsdl.interface(AsynchKelvinToFahrenheitProcessor)"
+                    callbackInterface="saibot.airport/utilities/ConversionService#wsdl.interface(AsynchKelvinToFahrenheitProcessorCallback)"/>
+    <binding.ws port="saibot.airport/utilities/ConversionService#wsdl.endpoint(AsynchronousConversionService_ep/AsynchKelvinToFahrenheitProcessor_pt)"/>
+    <callback>
+      <binding.ws port="saibot.airport/utilities/ConversionService#wsdl.endpoint(AsynchronousConversionService_ep/AsynchKelvinToFahrenheitProcessorCallback_pt)"/>
+    </callback>
   </service>
   <property name="productVersion" type="xs:string" many="false">12.1.3.0.0</property>
   <property name="compositeID" type="xs:string" many="false">834644a4-bbe1-4746-81ae-e74d0f3b2ff7</property>
@@ -57,12 +69,28 @@
     <property name="configuration.sensorLocation" type="xs:string" many="false">BPEL/KelvinToFahrenheitProcessor_sensor.xml</property>
     <property name="configuration.sensorActionLocation" type="xs:string" many="false">BPEL/KelvinToFahrenheitProcessor_sensorAction.xml</property>
   </component>
+  <component name="AsynchronousKelvinToFahrenheitProcessor" version="2.0">
+    <implementation.bpel src="BPEL/AsynchronousKelvinToFahrenheitProcessor.bpel"/>
+    <componentType>
+      <service name="AsynchronousConversionService" ui:wsdlLocation="WSDLs/AsynchKelvinToFahrenheitProcessor.wsdl">
+        <interface.wsdl interface="saibot.airport/utilities/ConversionService#wsdl.interface(AsynchKelvinToFahrenheitProcessor)"
+                        callbackInterface="saibot.airport/utilities/ConversionService#wsdl.interface(AsynchKelvinToFahrenheitProcessorCallback)"/>
+      </service>
+      <reference name="ConversionMediator.ConversionMediator" ui:wsdlLocation="WSDLs/ConversionServiceWrapper3.wsdl">
+        <interface.wsdl interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
+      </reference>
+    </componentType>
+    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string" many="false">async.persist</property>
+  </component>
   <reference name="TemperatureConversionService" ui:wsdlLocation="oramds:/apps/WSDLs/ConversionService.wsdl">
     <interface.wsdl interface="saibot.airport/services/utility/conversion#wsdl.interface(ConversionServicePortType)"/>
     <binding.ws port="saibot.airport/services/utility/conversion#wsdl.endpoint(ConversionServicePortTypeSOAP11BindingQSService/ConversionServicePortTypeSOAP11BindingQSPort)"
-                location="http://${soasuite12c_host}:${servicebus_port}/ConversionService?wsdl" supports=""
+                location="http://soa2admin2.example.com:8011/ConversionService?wsdl" supports=""
                 soapVersion="1.1"/>
   </reference>
+  <!-- location="http://soa2admin2.example.com:8011/utilities/TemperatureConversionService?wsdl" 
+  location="http://${soasuite12c_host}:${servicebus_port}/ConversionService?wsdl"
+  -->
   <reference name="LogFileWriter" ui:wsdlLocation="WSDLs/LogFileWriter.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/file/SOAConversionServiceExtended/ConversionService/LogFileWriter#wsdl.interface(Write_ptt)"/>
     <binding.jca config="Adapters/LogFileWriter_file.jca"/>
@@ -85,5 +113,13 @@
   <wire>
     <source.uri>KelvinToFahrenheitProcessor/LogFileWriter</source.uri>
     <target.uri>LogFileWriter</target.uri>
+  </wire>
+  <wire>
+    <source.uri>AsynchronousConversionService_ep</source.uri>
+    <target.uri>AsynchronousKelvinToFahrenheitProcessor/AsynchronousConversionService</target.uri>
+  </wire>
+  <wire>
+    <source.uri>AsynchronousKelvinToFahrenheitProcessor/ConversionMediator.ConversionMediator</source.uri>
+    <target.uri>ConversionMediator/ConversionMediator</target.uri>
   </wire>
 </composite>

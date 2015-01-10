@@ -28,7 +28,8 @@
          xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
          xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
          xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/file/SOAConversionServiceExtended/ConversionService/LogFileWriter"
-         xmlns:ns3="saibot.airport/utilities/conversion" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         xmlns:ns3="saibot.airport/utilities/conversion" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:ns4="saibot.airport/utilities/ConversionService">
 
 
 <import location="java.util.logging.Logger" importType="http://schemas.oracle.com/bpel/extension/java"/>
