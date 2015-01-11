@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="ConversionService" resourceRoot="" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ConversionServicePortTypeSOAP11Binding" type="wsdl" bindingName="{saibot.airport/services/utility/conversion}ConversionServicePortTypeSOAP11Binding" soapVersion="1_1" anonymous="optional" definition="http://soa2admin2:8011/RobustConversionService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://soa2admin2:8011/RobustConversionService?wsdl"><con:part><con:url>http://soa2admin2:8011/RobustConversionService?wsdl</con:url><con:content><![CDATA[<WL5G3N0:definitions targetNamespace="saibot.airport/services/utility/conversion" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="saibot.airport/services/utility/conversion" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema elementFormDefault="qualified" xmlns:conversion="saibot.airport/services/utility/conversion" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="saibot.airport/services/utility/conversion" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="saibot.airport/services/utility/conversion" schemaLocation="http://soa2admin2:8011/RobustConversionService?SCHEMA%2FThrottlingAndCachingWrapperConversionService%2FSchemas%2FConversionService"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="temperatureCelsiusToFahrenheitRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:temperatureCelsiusToFahrenheitRequestMessage" name="in"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="temperatureCelsiusToFahrenheitResponseMessage">
+    <WL5G3N0:part element="WL5G3N1:temperatureCelsiusToFahrenheitResponseMessage" name="return"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="temperatureKelvinToFahrenheitRequestMessage">
+    <WL5G3N0:part element="WL5G3N1:temperatureKelvinToFahrenheitRequestMessage" name="in"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="temperatureKelvinToFahrenheitResponseMessage">
+    <WL5G3N0:part element="WL5G3N1:temperatureKelvinToFahrenheitResponseMessage" name="return"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="ConversionServicePortType">
+    <WL5G3N0:operation name="getTemperatureCelsiusToFahrenheit">
+      <WL5G3N0:input message="WL5G3N1:temperatureCelsiusToFahrenheitRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N1:temperatureCelsiusToFahrenheitResponseMessage"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="getTemperatureKelvinToFahrenheit">
+      <WL5G3N0:input message="WL5G3N1:temperatureKelvinToFahrenheitRequestMessage"/>
+      <WL5G3N0:output message="WL5G3N1:temperatureKelvinToFahrenheitResponseMessage"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="ConversionServicePortTypeSOAP11Binding" type="WL5G3N1:ConversionServicePortType">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="getTemperatureCelsiusToFahrenheit">
+      <WL5G3N2:operation soapAction="saibot.airport/services/utility/conversion/getTemperatureCelsiusToFahrenheit" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body parts="in" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body parts="return" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="getTemperatureKelvinToFahrenheit">
+      <WL5G3N2:operation soapAction="saibot.airport/services/utility/conversion/getTemperatureKelvinToFahrenheit" style="document"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body parts="in" use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body parts="return" use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="ConversionServicePortTypeSOAP11BindingQSService">
+    <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+    <WL5G3N0:port binding="WL5G3N1:ConversionServicePortTypeSOAP11Binding" name="ConversionServicePortTypeSOAP11BindingQSPort">
+      <WL5G3N2:address location="http://soa2admin2:8011/RobustConversionService"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://soa2admin2:8011/RobustConversionService?SCHEMA%2FThrottlingAndCachingWrapperConversionService%2FSchemas%2FConversionService</con:url><con:content><![CDATA[<xsd:schema targetNamespace="saibot.airport/services/utility/conversion" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:conversion="saibot.airport/services/utility/conversion">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="http://soa2admin2:8011/RobustConversionService?SCHEMA%2FThrottlingAndCachingWrapperConversionService%2FSchemas%2Fcommon"/>
+  <xsd:element name="temperatureCelsiusToFahrenheitRequestMessage" type="conversion:temperatureCelsiusType"/>
+  <xsd:element name="temperatureCelsiusToFahrenheitResponseMessage" type="conversion:temperatureFahrenheitType"/>
+  <xsd:element name="temperatureKelvinToFahrenheitRequestMessage" type="conversion:temperatureKelvinType"/>
+  <xsd:element name="temperatureKelvinToFahrenheitResponseMessage" type="conversion:temperatureFahrenheitType"/>
+  <xsd:complexType name="temperatureCelsiusType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseCelsiusTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="temperatureKelvinType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseKelvinTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="temperatureFahrenheitType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseFahrenheitTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://soa2admin2:8011/RobustConversionService?SCHEMA%2FThrottlingAndCachingWrapperConversionService%2FSchemas%2Fcommon</con:url><con:content><![CDATA[<xsd:schema targetNamespace="saibot.airport/data/common" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common">
+  <xsd:simpleType name="baseCelsiusTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-273.15"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="baseKelvinTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="baseFahrenheitTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-459.67"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://soa2admin2:8011/ConversionService</con:endpoint><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="saibot.airport/services/utility/conversion/getTemperatureCelsiusToFahrenheit" name="getTemperatureCelsiusToFahrenheit" bindingOperationName="getTemperatureCelsiusToFahrenheit" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureCelsiusToFahrenheitRequestMessage>
+         <con:temperature>100</con:temperature>
+      </con:temperatureCelsiusToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="saibot.airport/services/utility/conversion/getTemperatureCelsiusToFahrenheit"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/ConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureCelsiusToFahrenheitRequestMessage>
+         <con:temperature>?</con:temperature>
+      </con:temperatureCelsiusToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="saibot.airport/services/utility/conversion/getTemperatureCelsiusToFahrenheit"/></con:call></con:operation><con:operation isOneWay="false" action="saibot.airport/services/utility/conversion/getTemperatureKelvinToFahrenheit" name="getTemperatureKelvinToFahrenheit" bindingOperationName="getTemperatureKelvinToFahrenheit" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>373</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="saibot.airport/services/utility/conversion/getTemperatureKelvinToFahrenheit"/><con:wsrmConfig version="1.2"/></con:call><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/ConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>?</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="saibot.airport/services/utility/conversion/getTemperatureKelvinToFahrenheit"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="200508" name="AsynchKelvinToFahrenheitProcessorBinding" type="wsdl" bindingName="{saibot.airport/utilities/ConversionService}AsynchKelvinToFahrenheitProcessorBinding" soapVersion="1_1" anonymous="optional" definition="http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/AsynchronousConversionService_ep?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/AsynchronousConversionService_ep</con:endpoint></con:endpoints><con:operation isOneWay="false" action="requestKelvinToFahrenheitConversion" name="requestKelvinToFahrenheitConversion" bindingOperationName="requestKelvinToFahrenheitConversion" type="One-Way" inputName="" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1" useWsAddressing="true"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/AsynchronousConversionService_ep</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>373</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="requestKelvinToFahrenheitConversion"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="AsynchKelvinToFahrenheitProcessorCallbackBinding" type="wsdl" bindingName="{saibot.airport/utilities/ConversionService}AsynchKelvinToFahrenheitProcessorCallbackBinding" soapVersion="1_1" anonymous="optional" definition="http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/AsynchronousConversionService_ep?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/AsynchronousConversionService_ep?WSDL"><con:part><con:url>http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/AsynchronousConversionService_ep?WSDL</con:url><con:content><![CDATA[<wsdl:definitions name="AsynchKelvinToFahrenheitProcessor" targetNamespace="saibot.airport/utilities/ConversionService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:client="saibot.airport/utilities/ConversionService" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:tns="saibot.airport/services/utility/conversion" xmlns:conversion="saibot.airport/services/utility/conversion" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:documentation>
+    <abstractWSDL>http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService!1.0/WSDLs/AsynchKelvinToFahrenheitProcessor.wsdl</abstractWSDL>
+  </wsdl:documentation>
+  <plnk:partnerLinkType name="AsynchKelvinToFahrenheitProcessor">
+    <plnk:role name="AsynchKelvinToFahrenheitProcessorProvider" portType="client:AsynchKelvinToFahrenheitProcessor"/>
+    <plnk:role name="AsynchKelvinToFahrenheitProcessorRequester" portType="client:AsynchKelvinToFahrenheitProcessorCallback"/>
+  </plnk:partnerLinkType>
+  <wsp:Policy wsu:Id="wsaddr_policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+    <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/utility/conversion" schemaLocation="http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/apps/Schemas/ConversionService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="temperatureKelvinToFahrenheitRequestMessage">
+    <wsdl:part name="in" element="tns:temperatureKelvinToFahrenheitRequestMessage"/>
+  </wsdl:message>
+  <wsdl:message name="temperatureKelvinToFahrenheitResponseMessage">
+    <wsdl:part name="return" element="tns:temperatureKelvinToFahrenheitResponseMessage"/>
+  </wsdl:message>
+  <wsdl:portType name="AsynchKelvinToFahrenheitProcessor">
+    <wsdl:operation name="requestKelvinToFahrenheitConversion">
+      <wsdl:input message="client:temperatureKelvinToFahrenheitRequestMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AsynchKelvinToFahrenheitProcessorCallback">
+    <wsdl:operation name="replyKelvinToFahrenheitConversion">
+      <wsdl:input message="client:temperatureKelvinToFahrenheitResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AsynchKelvinToFahrenheitProcessorBinding" type="client:AsynchKelvinToFahrenheitProcessor">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsp:PolicyReference URI="#wsaddr_policy" wsdl:required="false" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+    <wsdl:operation name="requestKelvinToFahrenheitConversion">
+      <soap:operation style="document" soapAction="requestKelvinToFahrenheitConversion"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AsynchKelvinToFahrenheitProcessorCallbackBinding" type="client:AsynchKelvinToFahrenheitProcessorCallback">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="replyKelvinToFahrenheitConversion">
+      <soap:operation style="document" soapAction="replyKelvinToFahrenheitConversion"/>
+      <wsdl:input>
+        <soap:body use="literal" namespace="saibot.airport/utilities/ConversionService"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AsynchronousConversionService_ep">
+    <wsdl:port name="AsynchKelvinToFahrenheitProcessor_pt" binding="client:AsynchKelvinToFahrenheitProcessorBinding">
+      <soap:address location="http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/AsynchronousConversionService_ep"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/apps/Schemas/ConversionService.xsd</con:url><con:content><![CDATA[<xsd:schema targetNamespace="saibot.airport/services/utility/conversion" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:conversion="saibot.airport/services/utility/conversion">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+  <xsd:element name="temperatureCelsiusToFahrenheitRequestMessage" type="conversion:temperatureCelsiusType"/>
+  <xsd:element name="temperatureCelsiusToFahrenheitResponseMessage" type="conversion:temperatureFahrenheitType"/>
+  <xsd:element name="temperatureKelvinToFahrenheitRequestMessage" type="conversion:temperatureKelvinType"/>
+  <xsd:element name="temperatureKelvinToFahrenheitResponseMessage" type="conversion:temperatureFahrenheitType"/>
+  <xsd:complexType name="temperatureCelsiusType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseCelsiusTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="temperatureKelvinType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseKelvinTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="temperatureFahrenheitType">
+    <xsd:sequence>
+      <xsd:element name="temperature" nillable="false" type="common:baseFahrenheitTemperatureType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://soa2admin2.example.com:8001/soa-infra/services/default/ConversionService/apps/Schemas/common.xsd</con:url><con:content><![CDATA[<xsd:schema targetNamespace="saibot.airport/data/common" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common">
+  <xsd:simpleType name="baseCelsiusTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-273.15"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="baseKelvinTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="baseFahrenheitTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-459.67"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints/><con:operation isOneWay="false" action="replyKelvinToFahrenheitConversion" name="replyKelvinToFahrenheitConversion" bindingOperationName="replyKelvinToFahrenheitConversion" type="One-Way" inputName="" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitResponseMessage>
+         <con:temperature>?</con:temperature>
+      </con:temperatureKelvinToFahrenheitResponseMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="replyKelvinToFahrenheitConversion"/></con:call></con:operation></con:interface><con:testSuite name="PutSomeLoadOnRobustConversionService"><con:settings/><con:runType>PARALLELL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase 1" searchProperties="true" id="32dfb303-6ba2-4dd6-9b34-a55398781b53"><con:settings/><con:testStep type="request" name="Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>237</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>237</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>237</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Copy of Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Copy of Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>237</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Copy of TestCase 1" searchProperties="true" id="5fd0a3e0-3091-49a8-bf12-a4b30df1a918"><con:settings/><con:testStep type="request" name="Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>20</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>10</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>377</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Copy of Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Copy of Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>287</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Copy of TestCase 1" searchProperties="true" id="4aadc618-6931-4622-baef-4e0313bd3cc1"><con:settings/><con:testStep type="request" name="Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>337</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>137</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>437</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="Copy of Copy of Copy of Test Request"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>ConversionServicePortTypeSOAP11Binding</con:interface><con:operation>getTemperatureKelvinToFahrenheit</con:operation><con:request name="Copy of Copy of Copy of Test Request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://soa2admin2:8011/RobustConversionService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="saibot.airport/services/utility/conversion">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <con:temperatureKelvinToFahrenheitRequestMessage>
+         <con:temperature>537</con:temperature>
+      </con:temperatureKelvinToFahrenheitRequestMessage>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
