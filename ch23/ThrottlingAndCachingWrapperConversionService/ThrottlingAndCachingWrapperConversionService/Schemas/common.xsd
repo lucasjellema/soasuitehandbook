@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:common="saibot.airport/data/common"
+            targetNamespace="saibot.airport/data/common"
+            elementFormDefault="qualified">
+  <xsd:simpleType name="baseCelsiusTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-273.15"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="baseKelvinTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="baseFahrenheitTemperatureType">
+    <xsd:restriction base="xsd:float">
+      <xsd:minInclusive value="-459.67"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>
