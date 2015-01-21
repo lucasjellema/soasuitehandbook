@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+    <con:coreEntry>
+        <con:description>Eventually this pipeline will connect to a database adapter that actually registers the scheduled flights in a database. For now it contains a 'mock' implementation.</con:description>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="PrivateSubmitFlightSchedule/WSDLs/PrivateSubmitFlightScheduleService"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>saibot.airport/services/private/flightschedule</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-7f000001.141bc565.1.144a22da6e0.N7d8f">
+            <con:stage id="_StageId-7f000001.141bc565.1.144a22da6e0.N7d8d" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-7f000001.141bc565.1.144a22da6e0.N7d8e">
+            <con:stage id="_StageId-7f000001.141bc565.1.144a22da6e0.N7d8c" name="Stage1">
+                <con:context>
+                    <con2:userNsDecl prefix="flig" namespace="saibot.airport/services/private/flightschedule"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-7f000001.141bc565.1.144a22da6e0.N7d89</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform>
+                                <con2:resource ref="PrivateSubmitFlightSchedule/Transformations/SubmitFlightScheduleRequestToSubmitFlightScheduleResponse"/>
+                                <con2:param name="submitPrivateScheduledFlightRequestMessage">
+                                    <con2:path>$body/flig:submitScheduledFlightRequestMessage</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-7f000001.141bc565.1.144a22da6e0.N7d8f</con:request>
+                <con:response>response-7f000001.141bc565.1.144a22da6e0.N7d8e</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
