@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:val="saibot/validation" xmlns:tns="saibot/validation"
+            targetNamespace="saibot/validation" elementFormDefault="qualified">
+            <!-- inspired by http://gibaholms.wordpress.com/2011/10/31/advanced-validation-in-oracle-service-bus-11g -->
+  <xsd:complexType name="Validation">
+    <xsd:sequence>
+      <xsd:element name="Payload">
+        <xsd:complexType mixed="true">
+          <xsd:sequence>
+            <xsd:any/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ValidationErrorList" type="tns:ValidationErrorList"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ValidationErrorList">
+    <xsd:sequence>
+      <xsd:element name="ValidationError" type="tns:ValidationError" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ValidationError">
+    <xsd:sequence>
+      <xsd:element name="code" type="xsd:int"/>
+      <xsd:element name="message" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

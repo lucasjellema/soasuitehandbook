@@ -1,0 +1,33 @@
+<wsdl:definitions name="FlightScheduleService" targetNamespace="saibot.airport/services/flightschedule" xmlns:fse="saibot.airport/services/flightschedule" xmlns:tns="saibot.airport/services/flightschedule" xmlns:inp1="saibot.airport/services/flightschedule" xmlns:inp2="saibot.airport/services/flightschedule" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    
+    <wsdl:types>
+   <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/flightschedule" schemaLocation="../Schemas/FlightScheduleService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  
+    <wsdl:message name="requestMessage">
+        <wsdl:part name="in" element="fse:submitScheduledFlightRequestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="replyMessage">
+        <wsdl:part name="out" element="fse:submitScheduledFlightResponseMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="FlightScheduleServicePortType">
+        <wsdl:operation name="submitFlightSchedule">
+            <wsdl:input message="tns:requestMessage"/>
+            <wsdl:output message="tns:replyMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="execute_bind" type="tns:FlightScheduleServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="submitFlightSchedule">
+            <soap:operation style="document" soapAction="submitFlightSchedule"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="saibot.airport/services/flightschedule"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="saibot.airport/services/flightschedule"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
