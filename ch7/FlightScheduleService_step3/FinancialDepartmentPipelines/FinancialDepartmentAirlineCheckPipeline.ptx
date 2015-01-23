@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:templateEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" xsi:type="con:AnyWsdlSoapBindingType"/>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-7f000001.141bc565.1.144a22da6e0.N75c9" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="7f000001.141bc565.2.144b2a898f2.N8000" name="PerformTimeConsumingIllogic">
+                <con:context/>
+                <con:actions>
+                    <con1:javaCallout varName="wakeUpCall">
+                        <con2:id>_ActionId-7f000001.141bc565.1.144a22da6e0.N75c3</con2:id>
+                        <con1:archive ref="FinancialDepartmentPipelines/deploy/FinancialPipelineJavaCalloutJar"/>
+                        <con1:className>saibot.airport.financial.SleepingBeauty</con1:className>
+                        <con1:method>public static java.lang.String takeANap(int)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText>300</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-7f000001.141bc565.1.144a22da6e0.N75c8" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="7f000001.141bc565.2.144b2a898f2.N7fff" name="SetAirlineStatus">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-7f000001.141bc565.1.144a22da6e0.N757b</con2:id>
+                        <con1:case id="_BranchId-7f000001.141bc565.1.144a22da6e0.N757a">
+                            <con1:condition>
+                                <con2:xqueryText>$body/*[1]/*:Carrier/*:IATACode/text()='XX'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:assign varName="status">
+                                    <con2:id>_ActionId-7f000001.141bc565.1.144a22da6e0.N7575</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText>'NOK'</con2:xqueryText>
+                                    </con1:expr>
+                                </con1:assign>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:assign varName="status">
+                                <con2:id>_ActionId-7f000001.141bc565.1.144a22da6e0.N7541</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>'OK'</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="uniqueApprovalStamp">
+                                <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7fae</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText>fn-bea:uuid()</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:default>
+                    </con1:ifThenElse>
+                    <con1:assign varName="body">
+                        <con2:id>_ActionId-7f000001.141bc565.1.144a22da6e0.N75c0</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText><![CDATA[<soapenv:Body 	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+<fin:checkAirlineResponseMessage xmlns:fin="saibot.airport/services/financial">
+  <fin:Status>{$status}</fin:Status>
+  <fin:UniqueStamp>{$uniqueApprovalStamp}</fin:UniqueStamp>
+</fin:checkAirlineResponseMessage>
+</soapenv:Body>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:request>request-7f000001.141bc565.1.144a22da6e0.N75c9</con:request>
+                <con:response>response-7f000001.141bc565.1.144a22da6e0.N75c8</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:templateEntry>

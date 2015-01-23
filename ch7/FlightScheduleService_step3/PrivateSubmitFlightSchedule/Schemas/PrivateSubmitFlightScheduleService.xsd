@@ -1,0 +1,60 @@
+<xsd:schema targetNamespace="saibot.airport/services/private/flightschedule" elementFormDefault="qualified" xmlns:tns="saibot.airport/services/private/flightschedule" xmlns:pfs="saibot.airport/services/private/flightschedule" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:reference="saibot.airport/data/reference" xmlns:flight="saibot.airport/data/flight">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+  <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+  <xsd:element name="submitScheduledFlightRequestMessage" type="pfs:submitScheduledFlightRequestType"/>
+  <xsd:element name="submitScheduledFlightResponseMessage" type="pfs:submitScheduledFlightResponseType"/>
+  <xsd:complexType name="submitScheduledFlightRequestType">
+    <xsd:sequence>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="TimePlanningUnit" nillable="false" type="reference:timePlanningUnitType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AircraftModel" nillable="false" type="common:iataEquipmentCodeType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="ConnectingAirportIataCode" nillable="false" type="common:iataAirportType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="ConnectingFlight" nillable="false" type="pfs:flightIdentificationType" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="SlotId" nillable="false" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FinanceDepartmentApproveStamp" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="NumberOfRequestedFlights" nillable="false" type="xsd:positiveInteger" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightCodeShares" minOccurs="0" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="CodeShare" type="pfs:flightIdentificationType" minOccurs="0" maxOccurs="5"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="flightIdentificationType">
+    <xsd:sequence>
+      <xsd:element name="Carrier" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="submitScheduledFlightResponseType">
+    <xsd:sequence>
+      <xsd:element name="FlightSchedule" minOccurs="0" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="FlightId" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="SlotId" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="TentativeGateLocation" nillable="false" type="reference:gateLocationType" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ProcessingResults" minOccurs="0" maxOccurs="1">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="ProcessingResult" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="ResultCode" nillable="false" type="xsd:nonNegativeInteger" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="Description" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="ContextTrace" nillable="false" type="xsd:anyType" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

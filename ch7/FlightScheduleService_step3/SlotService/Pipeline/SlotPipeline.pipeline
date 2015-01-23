@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="SlotService/WSDLs/SlotService"/>
+            <con:binding>
+                <con:name>SlotServicePortTypeSOAP11Binding</con:name>
+                <con:namespace>saibot.airport/services/slot</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.4091890d.0.14b131c59bd.N7ec1">
+            <con:stage id="_StageId-N3f57c7ff.4091890d.0.14b131c59bd.N7ebf" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.4091890d.0.14b131c59bd.N7ec0">
+            <con:stage id="_StageId-N3f57c7ff.4091890d.0.14b131c59bd.N7ebe" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con2:assign varName="body" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7e8b</con1:id>
+                        <con2:expr>
+                            <con1:xqueryText><![CDATA[<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+<slot:findSlotResponseMessage xmlns:slot="saibot.airport/services/slot">
+  <slot:SlotId>4592</slot:SlotId>
+  <slot:Result>0</slot:Result>
+</slot:findSlotResponseMessage>
+</soapenv:Body>]]></con1:xqueryText>
+                        </con2:expr>
+                    </con2:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="operation" id="_FlowId-N3f57c7ff.4091890d.0.14b131c59bd.N7ec2" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="allocateSlot">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow/>
+                    </con:branch>
+                    <con:branch name="findSlot">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="PipelinePairNode1">
+                                <con:request>request-N3f57c7ff.4091890d.0.14b131c59bd.N7ec1</con:request>
+                                <con:response>response-N3f57c7ff.4091890d.0.14b131c59bd.N7ec0</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

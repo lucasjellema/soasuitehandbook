@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="FlightScheduleService/WSDLs/FlightScheduleService"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>saibot.airport/services/flightschedule</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.4091890d.0.14b131c59bd.N7ecb">
+            <con:stage id="_StageId-N3f57c7ff.4091890d.0.14b131c59bd.N7ec9" name="DeriveNumberOfFlights">
+                <con:context>
+                    <con2:userNsDecl prefix="flig" namespace="saibot.airport/services/flightschedule"/>
+                </con:context>
+                <con:actions>
+                    <con3:javaCallout varName="numberOfFlights">
+                        <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7ec5</con2:id>
+                        <con3:archive ref="FlightScheduleService/deploy/JavaCalloutJar"/>
+                        <con3:className>saibot.airport.flightscheduleservice.ScheduledFlightProcessor</con3:className>
+                        <con3:method>public static int calculateNumberOfFlights(org.apache.xmlbeans.XmlObject)</con3:method>
+                        <con3:expr>
+                            <con2:xqueryText>$body/flig:submitScheduledFlightRequestMessage/flig:TimePlanningUnit</con2:xqueryText>
+                        </con3:expr>
+                        <con3:return-param-as-ref>false</con3:return-param-as-ref>
+                    </con3:javaCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57c7ff.4091890d.0.14b131c59bd.N7e8a" name="RetrieveSlotIdentifier">
+                <con:context>
+                    <con2:userNsDecl prefix="flig" namespace="saibot.airport/services/flightschedule"/>
+                    <con2:userNsDecl prefix="slot" namespace="saibot.airport/services/slot"/>
+                </con:context>
+                <con:actions>
+                    <con3:wsCallout>
+                        <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7e86</con2:id>
+                        <con3:service ref="FlightScheduleService/BusinessService/SlotService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>findSlot</con3:operation>
+                        <con3:request>
+                            <con3:body wrapped="true">findSlotRequestMsg</con3:body>
+                        </con3:request>
+                        <con3:response>
+                            <con3:body wrapped="true">findSlotResponseMsg</con3:body>
+                        </con3:response>
+                        <con3:requestTransform>
+                            <con3:assign varName="findSlotRequestMsg">
+                                <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7e83</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>&lt;soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"/></con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:replace varName="findSlotRequestMsg" contents-only="true">
+                                <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7e80</con2:id>
+                                <con3:expr>
+                                    <con2:xsltTransform>
+                                        <con2:resource ref="FlightScheduleService/Transformations/submitScheduledFlightRequestMessageTofindSlotRequestMessage"/>
+                                        <con2:input>$body/flig:submitScheduledFlightRequestMessage</con2:input>
+                                    </con2:xsltTransform>
+                                </con3:expr>
+                            </con3:replace>
+                        </con3:requestTransform>
+                        <con3:responseTransform>
+                            <con3:assign varName="slotIdentifier">
+                                <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7e7d</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$findSlotResponseMsg/slot:findSlotResponseMessage/slot:SlotId/text()</con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                        </con3:responseTransform>
+                    </con3:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57c7ff.4091890d.0.14b131c59bd.N7e7c" name="CheckAirlineWithFinancialDepartment">
+                <con:context>
+                    <con2:userNsDecl prefix="flig" namespace="saibot.airport/services/flightschedule"/>
+                    <con2:userNsDecl prefix="fin" namespace="saibot.airport/services/financial"/>
+                </con:context>
+                <con:actions>
+                    <con3:wsCallout>
+                        <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7e79</con2:id>
+                        <con3:service ref="FlightScheduleService/Pipeline/CheckAirlineWithFinancialDepartmentPipeline" xsi:type="con:PipelineRef"/>
+                        <con3:operation>checkAirlineStatus</con3:operation>
+                        <con3:request>
+                            <con3:body wrapped="true">checkAirlineRequest</con3:body>
+                        </con3:request>
+                        <con3:response>
+                            <con3:body wrapped="true">checkAirlineResponse</con3:body>
+                        </con3:response>
+                        <con3:requestTransform>
+                            <con3:assign varName="checkAirlineRequest">
+                                <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7e76</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText><![CDATA[<soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+<fin:checkAirlineRequestMessage xmlns:fin="saibot.airport/services/financial">
+ <fin:Carrier>
+    <ref:IATACode xmlns:ref="ref:saibot.airport/data/reference">{$body/flig:submitScheduledFlightRequestMessage/flig:Carrier}</ref:IATACode>
+ </fin:Carrier>
+</fin:checkAirlineRequestMessage>
+</soapenv:Body>]]></con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                        </con3:requestTransform>
+                        <con3:responseTransform>
+                            <con3:assign varName="financialDepartmentApprovalStamp">
+                                <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7e73</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$checkAirlineResponse/fin:checkAirlineResponseMessage/fin:UniqueStamp/text()</con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                        </con3:responseTransform>
+                    </con3:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.4091890d.0.14b131c59bd.N7eca">
+            <con:stage id="_StageId-N3f57c7ff.4091890d.0.14b131c59bd.N7ec8" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.4091890d.0.14b131c59bd.N7ecb</con:request>
+                <con:response>response-N3f57c7ff.4091890d.0.14b131c59bd.N7eca</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7fc4</con2:id>
+                        <con1:service ref="PrivateSubmitFlightSchedule/PrivateSubmitFlightSchedulePS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>submitFlightSchedule</con1:operation>
+                        <con1:outboundTransform/>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

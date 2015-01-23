@@ -1,0 +1,20 @@
+<xsd:schema targetNamespace="saibot.airport/services/financial" xmlns:tns="saibot.airport/services/financial"
+            xmlns:fin="saibot.airport/services/financial" elementFormDefault="qualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common"
+            xmlns:reference="saibot.airport/data/reference" xmlns:flight="saibot.airport/data/flight">
+    <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+    <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+    <xsd:element name="checkAirlineRequestMessage" type="fin:checkAirlineRequestType"/>
+    <xsd:element name="checkAirlineResponseMessage" type="fin:checkAirlineResponseType"/>
+    <xsd:complexType name="checkAirlineRequestType">
+        <xsd:sequence>
+            <xsd:element name="Carrier" nillable="false" type="reference:aircarrierType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="checkAirlineResponseType">
+        <xsd:sequence>
+            <xsd:element name="Status" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="UniqueStamp" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
