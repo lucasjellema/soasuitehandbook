@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:templateEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+    <con:coreEntry>
+        <con:binding type="Any XML"/>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-7f000001.N65ad4e85.0.144b54b61e9.N7f74" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="7f000001.N65ad4e85.1.144b5f2da6a.N8000" name="InitializeAndRetain">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="startTime">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7f6e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>fn:current-time()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="originalBody">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7f6b</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-7f000001.N65ad4e85.0.144b54b61e9.N7f73" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con:stage id="7f000001.N65ad4e85.1.144b5f2da6a.N7fff" name="DefineStatusAndToBeLogged">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="status">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7f68</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>'OK'</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="toBeLogged">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7f59</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body/*[1]</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="7f000001.N65ad4e85.1.144b5f2da6a.N7ffe" name="Logging">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse>
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7f60</con2:id>
+                        <con1:case id="7f000001.N65ad4e85.1.144b5f2da6a.N7ffd">
+                            <con1:condition>
+                                <con2:xqueryText>$status='OK'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con3:alert>
+                                    <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7f5c</con2:id>
+                                    <con3:destination ref="CommonPipelines/LoggingAlertDestination"/>
+                                    <con3:description>Logging at severity level normal - no problems, just reporting what is going on</con3:description>
+                                    <con3:severity>normal</con3:severity>
+                                    <con3:payload>
+                                        <con2:xqueryText>$toBeLogged</con2:xqueryText>
+                                    </con3:payload>
+                                </con3:alert>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con3:alert>
+                                <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7f26</con2:id>
+                                <con3:destination ref="CommonPipelines/LoggingAlertDestination"/>
+                                <con3:description>Logging at severity level minor - processing did not complete as planned; reporting what is going on</con3:description>
+                                <con3:severity>minor</con3:severity>
+                                <con3:payload>
+                                    <con2:xqueryText>$toBeLogged</con2:xqueryText>
+                                </con3:payload>
+                            </con3:alert>
+                        </con1:default>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:request>request-7f000001.N65ad4e85.0.144b54b61e9.N7f74</con:request>
+                <con:response>response-7f000001.N65ad4e85.0.144b54b61e9.N7f73</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" id="7f000001.N65ad4e85.1.144b5f2da6a.N7ffc" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con:context/>
+                <con:actions>
+                    <con4:route>
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7f23</con2:id>
+                        <con4:outboundTransform/>
+                        <con4:responseTransform/>
+                    </con4:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:templateEntry>

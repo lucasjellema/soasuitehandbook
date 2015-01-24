@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:templateEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" xsi:type="con:AnyWsdlSoapBindingType"/>
+    </con:coreEntry>
+    <con:router errorHandler="error-7f000001.N65ad4e85.0.144b54b61e9.N7ab2">
+        <con:pipeline type="request" name="request-7f000001.N65ad4e85.0.144b54b61e9.N7bcd">
+            <con:stage id="_StageId-7f000001.N65ad4e85.0.144b54b61e9.N7bcb" name="Initialize and Retain">
+                <con:context/>
+                <con:actions>
+                    <con3:assign varName="startTime">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7b95</con2:id>
+                        <con3:expr>
+                            <con2:xqueryText>fn:current-dateTime()</con2:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                    <con1:assign varName="originalBody" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7b92</con2:id>
+                        <con2:locked>true</con2:locked>
+                        <con1:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-7f000001.N65ad4e85.0.144b54b61e9.N7bcc">
+            <con:stage id="_StageId-7f000001.N65ad4e85.0.144b54b61e9.N7bca" name="DefineStatusAndToBeLogged">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="status" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7b5e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>'OK'</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="toBeLogged" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7b5b</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body/*[1]</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-7f000001.N65ad4e85.0.144b54b61e9.N7b5a" name="Logging">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="totalProcessingTime" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7b26</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>fn:current-dateTime()- xs:dateTime ($startTime)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7ae7</con2:id>
+                        <con2:locked>true</con2:locked>
+                        <con1:case id="_BranchId-7f000001.N65ad4e85.0.144b54b61e9.N7ae6">
+                            <con1:condition>
+                                <con2:xqueryText>$status='OK'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con3:alert>
+                                    <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7ae5</con2:id>
+                                    <con3:destination ref="CommonPipelines/LoggingAlertDestination"/>
+                                    <con3:description>Logging at severity level normal - no problems, just reporting what is going on</con3:description>
+                                    <con3:severity>normal</con3:severity>
+                                    <con3:payload>
+                                        <con2:xqueryText>fn:concat('Start Processing: ',$startTime,' Total Processing Time ',  $totalProcessingTime  ,$toBeLogged)</con2:xqueryText>
+                                    </con3:payload>
+                                </con3:alert>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con3:alert>
+                                <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7ae4</con2:id>
+                                <con3:destination ref="CommonPipelines/LoggingAlertDestination"/>
+                                <con3:description>Logging at severity level minor - processing did not complete as planned; reporting what is going on</con3:description>
+                                <con3:severity>minor</con3:severity>
+                                <con3:payload>
+                                    <con2:xqueryText>fn:concat('Start Processing: ',$startTime,' Total Processing Time ',  $totalProcessingTime  ,$toBeLogged)</con2:xqueryText>
+                                </con3:payload>
+                            </con3:alert>
+                        </con1:default>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-7f000001.N65ad4e85.0.144b54b61e9.N7ab2">
+            <con:stage id="_StageId-7f000001.N65ad4e85.0.144b54b61e9.N7a73" name="SetMessageKeyForReport">
+                <con:context/>
+                <con:actions>
+                    <con3:assign varName="messageKey" xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7a3f</con2:id>
+                        <con3:expr>
+                            <con2:xqueryText>'yourKey'</con2:xqueryText>
+                        </con3:expr>
+                    </con3:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-7f000001.N65ad4e85.0.144b54b61e9.N7ab1" name="PipelineErrorHandler">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="totalProcessingTime" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7a7d</con2:id>
+                        <con2:locked>true</con2:locked>
+                        <con1:expr>
+                            <con2:xqueryText>fn:current-dateTime()- xs:dateTime ($startTime)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con3:alert xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7a7a</con2:id>
+                        <con2:locked>true</con2:locked>
+                        <con3:destination ref="CommonPipelines/LoggingAlertDestination"/>
+                        <con3:description>Something unforeseen went wrong in a fairly bad way.</con3:description>
+                        <con3:severity>major</con3:severity>
+                        <con3:payload>
+                            <con2:xqueryText>fn:concat('Start Processing: ',$startTime,' Total Processing Time ',  $totalProcessingTime  ,'Original Body: ', $originalBody,'Fault: ', $fault)</con2:xqueryText>
+                        </con3:payload>
+                    </con3:alert>
+                    <con4:report xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7a77</con2:id>
+                        <con2:locked>true</con2:locked>
+                        <con4:expr>
+                            <con2:xqueryText>$fault</con2:xqueryText>
+                        </con4:expr>
+                        <con4:labels>
+                            <con4:key>messageKeyFaultReport</con4:key>
+                            <con4:varName>messageKey</con4:varName>
+                            <con4:value>
+                                <con2:xpathText>.</con2:xpathText>
+                            </con4:value>
+                        </con4:labels>
+                    </con4:report>
+                    <con3:Error xmlns:con4="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7a74</con2:id>
+                        <con2:locked>true</con2:locked>
+                        <con3:errCode>FSE-21000</con3:errCode>
+                        <con3:message>Processing Failed - more details in a pipeline alert and the log files</con3:message>
+                    </con3:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-7f000001.N65ad4e85.0.144b54b61e9.N7bcd</con:request>
+                <con:response>response-7f000001.N65ad4e85.0.144b54b61e9.N7bcc</con:response>
+            </con:pipeline-node>
+            <con:route-node id="_RouteId-7f000001.N65ad4e85.0.144b54b61e9.N7bd1" name="RouteNode1">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-7f000001.N65ad4e85.0.144b54b61e9.N7bce</con2:id>
+                        <con1:outboundTransform/>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:templateEntry>

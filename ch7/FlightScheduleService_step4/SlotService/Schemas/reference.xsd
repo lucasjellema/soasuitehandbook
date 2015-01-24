@@ -1,0 +1,100 @@
+<xsd:schema targetNamespace="saibot.airport/data/reference" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:reference="saibot.airport/data/reference" xmlns:common="saibot.airport/data/common">
+   <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+   <xsd:complexType name="countryType">
+      <xsd:sequence>
+         <!-- the code is the unique two letter ISO 3166-1 indication for a country - see http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 and http://www.iso.org/iso/home/standards/country_codes.htm -->
+         <xsd:element name="code" nillable="false" type="common:alpha2Type" minOccurs="0" maxOccurs="1"/>
+         <!-- the name is the common name, used to present the country to humans-->
+         <xsd:element name="name" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <!-- see see http://www.flugzeuginfo.net/table_tailcodes_country_en.php-->
+         <xsd:element name="tailcode" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Flag" type="xsd:base64Binary" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+   <xsd:complexType name="aircarrierType">
+      <xsd:sequence>
+         <xsd:element name="IATACode" nillable="false" type="common:alpha2Type" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="PAXCode" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="ICAOCode" nillable="false" type="common:alphaNumeric4Type" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Name" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Country" type="reference:countryType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Logo" type="xsd:base64Binary" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+
+
+   <xsd:complexType name="airportType">
+      <xsd:sequence>
+         <xsd:element name="IATACode" nillable="false" type="common:iataAirportType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="ICAOCode" nillable="false" type="common:iacoCodeType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Name" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Country" type="reference:countryType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="City" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+         <xsd:element name="GeoLocation" type="common:geoLocationType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="UTCOffset" type="common:timezoneOffsetType" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="weatherReportType">
+      <xsd:sequence>
+         <!-- based on METAR - see http://weather.cod.edu/notes/metar.html ; http://en.wikipedia.org/wiki/METAR-->
+         <!-- knots  -->
+         <xsd:element name="WindSpeed" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="WindDirection" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="DewPointTemperature" nillable="false" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="CurrentTemperature" nillable="false" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Pressure" type="reference:countryType" minOccurs="0" maxOccurs="1"/>
+         <!-- Clear, Not significant, few, Scattered, Broken,  Overcast,    -->
+         <xsd:element name="SkyCondition" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Visibility" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Precipitation" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Obscuration" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="aircraftModelType">
+      <xsd:sequence>
+         <xsd:element name="IATACode" nillable="false" type="common:iataEquipmentCodeType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="IACOCode" nillable="false" type="common:iacoCodeType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Manufacturer" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Model" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="WakeCategory" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="PassengerCapacity" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="RangeInKilometers" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+         <xsd:element name="CruiseSpeedInKilolmetersPerHour" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+         <xsd:element name="LengthInMeters" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+         <xsd:element name="HeightInMeters" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+         <xsd:element name="WingSpanInMeters" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+         <xsd:element name="MaximumTakeOffWeightInKilogram" nillable="false" minOccurs="0" maxOccurs="1" type="xsd:positiveInteger"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="aircraftType">
+      <xsd:sequence>
+         <xsd:element name="aircraftModel" nillable="false" type="reference:aircraftModelType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Registration" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="LaunchDate" nillable="false" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   
+      <xsd:complexType name="gateLocationType">
+      <xsd:sequence>
+         <xsd:element name="Terminal" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Pier" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Gate" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+   <xsd:complexType name="timePlanningUnitType">
+      <xsd:sequence>
+         <xsd:element name="startDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="endDate" nillable="true" type="xsd:date" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="DaysOfWeek" minOccurs="0" maxOccurs="1">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="day" nillable="false" minOccurs="0" maxOccurs="7" type="common:weekDayType"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="HourOfDay" nillable="false" type="common:hourOfDayType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="FiveMinuteBlock" nillable="false" type="common:fiveMinuteBlockType" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,37 @@
+<xsd:schema targetNamespace="saibot.airport/services/slot" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:slot="saibot.airport/services/slot" xmlns:reference="saibot.airport/data/reference">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+  <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+  <xsd:element name="allocateSlotRequestMessage" type="slot:allocateSlotRequestType"/>
+  <xsd:element name="allocateSlotResponseMessage" type="slot:allocateSlotResponseType"/>
+  <xsd:element name="findSlotRequestMessage" type="slot:findSlotRequestType"/>
+  <xsd:element name="findSlotResponseMessage" type="slot:findSlotResponseType"/>
+  <xsd:complexType name="allocateSlotRequestType">
+    <xsd:sequence>
+      <xsd:element name="AllocationDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Period" nillable="false" type="common:periodType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="TimePlanningUnit" nillable="false" type="reference:timePlanningUnitType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="ArrivalOrDeparture" nillable="false" type="common:arrivalOrDepartureType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AircraftModel" nillable="false" type="common:iataEquipmentCodeType" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="allocateSlotResponseType">
+    <xsd:sequence>
+      <xsd:element name="SlotId" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Result" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="findSlotRequestType">
+    <xsd:sequence>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="TimePlanningUnit" nillable="false" type="reference:timePlanningUnitType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="AircraftModel" nillable="false" type="common:iataEquipmentCodeType" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="findSlotResponseType">
+    <xsd:sequence>
+      <xsd:element name="SlotId" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="Result" nillable="false" type="xsd:nonNegativeInteger" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
