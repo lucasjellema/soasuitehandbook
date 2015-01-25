@@ -11,10 +11,6 @@
 
     <modules>
         <module>System</module>
-        <module>PrivateSubmitFlightSchedule</module>
-        <module>FlightScheduleService</module>
-        <module>SlotService</module>
-        <module>FinancialDepartmentPipelines</module>
     </modules>
 
 </project>
