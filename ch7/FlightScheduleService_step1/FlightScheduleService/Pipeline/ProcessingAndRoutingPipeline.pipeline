@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
     <con:coreEntry>
         <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
             <con:wsdl ref="FlightScheduleService/WSDLs/FlightScheduleService"/>
@@ -21,8 +21,37 @@
                         <con2:id>_ActionId-N3f57c7ff.4091890d.0.14b131c59bd.N7fc4</con2:id>
                         <con1:service ref="PrivateSubmitFlightSchedule/PrivateSubmitFlightSchedulePS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
                         <con1:operation>submitFlightSchedule</con1:operation>
-                        <con1:outboundTransform/>
-                        <con1:responseTransform/>
+                        <con1:outboundTransform>
+                            <con3:replace varName="body" contents-only="true">
+                                <con2:id>_ActionId-N3f57c7ff.N3e91a739.0.14b1fb394e4.N7ff4</con2:id>
+                                <con3:expr>
+                                    <con2:xsltTransform>
+                                        <con2:resource ref="FlightScheduleService/Transformations/submitScheduledFlightRequestToprivateSubmitScheduledFlightRequest"/>
+                                        <con2:input>$body/*[1]</con2:input>
+                                        <con2:param name="numberOfFlights">
+                                            <con2:path>1</con2:path>
+                                        </con2:param>
+                                        <con2:param name="financialDepartmentApprovalStamp">
+                                            <con2:path>'ABC'</con2:path>
+                                        </con2:param>
+                                        <con2:param name="slotIdentifier">
+                                            <con2:path>123</con2:path>
+                                        </con2:param>
+                                    </con2:xsltTransform>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:outboundTransform>
+                        <con1:responseTransform>
+                            <con3:replace varName="body" contents-only="true">
+                                <con2:id>_ActionId-N3f57c7ff.N3e91a739.0.14b1fb394e4.N7ff7</con2:id>
+                                <con3:expr>
+                                    <con2:xsltTransform>
+                                        <con2:resource ref="FlightScheduleService/Transformations/privatesubmitScheduledFlightResponseMessageTosubmitScheduledFlightResponseMessage"/>
+                                        <con2:input>$body/*[1]</con2:input>
+                                    </con2:xsltTransform>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:responseTransform>
                     </con1:route>
                 </con:actions>
             </con:route-node>
