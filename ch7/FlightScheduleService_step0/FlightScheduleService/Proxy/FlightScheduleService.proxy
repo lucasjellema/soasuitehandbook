@@ -5,7 +5,7 @@
             <con:inboundWss processWssHeader="true"/>
         </ser:security>
         <ser:binding type="SOAP" xsi:type="con:SoapBindingType" isSoap12="false" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
-            <con:wsdl ref="FlightSScheduleService/WSDLs/FlightScheduleService"/>
+            <con:wsdl ref="FlightScheduleService/WSDLs/FlightScheduleService"/>
             <con:binding>
                 <con:name>execute_bind</con:name>
                 <con:namespace>saibot.airport/services/flightschedule</con:namespace>

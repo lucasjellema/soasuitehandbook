@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>FlightScheduleService</groupId>
-    <artifactId>FlightScheduleService</artifactId>
+    <artifactId>PrivateSubmitFlightSchedule</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <packaging>sbar</packaging>
@@ -30,10 +30,10 @@
                         ${basedir}/../FlightScheduleService.jws
                     </workspace>
                     <project>
-                        FlightScheduleService
+                        PrivateSubmitFlightSchedule
                     </project>
                     <profile>
-                        FlightScheduleService_FlightScheduleService_ServiceBusProjectProfile
+                        FlightScheduleService_Project1_ServiceBusProjectProfile
                     </profile>
                     <usemaven>
                         true

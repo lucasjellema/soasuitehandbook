@@ -66,7 +66,7 @@
       <string v="oracle.tip.tools.ide.ess.addin.ESSContentSetProvider/ess-content"/>
       <string v="oracle.bpm.fusion.studio.BPMProjectSettings/bpmProjectsProcessesContentSet"/>
    </list>
-   <value n="defaultPackage" v="flightscheduleservice"/>
+   <value n="defaultPackage" v="privatesubmitflightschedule"/>
    <hash n="oracle.adfdtinternal.model.ide.settings.ADFMSettings">
       <hash n="adfmContentSet">
          <list n="pattern-filters"/>
@@ -105,21 +105,21 @@
    </hash>
    <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
       <hash n="profileDefinitions">
-         <hash n="FlightScheduleService_FlightScheduleService_ServiceBusProjectProfile">
+         <hash n="FlightScheduleService_Project1_ServiceBusProjectProfile">
             <value n="profileClass" v="SbProjectDeployProfile"/>
-            <value n="profileName" v="FlightScheduleService_FlightScheduleService_ServiceBusProjectProfile"/>
+            <value n="profileName" v="FlightScheduleService_Project1_ServiceBusProjectProfile"/>
          </hash>
       </hash>
       <list n="profileList">
-         <string v="FlightScheduleService_FlightScheduleService_ServiceBusProjectProfile"/>
+         <string v="FlightScheduleService_Project1_ServiceBusProjectProfile"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
       <url n="pomfileURL" path="pom.xml"/>
    </hash>
    <hash n="oracle.jdeveloper.model.J2eeSettings">
-      <value n="j2eeWebAppName" v="FlightScheduleService-FlightScheduleService-webapp"/>
-      <value n="j2eeWebContextRoot" v="FlightScheduleService-FlightScheduleService-context-root"/>
+      <value n="j2eeWebAppName" v="FlightScheduleService-PrivateSubmitFlightSchedule-webapp"/>
+      <value n="j2eeWebContextRoot" v="FlightScheduleService-PrivateSubmitFlightSchedule-context-root"/>
       <hash n="webContentSet">
          <list n="pattern-filters"/>
          <list n="url-path">
