@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpel:process name="ParallelEnrichmentSplitJoin"
+              targetNamespace="http://xmlns.oracle.com/FlightScheduleService_step5/FlightScheduleService/"
+              xmlns:tns="http://xmlns.oracle.com/FlightScheduleService_step5/FlightScheduleService/"
+              xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+              xmlns:rescon="http://www.bea.com/alsb/flow/resources/config"
+              xmlns:bea="http://www.bea.com/bpel/ui/extensions"
+              xmlns:ext="http://www.bea.com/bpel/extensions"
+              xmlns:expr="http://www.bea.com/wli/sb/stages/config"
+              xmlns:trf="http://www.bea.com/wli/sb/stages/transform/config"
+              xmlns:bind="saibot.airport/services/flightschedule" 
+              bea:name="ParallelEnrichmentSplitJoin"
+              rescon:snippetVersion="1.0"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns0="http://www.bea.com/wli/sb/reference"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="saibot.airport/services/slot"
+              xmlns:ns2="http://www.bea.com/wli/sb/pipeline/config" xmlns:ns3="saibot.airport/services/financial">
+    <bpel:partnerLinks>
+        <bpel:partnerLink name="ParallelEnrichmentSplitJoin" partnerLinkType="tns:ParallelEnrichmentSplitJoin"
+                          myRole="ParallelEnrichmentSplitJoin">
+	       </bpel:partnerLink>
+        <bpel:partnerLink name="SlotService" partnerLinkType="tns:SlotService" partnerRole="SlotService"/>
+        <bpel:partnerLink name="CheckAirlineWithFinancialDepartmentPipeline"
+                          partnerLinkType="tns:CheckAirlineWithFinancialDepartmentPipeline"
+                          partnerRole="CheckAirlineWithFinancialDepartmentPipeline"/>
+    </bpel:partnerLinks>
+
+	   <bpel:variables>
+        <bpel:variable name="request"
+	                      messageType="bind:requestMessage">
+	       </bpel:variable>
+	       <bpel:variable name="response"
+                       messageType="bind:replyMessage">
+	       </bpel:variable>
+        <bpel:variable name="numberOfFlights" type="xsd:int"/>
+        <bpel:variable name="slotIdentifier" messageType="ns1:findSlotResponseMessage"/>
+        <bpel:variable name="checkAirlineFinanceResponse" messageType="ns3:replyMessage"/>
+    </bpel:variables>
+
+    <bpel:sequence>
+        <bpel:receive partnerLink="ParallelEnrichmentSplitJoin" operation="enrichFlightSchedule" variable="request" createInstance="yes">
+	           <rescon:receiveInfo>
+                <rescon:wsdl ref="FlightScheduleService/WSDLs/ParallelFlightEnrichmentService" binding="bind:execute_bind"/>
+            </rescon:receiveInfo>
+        </bpel:receive>
+        <bpel:flow>
+            <bpel:scope bea:name="DeriveNumberOfFlights">
+                <bpel:sequence>
+                    <bpel:assign>
+                        <bpel:extensionAssignOperation>
+                            <trf:javaCallout varName="numberOfFlights">
+                                <trf:archive ref="FlightScheduleService/deploy/JavaCalloutJar"/>
+                                <trf:className>saibot.airport.flightscheduleservice.ScheduledFlightProcessor</trf:className>
+                                <trf:method>public static int calculateNumberOfFlights(org.apache.xmlbeans.XmlObject)</trf:method>
+                                <trf:expr>
+                                    <expr:xqueryText>$request.in/bind:TimePlanningUnit</expr:xqueryText>
+                                </trf:expr>
+                            </trf:javaCallout>
+                        </bpel:extensionAssignOperation>
+                    </bpel:assign>
+                </bpel:sequence>
+            </bpel:scope>
+            <bpel:scope bea:name="RetrieveSlotIdentifier">
+                <bpel:variables>
+                    <bpel:variable name="findSlotRequestMsg" messageType="ns1:findSlotRequestMessage"/>
+                </bpel:variables>
+                <bpel:sequence>
+                    <bpel:assign>
+                        <bpel:extensionAssignOperation>
+                            <trf:assign varName="findSlotRequestMsg.in">
+                                <trf:expr>
+                                    <expr:xqueryText>&lt;soapenv:Body
+                                                     xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"/&gt;</expr:xqueryText>
+                                </trf:expr>
+                            </trf:assign>
+                        </bpel:extensionAssignOperation>
+                        <bpel:extensionAssignOperation>
+                            <trf:replace contents-only="true" varName="findSlotRequestMsg.in">
+                                <trf:expr>
+                                    <expr:xsltTransform>
+                                        <expr:resource ref="FlightScheduleService/Transformations/submitScheduledFlightRequestMessageTofindSlotRequestMessage"/>
+                                        <expr:input>$request.in</expr:input>
+                                    </expr:xsltTransform>
+                                </trf:expr>
+                            </trf:replace>
+                        </bpel:extensionAssignOperation>
+                    </bpel:assign>
+                    <bpel:invoke partnerLink="SlotService" operation="findSlot" inputVariable="findSlotRequestMsg"
+                                 outputVariable="slotIdentifier">
+                        <rescon:invokeInfo>
+                            <rescon:service ref="FlightScheduleService/BusinessService/SlotService"
+                                            xsi:type="ns0:BusinessServiceRef"/>
+                        </rescon:invokeInfo>
+                    </bpel:invoke>
+                </bpel:sequence>
+            </bpel:scope>
+            <bpel:scope bea:name="CheckAirlineWithFinancialDepartment">
+                <bpel:variables>
+                    <bpel:variable name="checkAirlineRequest" messageType="ns3:requestMessage"/>
+                </bpel:variables>
+                <bpel:sequence>
+                    <bpel:assign>
+                        <bpel:extensionAssignOperation>
+                            <trf:assign varName="checkAirlineRequest.in">
+                                <trf:expr>
+                                    <expr:xqueryText>&lt;soapenv:Body
+                                                     xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"&gt; 
+&lt;fin:checkAirlineRequestMessage xmlns:fin="saibot.airport/services/financial"&gt; 
+  &lt;fin:Carrier&gt; 
+    &lt;ref:IATACode xmlns:ref="ref:saibot.airport/data/reference"&gt;{$request.in/bind:Carrier}&lt;/ref:IATACode&gt; 
+  &lt;/fin:Carrier&gt; 
+&lt;/fin:checkAirlineRequestMessage&gt; 
+&lt;/soapenv:Body&gt; 
+</expr:xqueryText>
+                                </trf:expr>
+                            </trf:assign>
+                        </bpel:extensionAssignOperation>
+                    </bpel:assign>
+                    <bpel:invoke partnerLink="CheckAirlineWithFinancialDepartmentPipeline"
+                                 operation="checkAirlineStatus" inputVariable="checkAirlineRequest"
+                                 outputVariable="checkAirlineFinanceResponse">
+                        <rescon:invokeInfo>
+                            <rescon:service ref="FlightScheduleService/Pipeline/CheckAirlineWithFinancialDepartmentPipeline"
+                                            xsi:type="ns2:PipelineRef"/>
+                        </rescon:invokeInfo>
+                    </bpel:invoke>
+                </bpel:sequence>
+            </bpel:scope>
+        </bpel:flow>
+        <bpel:assign>
+            <bpel:extensionAssignOperation>
+                <trf:assign varName="response.out">
+                    <trf:expr>
+                        <expr:xqueryText>&lt;flig:EnrichmentDetails
+                                         xmlns:flig="saibot.airport/services/flightschedule"&gt; 
+    &lt;flig:SlotId&gt;{$slotIdentifier.return/ns1:SlotId/text()}&lt;/flig:SlotId&gt; 
+    &lt;flig:NumberOfFlights&gt;{$numberOfFlights}&lt;/flig:NumberOfFlights&gt; 
+    &lt;flig:FinancialDepartmentApprovalStamp&gt;{$checkAirlineFinanceResponse.out/ns3:UniqueStamp/text()}&lt;/flig:FinancialDepartmentApprovalStamp&gt; 
+  &lt;/flig:EnrichmentDetails&gt; 
+</expr:xqueryText>
+                    </trf:expr>
+                </trf:assign>
+            </bpel:extensionAssignOperation>
+        </bpel:assign>
+        <bpel:reply partnerLink="ParallelEnrichmentSplitJoin" operation="enrichFlightSchedule" variable="response"></bpel:reply>
+    </bpel:sequence>
+</bpel:process>

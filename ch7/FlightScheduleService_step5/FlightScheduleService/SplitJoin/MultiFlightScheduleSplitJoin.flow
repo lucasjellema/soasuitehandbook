@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpel:process name="MultiFlightScheduleSplitJoin"
+              targetNamespace="http://xmlns.oracle.com/FlightScheduleService_step5/FlightScheduleService/"
+              xmlns:tns="http://xmlns.oracle.com/FlightScheduleService_step5/FlightScheduleService/"
+              xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+              xmlns:rescon="http://www.bea.com/alsb/flow/resources/config"
+              xmlns:bea="http://www.bea.com/bpel/ui/extensions"
+              xmlns:ext="http://www.bea.com/bpel/extensions"
+              xmlns:expr="http://www.bea.com/wli/sb/stages/config"
+              xmlns:trf="http://www.bea.com/wli/sb/stages/transform/config"
+              xmlns:bind="saibot.airport/services/flightschedule" 
+              bea:name="MultiFlightScheduleSplitJoin"
+              rescon:snippetVersion="1.0"
+              xmlns:ns0="http://www.bea.com/wli/sb/pipeline/config"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bpel:partnerLinks>
+        <bpel:partnerLink name="MultiFlightScheduleSplitJoin" partnerLinkType="tns:MultiFlightScheduleSplitJoin"
+                          myRole="MultiFlightScheduleSplitJoin">
+	       </bpel:partnerLink>
+        <bpel:partnerLink name="FlightScheduleValidationPipeline" partnerLinkType="tns:FlightScheduleValidationPipeline"
+                          partnerRole="FlightScheduleValidationPipeline"/>
+    </bpel:partnerLinks>
+
+	   <bpel:variables>
+        <bpel:variable name="request"
+	                      messageType="bind:multiRequestMessage">
+	       </bpel:variable>
+	       <bpel:variable name="response"
+                       messageType="bind:multiReplyMessage">
+	       </bpel:variable>
+        <bpel:variable name="tempResponse" element="bind:submitMultiScheduledFlightsResponseMessage"/>
+    </bpel:variables>
+
+    <bpel:sequence>
+        <bpel:receive partnerLink="MultiFlightScheduleSplitJoin" operation="submitMultiFlightSchedules" variable="request" createInstance="yes">
+	           <rescon:receiveInfo>
+                <rescon:wsdl ref="FlightScheduleService/WSDLs/MultiFlightScheduleService" binding="bind:execute_bind"/>
+            </rescon:receiveInfo>
+        </bpel:receive>
+        <bpel:assign>
+            <bpel:extensionAssignOperation>
+                <trf:assign varName="tempResponse">
+                    <trf:expr>
+                        <expr:xqueryText>&lt;flig:submitMultiScheduledFlightsResponseMessage
+                                         xmlns:flig="saibot.airport/services/flightschedule"&gt;  
+  &lt;flig:SubmittedFlightScheduleResults&gt;&lt;/flig:SubmittedFlightScheduleResults&gt;  
+&lt;/flig:submitMultiScheduledFlightsResponseMessage&gt;</expr:xqueryText>
+                    </trf:expr>
+                </trf:assign>
+            </bpel:extensionAssignOperation>
+        </bpel:assign>
+        <bpel:forEach parallel="yes" counterName="counter">
+            <bpel:startCounterValue>number(1)</bpel:startCounterValue>
+            <bpel:finalCounterValue>count($request.in/bind:SubmittedFlightSchedules/bind:SubmittedFlightSchedule)</bpel:finalCounterValue>
+            <bpel:scope>
+                <bpel:variables>
+                    <bpel:variable name="submitFlightScheduleReq" messageType="bind:requestMessage"/>
+                    <bpel:variable name="submitFlightScheduleRes" messageType="bind:replyMessage"/>
+                </bpel:variables>
+                <bpel:sequence>
+                    <bpel:assign>
+                        <bpel:extensionAssignOperation>
+                            <trf:assign varName="submitFlightScheduleReq.in">
+                                <trf:expr>
+                                    <expr:xqueryText>$request.in/bind:SubmittedFlightSchedules/bind:SubmittedFlightSchedule[$counter]</expr:xqueryText>
+                                </trf:expr>
+                            </trf:assign>
+                        </bpel:extensionAssignOperation>
+                    </bpel:assign>
+                    <bpel:invoke partnerLink="FlightScheduleValidationPipeline" operation="submitFlightSchedule"
+                                 inputVariable="submitFlightScheduleReq" outputVariable="submitFlightScheduleRes">
+                        <rescon:invokeInfo>
+                            <rescon:service ref="FlightScheduleService/Pipeline/FlightScheduleValidationPipeline"
+                                            xsi:type="ns0:PipelineRef"/>
+                        </rescon:invokeInfo>
+                    </bpel:invoke>
+                    <bpel:assign>
+                        <bpel:extensionAssignOperation>
+                            <trf:insert varName="tempResponse">
+                                <trf:location>
+                                    <expr:xpathText>./*[1]</expr:xpathText>
+                                </trf:location>
+                                <trf:where>first-child</trf:where>
+                                <trf:expr>
+                                    <expr:xqueryText>&lt;bind:SubmittedFlightScheduleResult&gt; 
+&lt;bind:Carrier&gt;{$submitFlightScheduleReq.in/bind:Carrier/text()}&lt;/bind:Carrier&gt;  
+&lt;bind:FlightNumber&gt;{$submitFlightScheduleReq.in/bind:FlightNumber/text()}&lt;/bind:FlightNumber&gt; 
+&lt;bind:SubmissionOutcome&gt; 
+&lt;bind:FlightSchedule&gt; &lt;bind:FlightId&gt;{$submitFlightScheduleRes.out/bind:FlightSchedule/bind:FlightId/text()}&lt;/bind:FlightId&gt;
+                                                      
+&lt;bind:SlotId&gt;{$submitFlightScheduleRes.out/bind:FlightSchedule/bind:SlotId/text()}&lt;/bind:SlotId&gt; 
+&lt;/bind:FlightSchedule&gt;  
+{$submitFlightScheduleRes.out/bind:ProcessingResults} &lt;/bind:SubmissionOutcome&gt; 
+&lt;/bind:SubmittedFlightScheduleResult&gt; 
+</expr:xqueryText>
+                                </trf:expr>
+                            </trf:insert>
+                        </bpel:extensionAssignOperation>
+                    </bpel:assign>
+                </bpel:sequence>
+            </bpel:scope>
+        </bpel:forEach>
+        <bpel:assign>
+            <bpel:extensionAssignOperation>
+                <trf:assign varName="response.out">
+                    <trf:expr>
+                        <expr:xqueryText>$tempResponse</expr:xqueryText>
+                    </trf:expr>
+                </trf:assign>
+            </bpel:extensionAssignOperation>
+        </bpel:assign>
+        <bpel:reply partnerLink="MultiFlightScheduleSplitJoin" operation="submitMultiFlightSchedules" variable="response"></bpel:reply>
+    </bpel:sequence>
+</bpel:process>
