@@ -1,0 +1,88 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Jan 26 06:51:37 CET 2015
+  Author:  lucas_j
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="FlightScheduleProcessor"
+               targetNamespace="saibot.airport/services/flightschedule/private/FlightScheduleProcessor"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="saibot.airport/services/flightschedule/private/FlightScheduleProcessor"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="saibot.airport/services/flightschedule"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer" xmlns:ns2="saibot.airport/data/reference">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="saibot.airport/services/flightschedule" location="../WSDLs/FlightScheduleServiceWrapper.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="flightscheduleprocessor_client" partnerLinkType="ns1:FlightScheduleProcessor" myRole="FlightScheduleServicePortType"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:requestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:replyMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in FlightScheduleProcessor.wsdl) -->
+    <receive name="receiveInput" partnerLink="flightscheduleprocessor_client" portType="ns1:FlightScheduleServicePortType" operation="submitFlightSchedule" variable="inputVariable" createInstance="yes"/>
+        <assign name="SetHardcodedReply">
+      <copy>
+        <from><literal>346</literal></from>
+        <to>$outputVariable.out/ns1:FlightSchedule/ns1:SlotId</to>
+      </copy>
+      <copy>
+        <from><literal>8546</literal></from>
+        <to>$outputVariable.out/ns1:FlightSchedule/ns1:FlightId</to>
+      </copy>
+      <copy>
+        <from><literal>4</literal></from>
+        <to>$outputVariable.out/ns1:FlightSchedule/ns1:TentativeGateLocation/ns2:Terminal</to>
+      </copy>
+      <copy>
+        <from><literal>F</literal></from>
+        <to>$outputVariable.out/ns1:FlightSchedule/ns1:TentativeGateLocation/ns2:Pier</to>
+      </copy>
+      <copy>
+        <from><literal>21</literal></from>
+        <to>$outputVariable.out/ns1:FlightSchedule/ns1:TentativeGateLocation/ns2:Gate</to>
+      </copy>
+    </assign>
+<!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="flightscheduleprocessor_client" portType="ns1:FlightScheduleServicePortType" operation="submitFlightSchedule" variable="outputVariable"/>
+  </sequence>
+</process>
