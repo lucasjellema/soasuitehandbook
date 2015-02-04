@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions
+    
+     targetNamespace="saibot.airport/services/slot"
+     xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:WL5G3N1="saibot.airport/services/slot"
+     xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <WL5G3N0:types>
+        <xsd:schema elementFormDefault="qualified" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+             xmlns:reference="saibot.airport/datareference" xmlns:slot="saibot.airport/services/slot"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:tns="saibot.airport/services/slot" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/services/slot" schemaLocation="../LocalizedExternalResources/SlotService.xsd"/>
+        </xsd:schema>
+    </WL5G3N0:types>
+    <WL5G3N0:message name="allocateSlotRequestMessage">
+        <WL5G3N0:part name="in" element="WL5G3N1:allocateSlotRequestMessage"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="allocateSlotResponseMessage">
+        <WL5G3N0:part name="return" element="WL5G3N1:allocateSlotResponseMessage"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="findSlotRequestMessage">
+        <WL5G3N0:part name="in" element="WL5G3N1:findSlotRequestMessage"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="findSlotResponseMessage">
+        <WL5G3N0:part name="return" element="WL5G3N1:findSlotResponseMessage"/>
+    </WL5G3N0:message>
+    <WL5G3N0:portType name="SlotServicePortType">
+        <WL5G3N0:operation name="allocateSlot">
+            <WL5G3N0:input message="WL5G3N1:allocateSlotRequestMessage"/>
+            <WL5G3N0:output message="WL5G3N1:allocateSlotResponseMessage"/>
+        </WL5G3N0:operation>
+        <WL5G3N0:operation name="findSlot">
+            <WL5G3N0:input message="WL5G3N1:findSlotRequestMessage"/>
+            <WL5G3N0:output message="WL5G3N1:findSlotResponseMessage"/>
+        </WL5G3N0:operation>
+    </WL5G3N0:portType>
+    <WL5G3N0:binding name="SlotServicePortTypeSOAP11Binding" type="WL5G3N1:SlotServicePortType">
+        <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <WL5G3N0:operation name="allocateSlot">
+            <WL5G3N2:operation style="document" soapAction="saibot.airport/services/slot/allocateSlot"/>
+            <WL5G3N0:input>
+                <WL5G3N2:body use="literal" parts="in"/>
+            </WL5G3N0:input>
+            <WL5G3N0:output>
+                <WL5G3N2:body use="literal" parts="return"/>
+            </WL5G3N0:output>
+        </WL5G3N0:operation>
+        <WL5G3N0:operation name="findSlot">
+            <WL5G3N2:operation style="document" soapAction="saibot.airport/services/slot/findSlot"/>
+            <WL5G3N0:input>
+                <WL5G3N2:body use="literal" parts="in"/>
+            </WL5G3N0:input>
+            <WL5G3N0:output>
+                <WL5G3N2:body use="literal" parts="return"/>
+            </WL5G3N0:output>
+        </WL5G3N0:operation>
+    </WL5G3N0:binding>
+    <WL5G3N0:service name="SlotServicePortTypeSOAP11BindingQSService">
+        <WL5G3N0:documentation>OSB Service</WL5G3N0:documentation>
+        <WL5G3N0:port name="SlotServicePortTypeSOAP11BindingQSPort" binding="WL5G3N1:SlotServicePortTypeSOAP11Binding">
+            <WL5G3N2:address location="http://soa2admin2:8011/flight/SlotService"/>
+        </WL5G3N0:port>
+    </WL5G3N0:service>
+</WL5G3N0:definitions>
