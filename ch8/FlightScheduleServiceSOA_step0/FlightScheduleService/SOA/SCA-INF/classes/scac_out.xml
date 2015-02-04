@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>error</severity>
+      <loc>/ns:composite/ns:service[@name='FlightScheduleService']</loc>
+      <line>16</line>
+      <col>92</col>
+      <file>D:\GitHub\soasuitehandbook\ch8\FlightScheduleServiceSOA_step0\FlightScheduleService\SOA\composite.xml</file>
+      <name>D:\GitHub\soasuitehandbook\ch8\FlightScheduleServiceSOA_step0\FlightScheduleService\SOA\composite.xml</name>
+      <fix/>
+      <msg>Service "FlightScheduleService" does not exist as wire source</msg>
+   </Fault>
+</Faults>
