@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+    
+     targetNamespace="saibot.airport/services/slot"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:WL5G3N1="saibot.airport/services/slot"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="SlotService">
+        <plnk:role name="SlotServicePortType" portType="WL5G3N1:SlotServicePortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="saibot.airport/services/slot" location="SlotService.wsdl"/>
+</wsdl:definitions>
