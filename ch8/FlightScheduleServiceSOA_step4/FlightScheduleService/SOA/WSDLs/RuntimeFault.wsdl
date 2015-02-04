@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="RuntimeFault"
+             targetNamespace="http://schemas.oracle.com/bpel/extension"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+    <message name="RuntimeFaultMessage">
+        <part name="code" type="xsd:string"/>
+        <part name="summary" type="xsd:string"/>
+        <part name="detail" type="xsd:string"/>
+    </message>
+</definitions>
