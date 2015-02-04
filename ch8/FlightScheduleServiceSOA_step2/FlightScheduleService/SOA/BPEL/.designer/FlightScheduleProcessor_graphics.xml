@@ -6,7 +6,7 @@
    <partnerlink_locations>
       <partnerlink name="flightscheduleprocessor_client" x="0" y="1794" side="left"/>
    </partnerlink_locations>
-   <graph_layout viewport="119,1362,1216,701" show_swimlanes="true">
+   <graph_layout viewport="119,1362,1216,260" show_swimlanes="true">
       <layout_item collapsed="false" xpath="/process" type="process" showhandlers="true"/>
       <layout_item collapsed="false" xpath="/process/sequence" type="sequence"/>
       <layout_item collapsed="false" xpath="/process/sequence/scope[1]" type="scope" showhandlers="true"/>
