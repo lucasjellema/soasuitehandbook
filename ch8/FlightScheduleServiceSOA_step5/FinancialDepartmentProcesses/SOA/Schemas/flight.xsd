@@ -1,0 +1,67 @@
+<xsd:schema targetNamespace="saibot.airport/data/flight" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:reference="saibot.airport/data/reference" xmlns:flight="saibot.airport/data/flight">
+   <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+   <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+   <xsd:complexType name="slotType">
+      <xsd:sequence>
+         <xsd:element name="AllocationDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Carrier" nillable="false" type="reference:aircarrierType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="TimePlanningUnit" nillable="false" type="reference:timePlanningUnitType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="ArrivalOrDeparture" nillable="false" type="common:arrivalOrDepartureType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="AircraftModel" nillable="false" type="reference:aircraftModelType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Period" nillable="false" type="common:periodType" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="flightType">
+      <xsd:sequence>
+         <xsd:element name="Carrier" nillable="false" type="reference:aircarrierType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="FlightStatus" nillable="false" type="flight:flightStatusType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="ArrivalOrDeparture" nillable="false" type="common:arrivalOrDepartureType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="Delayed" nillable="false" type="xsd:boolean" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="AircraftModel" nillable="false" type="reference:aircraftModelType" minOccurs="1" maxOccurs="1"/>
+         <xsd:element name="ConnectingFlightNumber" nillable="false" type="common:flightNumberType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="ConnectingAirport" nillable="false" type="reference:airportType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="CodeShares" minOccurs="0" maxOccurs="1">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="CodeShare" minOccurs="0" maxOccurs="unbounded">
+                     <xsd:complexType>
+                        <xsd:sequence>
+                           <xsd:element name="Carrier" nillable="false" type="reference:aircarrierType" minOccurs="1" maxOccurs="1"/>
+                           <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+                        </xsd:sequence>
+                     </xsd:complexType>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="FlightHistory" minOccurs="0" maxOccurs="1">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="FlightUpdate" minOccurs="0" maxOccurs="unbounded">
+                     <xsd:complexType>
+                        <xsd:sequence>
+                           <xsd:element name="UpdateTimestamp" nillable="false" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+                           <xsd:element name="FlightStatus" nillable="false" type="flight:flightStatusType" minOccurs="1" maxOccurs="1"/>
+                           <xsd:element name="Remarks" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+                        </xsd:sequence>
+                     </xsd:complexType>
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="flightStatusType">
+      <xsd:sequence>
+         <xsd:element name="TimePlanningUnit" nillable="false" type="reference:timePlanningUnitType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Status" nillable="false" type="common:flightStatusType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Action" nillable="false" type="common:flightActionType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="BagageLocation" nillable="false" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="CheckinCounter" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Runway" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="Aircraft" nillable="false" type="reference:aircraftType" minOccurs="0" maxOccurs="1"/>
+         <xsd:element name="GateLocation" nillable="false" type="reference:gateLocationType" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

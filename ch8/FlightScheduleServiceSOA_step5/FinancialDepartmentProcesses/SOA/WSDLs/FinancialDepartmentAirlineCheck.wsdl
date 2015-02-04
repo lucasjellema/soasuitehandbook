@@ -1,0 +1,45 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="FinancialDepartmentAirlineCheckService"
+     targetNamespace="saibot.airport/services/financial"
+     xmlns:fin="saibot.airport/services/financial"
+     xmlns:tns="saibot.airport/services/financial"
+     xmlns:inp1="saibot.airport/services/financial"
+     xmlns:inp2="saibot.airport/services/financial"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    
+    <wsdl:types>
+   <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/financial"
+                  schemaLocation="../Schemas/FinancialDepartmentAirlineCheck.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  
+    <wsdl:message name="requestMessage">
+        <wsdl:part name="in" element="fin:checkAirlineRequestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="replyMessage">
+        <wsdl:part name="out" element="fin:checkAirlineResponseMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="FinancialDepartmentAirlineCheckServicePortType">
+        <wsdl:operation name="checkAirlineStatus">
+            <wsdl:input message="tns:requestMessage"/>
+            <wsdl:output message="tns:replyMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="execute_bind" type="tns:FinancialDepartmentAirlineCheckServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="checkAirlineStatus">
+            <soap:operation style="document" soapAction="checkAirlineStatus"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="saibot.airport/services/financial"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" namespace="saibot.airport/services/flightschedule"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

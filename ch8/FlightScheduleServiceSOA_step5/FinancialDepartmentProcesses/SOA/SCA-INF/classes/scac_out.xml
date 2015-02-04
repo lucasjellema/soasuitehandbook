@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:component[@name='FinancialDepartmentAirlineCheckProcess/FinancialDepartmentAirlineCheck']</loc>
+      <line/>
+      <col/>
+      <file>/u01/work/ch8/FlightScheduleServiceSOA/FinancialDepartmentProcesses/SOA/composite.xml</file>
+      <name>/u01/work/ch8/FlightScheduleServiceSOA/FinancialDepartmentProcesses/SOA/composite.xml</name>
+      <fix/>
+      <msg>The service "FinancialDepartmentAirlineCheck" exposed by component "FinancialDepartmentAirlineCheckProcess" is not wired to/used by any other component.</msg>
+   </Fault>
+   <Fault>
+      <severity>error</severity>
+      <loc/>
+      <line>73</line>
+      <col/>
+      <file>BPEL/FinancialDepartmentAirlineCheckProcess.bpel</file>
+      <name>BPEL/FinancialDepartmentAirlineCheckProcess.bpel</name>
+      <fix/>
+      <msg>Invalid value 'IfCarrierIataCode == XX' for attribute: 'name'</msg>
+   </Fault>
+</Faults>

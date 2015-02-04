@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="FinancialDepartmentAirlineCheckService"
+     targetNamespace="saibot.airport/services/financial"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:fin="saibot.airport/services/financial"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="FinancialDepartmentAirlineCheckProcess">
+        <plnk:role name="FinancialDepartmentAirlineCheckServicePortType" portType="fin:FinancialDepartmentAirlineCheckServicePortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="saibot.airport/services/financial" location="FinancialDepartmentAirlineCheck.wsdl"/>
+</wsdl:definitions>
