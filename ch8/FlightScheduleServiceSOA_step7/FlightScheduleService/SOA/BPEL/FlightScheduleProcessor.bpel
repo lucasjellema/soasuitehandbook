@@ -1,0 +1,437 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Jan 26 06:51:37 CET 2015
+  Author:  lucas_j
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="FlightScheduleProcessor"
+         targetNamespace="saibot.airport/services/flightschedule/private/FlightScheduleProcessor"
+         xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:client="saibot.airport/services/flightschedule/private/FlightScheduleProcessor"
+         xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns1="saibot.airport/services/flightschedule"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer" xmlns:ns2="saibot.airport/data/reference"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="saibot/validation"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns4="saibot.airport/services/slot"
+         xmlns:ns5="saibot.airport/services/financial">
+    <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+    <bpelx:inlineSubProcess name="ReportMessageToProcessingResults">
+        <bpelx:annotation>
+            <bpelx:general>
+                <bpelx:property name="userDescription">
+                    <![CDATA[Add a message code, a summary and a description to the global variable processingResults.]]>
+                </bpelx:property>
+                <bpelx:property name="userLabel">
+                    <![CDATA[Report a Message To ProcessingResults]]>
+                </bpelx:property>
+            </bpelx:general>
+        </bpelx:annotation>
+    <variables>
+      <variable name="messageCode" type="xsd:string"/>
+      <variable name="messageDescription" type="xsd:string"/>
+      <variable name="contextTrace" type="xsd:string"/>
+    </variables>
+    <assign name="CopymessageToProcessingResults"
+            xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+            <copy>
+                <from><literal><fse:ProcessingResult xmlns:fse="saibot.airport/services/flightschedule">
+</fse:ProcessingResult></literal></from>
+                <to>$processingResults</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+                <from>$messageCode</from>
+                <to>$processingResults/ns1:ProcessingResult/ns1:ResultCode</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+                <from>$messageDescription</from>
+                <to>$processingResults/ns1:ProcessingResult/ns1:Description</to>
+            </copy>
+            <copy bpelx:insertMissingToData="yes">
+                <from>$contextTrace</from>
+                <to>$processingResults/ns1:ProcessingResult/ns1:ContextTrace</to>
+            </copy>
+        </assign>
+  </bpelx:inlineSubProcess>
+    <import namespace="http://schemas.oracle.com/bpel/extension" location="../WSDLs/RuntimeFault.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="saibot.airport/services/flightschedule" location="../WSDLs/FlightScheduleServiceWrapper.wsdl"
+            importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+<import location="oracle.xml.parser.v2.XMLElement" importType="http://schemas.oracle.com/bpel/extension/java"/>
+<import location="saibot.airport.flightscheduleservice.FlightScheduleProcessor" importType="http://schemas.oracle.com/bpel/extension/java"/>
+    <partnerLinks>
+        <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+        <partnerLink name="flightscheduleprocessor_client" partnerLinkType="ns1:FlightScheduleProcessor"
+                     myRole="FlightScheduleServicePortType"/>
+        <partnerLink name="SlotService" partnerLinkType="ns4:SlotService" partnerRole="SlotServicePortType"/>
+        <partnerLink name="FinancialDepartmentAirlineCheckProcess.FinancialDepartmentAirlineCheck"
+                     partnerLinkType="ns5:FinancialDepartmentAirlineCheckProcess"
+                     partnerRole="FinancialDepartmentAirlineCheckServicePortType"/>
+    </partnerLinks>
+    <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+    <variables>
+        <!-- Reference to the message passed as input during initiation -->
+        <variable name="inputVariable" messageType="ns1:requestMessage"/>
+        <!-- Reference to the message that will be returned to the requester-->
+        <variable name="outputVariable" messageType="ns1:replyMessage"/>
+        <variable name="processingResults" type="ns1:processingResultsType"></variable>
+        <variable name="copyprocessingResults" type="ns1:processingResultsType"></variable>
+    </variables>
+    <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+    <sequence name="main">
+        <!-- Receive input from requestor. (Note: This maps to operation defined in FlightScheduleProcessor.wsdl) -->
+        <receive name="receiveInput" partnerLink="flightscheduleprocessor_client"
+                 portType="ns1:FlightScheduleServicePortType" operation="submitFlightSchedule" variable="inputVariable"
+                 createInstance="yes"/>
+        <scope name="Validations">
+            <sequence name="Sequence1">
+                <scope name="SchemaValidation">
+                    <variables>
+                        <variable name="validationFault" messageType="bpelx:RuntimeFaultMessage"/>
+                    </variables>
+                    <faultHandlers>
+                        <catch bpelx:name="handleValidationFault" faultName="bpel:invalidVariables"
+                               faultVariable="validationFault" faultMessageType="bpelx:RuntimeFaultMessage">
+                               <sequence name="s45">
+         
+                            <assign name="CopyValidationFaultToProcessingResults">
+                                <copy>
+                                    <from><literal><fse:ProcessingResult xmlns:fse="saibot.airport/services/flightschedule">
+   <fse:ResultCode>SBT-011</fse:ResultCode>
+</fse:ProcessingResult></literal></from>
+                                    <to>$processingResults</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>$validationFault.summary</from>
+                                    <to>$processingResults/ns1:ProcessingResult/ns1:Description</to>
+                                </copy>
+                                <copy bpelx:insertMissingToData="yes">
+                                    <from>$inputVariable.in</from>
+                                    <to>$processingResults/ns1:ProcessingResult/ns1:ContextTrace</to>
+                                </copy>
+                            </assign>
+                            </sequence>
+                        </catch>
+                    </faultHandlers>
+                    <sequence name="s23">
+         
+                    <validate name="ValidateRequest" variables="inputVariable"/>
+                    </sequence>
+                </scope>
+        <scope name="CustomValidation">
+          <variables>
+            <variable name="validationResults" type="ns3:Validation"/>
+          </variables>
+          <sequence name="Sequence3">
+          
+            <assign name="ValidateScheduledFlightWithXQuery">
+              <copy>
+                <from>ora:processXQuery10('../Validations/ValidateSubmitScheduledFlightRequest.xqy','submitScheduledFlightRequest',$inputVariable.in)</from>
+                <to>$validationResults</to>
+              </copy>
+            </assign>
+            <if name="IfCustomValidationError">
+              <documentation>
+                <![CDATA[CopyErrorsToProcessingResults]]>
+              </documentation>
+              <condition>count($validationResults/ns3:ValidationErrorList/ns3:ValidationError) &gt; 0</condition>
+              <forEach parallel="no" counterName="counter" name="ProcessAllValidationErrors">
+                <startCounterValue>1</startCounterValue>
+                <finalCounterValue>count($validationResults/ns3:ValidationErrorList/ns3:ValidationError)</finalCounterValue>
+                <scope name="AddValErrorsToProcessingResults">
+                  <variables>
+                    <variable name="ValidationError" type="ns3:ValidationError"/>
+                  </variables>
+                  <sequence name="Sequence4">
+                    <assign name="ValidationErrorToProcessResults">
+                      <extensionAssignOperation>
+                        <bpelx:insertBefore>
+                          <bpelx:from><bpelx:literal><fse:ProcessingResult xmlns:fse="saibot.airport/services/flightschedule"/></bpelx:literal></bpelx:from>
+                          <bpelx:to>$processingResults/ns1:ProcessingResult</bpelx:to>
+                        </bpelx:insertBefore>
+                      </extensionAssignOperation>
+                      <copy bpelx:insertMissingToData="yes">
+                        <from>$validationResults/ns3:ValidationErrorList/ns3:ValidationError[$counter]/ns3:code</from>
+                        <to>$processingResults/ns1:ProcessingResult[1]/ns1:ResultCode</to>
+                      </copy>
+                      <copy bpelx:insertMissingToData="yes">
+                        <from>$validationResults/ns3:ValidationErrorList/ns3:ValidationError[$counter]/ns3:message</from>
+                        <to>$processingResults/ns1:ProcessingResult[1]/ns1:Description</to>
+                      </copy>
+                    </assign>
+                  </sequence>
+                </scope>
+              </forEach>
+              <else>
+                <documentation>
+                  <![CDATA[NoErrors]]>
+                </documentation>
+                <empty name="Continue"/>
+              </else>
+            </if>
+           
+          </sequence>
+        </scope>
+                <scope name="AirlineValueMap">
+          <variables>
+            <variable name="iataCode" type="xsd:string"/>
+          </variables>
+          <sequence name="Sequence7">
+          
+            <if name="IfIncorrectLengthCarrier">
+              <condition>string-length($inputVariable.in/ns1:Carrier) &lt;2  or string-length($inputVariable.in/ns1:Carrier) &gt; 3</condition>
+                            <sequence name="Sequence11">
+<extensionActivity xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+<bpelx:call name="CallReportError" target="ReportMessageToProcessingResults"
+                  xmlns:bpelx="http://schemas.oracle.com/bpel/extension">
+                                        <bpelx:param name="messageCode" copyByValue="yes">'FSS-32'</bpelx:param>
+                                        <bpelx:param name="messageDescription" copyByValue="yes">concat('Incorrect length for Airline Carrier: ', $inputVariable.in/ns1:Carrier)</bpelx:param>
+                                        <bpelx:param name="contextTrace" copyByValue="yes">string($inputVariable.in)</bpelx:param>
+                                    </bpelx:call>
+   </extensionActivity>
+                            </sequence>
+                            <else>
+                <if name="IfCarrierLengthIsIcao">
+                  <documentation>
+                                        <![CDATA[IcaoCode]]>
+                                    </documentation>
+                  <condition>string-length($inputVariable.in/ns1:Carrier) = 3</condition>
+                  <sequence name="Sequence8">
+                    <assign name="MapAirlineCode">
+                     
+                      <copy>
+                        <from>dvm:lookupValue("icaoToiataAirlineMapping.dvm","icaoAirlineCode",$inputVariable.in/ns1:Carrier,"iataAirlineCode","XXX")</from>
+                        <!-- dvm:lookupValue("../iacoToiataAirlineMapping.dvm","iacoAirlineCode",$inputVariable.in/ns1:Carrier,"iataAirlineCode","XXX") -->
+                        <to>$iataCode</to>
+                      </copy>
+                    </assign>
+                    <if name="IfMappingFailed">
+                      <condition>$iataCode = 'XXX'</condition><sequence name="Sequence10">
+                        <extensionActivity>
+                          <bpelx:call name="CallReportError" target="ReportMessageToProcessingResults">
+                            <bpelx:param name="messageCode" copyByValue="yes">'FSS-34'</bpelx:param>
+                            <bpelx:param name="messageDescription" copyByValue="yes">concat('Unknown IACO Airline Carrier: ', $inputVariable.in/ns1:Carrier)</bpelx:param>
+                            <bpelx:param name="contextTrace" copyByValue="yes">string($inputVariable.in)</bpelx:param>
+                          </bpelx:call>
+                        </extensionActivity>
+</sequence><else>
+                        <assign name="SetIataCodeInInputVariable">
+                          <copy>
+                            <from>$iataCode</from>
+                            <to>$inputVariable.in/ns1:Carrier</to>
+                          </copy>
+                        </assign>
+                      </else>
+                    </if>
+                  </sequence>
+                  <else>
+                    <documentation>
+                      <![CDATA[AssumeValidIata]]>
+                    </documentation>
+                    <empty name="Continue"/>
+                  </else>
+                </if>
+              </else>
+            </if>
+          </sequence>
+        </scope>
+               
+                <scope name="ContinueOrReturn">
+                   <if name="IfValidationErrors">
+            <documentation>
+                            <![CDATA[ValidationErrorsFound]]>
+                        </documentation>
+            <condition>count($processingResults/ns1:ProcessingResult) &gt; 0 and ($processingResults[1]/ns1:ProcessingResult/ns1:ResultCode/text()!= '')</condition>
+            <sequence name="Sequence2">
+              <assign name="UpdateOutputVariable">
+                                <extensionAssignOperation>
+                                    <bpelx:append>
+                                        <bpelx:from><bpelx:literal><fse:ProcessingResults xmlns:fse="saibot.airport/services/flightschedule"/></bpelx:literal></bpelx:from>
+                                        <bpelx:to>$outputVariable.out</bpelx:to>
+                                    </bpelx:append>
+                                </extensionAssignOperation>
+                                <extensionAssignOperation>
+                                    <bpelx:append>
+                                        <bpelx:from>$processingResults/ns1:ProcessingResult</bpelx:from>
+                                        <bpelx:to>$outputVariable.out/ns1:ProcessingResults</bpelx:to>
+                                    </bpelx:append>
+                                </extensionAssignOperation>
+                            </assign>
+              <reply name="ReplyWithValidationErrors" variable="outputVariable"
+                     partnerLink="flightscheduleprocessor_client"
+                     portType="ns1:FlightScheduleServicePortType" operation="submitFlightSchedule"/>
+              <exit name="Exit1"/>
+            </sequence>
+            <else>
+              <documentation>
+                <![CDATA[NoValidationErrors]]>
+              </documentation>
+              <empty name="Continue"/>
+            </else>
+          </if>
+       </scope>
+            </sequence>
+        </scope>
+        <scope name="ProcessingAndRouting">
+                <variables>
+        <variable name="numberOfFlights" type="xsd:int">
+          <from>0</from>
+        </variable>
+        <variable name="slotIdentifier" type="xsd:string"/>
+        <variable name="checkAirlineFinanceResponse" type="ns5:checkAirlineResponseType"/>
+      </variables>
+
+            <sequence name="Sequence5">
+                <flow name="Flow1">
+                    <sequence name="Sequence14">
+                        <scope name="CheckAirlineWithFinancialDepartment">
+                            <variables>
+                                <variable name="InvokeFinancialCheckAirline_checkAirlineStatus_InputVariable"
+                                          messageType="ns5:requestMessage"/>
+                                <variable name="InvokeFinancialCheckAirline_checkAirlineStatus_OutputVariable"
+                                          messageType="ns5:replyMessage"/>
+                            </variables><sequence name="Sequence15"><sequence name="Sequence12"><assign name="AssignInputFinancialCheck"><copy><from>$inputVariable.in/ns1:Carrier</from><to>$InvokeFinancialCheckAirline_checkAirlineStatus_InputVariable.in/ns5:Carrier/ns2:IATACode</to></copy></assign>
+                                    <wait name="Wait10Seconds"
+                                          xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable">
+      <for>'PT10S'</for>
+   </wait>
+                                    <invoke name="InvokeFinancialCheckAirline"
+                                                                                                                                                                                                                                                                                                                   bpelx:invokeAsDetail="no"
+                                                                                                                                                                                                                                                                                                                   partnerLink="FinancialDepartmentAirlineCheckProcess.FinancialDepartmentAirlineCheck"
+                                                                                                                                                                                                                                                                                                                   portType="ns5:FinancialDepartmentAirlineCheckServicePortType"
+                                                                                                                                                                                                                                                                                                                   operation="checkAirlineStatus"
+                                                                                                                                                                                                                                                                                                                   inputVariable="InvokeFinancialCheckAirline_checkAirlineStatus_InputVariable"
+                                                                                                                                                                                                                                                                                                                   outputVariable="InvokeFinancialCheckAirline_checkAirlineStatus_OutputVariable"/><assign name="ProcessOutputFinancialCheck"><copy><from>$InvokeFinancialCheckAirline_checkAirlineStatus_OutputVariable.out</from><to>$checkAirlineFinanceResponse</to></copy></assign></sequence></sequence></scope>
+                    </sequence>
+                    <sequence name="Sequence">
+                        <scope name="DeriveNumberOfFlights">
+                            <sequence name="Sequence6">
+                                <extensionActivity>
+                                    <bpelx:exec name="CalculateNumberOfFlights" language="java">
+                                        <![CDATA[addAuditTrailEntry("step 1"); 
+ 
+XMLElement flightNumberElement = (XMLElement) getVariableData("inputVariable", "in", "/ns1:submitScheduledFlightRequestMessage/ns1:FlightNumber"); 
+  addAuditTrailEntry("step 1"); 
+  String flightNumber = flightNumberElement.getTextContent(); 
+  addAuditTrailEntry("step 1"); 
+  XMLElement startDate = (XMLElement) getVariableData("inputVariable", "in", "/ns1:submitScheduledFlightRequestMessage/ns1:TimePlanningUnit/ns2:startDate"); 
+  addAuditTrailEntry("step 1"); 
+  XMLElement endDate = (XMLElement) getVariableData("inputVariable", "in", "/ns1:submitScheduledFlightRequestMessage/ns1:TimePlanningUnit/ns2:endDate"); 
+  addAuditTrailEntry("step 1"); 
+  XMLElement daysOfWeek = (XMLElement) getVariableData("inputVariable", "in", "/ns1:submitScheduledFlightRequestMessage/ns1:TimePlanningUnit/ns2:DaysOfWeek"); 
+  addAuditTrailEntry("step 1"); 
+  int numberOfDaysPerWeek = daysOfWeek.getElementsByTagName("day").getLength(); 
+  addAuditTrailEntry("step 1"); 
+  int flightCount = FlightScheduleProcessor.calculateNumberOfFlights(startDate.getTextContent(), endDate.getTextContent(),numberOfDaysPerWeek); 
+  addAuditTrailEntry("step 1"); 
+  addAuditTrailEntry("Java Embedding - Calculated number of flights for flightnumber "+ flightNumber +" as "+ flightCount); 
+  setVariableData("numberOfFlights", flightCount);]]>
+                                    </bpelx:exec>
+                                </extensionActivity>
+                            </sequence>
+                        </scope>
+                    </sequence>
+                    <sequence name="Sequence13">
+                        <scope name="RetrieveSlotIdentifier">
+                            <variables>
+                                <variable name="InvokeSlotService_findSlot_InputVariable"
+                                          messageType="ns4:findSlotRequestMessage"/>
+                                <variable name="InvokeSlotService_findSlot_OutputVariable"
+                                          messageType="ns4:findSlotResponseMessage"/>
+                            </variables>
+                            <sequence name="Sequence10">
+                                <assign name="AssignInvokeInput">
+                                    <copy>
+                                        <from>$inputVariable.in/ns1:Carrier</from>
+                                        <to>$InvokeSlotService_findSlot_InputVariable.in/ns4:Carrier</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.in/ns1:TimePlanningUnit</from>
+                                        <to>$InvokeSlotService_findSlot_InputVariable.in/ns4:TimePlanningUnit</to>
+                                    </copy>
+                                    <copy>
+                                        <from>$inputVariable.in/ns1:AircraftModel</from>
+                                        <to>$InvokeSlotService_findSlot_InputVariable.in/ns4:AircraftModel</to>
+                                    </copy>
+                                </assign>
+                                <wait name="Wait10Seconds">
+                                    <for>'PT10S'</for>
+                                </wait>
+                                <invoke name="InvokeSlotService" bpelx:invokeAsDetail="no" partnerLink="SlotService"
+                                        portType="ns4:SlotServicePortType" operation="findSlot"
+                                        inputVariable="InvokeSlotService_findSlot_InputVariable"
+                                        outputVariable="InvokeSlotService_findSlot_OutputVariable"/>
+                                <assign name="AssignInvokeOutput">
+                                    <copy>
+                                        <from>$InvokeSlotService_findSlot_OutputVariable.return/ns4:SlotId</from>
+                                        <to>$slotIdentifier</to>
+                                    </copy>
+                                </assign>
+                            </sequence>
+                        </scope>
+                    </sequence>
+                </flow>
+
+            </sequence>
+        </scope>
+        <assign name="SetHardcodedReply">
+            <copy>
+                <from><literal>346</literal></from>
+                <to>$outputVariable.out/ns1:FlightSchedule/ns1:SlotId</to>
+            </copy>
+            <copy>
+                <from><literal>8546</literal></from>
+                <to>$outputVariable.out/ns1:FlightSchedule/ns1:FlightId</to>
+            </copy>
+            <copy>
+                <from><literal>4</literal></from>
+                <to>$outputVariable.out/ns1:FlightSchedule/ns1:TentativeGateLocation/ns2:Terminal</to>
+            </copy>
+            <copy>
+                <from><literal>F</literal></from>
+                <to>$outputVariable.out/ns1:FlightSchedule/ns1:TentativeGateLocation/ns2:Pier</to>
+            </copy>
+            <copy>
+                <from><literal>21</literal></from>
+                <to>$outputVariable.out/ns1:FlightSchedule/ns1:TentativeGateLocation/ns2:Gate</to>
+            </copy>
+        </assign>
+        <!-- Generate reply to synchronous request -->
+        <reply name="replyOutput" partnerLink="flightscheduleprocessor_client"
+               portType="ns1:FlightScheduleServicePortType" operation="submitFlightSchedule" variable="outputVariable"/>
+    </sequence>
+</process>

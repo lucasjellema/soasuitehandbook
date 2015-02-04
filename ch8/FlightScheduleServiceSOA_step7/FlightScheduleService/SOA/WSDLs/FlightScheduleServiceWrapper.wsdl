@@ -1,0 +1,32 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="FlightScheduleService"
+     targetNamespace="saibot.airport/services/flightschedule"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:fse="saibot.airport/services/flightschedule"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+     xmlns:ns2="saibot/validation"
+    >
+    <plnk:partnerLinkType name="FlightScheduleProcessor">
+        <plnk:role name="FlightScheduleServicePortType" portType="fse:FlightScheduleServicePortType"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="saibot.airport/services/flightschedule" location="FlightScheduleService.wsdl"/>
+    <wsdl:import namespace="http://schemas.oracle.com/bpel/extension" location="RuntimeFault.wsdl"/>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:fse="saibot.airport/services/flightschedule"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+             xmlns:ns2="saibot/validation">
+            <xsd:import namespace="saibot.airport/services/flightschedule" schemaLocation="../Schemas/FlightScheduleService.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:fse="saibot.airport/services/flightschedule"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://schemas.oracle.com/bpel/extension"
+             xmlns:ns2="saibot/validation">
+            <xsd:import namespace="saibot/validation" schemaLocation="../Schemas/Validation.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+</wsdl:definitions>
