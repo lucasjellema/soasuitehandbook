@@ -1,0 +1,38 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="QuickAndSlowProcess"
+     targetNamespace="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns1="saibot.airport/utility/cache"
+    >
+    <plnk:partnerLinkType name="QuickAndSlowProcess">
+        <plnk:role name="QuickAndSlowProcessProvider" portType="client:QuickAndSlowProcess"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="saibot.airport/utility/cache">
+            <import namespace="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess"
+                 schemaLocation="../Schemas/QuickAndSlowProcess.xsd"/>
+        </schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns1="saibot.airport/utility/cache">
+            <xsd:import namespace="saibot.airport/utility/cache" schemaLocation="../Schemas/Cache.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="QuickAndSlowProcessRequestMessage">
+        <wsdl:part name="payload" element="client:process"/>
+    </wsdl:message>
+    <wsdl:message name="QuickAndSlowProcessResponseMessage">
+        <wsdl:part name="payload" element="client:processResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="QuickAndSlowProcess">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:QuickAndSlowProcessRequestMessage"/>
+            <wsdl:output message="client:QuickAndSlowProcessResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

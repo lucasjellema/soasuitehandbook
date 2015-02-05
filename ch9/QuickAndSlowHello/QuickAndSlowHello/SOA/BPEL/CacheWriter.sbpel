@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Fri Apr 04 15:16:42 CEST 2014
+  Author:  oracle
+  Type: BPEL 2.0 Subprocess
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<bpelx:subProcess name="CacheWriter"
+               targetNamespace="saibot.airport/services/generic/soacomoposite"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="saibot.airport/services/generic/soacomoposite"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightService/QuickAndSlowHello/CoherenceCacheWriter"
+                  xmlns:ns2="saibot.airport/utility/cache">
+   <!--
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC
+       Set of activities coordinating the flow of messages across the
+       services integrated within this business process
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <partnerLink name="CoherenceCacheWriter" partnerLinkType="ns1:Put_plt" partnerRole="Put_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="key" type="ns2:cacheTagType"/>
+    <variable name="cachePayload" type="ns2:cachedObjectType"/>
+  </variables>
+  <sequence name="main">
+    <scope name="PutOnCache">
+      <variables>
+        <variable name="WriteToCache_Put_InputVariable" messageType="ns1:Put_msg"/>
+        <variable name="WriteToCache_Put_OutputVariable" messageType="ns1:PutResponse_msg"/>
+      </variables>
+      <sequence name="Sequence1">
+        <assign name="PopulateInputWriteCache">
+          <copy>
+            <from>$cachePayload</from>
+            <to>$WriteToCache_Put_InputVariable.body</to>
+          </copy>
+        </assign>
+        <invoke name="WriteToCache" partnerLink="CoherenceCacheWriter" portType="ns1:Put_ptt"
+                operation="Put" inputVariable="WriteToCache_Put_InputVariable"
+                outputVariable="WriteToCache_Put_OutputVariable" bpelx:invokeAsDetail="no">
+          <bpelx:toProperties>
+            <bpelx:toProperty name="jca.coherence.Key" variable="key">
+              <bpelx:query>ns2:tag</bpelx:query>
+            </bpelx:toProperty>
+          </bpelx:toProperties>
+        </invoke>
+      </sequence>
+    </scope>
+  </sequence>
+</bpelx:subProcess>

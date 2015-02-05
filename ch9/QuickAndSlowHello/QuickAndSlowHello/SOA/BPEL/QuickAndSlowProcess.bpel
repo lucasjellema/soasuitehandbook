@@ -1,0 +1,174 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Apr 04 12:34:28 CEST 2014
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="QuickAndSlowProcess"
+               targetNamespace="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" xmlns:ns1="saibot.airport/utility/cache"
+         xmlns:sp1="saibot.airport/services/generic/soacomposite"
+         xmlns:ns0="saibot.airport/services/generic/soacomoposite">
+  <import namespace="saibot.airport/utility/cache" location="../Schemas/Cache.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess"
+          location="../Schemas/QuickAndSlowProcess.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess" location="../WSDLs/QuickAndSlowProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="quickandslowprocess_client" partnerLinkType="client:QuickAndSlowProcess" myRole="QuickAndSlowProcessProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:QuickAndSlowProcessRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:QuickAndSlowProcessResponseMessage"/>
+    <variable name="intermediateResult" type="client:intermediateResultType"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in QuickAndSlowProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="quickandslowprocess_client" portType="client:QuickAndSlowProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <scope name="ProduceResult">
+      <variables>
+        <variable name="cacheTag" type="ns1:cacheTagType"/>
+      </variables>
+      <sequence>
+        <assign name="SetCacheTag">
+          <copy>
+            <from>$inputVariable.payload/client:input</from>
+            <to>$cacheTag/ns1:tag</to>
+          </copy>
+        </assign>
+        <scope name="FetchFromCache">
+          <variables>
+            <variable name="localCacheResult" type="ns1:cachedObjectType"/>
+          </variables>
+          <sequence name="Sequence2">
+            <extensionActivity>
+              <bpelx:call name="RetrieveFromCache" xmlns:sp1="saibot.airport/services/generic/soacomposite"
+                          target="sp1:CacheRetriever">
+                <bpelx:param name="key" copyByValue="yes" variable="cacheTag"/>
+                <bpelx:param name="cacheResult" copyByValue="no" variable="localCacheResult"/>
+              </bpelx:call>
+            </extensionActivity>
+            <assign name="CopyCacheOutcomeToIntermediateResult">
+              <extensionAssignOperation>
+                <bpelx:append>
+                  <bpelx:from>$localCacheResult/ns1:payload/client:result</bpelx:from>
+                  <bpelx:to>$intermediateResult</bpelx:to>
+                </bpelx:append>
+              </extensionAssignOperation>
+            </assign>
+          </sequence>
+        </scope>
+        <if name="IfDataInCache">
+          <documentation>
+            <![CDATA[DataFound]]>
+          </documentation>
+          <condition>$intermediateResult/client:result</condition>
+          <empty name="Continue"/>
+          <else>
+            <documentation>
+              <![CDATA[DataNotInCache]]>
+            </documentation>
+            <sequence name="Sequence3">
+              <scope name="ComputeValue">
+                <sequence name="Sequence1">
+                  <assign name="SetIntermediateResult">
+                    <copy>
+                      <from><literal><intermediateResult xmlns="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess">
+<result>
+  <ValueOne>Bonjour</ValueOne>
+  <ValueTwo>Goedendag</ValueTwo>
+  </result>
+</intermediateResult></literal></from>
+                      <to>$intermediateResult</to>
+                    </copy>
+                  </assign>
+                  <wait name="ArtificialLongProcessing">
+                    <for>'PT5S'</for>
+                  </wait>
+                </sequence>
+              </scope>
+              <scope name="PutValueInCache">
+                <variables>
+                  <variable name="cachePayload" type="ns1:cachedObjectType"/>
+                </variables>
+                <sequence name="Sequence4">
+                  <assign name="PopulatePayload">
+                    <copy bpelx:insertMissingToData="yes">
+                      <from>$intermediateResult</from>
+                      <to>$cachePayload/ns1:payload</to>
+                    </copy>
+                  </assign>
+                  <extensionActivity>
+                    <bpelx:call name="PutPayloadOnCache" xmlns:sp1="saibot.airport/services/generic/soacomoposite"
+                                target="sp1:CacheWriter">
+                      <bpelx:param name="key" copyByValue="yes" variable="cacheTag"/>
+                      <bpelx:param name="cachePayload" copyByValue="yes" variable="cachePayload"/>
+                    </bpelx:call>
+                  </extensionActivity>
+                </sequence>
+              </scope>
+            </sequence>
+          </else>
+        </if>
+      </sequence>
+    </scope>
+    <assign name="AssembleResponse">
+      <copy>
+        <from>concat('Result for input ',$inputVariable.payload/client:input,' was calculated as ', $intermediateResult/client:result/client:ValueOne)</from>
+        <to>$outputVariable.payload/client:result</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="quickandslowprocess_client" portType="client:QuickAndSlowProcess" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

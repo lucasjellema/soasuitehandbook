@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="quickandslowprocess_client_ep">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="176" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="169" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="quickandslowprocess_client_ep" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess#wsdl.interface(QuickAndSlowProcess)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>process</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="CoherenceCacheRetriever">
+        <dgm:body borderWidth="2" arcRad="20" X="716" Y="54" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="706" Y="47" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="CoherenceCacheRetriever" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightService/QuickAndSlowHello/CoherenceCacheRetriever#wsdl.interface(Get_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/coherence_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>Get</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="CoherenceCacheWriter">
+        <dgm:body borderWidth="2" arcRad="20" X="716" Y="187" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="706" Y="180" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="CoherenceCacheWriter" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightService/QuickAndSlowHello/CoherenceCacheWriter#wsdl.interface(Put_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/coherence_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>Put</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="QuickAndSlowProcess">
+        <dgm:body borderWidth="2" arcRad="20" X="274" Y="161" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="264" Y="154" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="quickandslowprocess_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/QuickAndSlowProcess#wsdl.interface(QuickAndSlowProcess)"/>
+        <dgm:outputPort name="CacheRetriever" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="CacheWriter" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="CacheRetriever">
+        <dgm:body borderWidth="2" arcRad="20" X="518" Y="26" width="130" height="61">
+            <dgm:borderColor r="141" g="141" b="141"/>
+            <dgm:lightBgColor r="255" g="255" b="255"/>
+            <dgm:darkBgColor r="202" g="202" b="202"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="508" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="CacheRetriever" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="CoherenceCacheRetriever" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightService/QuickAndSlowHello/CoherenceCacheRetriever#wsdl.interface(Get_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/v2/plugins/resources/images/application/scaconfig/subprocess_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="CacheWriter">
+        <dgm:body borderWidth="2" arcRad="20" X="518" Y="172" width="130" height="61">
+            <dgm:borderColor r="141" g="141" b="141"/>
+            <dgm:lightBgColor r="255" g="255" b="255"/>
+            <dgm:darkBgColor r="202" g="202" b="202"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="508" Y="165" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="CacheWriter" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="CoherenceCacheWriter" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightService/QuickAndSlowHello/CoherenceCacheWriter#wsdl.interface(Put_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/v2/plugins/resources/images/application/scaconfig/subprocess_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="DummyVehicle">
+        <dgm:body borderWidth="2" arcRad="20" X="274" Y="41" width="130" height="86">
+            <dgm:borderColor r="69" g="113" b="140"/>
+            <dgm:lightBgColor r="166" g="208" b="230"/>
+            <dgm:darkBgColor r="99" g="162" b="201"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="264" Y="34" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="dummyvehicle_client" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/DummyVehicle#wsdl.interface(DummyVehicle)" callbackInterface="http://xmlns.oracle.com/QuickAndSlowHello/QuickAndSlowHello/DummyVehicle#wsdl.interface(DummyVehicleCallback)"/>
+        <dgm:outputPort name="CacheRetriever" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:outputPort name="CacheWriter" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/bpel/shared/plugins/resources/images/soa/process_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="quickandslowprocess_client_ep" target="QuickAndSlowProcess/quickandslowprocess_client" width="2">
+        <dgm:gSegment X1="168" Y1="186" X2="264" Y2="186"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="CacheRetriever/CoherenceCacheRetriever" target="CoherenceCacheRetriever" width="2">
+        <dgm:gSegment X1="658" Y1="51" X2="682" Y2="51"/>
+        <dgm:gSegment X1="682" Y1="51" X2="682" Y2="64"/>
+        <dgm:gSegment X1="682" Y1="64" X2="706" Y2="64"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="CacheWriter/CoherenceCacheWriter" target="CoherenceCacheWriter" width="2">
+        <dgm:gSegment X1="658" Y1="197" X2="706" Y2="197"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="QuickAndSlowProcess/CacheRetriever" target="CacheRetriever/CacheRetriever" width="2">
+        <dgm:gSegment X1="414" Y1="186" X2="454" Y2="186"/>
+        <dgm:gSegment X1="454" Y1="186" X2="454" Y2="51"/>
+        <dgm:gSegment X1="454" Y1="51" X2="508" Y2="51"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="QuickAndSlowProcess/CacheWriter" target="CacheWriter/CacheWriter" width="2">
+        <dgm:gSegment X1="414" Y1="211" X2="469" Y2="211"/>
+        <dgm:gSegment X1="469" Y1="211" X2="469" Y2="197"/>
+        <dgm:gSegment X1="469" Y1="197" X2="508" Y2="197"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="DummyVehicle/CacheRetriever" target="CacheRetriever/CacheRetriever" width="2">
+        <dgm:gSegment X1="414" Y1="66" X2="439" Y2="66"/>
+        <dgm:gSegment X1="439" Y1="66" X2="439" Y2="51"/>
+        <dgm:gSegment X1="439" Y1="51" X2="508" Y2="51"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="DummyVehicle/CacheWriter" target="CacheWriter/CacheWriter" width="2">
+        <dgm:gSegment X1="414" Y1="91" X2="484" Y2="91"/>
+        <dgm:gSegment X1="484" Y1="91" X2="484" Y2="197"/>
+        <dgm:gSegment X1="484" Y1="197" X2="508" Y2="197"/>
+        <dgm:baseColor r="183" g="183" b="183"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

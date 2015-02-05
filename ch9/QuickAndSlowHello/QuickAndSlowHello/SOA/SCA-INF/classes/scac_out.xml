@@ -1,0 +1,53 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc>/ns:composite/ns:component[@name='DummyVehicle/dummyvehicle_client']</loc>
+      <line/>
+      <col/>
+      <file>D:\GitHub\soasuitehandbook\ch9\QuickAndSlowHello\QuickAndSlowHello\SOA\composite.xml</file>
+      <name>D:\GitHub\soasuitehandbook\ch9\QuickAndSlowHello\QuickAndSlowHello\SOA\composite.xml</name>
+      <fix/>
+      <msg>The service "dummyvehicle_client" exposed by component "DummyVehicle" is not wired to/used by any other component.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>21</line>
+      <col/>
+      <file>BPEL/CacheWriter.sbpel</file>
+      <name>BPEL/CacheWriter.sbpel</name>
+      <fix>You should place all explicit &lt;bpel:import> statements in a BPEL 2.0 process.</fix>
+      <msg>There are no explicit "import" statements in &lt;bpelx:subProcess> "CacheWriter" as required by BPEL 2.0 standard.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>31</line>
+      <col/>
+      <file>BPEL/QuickAndSlowProcess.bpel</file>
+      <name>BPEL/QuickAndSlowProcess.bpel</name>
+      <fix>Fix the process to be *either* durable or synchronous.</fix>
+      <msg>Process "QuickAndSlowProcess" is both durable (onMessage,Receive,Wait) and synchronous.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>115</line>
+      <col/>
+      <file>BPEL/QuickAndSlowProcess.bpel</file>
+      <name>BPEL/QuickAndSlowProcess.bpel</name>
+      <fix>Make sure that the expression in &lt;bpel:condition> is a boolean expression.</fix>
+      <msg>The expression $intermediateResult/client:result in &lt;bpel:condition> is not a boolean expression.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>31</line>
+      <col/>
+      <file>BPEL/CacheRetriever.sbpel</file>
+      <name>BPEL/CacheRetriever.sbpel</name>
+      <fix>You should place all explicit &lt;bpel:import> statements in a BPEL 2.0 process.</fix>
+      <msg>There are no explicit "import" statements in &lt;bpelx:subProcess> "CacheRetriever" as required by BPEL 2.0 standard.</msg>
+   </Fault>
+</Faults>

@@ -1,0 +1,12 @@
+<adapter-config name="CoherenceCacheRetriever" adapter="coherence" wsdlLocation="../WSDLs/CoherenceCacheRetriever.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/Coherence/Local"/>
+  <endpoint-interaction portType="Get_ptt" operation="Get" UICacheItemType="XML">
+    <interaction-spec className="oracle.tip.adapter.coherence.jca.CoherenceInteractionSpec">
+      <property name="KeyType" value="java.lang.String"/>
+      <property name="CacheName" value="adapter-local"/>
+      <property name="CacheOperation" value="get"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
