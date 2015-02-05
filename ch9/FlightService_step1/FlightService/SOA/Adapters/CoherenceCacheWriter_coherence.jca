@@ -1,0 +1,13 @@
+<adapter-config name="CoherenceCacheWriter" adapter="coherence" wsdlLocation="../WSDLs/CoherenceCacheWriter.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/Coherence/Local"/>
+  <endpoint-interaction portType="Put_ptt" operation="Put" UICacheItemType="XML">
+    <interaction-spec className="oracle.tip.adapter.coherence.jca.CoherenceInteractionSpec">
+      <property name="KeyType" value="java.lang.String"/>
+      <property name="CacheName" value="adapter-local"/>
+      <property name="TimeToLive" value="0"/>
+      <property name="CacheOperation" value="put"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

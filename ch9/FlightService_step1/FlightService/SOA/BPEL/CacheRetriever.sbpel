@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer
+
+  Created: Fri Apr 04 14:01:51 CEST 2014
+  Author:  oracle
+  Type: BPEL 2.0 Subprocess
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<bpelx:subProcess name="CacheRetriever"
+               targetNamespace="saibot.airport/services/generic/soacomposite"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="saibot.airport/services/generic/soacomposite"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xsi:type="bpel:tProcess" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightService/QuickAndSlowHello/CoherenceCacheRetriever"
+                  xmlns:ns2="saibot.airport/utility/cache"
+                  xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+                  xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+                  xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+                  xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+                  xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+                  xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+                  xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+                  xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+                  xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+                  xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap">
+   <!--
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       ORCHESTRATION LOGIC
+       Set of activities coordinating the flow of messages across the
+       services integrated within this business process
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    -->
+  <partnerLinks>
+    <partnerLink name="CoherenceCacheRetriever" partnerLinkType="ns1:Get_plt" partnerRole="Get_role"/>
+  </partnerLinks>
+  <variables>
+    <variable name="key" type="ns2:cacheTagType"/>
+    <variable name="cacheResult" type="ns2:cachedObjectType"/>
+  </variables>
+  <sequence name="main">
+    <scope name="Scope1">
+      <variables>
+        <variable name="GetFromCache_Get_InputVariable" messageType="ns1:Get_msg"/>
+        <variable name="GetFromCache_Get_OutputVariable" messageType="ns1:GetResponse_msg"/>
+      </variables>
+      <sequence name="Sequence1">
+        <invoke name="GetFromCache" bpelx:invokeAsDetail="no" partnerLink="CoherenceCacheRetriever"
+                portType="ns1:Get_ptt" operation="Get" inputVariable="GetFromCache_Get_InputVariable"
+                outputVariable="GetFromCache_Get_OutputVariable">
+          <bpelx:toProperties>
+            <bpelx:toProperty name="jca.coherence.Key">$key/ns2:tag</bpelx:toProperty>
+          </bpelx:toProperties>
+        </invoke>
+        <assign name="CopyCacheOutputToResult">
+          <copy>
+            <from>$GetFromCache_Get_OutputVariable.body</from>
+            <to>$cacheResult</to>
+          </copy>
+        </assign>
+      </sequence>
+    </scope>
+  </sequence>
+</bpelx:subProcess>

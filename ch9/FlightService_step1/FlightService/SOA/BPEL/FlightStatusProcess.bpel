@@ -1,0 +1,199 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Apr 04 16:34:43 CEST 2014
+  Author:  oracle
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="FlightStatusProcess"
+               targetNamespace="saibot.airport/services/flight/private/FlightStatusProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="saibot.airport/services/flight/private/FlightStatusProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="saibot.airport/services/flight"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:ns2="saibot.airport/services/flight/private/FlightStatusRetriever"
+         xmlns:ns3="saibot.airport/data/flight" xmlns:ns4="saibot.airport/data/reference"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns5="saibot.airport/utility/cache"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:sp1="saibot.airport/services/generic/soacomposite"
+         xmlns:ns0="saibot.airport/services/generic/soacomoposite">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="saibot.airport/utility/cache" location="../Schemas/Cache.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="saibot.airport/services/flight" location="../Schemas/FlightService.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="saibot.airport/services/flight" location="../WSDLs/FlightServiceWrapper.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="FlightService" partnerLinkType="ns1:FlightStatusProcess" myRole="FlightServicePortType"/>
+    <partnerLink name="DetermineFlightStatusFromBackendSystems.FlightStatusRetriever"
+                 partnerLinkType="ns2:DetermineFlightStatusFromBackendSystems"
+                 partnerRole="DetermineFlightStatusFromBackendSystemsProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:requestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:replyMessage"/>
+    <variable name="intermediateResult" type="ns1:intermediateResultType"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in FlightStatusProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="FlightService" portType="ns1:FlightServicePortType" operation="getFlightStatus" variable="inputVariable" createInstance="yes"/>
+    <scope name="ProduceResult">
+      <variables>
+        <variable name="cacheTag" type="ns5:cacheTagType"/>
+      </variables>
+      <sequence name="Sequence2">
+        <assign name="SetCacheTag">
+          <copy>
+            <from>concat($inputVariable.in/ns1:Carrier,':',$inputVariable.in/ns1:FlightNumber,':',string($inputVariable.in/ns1:FlightDate))</from>
+            <to>$cacheTag/ns5:tag</to>
+          </copy>
+        </assign>
+        <scope name="FetchFromCache">
+          <variables>
+            <variable name="localCacheResult" type="ns5:cachedObjectType"/>
+          </variables>
+          <sequence name="Sequence4">
+            <extensionActivity>
+              <bpelx:call name="ReadFlightStatusFromCache" xmlns:sp1="saibot.airport/services/generic/soacomposite"
+                          target="sp1:CacheRetriever">
+                <bpelx:param name="key" copyByValue="yes" variable="cacheTag"/>
+                <bpelx:param name="cacheResult" copyByValue="no" variable="localCacheResult"/>
+              </bpelx:call>
+            </extensionActivity>
+           <assign name="CopyCacheOutcomeToIntermediateResult">
+    <copy bpelx:insertMissingToData="yes" ignoreMissingFromData="yes">
+       <from>$localCacheResult/ns5:payload/ns1:result</from>
+       <to>$intermediateResult/ns1:result</to>
+    </copy>
+</assign>
+
+          </sequence>
+        </scope>
+        <if name="IfDataInCache">
+          <condition>$intermediateResult/ns1:result/ns1:FlightStatus/*[1]</condition>
+          <empty name="Continue"/>
+          <else>
+            <sequence name="Sequence3">
+              <scope name="ComputeResult">
+                <variables>
+                  <variable name="InvokeFlightStatusRetriever_process_InputVariable"
+                            messageType="ns2:DetermineFlightStatusFromBackendSystemsRequestMessage"/>
+                  <variable name="InvokeFlightStatusRetriever_process_OutputVariable"
+                            messageType="ns2:DetermineFlightStatusFromBackendSystemsResponseMessage"/>
+                </variables>
+                <sequence name="Sequence1">
+                  <assign name="PopulateInputForInvoke">
+                    <copy>
+                      <from>$inputVariable.in</from>
+                      <to>$InvokeFlightStatusRetriever_process_InputVariable.payload</to>
+                    </copy>
+                  </assign>
+                  <invoke name="InvokeFlightStatusRetriever" bpelx:invokeAsDetail="no"
+                          partnerLink="DetermineFlightStatusFromBackendSystems.FlightStatusRetriever"
+                          portType="ns2:DetermineFlightStatusFromBackendSystems" operation="process"
+                          inputVariable="InvokeFlightStatusRetriever_process_InputVariable"
+                          outputVariable="InvokeFlightStatusRetriever_process_OutputVariable"/>
+                  <wait name="ArtificialWaitRepresentingBackendSystemProcessing">
+                    <for>'PT4S'</for>
+                  </wait>
+                  <assign name="SetIntermediateResult">
+                    <copy>
+                      <from>$InvokeFlightStatusRetriever_process_OutputVariable.payload/ns1:FlightStatus</from>
+                      <to>$intermediateResult/ns1:result/ns1:FlightStatus</to>
+                    </copy>
+                    <copy>
+                      <from>$InvokeFlightStatusRetriever_process_OutputVariable.payload/ns1:StatusTimestamp</from>
+                      <to>$intermediateResult/ns1:result/ns1:StatusTimestamp</to>
+                    </copy>
+                  </assign>
+                </sequence>
+              </scope>
+              <scope name="PutValueInCache">
+                <variables>
+                  <variable name="cachePayload" type="ns5:cachedObjectType"/>
+                </variables>
+                <sequence name="Sequence5">
+                  <assign name="PopulatePayload">
+                    <copy>
+                      <from>xp20:current-dateTime()</from>
+                      <to>$cachePayload/ns5:creationTimestamp</to>
+                    </copy>
+                    <copy>
+                      <from>$intermediateResult</from>
+                      <to>$cachePayload/ns5:payload</to>
+                    </copy>
+                  </assign>
+                  <extensionActivity>
+                    <bpelx:call name="PutFlightStatusOnCache" xmlns:sp1="saibot.airport/services/generic/soacomoposite"
+                                target="sp1:CacheWriter">
+                      <bpelx:param name="key" copyByValue="yes" variable="cacheTag"/>
+                      <bpelx:param name="cachePayload" copyByValue="yes" variable="cachePayload"/>
+                    </bpelx:call>
+                  </extensionActivity>
+                </sequence>
+              </scope>
+            </sequence>
+          </else>
+        </if>
+      </sequence>
+    </scope>
+    <assign name="AssembleResponse">
+      <copy>
+        <from>$intermediateResult/ns1:result/ns1:FlightStatus</from>
+        <to>$outputVariable.return/ns1:FlightStatus</to>
+      </copy>
+      <copy>
+        <from>$intermediateResult/ns1:result/ns1:StatusTimestamp</from>
+        <to>$outputVariable.return/ns1:StatusTimestamp</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="FlightService" portType="ns1:FlightServicePortType" operation="getFlightStatus" variable="outputVariable"/>
+  </sequence>
+</process>

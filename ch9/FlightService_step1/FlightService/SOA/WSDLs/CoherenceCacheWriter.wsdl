@@ -1,0 +1,36 @@
+<wsdl:definitions
+     name="CoherenceCacheWriter"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightService/QuickAndSlowHello/CoherenceCacheWriter"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightService/QuickAndSlowHello/CoherenceCacheWriter"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:imp1="saibot.airport/utility/cache"
+     xmlns:imp2="http://xmlns.oracle.com/pcbpel/adapter/coherence/CoherenceCacheWriter/response"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="Put_plt" >
+    <plt:role name="Put_role" >
+      <plt:portType name="tns:Put_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="saibot.airport/utility/cache" schemaLocation="../Schemas/Cache.xsd" />
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/CoherenceCacheWriter/response" schemaLocation="../Schemas/CoherenceCacheWriterResponse.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="Put_msg">
+        <wsdl:part name="body" element="imp1:cacheResult"/>
+    </wsdl:message>
+    <wsdl:message name="PutResponse_msg">
+        <wsdl:part name="body" element="imp2:PutResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="Put_ptt">
+        <wsdl:operation name="Put">
+            <wsdl:input message="tns:Put_msg"/>
+            <wsdl:output message="tns:PutResponse_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

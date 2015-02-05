@@ -1,0 +1,53 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>21</line>
+      <col/>
+      <file>BPEL/CacheWriter.sbpel</file>
+      <name>BPEL/CacheWriter.sbpel</name>
+      <fix>You should place all explicit &lt;bpel:import> statements in a BPEL 2.0 process.</fix>
+      <msg>There are no explicit "import" statements in &lt;bpelx:subProcess> "CacheWriter" as required by BPEL 2.0 standard.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>34</line>
+      <col/>
+      <file>BPEL/FlightStatusProcess.bpel</file>
+      <name>BPEL/FlightStatusProcess.bpel</name>
+      <fix>Fix the process to be *either* durable or synchronous.</fix>
+      <msg>Process "FlightStatusProcess" is both durable (onMessage,Receive,Wait) and synchronous.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>119</line>
+      <col/>
+      <file>BPEL/FlightStatusProcess.bpel</file>
+      <name>BPEL/FlightStatusProcess.bpel</name>
+      <fix>Static XPath checking is not possible here.</fix>
+      <msg>The axis of XPath segment "child::*[1.0]" cannot be followed.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>119</line>
+      <col/>
+      <file>BPEL/FlightStatusProcess.bpel</file>
+      <name>BPEL/FlightStatusProcess.bpel</name>
+      <fix>Make sure that the expression in &lt;bpel:condition> is a boolean expression.</fix>
+      <msg>The expression $intermediateResult/ns1:result/ns1:FlightStatus/ ... in &lt;bpel:condition> is not a boolean expression.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>31</line>
+      <col/>
+      <file>BPEL/CacheRetriever.sbpel</file>
+      <name>BPEL/CacheRetriever.sbpel</name>
+      <fix>You should place all explicit &lt;bpel:import> statements in a BPEL 2.0 process.</fix>
+      <msg>There are no explicit "import" statements in &lt;bpelx:subProcess> "CacheRetriever" as required by BPEL 2.0 standard.</msg>
+   </Fault>
+</Faults>
