@@ -1,0 +1,15 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common"
+            targetNamespace="saibot.airport/services/flightstatuscache" xmlns:flc="saibot.airport/services/flightstatuscache"
+            
+            elementFormDefault="qualified">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="../Schemas/common.xsd"/>
+  <xsd:element name="getFlightStatusRequestMessage" type="flc:resetFlightStatusRequestType"/>
+  <xsd:complexType name="resetFlightStatusRequestType">
+    <xsd:sequence>
+      <xsd:element name="FlightDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

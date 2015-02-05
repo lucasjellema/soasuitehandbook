@@ -1,0 +1,32 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="FlightStatusCacheService"
+                  targetNamespace="http://xmlns.oracle.com/FlightStatusCacheService/FlightStatusCacheService/FlightStatusCacheService"
+                  xmlns:tns="http://xmlns.oracle.com/FlightStatusCacheService/FlightStatusCacheService/FlightStatusCacheService"
+                  xmlns:inp1="http://xmlns.oracle.com/FlightStatusCacheService/FlightStatusCacheService/FlightStatusCacheService"
+                  xmlns:flc="saibot.airport/services/flightstatuscache" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/flightstatuscache"
+                  schemaLocation="../Schemas/FlightStatusCacheService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="requestMessage">
+    <wsdl:part name="in" element="flc:getFlightStatusRequestMessage"/>
+  </wsdl:message>
+  <wsdl:portType name="FlightStatusCacheServicePortType">
+    <wsdl:operation name="resetFlightStatus">
+      <wsdl:input message="tns:requestMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="execute_bind" type="tns:FlightStatusCacheServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="resetFlightStatus">
+      <soap:operation style="document" soapAction="resetFlightStatus"/>
+      <wsdl:input>
+        <soap:body use="literal"
+                   namespace="http://xmlns.oracle.com/FlightStatusCacheService/FlightStatusCacheService/FlightStatusCacheService"/>
+      </wsdl:input>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>

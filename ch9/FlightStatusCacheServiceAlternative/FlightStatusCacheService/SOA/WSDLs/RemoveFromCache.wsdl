@@ -1,0 +1,36 @@
+<wsdl:definitions
+     name="RemoveFromCache"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightStatusCacheServiceAlternative/FlightStatusCacheService/RemoveFromCache"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightStatusCacheServiceAlternative/FlightStatusCacheService/RemoveFromCache"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:imp1="http://xmlns.oracle.com/pcbpel/adapter/coherence/RemoveFromCache/request"
+     xmlns:imp2="http://xmlns.oracle.com/pcbpel/adapter/coherence/RemoveFromCache/response"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="Remove_plt" >
+    <plt:role name="Remove_role" >
+      <plt:portType name="tns:Remove_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/RemoveFromCache/request" schemaLocation="../Schemas/RemoveFromCacheRequest.xsd" />
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/RemoveFromCache/response" schemaLocation="../Schemas/RemoveFromCacheResponse.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="Remove_msg">
+        <wsdl:part name="body" element="imp1:RemoveRequest"/>
+    </wsdl:message>
+    <wsdl:message name="RemoveResponse_msg">
+        <wsdl:part name="body" element="imp2:RemoveResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="Remove_ptt">
+        <wsdl:operation name="Remove">
+            <wsdl:input message="tns:Remove_msg"/>
+            <wsdl:output message="tns:RemoveResponse_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

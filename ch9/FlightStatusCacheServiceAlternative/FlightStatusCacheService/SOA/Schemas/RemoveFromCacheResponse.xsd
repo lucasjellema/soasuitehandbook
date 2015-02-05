@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+
+            xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/coherence/RemoveFromCache/response"
+            targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/coherence/RemoveFromCache/response"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+
+>
+
+
+  <xsd:element name="RemoveResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Count" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>
