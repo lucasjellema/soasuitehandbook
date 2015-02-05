@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ser:businessServiceEntry xmlns:ser="http://xmlns.oracle.com/servicebus/business/config" xmlns:svc="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:jca="http://www.bea.com/wli/sb/transports/jca" xmlns:ops="http://xmlns.oracle.com/servicebus/business/operations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ser:coreEntry>
+        <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+            <con:wsdl ref="FlightStatusCacheService/Resources/RemoveFromCache-concrete"/>
+            <con:binding>
+                <con:name>Remove_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/pcbpel/adapter/coherence/FlightStatusCacheService_step1/FlightStatusCacheService/RemoveFromCache</con:namespace>
+            </con:binding>
+        </ser:binding>
+        <ops:operations enabled="true">
+            <ops:sla-alerting enabled="true"/>
+        </ops:operations>
+        <ser:ws-policy>
+            <svc:binding-mode>no-policies</svc:binding-mode>
+        </ser:ws-policy>
+        <ser:xqConfiguration>
+            <svc:snippetVersion>1.0</svc:snippetVersion>
+        </ser:xqConfiguration>
+    </ser:coreEntry>
+    <ser:endpointConfig>
+        <tran:provider-id>jca</tran:provider-id>
+        <tran:inbound>false</tran:inbound>
+        <tran:URI>
+            <env:value>jca://eis/Coherence/Local</env:value>
+        </tran:URI>
+        <tran:outbound-properties>
+            <tran:load-balancing-algorithm>round-robin</tran:load-balancing-algorithm>
+            <tran:retry-count>0</tran:retry-count>
+            <tran:retry-interval>30</tran:retry-interval>
+            <tran:retry-application-errors>true</tran:retry-application-errors>
+        </tran:outbound-properties>
+        <tran:all-headers>false</tran:all-headers>
+        <tran:provider-specific>
+            <jca:jca-file ref="FlightStatusCacheService/Resources/RemoveFromCache_coherence"/>
+            <jca:adapter-name>RemoveFromCache</jca:adapter-name>
+            <jca:adapter-type>COHERENCE</jca:adapter-type>
+            <jca:always-use-wsdl>true</jca:always-use-wsdl>
+            <jca:connection-mode>managed</jca:connection-mode>
+            <jca:outbound-properties>
+                <jca:operation-properties>
+                    <jca:operation-name>Remove</jca:operation-name>
+                    <jca:spec-properties>
+                        <jca:property>
+                            <jca:name>KeyType</jca:name>
+                            <jca:value>java.lang.String</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>CacheName</jca:name>
+                            <jca:value>Adapter-Local</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>Key</jca:name>
+                            <jca:value>dummy</jca:value>
+                        </jca:property>
+                        <jca:property>
+                            <jca:name>CacheOperation</jca:name>
+                            <jca:value>remove</jca:value>
+                        </jca:property>
+                    </jca:spec-properties>
+                </jca:operation-properties>
+            </jca:outbound-properties>
+        </tran:provider-specific>
+    </ser:endpointConfig>
+</ser:businessServiceEntry>
