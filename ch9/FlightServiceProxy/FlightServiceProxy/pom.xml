@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.oracle.servicebus</groupId>
+        <artifactId>sbar-project-common</artifactId>
+        <version>12.1.3-0-0</version>
+    </parent>
+
+    <groupId>FlightServiceProxy</groupId>
+    <artifactId>FlightServiceProxy</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>sbar</packaging>
+
+    <description/>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.oracle.adf.plugin</groupId>
+                <artifactId>ojdeploy</artifactId>
+                <version>12.1.3-0-0</version>
+                <configuration>
+                    <ojdeploy>
+                        ${oracleHome}/jdeveloper/jdev/bin/ojdeploy.exe
+                    </ojdeploy>
+                    <workspace>
+                        ${basedir}/../FlightServiceProxy.jws
+                    </workspace>
+                    <project>
+                        FlightServiceProxy
+                    </project>
+                    <profile>
+                        FlightServiceProxy_FlightServiceProxy_ServiceBusProjectProfile
+                    </profile>
+                    <usemaven>
+                        true
+                    </usemaven>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

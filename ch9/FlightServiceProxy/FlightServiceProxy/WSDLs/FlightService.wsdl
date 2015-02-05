@@ -1,0 +1,34 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions name="FlightService" targetNamespace="saibot.airport/services/flight"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="saibot.airport/services/flight"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xsd:schema elementFormDefault="qualified">
+      <xsd:import namespace="saibot.airport/services/flight" schemaLocation="../Schemas/FlightService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="requestMessage">
+    <wsdl:part name="in" element="tns:getFlightStatusRequestMessage"/>
+  </wsdl:message>
+  <wsdl:message name="replyMessage">
+    <wsdl:part name="return" element="tns:getFlightStatusResponseMessage"/>
+  </wsdl:message>
+  <wsdl:portType name="FlightServicePortType">
+    <wsdl:operation name="getFlightStatus">
+      <wsdl:input message="tns:requestMessage"/>
+      <wsdl:output message="tns:replyMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FlightServicePortTypeSOAP11Binding" type="tns:FlightServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getFlightStatus">
+      <soap:operation style="document" soapAction="saibot.airport/services/flight/getFlightStatus"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="in"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="return"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>

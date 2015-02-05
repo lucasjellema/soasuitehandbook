@@ -1,0 +1,32 @@
+<xsd:schema targetNamespace="saibot.airport/services/flight" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:common="saibot.airport/data/common" xmlns:flsve="saibot.airport/services/flight" xmlns:flight="saibot.airport/data/flight" xmlns:reference="saibot.airport/data/reference">
+    <xsd:import namespace="saibot.airport/data/common" schemaLocation="XMLSchema_-1132120598.xsd"/>
+    <xsd:import namespace="saibot.airport/data/flight" schemaLocation="XMLSchema_-570899409.xsd"/>
+    <xsd:import namespace="saibot.airport/data/reference" schemaLocation="XMLSchema_-1080956774.xsd"/>
+    <xsd:element name="getFlightStatusRequestMessage" type="flsve:getFlightStatusRequestType"/>
+    <xsd:element name="getFlightStatusResponseMessage" type="flsve:getFlightStatusResponseType"/>
+    <xsd:complexType name="getFlightStatusRequestType">
+        <xsd:sequence>
+            <xsd:element name="FlightDate" nillable="false" type="xsd:date" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFlightStatusResponseType">
+        <xsd:sequence>
+            <xsd:element name="FlightStatus" nillable="false" type="flight:flightStatusType" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="StatusTimestamp" nillable="false" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="intermediateResultType">
+        <xsd:sequence>
+            <xsd:element name="result">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="FlightStatus" nillable="false" type="flight:flightStatusType" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="StatusTimestamp" nillable="false" type="xsd:dateTime" minOccurs="1" maxOccurs="1"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

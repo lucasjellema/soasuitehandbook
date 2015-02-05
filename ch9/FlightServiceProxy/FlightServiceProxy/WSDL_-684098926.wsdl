@@ -1,0 +1,19 @@
+<wsdl:definitions name="FlightService" targetNamespace="saibot.airport/services/flight" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="saibot.airport/services/flight" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+    <wsdl:types>
+        <xsd:schema elementFormDefault="qualified">
+            <xsd:import namespace="saibot.airport/services/flight" schemaLocation="XMLSchema_-1370411820.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="requestMessage">
+        <wsdl:part name="in" element="tns:getFlightStatusRequestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="replyMessage">
+        <wsdl:part name="return" element="tns:getFlightStatusResponseMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="FlightServicePortType">
+        <wsdl:operation name="getFlightStatus">
+            <wsdl:input message="tns:requestMessage"/>
+            <wsdl:output message="tns:replyMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
