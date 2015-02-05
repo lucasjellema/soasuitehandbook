@@ -1,0 +1,121 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Apr 04 16:34:43 CEST 2014
+  Author:  oracle
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="FlightStatusProcess"
+               targetNamespace="saibot.airport/services/flight/private/FlightStatusProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="saibot.airport/services/flight/private/FlightStatusProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="saibot.airport/services/flight"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer"
+         xmlns:ns2="saibot.airport/services/flight/private/FlightStatusRetriever"
+         xmlns:ns3="saibot.airport/data/flight" xmlns:ns4="saibot.airport/data/reference"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="saibot.airport/services/flight" location="../Schemas/FlightService.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="saibot.airport/services/flight" location="../WSDLs/FlightServiceWrapper.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="FlightService" partnerLinkType="ns1:FlightStatusProcess" myRole="FlightServicePortType"/>
+    <partnerLink name="DetermineFlightStatusFromBackendSystems.FlightStatusRetriever"
+                 partnerLinkType="ns2:DetermineFlightStatusFromBackendSystems"
+                 partnerRole="DetermineFlightStatusFromBackendSystemsProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:requestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:replyMessage"/>
+    <variable name="intermediateResult" type="ns1:intermediateResultType"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in FlightStatusProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="FlightService" portType="ns1:FlightServicePortType" operation="getFlightStatus" variable="inputVariable" createInstance="yes"/>
+    <scope name="ProduceResult">
+      <scope name="ComputeResult">
+        <variables>
+          <variable name="InvokeFlightStatusRetriever_process_InputVariable"
+                    messageType="ns2:DetermineFlightStatusFromBackendSystemsRequestMessage"/>
+          <variable name="InvokeFlightStatusRetriever_process_OutputVariable"
+                    messageType="ns2:DetermineFlightStatusFromBackendSystemsResponseMessage"/>
+        </variables>
+        <sequence name="Sequence1">
+          <assign name="PopulateInputForInvoke">
+            <copy>
+              <from>$inputVariable.in</from>
+              <to>$InvokeFlightStatusRetriever_process_InputVariable.payload</to>
+            </copy>
+          </assign>
+          <invoke name="InvokeFlightStatusRetriever" bpelx:invokeAsDetail="no"
+                  partnerLink="DetermineFlightStatusFromBackendSystems.FlightStatusRetriever"
+                  portType="ns2:DetermineFlightStatusFromBackendSystems" operation="process"
+                  inputVariable="InvokeFlightStatusRetriever_process_InputVariable"
+                  outputVariable="InvokeFlightStatusRetriever_process_OutputVariable"/>
+          <wait name="ArtificialWaitRepresentingBackendSystemProcessing">
+      <for>'PT4S'</for>
+    </wait>
+          <assign name="SetIntermediateResult">
+            <copy>
+              <from>$InvokeFlightStatusRetriever_process_OutputVariable.payload/ns1:FlightStatus</from>
+              <to>$intermediateResult/ns1:result/ns1:FlightStatus</to>
+            </copy>
+            <copy>
+              <from>$InvokeFlightStatusRetriever_process_OutputVariable.payload/ns1:StatusTimestamp</from>
+              <to>$intermediateResult/ns1:result/ns1:StatusTimestamp</to>
+            </copy>
+          </assign>
+        </sequence>
+      </scope>
+    </scope>
+    <assign name="AssembleResponse">
+      <copy>
+        <from>$intermediateResult/ns1:result/ns1:FlightStatus</from>
+        <to>$outputVariable.return/ns1:FlightStatus</to>
+      </copy>
+      <copy>
+        <from>$intermediateResult/ns1:result/ns1:StatusTimestamp</from>
+        <to>$outputVariable.return/ns1:StatusTimestamp</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="FlightService" portType="ns1:FlightServicePortType" operation="getFlightStatus" variable="outputVariable"/>
+  </sequence>
+</process>

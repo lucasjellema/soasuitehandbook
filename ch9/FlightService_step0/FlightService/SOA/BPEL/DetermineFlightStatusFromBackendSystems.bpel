@@ -1,0 +1,103 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Apr 04 16:36:57 CEST 2014
+  Author:  oracle
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="DetermineFlightStatusFromBackendSystems"
+               targetNamespace="saibot.airport/services/flight/private/FlightStatusRetriever"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="saibot.airport/services/flight/private/FlightStatusRetriever"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ns2="saibot.airport/data/flight"
+         xmlns:ns3="saibot.airport/data/reference" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns1="saibot.airport/services/flight">
+
+    <import ui:processWSDL="true" namespace="saibot.airport/services/flight/private/FlightStatusRetriever" location="../WSDLs/DetermineFlightStatusFromBackendSystems.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="FlightStatusRetriever" partnerLinkType="client:DetermineFlightStatusFromBackendSystems" myRole="DetermineFlightStatusFromBackendSystemsProvider"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:DetermineFlightStatusFromBackendSystemsRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:DetermineFlightStatusFromBackendSystemsResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in DetermineFlightStatusFromBackendSystems.wsdl) -->
+    <receive name="receiveInput" partnerLink="FlightStatusRetriever" portType="client:DetermineFlightStatusFromBackendSystems" operation="process" variable="inputVariable" createInstance="yes"/>
+
+    <assign name="AssignHardCodedFlightStatus">
+      <copy bpelx:insertMissingToData="yes">
+        <from><literal><FlightStatus xmlns="saibot.airport/services/flight">
+    <TimePlanningUnit xmlns="saibot.airport/data/flight">
+      <startDate xmlns="saibot.airport/data/reference">2015-11-23</startDate>
+      <HourOfDay xmlns="saibot.airport/data/reference">15</HourOfDay>
+      <FiveMinuteBlock xmlns="saibot.airport/data/reference">35</FiveMinuteBlock>
+    </TimePlanningUnit>
+    <Status xmlns="saibot.airport/data/flight">Open</Status>
+    <Action xmlns="saibot.airport/data/flight">GateOpen</Action>
+    <CheckinCounter xmlns="saibot.airport/data/flight">35-38</CheckinCounter>
+    <Runway xmlns="saibot.airport/data/flight">4TH-N</Runway>
+    <Aircraft xmlns="saibot.airport/data/flight">
+      <aircraftModel xmlns="saibot.airport/data/reference">
+        <IATACode>777</IATACode>
+        <Manufacturer>Boeing</Manufacturer>
+        <Model>777-3P</Model>
+        <WakeCategory>H</WakeCategory>
+      </aircraftModel>
+      <Registration xmlns="saibot.airport/data/reference">PH-812</Registration>
+    </Aircraft>
+    <GateLocation xmlns="saibot.airport/data/flight">
+      <Terminal xmlns="saibot.airport/data/reference">3</Terminal>
+      <Pier xmlns="saibot.airport/data/reference">H</Pier>
+      <Gate xmlns="saibot.airport/data/reference">41</Gate>
+    </GateLocation>
+  </FlightStatus></literal></from>
+        <to>$outputVariable.payload/ns1:FlightStatus</to>
+      </copy>
+      <copy>
+        <from>xp20:current-dateTime()</from>
+        <to>$outputVariable.payload/ns1:StatusTimestamp</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="FlightStatusRetriever" portType="client:DetermineFlightStatusFromBackendSystems" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>
