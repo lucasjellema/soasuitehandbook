@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="FlightUpdateNotificationService">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="125" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="118" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="FlightUpdateNotificationService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/services/flightupdatenotification#wsdl.interface(FlightUpdateNotificationServicePortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>sendFlightUpdateNotification</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="EmailSender">
+        <dgm:body borderWidth="2" arcRad="20" X="859" Y="26" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="849" Y="19" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="EmailSender" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/EmailSender#wsdl.interface(SendNotification_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ums_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendNotification</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="ChatClient">
+        <dgm:body borderWidth="2" arcRad="20" X="859" Y="144" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="849" Y="137" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ChatClient" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/ChatClient#wsdl.interface(SendNotification_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ums_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendNotification</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="MachineToHumanMediator">
+        <dgm:body borderWidth="2" arcRad="20" X="305" Y="110" width="130" height="111">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="295" Y="103" width="150" height="127">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="MachineToHumanMediator" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/services/flightupdatenotification#wsdl.interface(FlightUpdateNotificationServicePortType)"/>
+        <dgm:outputPort name="EmailSender" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/EmailSender#wsdl.interface(SendNotification_ptt)"/>
+        <dgm:outputPort name="ChatClient" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/ChatClient#wsdl.interface(SendNotification_ptt)"/>
+        <dgm:outputPort name="TwitterChannel.TwitterMessenger" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://spring.services.airport.saibot/#wsdl.interface(TwitterMessageSender)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="TwitterChannel">
+        <dgm:body borderWidth="2" arcRad="20" X="582" Y="214" width="130" height="61">
+            <dgm:borderColor r="134" g="135" b="142"/>
+            <dgm:lightBgColor r="231" g="231" b="234"/>
+            <dgm:darkBgColor r="192" g="194" b="203"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="572" Y="207" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TwitterMessenger" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport.services.spring.TwitterMessageSender"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/spring/sca/images/springcomponenticon_dia.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="FlightUpdateNotificationService" target="MachineToHumanMediator/MachineToHumanMediator" width="2">
+        <dgm:gSegment X1="168" Y1="135" X2="295" Y2="135"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MachineToHumanMediator/EmailSender" target="EmailSender" width="2">
+        <dgm:gSegment X1="445" Y1="135" X2="469" Y2="135"/>
+        <dgm:gSegment X1="469" Y1="135" X2="469" Y2="36"/>
+        <dgm:gSegment X1="469" Y1="36" X2="849" Y2="36"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MachineToHumanMediator/ChatClient" target="ChatClient" width="2">
+        <dgm:gSegment X1="445" Y1="160" X2="469" Y2="160"/>
+        <dgm:gSegment X1="469" Y1="160" X2="469" Y2="154"/>
+        <dgm:gSegment X1="469" Y1="154" X2="849" Y2="154"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MachineToHumanMediator/TwitterChannel.TwitterMessenger" target="TwitterChannel/TwitterMessenger" width="2">
+        <dgm:gSegment X1="445" Y1="185" X2="469" Y2="185"/>
+        <dgm:gSegment X1="469" Y1="185" X2="469" Y2="239"/>
+        <dgm:gSegment X1="469" Y1="239" X2="572" Y2="239"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>Mediators/MachineToHumanMediator.mplan</file>
+      <name>Mediators/MachineToHumanMediator.mplan</name>
+      <fix/>
+      <msg>Assigning element "$in.in/tns:sendFlightUpdateNotificationRequestMessage/tns:CommunicationMetadata/tns:ToAddress" to property "$out.property.jca.ums.to". Make sure source is leaf node otherwise all the child nodes of source gets concatenated and assigned to the target.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>Mediators/MachineToHumanMediator.mplan</file>
+      <name>Mediators/MachineToHumanMediator.mplan</name>
+      <fix/>
+      <msg>Assigning element "$in.in/tns:sendFlightUpdateNotificationRequestMessage/tns:CommunicationMetadata/tns:ToAddress" to property "$out.property.jca.ums.to". Make sure source is leaf node otherwise all the child nodes of source gets concatenated and assigned to the target.</msg>
+   </Fault>
+</Faults>
