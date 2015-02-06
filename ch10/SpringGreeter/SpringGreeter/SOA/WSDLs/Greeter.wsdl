@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="Greeter"
+     targetNamespace="http://springgreeter/"
+     xmlns:tns="http://springgreeter/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://springgreeter/" xmlns:tns="http://springgreeter/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="greet">
+                <xsd:sequence>
+                    <xsd:element name="arg0" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="greet" type="tns:greet"/>
+            <xsd:complexType name="greetResponse">
+                <xsd:sequence>
+                    <xsd:element name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="greetResponse" type="tns:greetResponse"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="greetInput">
+        <wsdl:part name="parameters" element="tns:greet"/>
+    </wsdl:message>
+    <wsdl:message name="greetOutput">
+        <wsdl:part name="parameters" element="tns:greetResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="Greeter">
+        <wsdl:operation name="greet">
+            <wsdl:input message="tns:greetInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:greetOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

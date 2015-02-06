@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="Decorator"
+     targetNamespace="http://springgreeter/"
+     xmlns:tns="http://springgreeter/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://springgreeter/" xmlns:tns="http://springgreeter/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="prettifyString">
+                <xsd:sequence>
+                    <xsd:element name="arg0" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="prettifyString" type="tns:prettifyString"/>
+            <xsd:complexType name="prettifyStringResponse">
+                <xsd:sequence>
+                    <xsd:element name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="prettifyStringResponse" type="tns:prettifyStringResponse"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="prettifyStringInput">
+        <wsdl:part name="parameters" element="tns:prettifyString"/>
+    </wsdl:message>
+    <wsdl:message name="prettifyStringOutput">
+        <wsdl:part name="parameters" element="tns:prettifyStringResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="Decorator">
+        <wsdl:operation name="prettifyString">
+            <wsdl:input message="tns:prettifyStringInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:prettifyStringOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
