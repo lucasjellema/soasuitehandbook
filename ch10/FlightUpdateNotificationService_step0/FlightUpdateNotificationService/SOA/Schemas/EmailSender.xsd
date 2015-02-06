@@ -1,0 +1,22 @@
+<?xml version= "1.0" encoding= "UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata/EmailSender"
+            targetNamespace="http://platform.integration.oracle/blocks/adapter/fw/metadata/EmailSender"
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xsd:complexType name="MessageType">
+        <xsd:sequence>
+            <xsd:element name="payload" type="xsd:string"/>
+            <xsd:element name="attachment" type="AttachmentType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="AttachmentType">
+        <xsd:attribute name="href" type="xsd:string"/>
+    </xsd:complexType>
+    <xsd:complexType name="ResponseType">
+        <xsd:sequence>
+            <xsd:element name="MessageId" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:element name="message" type="MessageType"/>
+    <xsd:element name="response" type="ResponseType"/>
+</xsd:schema>

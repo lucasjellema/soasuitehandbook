@@ -1,0 +1,11 @@
+<adapter-config name="ChatClient" adapter="ums" wsdlLocation="../WSDLs/ChatClient.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/ums/UMSAdapterOutbound"/>
+  <endpoint-interaction portType="SendNotification_ptt" operation="SendNotification">
+    <interaction-spec className="oracle.tip.adapter.ums.outbound.UmsInteractionSpec">
+      <property name="DeliveryType" value="IM"/>
+      <property name="To" value="dummybuddy@dummyxmppdomain"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
