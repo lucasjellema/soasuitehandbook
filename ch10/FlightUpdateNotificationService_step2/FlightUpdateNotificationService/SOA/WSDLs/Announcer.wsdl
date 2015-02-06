@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="Announcer"
+     targetNamespace="http://spring.services.airport.saibot/"
+     xmlns:tns="http://spring.services.airport.saibot/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:ns0="http://spring.services.airport.saibot/types" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://spring.services.airport.saibot/types">
+            <xsd:complexType name="flight">
+                <xsd:sequence>
+                    <xsd:element name="action" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="carrier" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="flightNumber" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="gate" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="pier" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="terminal" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="timestamp" type="xsd:dateTime" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+        <xsd:schema targetNamespace="http://spring.services.airport.saibot/" xmlns:tns="http://spring.services.airport.saibot/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://spring.services.airport.saibot/types">
+            <xsd:import namespace="http://spring.services.airport.saibot/types"/>
+            <xsd:complexType name="composeFlightStatusAnnouncement">
+                <xsd:sequence>
+                    <xsd:element name="arg0" type="ns1:flight"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="composeFlightStatusAnnouncement" type="tns:composeFlightStatusAnnouncement"/>
+            <xsd:complexType name="composeFlightStatusAnnouncementResponse">
+                <xsd:sequence>
+                    <xsd:element name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="composeFlightStatusAnnouncementResponse" type="tns:composeFlightStatusAnnouncementResponse"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="composeFlightStatusAnnouncementInput">
+        <wsdl:part name="parameters" element="tns:composeFlightStatusAnnouncement"/>
+    </wsdl:message>
+    <wsdl:message name="composeFlightStatusAnnouncementOutput">
+        <wsdl:part name="parameters" element="tns:composeFlightStatusAnnouncementResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="Announcer">
+        <wsdl:operation name="composeFlightStatusAnnouncement">
+            <wsdl:input message="tns:composeFlightStatusAnnouncementInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:composeFlightStatusAnnouncementOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

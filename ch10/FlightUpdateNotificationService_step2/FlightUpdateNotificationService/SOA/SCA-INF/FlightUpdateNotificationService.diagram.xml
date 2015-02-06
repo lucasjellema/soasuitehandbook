@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dgm:gDiagram xmlns:dgm="http://xmlns.oracle.com/sca/soadgm">
+    <dgm:gService name="FlightUpdateNotificationService">
+        <dgm:body borderWidth="2" arcRad="20" X="21" Y="314" width="137" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="11" Y="307" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:outputPort name="FlightUpdateNotificationService" X="127" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/services/flightupdatenotification#wsdl.interface(FlightUpdateNotificationServicePortType)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/soap_service_20x20.png" X="20" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>sendFlightUpdateNotification</dgm:item>
+        </dgm:operations>
+    </dgm:gService>
+    <dgm:gReference name="EmailSender">
+        <dgm:body borderWidth="2" arcRad="20" X="1044" Y="118" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1034" Y="111" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="EmailSender" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/EmailSender#wsdl.interface(SendNotification_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ums_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendNotification</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="ChatClient">
+        <dgm:body borderWidth="2" arcRad="20" X="1044" Y="234" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1034" Y="227" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="ChatClient" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/ChatClient#wsdl.interface(SendNotification_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/ums_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>SendNotification</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gReference name="MP3Writer">
+        <dgm:body borderWidth="2" arcRad="20" X="1044" Y="527" width="136" height="84">
+            <dgm:borderColor r="153" g="153" b="153"/>
+            <dgm:bgColor r="255" g="255" b="255"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="1034" Y="520" width="156" height="98">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="MP3Writer" X="-10" Y="0" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/file/FlightUpdateNotificationService_step2/FlightUpdateNotificationService/MP3Writer#wsdl.interface(Write_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/adapters/designtime/adapter/images/file_adapter_20x20.png" X="27" Y="4" width="20" height="20"/>
+        <dgm:operations>
+            <dgm:item>Write</dgm:item>
+        </dgm:operations>
+    </dgm:gReference>
+    <dgm:gComponent name="MachineToHumanMediator">
+        <dgm:body borderWidth="2" arcRad="20" X="282" Y="299" width="130" height="161">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="272" Y="292" width="150" height="177">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="MachineToHumanMediator" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport/services/flightupdatenotification#wsdl.interface(FlightUpdateNotificationServicePortType)"/>
+        <dgm:outputPort name="EmailSender" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/EmailSender#wsdl.interface(SendNotification_ptt)"/>
+        <dgm:outputPort name="ChatClient" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/ums/FlightUpdateNotificationService/FlightUpdateNotificationService/ChatClient#wsdl.interface(SendNotification_ptt)"/>
+        <dgm:outputPort name="TwitterChannel.TwitterMessenger" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://spring.services.airport.saibot/#wsdl.interface(TwitterMessageSender)"/>
+        <dgm:outputPort name="FlightAnnouncementComposer.FlightAnnouncementComposer" X="120" Y="90" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://spring.services.airport.saibot/#wsdl.interface(Announcer)"/>
+        <dgm:outputPort name="TextToSpeechConverter.TextToSpeechConverter" X="120" Y="115" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://spring.services.airport.saibot/#wsdl.interface(TextToSpeechConverter)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="TwitterChannel">
+        <dgm:body borderWidth="2" arcRad="20" X="536" Y="327" width="130" height="86">
+            <dgm:borderColor r="134" g="135" b="142"/>
+            <dgm:lightBgColor r="231" g="231" b="234"/>
+            <dgm:darkBgColor r="192" g="194" b="203"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="526" Y="320" width="150" height="102">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TwitterMessenger" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport.services.spring.TwitterMessageSender"/>
+        <dgm:inputPort name="Tweeter" X="-10" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport.services.spring.TwitterStatusUpdater"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/spring/sca/images/springcomponenticon_dia.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="TextToSpeechConverter">
+        <dgm:body borderWidth="2" arcRad="20" X="536" Y="542" width="130" height="61">
+            <dgm:borderColor r="134" g="135" b="142"/>
+            <dgm:lightBgColor r="231" g="231" b="234"/>
+            <dgm:darkBgColor r="192" g="194" b="203"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="526" Y="535" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="TextToSpeechConverter" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport.services.spring.TextToSpeechConverter"/>
+        <dgm:outputPort name="ContentHandler" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport.services.spring.ContentHandler"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/spring/sca/images/springcomponenticon_dia.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="DropboxAdapter">
+        <dgm:body borderWidth="2" arcRad="20" X="536" Y="26" width="130" height="61">
+            <dgm:borderColor r="134" g="135" b="142"/>
+            <dgm:lightBgColor r="231" g="231" b="234"/>
+            <dgm:darkBgColor r="192" g="194" b="203"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="526" Y="19" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="DropboxAdapter" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport.services.spring.DropboxAdapter"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/spring/sca/images/springcomponenticon_dia.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="FlightAnnouncementComposer">
+        <dgm:body borderWidth="2" arcRad="20" X="536" Y="447" width="130" height="61">
+            <dgm:borderColor r="134" g="135" b="142"/>
+            <dgm:lightBgColor r="231" g="231" b="234"/>
+            <dgm:darkBgColor r="192" g="194" b="203"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="526" Y="440" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="FlightAnnouncementComposer" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport.services.spring.Announcer"/>
+        <dgm:outputPort name="CarrierMapper" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="saibot.airport.services.spring.ValueMapper"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/spring/sca/images/springcomponenticon_dia.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="CarrierMapper">
+        <dgm:body borderWidth="2" arcRad="20" X="790" Y="367" width="130" height="61">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="780" Y="360" width="150" height="77">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="CarrierMapper" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://spring.services.airport.saibot/#wsdl.interface(ValueMapper)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gComponent name="MP3Router">
+        <dgm:body borderWidth="2" arcRad="20" X="790" Y="462" width="130" height="111">
+            <dgm:borderColor r="128" g="92" b="148"/>
+            <dgm:lightBgColor r="208" g="169" b="227"/>
+            <dgm:darkBgColor r="183" g="132" b="212"/>
+        </dgm:body>
+        <dgm:shadow arcRad="20" X="780" Y="455" width="150" height="127">
+            <dgm:bgColor r="196" g="228" b="240"/>
+        </dgm:shadow>
+        <dgm:inputPort name="MP3Router" X="-10" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://spring.services.airport.saibot/#wsdl.interface(ContentHandler)"/>
+        <dgm:outputPort name="DropboxAdapter.DropboxAdapter" X="120" Y="15" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://spring.services.airport.saibot/#wsdl.interface(DropboxAdapter)"/>
+        <dgm:outputPort name="TwitterChannel.Tweeter" X="120" Y="40" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://spring.services.airport.saibot/#wsdl.interface(TwitterStatusUpdater)"/>
+        <dgm:outputPort name="MP3Writer" X="120" Y="65" diameter="20" imageURI="oracle/tip/tools/ide/fabric/resource/image/visuals_rd1/servicereference.png" interface="http://xmlns.oracle.com/pcbpel/adapter/file/FlightUpdateNotificationService_step2/FlightUpdateNotificationService/MP3Writer#wsdl.interface(Write_ptt)"/>
+        <dgm:nodeIcon URI="/oracle/tip/tools/ide/mediator/resource/image/mediator_20x20.png" X="10" Y="4" width="20" height="20"/>
+    </dgm:gComponent>
+    <dgm:gWireLink source="FlightUpdateNotificationService" target="MachineToHumanMediator/MachineToHumanMediator" width="2">
+        <dgm:gSegment X1="168" Y1="324" X2="272" Y2="324"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MachineToHumanMediator/EmailSender" target="EmailSender" width="2">
+        <dgm:gSegment X1="422" Y1="324" X2="446" Y2="324"/>
+        <dgm:gSegment X1="446" Y1="324" X2="446" Y2="128"/>
+        <dgm:gSegment X1="446" Y1="128" X2="1034" Y2="128"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MachineToHumanMediator/ChatClient" target="ChatClient" width="2">
+        <dgm:gSegment X1="422" Y1="349" X2="461" Y2="349"/>
+        <dgm:gSegment X1="461" Y1="349" X2="461" Y2="244"/>
+        <dgm:gSegment X1="461" Y1="244" X2="1034" Y2="244"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MachineToHumanMediator/TwitterChannel.TwitterMessenger" target="TwitterChannel/TwitterMessenger" width="2">
+        <dgm:gSegment X1="422" Y1="374" X2="476" Y2="374"/>
+        <dgm:gSegment X1="476" Y1="374" X2="476" Y2="352"/>
+        <dgm:gSegment X1="476" Y1="352" X2="526" Y2="352"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="FlightAnnouncementComposer/CarrierMapper" target="CarrierMapper/CarrierMapper" width="2">
+        <dgm:gSegment X1="676" Y1="472" X2="700" Y2="472"/>
+        <dgm:gSegment X1="700" Y1="472" X2="700" Y2="392"/>
+        <dgm:gSegment X1="700" Y1="392" X2="780" Y2="392"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MachineToHumanMediator/FlightAnnouncementComposer.FlightAnnouncementComposer" target="FlightAnnouncementComposer/FlightAnnouncementComposer" width="2">
+        <dgm:gSegment X1="422" Y1="399" X2="461" Y2="399"/>
+        <dgm:gSegment X1="461" Y1="399" X2="461" Y2="472"/>
+        <dgm:gSegment X1="461" Y1="472" X2="526" Y2="472"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="TextToSpeechConverter/ContentHandler" target="MP3Router/MP3Router" width="2">
+        <dgm:gSegment X1="676" Y1="567" X2="700" Y2="567"/>
+        <dgm:gSegment X1="700" Y1="567" X2="700" Y2="487"/>
+        <dgm:gSegment X1="700" Y1="487" X2="780" Y2="487"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MP3Router/DropboxAdapter.DropboxAdapter" target="DropboxAdapter/DropboxAdapter" width="2">
+        <dgm:gSegment X1="930" Y1="487" X2="969" Y2="487"/>
+        <dgm:gSegment X1="969" Y1="487" X2="969" Y2="113"/>
+        <dgm:gSegment X1="969" Y1="113" X2="446" Y2="113"/>
+        <dgm:gSegment X1="446" Y1="113" X2="446" Y2="51"/>
+        <dgm:gSegment X1="446" Y1="51" X2="526" Y2="51"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MP3Router/TwitterChannel.Tweeter" target="TwitterChannel/Tweeter" width="2">
+        <dgm:gSegment X1="930" Y1="512" X2="954" Y2="512"/>
+        <dgm:gSegment X1="954" Y1="512" X2="954" Y2="265"/>
+        <dgm:gSegment X1="954" Y1="265" X2="491" Y2="265"/>
+        <dgm:gSegment X1="491" Y1="265" X2="491" Y2="377"/>
+        <dgm:gSegment X1="491" Y1="377" X2="526" Y2="377"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MachineToHumanMediator/TextToSpeechConverter.TextToSpeechConverter" target="TextToSpeechConverter/TextToSpeechConverter" width="2">
+        <dgm:gSegment X1="422" Y1="424" X2="446" Y2="424"/>
+        <dgm:gSegment X1="446" Y1="424" X2="446" Y2="567"/>
+        <dgm:gSegment X1="446" Y1="567" X2="526" Y2="567"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+    <dgm:gWireLink source="MP3Router/MP3Writer" target="MP3Writer" width="2">
+        <dgm:gSegment X1="930" Y1="537" X2="1034" Y2="537"/>
+        <dgm:baseColor r="153" g="153" b="153"/>
+        <dgm:selectedColor r="49" g="106" b="196"/>
+    </dgm:gWireLink>
+</dgm:gDiagram>

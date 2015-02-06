@@ -1,0 +1,13 @@
+<adapter-config name="MP3Writer" adapter="file" wsdlLocation="../WSDLs/MP3Writer.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/FileAdapter"/>
+  <endpoint-interaction portType="Write_ptt" operation="Write">
+    <interaction-spec className="oracle.tip.adapter.file.outbound.FileInteractionSpec">
+      <property name="LogicalDirectory" value="MP3_ANNOUNCEMENTS_FOLDER"/>
+      <property name="Append" value="false"/>
+      <property name="FileNamingConvention" value="DummyValue"/>
+      <property name="NumberMessages" value="1"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

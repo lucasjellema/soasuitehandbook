@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="saibot.airport/services/flightupdatenotification"
+            targetNamespace="saibot.airport/services/flightupdatenotification"
+            xmlns:fun="saibot.airport/services/flightupdatenotification" xmlns:common="saibot.airport/data/common"
+            xmlns:flight="saibot.airport/data/flight" xmlns:reference="saibot.airport/data/reference"
+            elementFormDefault="qualified">
+  <xsd:import namespace="saibot.airport/data/common" schemaLocation="common.xsd"/>
+  <xsd:import namespace="saibot.airport/data/flight" schemaLocation="flight.xsd"/>
+  <xsd:import namespace="saibot.airport/data/reference" schemaLocation="reference.xsd"/>
+  <xsd:element name="sendFlightUpdateNotificationRequestMessage" type="fun:sendFlightUpdateNotificationRequestType"/>
+  <xsd:complexType name="sendFlightUpdateNotificationRequestType">
+    <xsd:sequence>
+      <xsd:element name="Carrier" nillable="false" type="common:iataAirlineType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightNumber" nillable="false" type="common:flightNumberType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FlightStatus" nillable="false" type="flight:flightStatusType" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="CommunicationMetadata" nillable="false" type="fun:CommunicationMetadataType" minOccurs="1"
+                   maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CommunicationMetadataType">
+    <xsd:sequence>
+      <xsd:element name="Channel" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Salutation" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="ToAddress" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="FromAddress" nillable="false" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

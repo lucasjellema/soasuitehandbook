@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="TextToSpeechConverter"
+     targetNamespace="http://spring.services.airport.saibot/"
+     xmlns:tns="http://spring.services.airport.saibot/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://spring.services.airport.saibot/" xmlns:tns="http://spring.services.airport.saibot/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="convertTextToSpeech">
+                <xsd:sequence>
+                    <xsd:element name="arg0" type="xsd:string"/>
+                    <xsd:element name="arg1" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="convertTextToSpeech" type="tns:convertTextToSpeech"/>
+            <xsd:complexType name="convertTextToSpeechResponse">
+                <xsd:sequence>
+                    <xsd:element name="return" type="xsd:base64Binary"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="convertTextToSpeechResponse" type="tns:convertTextToSpeechResponse"/>
+            <xsd:complexType name="convertTextToSpeechAndHandle">
+                <xsd:sequence>
+                    <xsd:element name="arg0" type="xsd:string"/>
+                    <xsd:element name="arg1" type="xsd:string"/>
+                    <xsd:element name="arg2" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="convertTextToSpeechAndHandle" type="tns:convertTextToSpeechAndHandle"/>
+            <xsd:complexType name="convertTextToSpeechAndHandleResponse">
+                <xsd:sequence>
+                    <xsd:element name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="convertTextToSpeechAndHandleResponse" type="tns:convertTextToSpeechAndHandleResponse"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="convertTextToSpeechInput">
+        <wsdl:part name="parameters" element="tns:convertTextToSpeech"/>
+    </wsdl:message>
+    <wsdl:message name="convertTextToSpeechOutput">
+        <wsdl:part name="parameters" element="tns:convertTextToSpeechResponse"/>
+    </wsdl:message>
+    <wsdl:message name="convertTextToSpeechAndHandleInput">
+        <wsdl:part name="parameters" element="tns:convertTextToSpeechAndHandle"/>
+    </wsdl:message>
+    <wsdl:message name="convertTextToSpeechAndHandleOutput">
+        <wsdl:part name="parameters" element="tns:convertTextToSpeechAndHandleResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="TextToSpeechConverter">
+        <wsdl:operation name="convertTextToSpeech">
+            <wsdl:input message="tns:convertTextToSpeechInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:convertTextToSpeechOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+        </wsdl:operation>
+        <wsdl:operation name="convertTextToSpeechAndHandle">
+            <wsdl:input message="tns:convertTextToSpeechAndHandleInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:convertTextToSpeechAndHandleOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

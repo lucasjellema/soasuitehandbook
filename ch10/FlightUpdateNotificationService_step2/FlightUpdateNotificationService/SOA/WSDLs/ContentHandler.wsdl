@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="ContentHandler"
+     targetNamespace="http://spring.services.airport.saibot/"
+     xmlns:tns="http://spring.services.airport.saibot/"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://spring.services.airport.saibot/" xmlns:tns="http://spring.services.airport.saibot/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:complexType name="handleContent">
+                <xsd:sequence>
+                    <xsd:element name="arg0" type="xsd:base64Binary"/>
+                    <xsd:element name="arg1" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="handleContent" type="tns:handleContent"/>
+            <xsd:complexType name="handleContentResponse">
+                <xsd:sequence>
+                    <xsd:element name="return" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="handleContentResponse" type="tns:handleContentResponse"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="handleContentInput">
+        <wsdl:part name="parameters" element="tns:handleContent"/>
+    </wsdl:message>
+    <wsdl:message name="handleContentOutput">
+        <wsdl:part name="parameters" element="tns:handleContentResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ContentHandler">
+        <wsdl:operation name="handleContent">
+            <wsdl:input message="tns:handleContentInput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+            <wsdl:output message="tns:handleContentOutput" xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                 ns1:Action=""/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
