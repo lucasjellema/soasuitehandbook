@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<graphics>
+   <ui useAntiAliasedFont="no" fontName="Dialog.plain" fontSize="11" keyWordFontName="Dialog.bold" keyWordFontSize="11" ruleNameFontName="Dialog.bold" ruleNameFontSize="11">
+      <uistate tabDisplayMode="0"/>
+   </ui>
+</graphics>

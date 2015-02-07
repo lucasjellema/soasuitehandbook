@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="saibot.airport/finance/aircraftcharge" xmlns:fac="saibot.airport/finance/aircraftcharge"
+            elementFormDefault="qualified">
+    <xsd:element name="Flight" type="fac:flightType"/>
+    <xsd:element name="AirportCharge" type="fac:airportChargeType"/>
+    <xsd:complexType name="flightType">
+        <xsd:sequence>
+            <xsd:element name="AircraftMTOW" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="NumberOfPassengers" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="SlotTime" nillable="false" type="xsd:time" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="ArrivalOrDeparture" nillable="false" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="AircraftNoiseCategory" nillable="false" type="fac:noiseCategoryType" minOccurs="1" maxOccurs="1"/>      
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="airportChargeType">
+        <xsd:sequence>
+            <xsd:element name="baseRate" nillable="false" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="surchargePercentage" nillable="false" type="xsd:int" minOccurs="1" maxOccurs="1"/> 
+            <xsd:element name="totalCharge" nillable="false" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="noiseCategoryType">
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="MCC3"/>
+      <xsd:enumeration value="A"/>
+      <xsd:enumeration value="B"/>
+      <xsd:enumeration value="C"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+</xsd:schema>

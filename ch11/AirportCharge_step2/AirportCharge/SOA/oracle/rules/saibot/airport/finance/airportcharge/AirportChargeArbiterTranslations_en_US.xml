@@ -1,0 +1,42 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<properties>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b7d">CalculateTotalCharge</entry>
+   <entry key="DG}-39dda2ed:145696b67ee:-7b63">A flight is either cargo or passenger. With MaxNumberOfPassengersOnCargoFlight or fewer passengers, a flight is deemed a cargo flight</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b7a">Test Case - Under Weight, noise MCC3</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7acf">"MorningEdge"</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7acd">"EveningEdge"</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b89">CalculateBaseRate</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b61">Passenger</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7ace">"Day"</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b88">CalculateAirportCharge</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b60">CargoCorrection</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b63">TypeOfFlight</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b62">Cargo</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b84">WeightLimit</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b82">BaseRateForUnderLimitWeight</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b83">PerThousandKilogramRate</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b80">OverWeightLimit</entry>
+   <entry key="AJ}airport.saibot.finance.aircraftcharge.FlightType.{aircraftMTWO}">aircraftMTOW</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b81">UnderWeightLimit</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7ad5">ArrivalOrDeparture</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7ad3">"Arrival"</entry>
+   <entry key="DG}-39dda2ed:145696b67ee:-7aba">Rules to determine the surcharge for a flight</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7ad0">"Night"</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7ad1">SlotTime</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7ad2">"Departure"</entry>
+   <entry key="AJ}airport.saibot.finance.aircraftcharge.AirportChargeType">AirportCharge</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7aba">FlightSurchargeCalculation</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7abe">Unknown</entry>
+   <entry key="DG}-39dda2ed:145696b67ee:-7b5f">The maximum number of passengers that a flight may have and still be considered a cargo flight</entry>
+   <entry key="DG}-39dda2ed:145696b67ee:-7ad5">A flight is either incoming (arrival, landing) or outgoing (departure, take off)</entry>
+   <entry key="DG}-39dda2ed:145696b67ee:-7ad1">This value set defines the four "time zones" dealt with at Saibot Airport: day, night and the gray areas (both edges of the night). Four time ranges - the first one starting at minus infinity, the fourth at 11PM - make up this Value Set.</entry>
+   <entry key="AJ}airport.saibot.finance.aircraftcharge.FlightType">Flight</entry>
+   <entry key="AG}-51b077d:14578aae1b9:-7c27">TestGetTimeFromString</entry>
+   <entry key="DG}-39dda2ed:145696b67ee:-7b84">The boundary between flat fee and per ton calculation</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b4a">CargoCorrrection</entry>
+   <entry key="AG}-51b077d:14578aae1b9:-7c28">timeString</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b5e">Test Case - Under Weight and Cargo</entry>
+   <entry key="AG}-51b077d:14578aae1b9:-7c29">GetTimeFromString</entry>
+   <entry key="AG}-39dda2ed:145696b67ee:-7b5f">MaxNumberOfPassengersOnCargoFlight</entry>
+   <entry key="DG}-39dda2ed:145696b67ee:-7b82">The base rate for aircrafts under {weight limit} kg MTOW</entry>
+</properties>
