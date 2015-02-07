@@ -1,0 +1,30 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="AirportChargeService"
+     targetNamespace="http://xmlns.oracle.com/AirportCharge/AirportCharge/AirportChargeService"
+     xmlns:tns="http://xmlns.oracle.com/AirportCharge/AirportCharge/AirportChargeService"
+     xmlns:inp1="saibot.airport/finance/aircraftcharge"
+     xmlns:inp2="saibot.airport/finance/aircraftcharge"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/finance/aircraftcharge" schemaLocation="../Schemas/AirportChargeCalculation.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/finance/aircraftcharge" schemaLocation="../Schemas/AirportChargeCalculation.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="requestMessage">
+        <wsdl:part name="request" element="inp1:Flight"/>
+    </wsdl:message>
+    <wsdl:message name="replyMessage">
+        <wsdl:part name="reply" element="inp1:AirportCharge"/>
+    </wsdl:message>
+    <wsdl:portType name="execute_ptt">
+        <wsdl:operation name="execute">
+            <wsdl:input message="tns:requestMessage"/>
+            <wsdl:output message="tns:replyMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

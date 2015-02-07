@@ -1,0 +1,1301 @@
+<?xml version="1.0"?>
+<RuleDictionary id="G}-39dda2ed:145696b67ee:-7b91" xmlns="http://xmlns.oracle.com/rules/dictionary">
+  <Name>AirportChargeArbiter</Name>
+  <Alias>AirportChargeArbiter</Alias>
+  <Package>saibot.airport.finance.airportcharge</Package>
+  <Version>11.1.1.0.0</Version>
+  <DataModel id="L}1">
+    <CreationUpdateNumber>2</CreationUpdateNumber>
+    <QualifierPattern>{member} of {fact}</QualifierPattern>
+    <Variable id="G}-39dda2ed:145696b67ee:-7b84">
+      <Name>WeightLimit</Name>
+      <Alias>WeightLimit</Alias>
+      <Description>The boundary between flat fee and per ton calculation</Description>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>11</CreationUpdateNumber>
+      <IDofType>J}int</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>int</Type>
+      <IDofBucketSet>B}nil</IDofBucketSet>
+      <Expression id="L}61">
+        <Value>20000</Value>
+        <ResolvedValue>20000</ResolvedValue>
+        <IsConstant>false</IsConstant>
+        <ParameterID>B}nil</ParameterID>
+      </Expression>
+      <Final>true</Final>
+      <System>false</System>
+      <ValidationUpdateNumber>15</ValidationUpdateNumber>
+    </Variable>
+    <Variable id="G}-39dda2ed:145696b67ee:-7b83">
+      <Name>PerThousandKilogramRate</Name>
+      <Alias>PerThousandKilogramRate</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>16</CreationUpdateNumber>
+      <IDofType>J}float</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>float</Type>
+      <IDofBucketSet>B}nil</IDofBucketSet>
+      <Expression id="L}73">
+        <Value>4.70</Value>
+        <ResolvedValue>4.70</ResolvedValue>
+        <IsConstant>false</IsConstant>
+        <ParameterID>B}nil</ParameterID>
+      </Expression>
+      <Final>true</Final>
+      <System>false</System>
+      <ValidationUpdateNumber>20</ValidationUpdateNumber>
+    </Variable>
+    <Variable id="G}-39dda2ed:145696b67ee:-7b82">
+      <Name>BaseRateForUnderLimitWeight</Name>
+      <Alias>BaseRateForUnderLimitWeight</Alias>
+      <Description>The base rate for aircrafts under {weight limit} kg MTOW</Description>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>21</CreationUpdateNumber>
+      <IDofType>J}float</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>float</Type>
+      <IDofBucketSet>B}nil</IDofBucketSet>
+      <Expression id="L}84">
+        <Value>94.00</Value>
+        <ResolvedValue>94.00</ResolvedValue>
+        <IsConstant>false</IsConstant>
+        <ParameterID>B}nil</ParameterID>
+      </Expression>
+      <Final>true</Final>
+      <System>false</System>
+      <ValidationUpdateNumber>26</ValidationUpdateNumber>
+    </Variable>
+    <Variable id="G}-39dda2ed:145696b67ee:-7b5f">
+      <Name>MaxNumberOfPassengersOnCargoFlight</Name>
+      <Alias>MaxNumberOfPassengersOnCargoFlight</Alias>
+      <Description>The maximum number of passengers that a flight may have and still be considered a cargo flight</Description>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>87</CreationUpdateNumber>
+      <IDofType>J}int</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>int</Type>
+      <IDofBucketSet>B}nil</IDofBucketSet>
+      <Expression id="L}313">
+        <Value>5</Value>
+        <ResolvedValue>5</ResolvedValue>
+        <IsConstant>false</IsConstant>
+        <ParameterID>B}nil</ParameterID>
+      </Expression>
+      <Final>true</Final>
+      <System>false</System>
+      <ValidationUpdateNumber>91</ValidationUpdateNumber>
+    </Variable>
+    <Function id="G}-51b077d:14578aae1b9:-7c29">
+      <Name>GetTimeFromString</Name>
+      <Alias>GetTimeFromString</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>282</CreationUpdateNumber>
+      <IDofType>J}javax.xml.datatype.XMLGregorianCalendar</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>XMLGregorianCalendar</Type>
+      <IDofBucketSet>B}nil</IDofBucketSet>
+      <Form>Structured</Form>
+      <FormalParameter id="G}-51b077d:14578aae1b9:-7c28">
+        <Name>timeString</Name>
+        <Alias>timeString</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>285</CreationUpdateNumber>
+        <IDofType>J}java.lang.String</IDofType>
+        <ListContentID>B}nil</ListContentID>
+        <Type>String</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </FormalParameter>
+      <Action id="L}1263">
+        <Form>Return</Form>
+        <Expression id="L}1264">
+          <Value>XMLDate.from string(&quot;2015-12-31T&quot;+timeString+&quot;:00Z&quot;)</Value>
+          <ResolvedValue>`J}oracle.rules.rl.extensions.XMLDate`.`J}public static javax.xml.datatype.XMLGregorianCalendar oracle.rules.rl.extensions.XMLDate.fromString(java.lang.String) throws java.lang.IllegalArgumentException`(&quot;2015-12-31T&quot;+`G}-51b077d:14578aae1b9:-7c28`+&quot;:00Z&quot;)</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+      <ValidationUpdateNumber>369</ValidationUpdateNumber>
+    </Function>
+    <Function id="G}-51b077d:14578aae1b9:-7c27">
+      <Name>TestGetTimeFromString</Name>
+      <Alias>TestGetTimeFromString</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>297</CreationUpdateNumber>
+      <IDofType>J}boolean</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>boolean</Type>
+      <IDofBucketSet>B}bbs</IDofBucketSet>
+      <BucketSet>boolean</BucketSet>
+      <Form>Structured</Form>
+      <Action id="L}1424">
+        <Form>Assign New</Form>
+        <Target>XMLGregorianCalendar</Target>
+        <ResolvedTarget>`J}javax.xml.datatype.XMLGregorianCalendar`</ResolvedTarget>
+        <Expression id="L}1425">
+          <Value>GetTimeFromString(&quot;15:45&quot;)</Value>
+          <ResolvedValue>`G}-51b077d:14578aae1b9:-7c29`(&quot;15:45&quot;)</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Variable>var</Variable>
+        <DSLId>B}nil</DSLId>
+      </Action>
+      <Action id="L}1430">
+        <Form>Call</Form>
+        <Target>print</Target>
+        <ResolvedTarget>`B}function.println`</ResolvedTarget>
+        <Expression id="L}1435">
+          <Value>var</Value>
+          <ResolvedValue>`L}1424`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>message</ParameterAlias>
+          <ParameterID>B}function.println_message</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+      <Action id="L}1490">
+        <Form>Assign</Form>
+        <Target>var</Target>
+        <ResolvedTarget>`L}1424`</ResolvedTarget>
+        <Expression id="L}1493">
+          <Value>GetTimeFromString(&quot;23:17&quot;)</Value>
+          <ResolvedValue>`G}-51b077d:14578aae1b9:-7c29`(&quot;23:17&quot;)</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+      <Action id="L}1306">
+        <Form>Call</Form>
+        <Target>print</Target>
+        <ResolvedTarget>`B}function.println`</ResolvedTarget>
+        <Expression id="L}1311">
+          <Value>var</Value>
+          <ResolvedValue>`L}1424`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>message</ParameterAlias>
+          <ParameterID>B}function.println_message</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+      <Action id="L}1283">
+        <Form>Return</Form>
+        <Expression id="L}1284">
+          <Value>true</Value>
+          <ResolvedValue>true</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+      <ValidationUpdateNumber>371</ValidationUpdateNumber>
+    </Function>
+    <JaxbFactType id="J}airport.saibot.finance.aircraftcharge.FlightType">
+      <Name>airport.saibot.finance.aircraftcharge.FlightType</Name>
+      <Alias>Flight</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>4</CreationUpdateNumber>
+      <Property id="J}airport.saibot.finance.aircraftcharge.FlightType.{numberOfPassengers}">
+        <Name>numberOfPassengers</Name>
+        <Alias>numberOfPassengers</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <IDofType>J}int</IDofType>
+        <ListContentID>B}nil</ListContentID>
+        <Type>int</Type>
+        <IDofBucketSet>G}-39dda2ed:145696b67ee:-7b63</IDofBucketSet>
+        <BucketSet>TypeOfFlight</BucketSet>
+        <Writable>true</Writable>
+        <Readable>true</Readable>
+        <Local>true</Local>
+        <Expression id="L}24">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <PrimaryKey>false</PrimaryKey>
+      </Property>
+      <Property id="J}airport.saibot.finance.aircraftcharge.FlightType.{aircraftMTOW}">
+        <Name>aircraftMTOW</Name>
+        <Alias>aircraftMTOW</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>68</CreationUpdateNumber>
+        <IDofType>J}int</IDofType>
+        <ListContentID>B}nil</ListContentID>
+        <Type>int</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+        <Writable>true</Writable>
+        <Readable>true</Readable>
+        <Local>true</Local>
+        <Expression id="L}228">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <PrimaryKey>false</PrimaryKey>
+      </Property>
+      <Method id="J}public int airport.saibot.finance.aircraftcharge.FlightType.getNumberOfPassengers()">
+        <Name>getNumberOfPassengers</Name>
+        <Alias>getNumberOfPassengers</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Modifiers id="L}18">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}int</IDofType>
+        <Type>int</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public void airport.saibot.finance.aircraftcharge.FlightType.setNumberOfPassengers(int)">
+        <Name>setNumberOfPassengers</Name>
+        <Alias>setNumberOfPassengers</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <OverloadedParameter id="G}-39dda2ed:145696b67ee:-7b8e">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <IDsOfType>J}int</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}22">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}void</IDofType>
+        <Type>void</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public void airport.saibot.finance.aircraftcharge.FlightType.setAircraftMTOW(int)">
+        <Name>setAircraftMTOW</Name>
+        <Alias>setAircraftMTOW</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>68</CreationUpdateNumber>
+        <OverloadedParameter id="G}-39dda2ed:145696b67ee:-7b73">
+          <CreationUpdateNumber>68</CreationUpdateNumber>
+          <IDsOfType>J}int</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}225">
+          <CreationUpdateNumber>68</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}void</IDofType>
+        <Type>void</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public int airport.saibot.finance.aircraftcharge.FlightType.getAircraftMTOW()">
+        <Name>getAircraftMTOW</Name>
+        <Alias>getAircraftMTOW</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>68</CreationUpdateNumber>
+        <Modifiers id="L}227">
+          <CreationUpdateNumber>68</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}int</IDofType>
+        <Type>int</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Constructor id="J}public airport.saibot.finance.aircraftcharge.FlightType()">
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Visible>true</Visible>
+        <Modifiers id="L}14">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+      </Constructor>
+      <IDofSuperClass>J}java.lang.Object</IDofSuperClass>
+      <ValidationUpdateNumber>454</ValidationUpdateNumber>
+      <Source>Schemas/AirportChargeCalculation.xsd</Source>
+      <IsArray>false</IsArray>
+      <IDofArrayComponentType>B}nil</IDofArrayComponentType>
+      <SupportXPath>false</SupportXPath>
+      <IsInterface>false</IsInterface>
+      <Modifiers id="L}1686">
+        <CreationUpdateNumber>454</CreationUpdateNumber>
+        <Access>1</Access>
+        <isStatic>false</isStatic>
+        <isFinal>false</isFinal>
+        <isAbstract>false</isAbstract>
+      </Modifiers>
+      <EnumBucketSetID>B}nil</EnumBucketSetID>
+      <Timestamp>0</Timestamp>
+      <ENUM>false</ENUM>
+      <XmlName>//xs:complexType[@name=&apos;flightType&apos;]</XmlName>
+      <JAXB2.0>true</JAXB2.0>
+      <NodeName>flightType</NodeName>
+      <Namespace>saibot.airport/finance/aircraftcharge</Namespace>
+    </JaxbFactType>
+    <JaxbFactType id="J}airport.saibot.finance.aircraftcharge.ObjectFactory">
+      <Name>airport.saibot.finance.aircraftcharge.ObjectFactory</Name>
+      <Alias>airport_saibot_finance_aircraftcharge_ObjectFactory</Alias>
+      <Visible>false</Visible>
+      <CreationUpdateNumber>4</CreationUpdateNumber>
+      <Method id="J}public javax.xml.bind.JAXBElement airport.saibot.finance.aircraftcharge.ObjectFactory.createFlight(airport.saibot.finance.aircraftcharge.FlightType)">
+        <Name>createFlight</Name>
+        <Alias>createFlight</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <OverloadedParameter id="G}-39dda2ed:145696b67ee:-7b8d">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <IDsOfType>J}airport.saibot.finance.aircraftcharge.FlightType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}30">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public airport.saibot.finance.aircraftcharge.FlightType airport.saibot.finance.aircraftcharge.ObjectFactory.createFlightType()">
+        <Name>createFlightType</Name>
+        <Alias>createFlightType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Modifiers id="L}32">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}airport.saibot.finance.aircraftcharge.FlightType</IDofType>
+        <Type>Flight</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public javax.xml.bind.JAXBElement airport.saibot.finance.aircraftcharge.ObjectFactory.createAirportCharge(airport.saibot.finance.aircraftcharge.AirportChargeType)">
+        <Name>createAirportCharge</Name>
+        <Alias>createAirportCharge</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <OverloadedParameter id="G}-39dda2ed:145696b67ee:-7b8c">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <IDsOfType>J}airport.saibot.finance.aircraftcharge.AirportChargeType</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}34">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}javax.xml.bind.JAXBElement</IDofType>
+        <Type>JAXBElement</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public airport.saibot.finance.aircraftcharge.AirportChargeType airport.saibot.finance.aircraftcharge.ObjectFactory.createAirportChargeType()">
+        <Name>createAirportChargeType</Name>
+        <Alias>createAirportChargeType</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Modifiers id="L}36">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}airport.saibot.finance.aircraftcharge.AirportChargeType</IDofType>
+        <Type>AirportCharge</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Constructor id="J}public airport.saibot.finance.aircraftcharge.ObjectFactory()">
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Visible>false</Visible>
+        <Modifiers id="L}28">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+      </Constructor>
+      <IDofSuperClass>J}java.lang.Object</IDofSuperClass>
+      <ValidationUpdateNumber>454</ValidationUpdateNumber>
+      <Source>Schemas/AirportChargeCalculation.xsd</Source>
+      <IsArray>false</IsArray>
+      <IDofArrayComponentType>B}nil</IDofArrayComponentType>
+      <SupportXPath>false</SupportXPath>
+      <IsInterface>false</IsInterface>
+      <Modifiers id="L}1687">
+        <CreationUpdateNumber>454</CreationUpdateNumber>
+        <Access>1</Access>
+        <isStatic>false</isStatic>
+        <isFinal>false</isFinal>
+        <isAbstract>false</isAbstract>
+      </Modifiers>
+      <EnumBucketSetID>B}nil</EnumBucketSetID>
+      <Timestamp>0</Timestamp>
+      <ENUM>false</ENUM>
+      <JAXB2.0>true</JAXB2.0>
+    </JaxbFactType>
+    <JaxbFactType id="J}airport.saibot.finance.aircraftcharge.AirportChargeType">
+      <Name>airport.saibot.finance.aircraftcharge.AirportChargeType</Name>
+      <Alias>AirportCharge</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>4</CreationUpdateNumber>
+      <Property id="J}airport.saibot.finance.aircraftcharge.AirportChargeType.{baseRate}">
+        <Name>baseRate</Name>
+        <Alias>baseRate</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <IDofType>J}float</IDofType>
+        <ListContentID>B}nil</ListContentID>
+        <Type>float</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+        <Writable>true</Writable>
+        <Readable>true</Readable>
+        <Local>true</Local>
+        <Expression id="L}49">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <PrimaryKey>false</PrimaryKey>
+      </Property>
+      <Property id="J}airport.saibot.finance.aircraftcharge.AirportChargeType.{totalCharge}">
+        <Name>totalCharge</Name>
+        <Alias>totalCharge</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <IDofType>J}float</IDofType>
+        <ListContentID>B}nil</ListContentID>
+        <Type>float</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+        <Writable>true</Writable>
+        <Readable>true</Readable>
+        <Local>true</Local>
+        <Expression id="L}50">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <PrimaryKey>false</PrimaryKey>
+      </Property>
+      <Method id="J}public void airport.saibot.finance.aircraftcharge.AirportChargeType.setTotalCharge(float)">
+        <Name>setTotalCharge</Name>
+        <Alias>setTotalCharge</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <OverloadedParameter id="G}-39dda2ed:145696b67ee:-7b8b">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <IDsOfType>J}float</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}42">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}void</IDofType>
+        <Type>void</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public void airport.saibot.finance.aircraftcharge.AirportChargeType.setBaseRate(float)">
+        <Name>setBaseRate</Name>
+        <Alias>setBaseRate</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <OverloadedParameter id="G}-39dda2ed:145696b67ee:-7b8a">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <IDsOfType>J}float</IDsOfType>
+        </OverloadedParameter>
+        <Modifiers id="L}44">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}void</IDofType>
+        <Type>void</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public float airport.saibot.finance.aircraftcharge.AirportChargeType.getBaseRate()">
+        <Name>getBaseRate</Name>
+        <Alias>getBaseRate</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Modifiers id="L}46">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}float</IDofType>
+        <Type>float</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Method id="J}public float airport.saibot.finance.aircraftcharge.AirportChargeType.getTotalCharge()">
+        <Name>getTotalCharge</Name>
+        <Alias>getTotalCharge</Alias>
+        <Visible>false</Visible>
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Modifiers id="L}48">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+        <Static>false</Static>
+        <IDofType>J}float</IDofType>
+        <Type>float</Type>
+        <IDofBucketSet>B}nil</IDofBucketSet>
+      </Method>
+      <Constructor id="J}public airport.saibot.finance.aircraftcharge.AirportChargeType()">
+        <CreationUpdateNumber>4</CreationUpdateNumber>
+        <Visible>true</Visible>
+        <Modifiers id="L}40">
+          <CreationUpdateNumber>4</CreationUpdateNumber>
+          <Access>1</Access>
+          <isStatic>false</isStatic>
+          <isFinal>false</isFinal>
+          <isAbstract>false</isAbstract>
+        </Modifiers>
+      </Constructor>
+      <IDofSuperClass>J}java.lang.Object</IDofSuperClass>
+      <ValidationUpdateNumber>454</ValidationUpdateNumber>
+      <Source>Schemas/AirportChargeCalculation.xsd</Source>
+      <IsArray>false</IsArray>
+      <IDofArrayComponentType>B}nil</IDofArrayComponentType>
+      <SupportXPath>false</SupportXPath>
+      <IsInterface>false</IsInterface>
+      <Modifiers id="L}1688">
+        <CreationUpdateNumber>454</CreationUpdateNumber>
+        <Access>1</Access>
+        <isStatic>false</isStatic>
+        <isFinal>false</isFinal>
+        <isAbstract>false</isAbstract>
+      </Modifiers>
+      <EnumBucketSetID>B}nil</EnumBucketSetID>
+      <Timestamp>0</Timestamp>
+      <ENUM>false</ENUM>
+      <XmlName>//xs:complexType[@name=&apos;airportChargeType&apos;]</XmlName>
+      <JAXB2.0>true</JAXB2.0>
+      <NodeName>airportChargeType</NodeName>
+      <Namespace>saibot.airport/finance/aircraftcharge</Namespace>
+    </JaxbFactType>
+    <BucketSet id="G}-39dda2ed:145696b67ee:-7b63">
+      <Name>TypeOfFlight</Name>
+      <Alias>TypeOfFlight</Alias>
+      <Description>A flight is either cargo or passenger. With MaxNumberOfPassengersOnCargoFlight or fewer passengers, a flight is deemed a cargo flight</Description>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>72</CreationUpdateNumber>
+      <IDofType>J}int</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>int</Type>
+      <Form>Range</Form>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7b62">
+        <Name>&lt;MaxNumberOfPassengersOnCargoFlight</Name>
+        <Alias>Cargo</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>72</CreationUpdateNumber>
+        <Inclusive>true</Inclusive>
+        <Otherwise>true</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}273">
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7b61">
+        <Name>&gt;=MaxNumberOfPassengersOnCargoFlight</Name>
+        <Alias>Passenger</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>75</CreationUpdateNumber>
+        <Inclusive>true</Inclusive>
+        <Otherwise>false</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}280">
+          <Value>MaxNumberOfPassengersOnCargoFlight</Value>
+          <ResolvedValue>`G}-39dda2ed:145696b67ee:-7b5f`</ResolvedValue>
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <CalendarForm>Date</CalendarForm>
+      <Excluded>false</Excluded>
+      <ValidationUpdateNumber>93</ValidationUpdateNumber>
+    </BucketSet>
+    <BucketSet id="G}-39dda2ed:145696b67ee:-7ad5">
+      <Name>ArrivalOrDeparture</Name>
+      <Alias>ArrivalOrDeparture</Alias>
+      <Description>A flight is either incoming (arrival, landing) or outgoing (departure, take off)</Description>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>144</CreationUpdateNumber>
+      <IDofType>J}java.lang.String</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>String</Type>
+      <Form>LOV</Form>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7ad4">
+        <Name>otherwise</Name>
+        <Alias>otherwise</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>144</CreationUpdateNumber>
+        <Inclusive>true</Inclusive>
+        <Otherwise>true</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}824">
+          <Value>&quot;otherwise&quot;</Value>
+          <ResolvedValue>&quot;otherwise&quot;</ResolvedValue>
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7ad3">
+        <Name>&quot;A&quot;</Name>
+        <Alias>&quot;Arrival&quot;</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>147</CreationUpdateNumber>
+        <Inclusive>false</Inclusive>
+        <Otherwise>false</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}831">
+          <Value>&quot;A&quot;</Value>
+          <ResolvedValue>&quot;A&quot;</ResolvedValue>
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7ad2">
+        <Name>&quot;D&quot;</Name>
+        <Alias>&quot;Departure&quot;</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>150</CreationUpdateNumber>
+        <Inclusive>false</Inclusive>
+        <Otherwise>false</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}838">
+          <Value>&quot;D&quot;</Value>
+          <ResolvedValue>&quot;D&quot;</ResolvedValue>
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <CalendarForm>Date</CalendarForm>
+      <Excluded>false</Excluded>
+      <ValidationUpdateNumber>154</ValidationUpdateNumber>
+    </BucketSet>
+    <BucketSet id="G}-39dda2ed:145696b67ee:-7ad1">
+      <Name>SlotTime</Name>
+      <Alias>SlotTime</Alias>
+      <Description>This value set defines the four &quot;time zones&quot; dealt with at Saibot Airport: day, night and the gray areas (both edges of the night). Four time ranges - the first one starting at minus infinity, the fourth at 11PM - make up this Value Set.</Description>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>155</CreationUpdateNumber>
+      <IDofType>J}java.util.Calendar</IDofType>
+      <ListContentID>B}nil</ListContentID>
+      <Type>Calendar</Type>
+      <Form>Range</Form>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7ad0">
+        <Name>&lt;&quot;05:30:00+00:00&quot;</Name>
+        <Alias>&quot;Night&quot;</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>155</CreationUpdateNumber>
+        <Inclusive>true</Inclusive>
+        <Otherwise>true</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}849">
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7acf">
+        <Name>[&quot;05:30:00+00:00&quot;..&quot;07:00:00+00:00&quot;)</Name>
+        <Alias>&quot;MorningEdge&quot;</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>159</CreationUpdateNumber>
+        <Inclusive>true</Inclusive>
+        <Otherwise>false</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}858">
+          <Value>&quot;05:30:00+00:00&quot;</Value>
+          <ResolvedValue>&quot;05:30:00+00:00&quot;</ResolvedValue>
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7ace">
+        <Name>[&quot;07:00:00+00:00&quot;..&quot;23:00:00Z&quot;)</Name>
+        <Alias>&quot;Day&quot;</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>163</CreationUpdateNumber>
+        <Inclusive>true</Inclusive>
+        <Otherwise>false</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}867">
+          <Value>&quot;07:00:00+00:00&quot;</Value>
+          <ResolvedValue>&quot;07:00:00+00:00&quot;</ResolvedValue>
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <Bucket id="G}-39dda2ed:145696b67ee:-7acd">
+        <Name>&gt;=&quot;23:00:00Z&quot;</Name>
+        <Alias>&quot;EveningEdge&quot;</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>170</CreationUpdateNumber>
+        <Inclusive>true</Inclusive>
+        <Otherwise>false</Otherwise>
+        <Excluded>false</Excluded>
+        <Expression id="L}882">
+          <Value>&quot;23:00:00Z&quot;</Value>
+          <ResolvedValue>&quot;23:00:00Z&quot;</ResolvedValue>
+          <IsConstant>true</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+      </Bucket>
+      <CalendarForm>Time</CalendarForm>
+      <Excluded>false</Excluded>
+      <ValidationUpdateNumber>443</ValidationUpdateNumber>
+    </BucketSet>
+    <SupportsXPathEnabled>false</SupportsXPathEnabled>
+    <DecisionFunction id="G}-39dda2ed:145696b67ee:-7b88">
+      <Name>CalculateAirportCharge</Name>
+      <Alias>CalculateAirportCharge</Alias>
+      <Visible>true</Visible>
+      <CreationUpdateNumber>4</CreationUpdateNumber>
+      <WebService>true</WebService>
+      <CheckRuleFlow>true</CheckRuleFlow>
+      <Stateless>true</Stateless>
+      <DecisionFunctionInput id="G}-39dda2ed:145696b67ee:-7b87">
+        <Name>Flight</Name>
+        <Alias>Flight</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>6</CreationUpdateNumber>
+        <IDofType>J}airport.saibot.finance.aircraftcharge.FlightType</IDofType>
+        <List>false</List>
+        <Tree>true</Tree>
+      </DecisionFunctionInput>
+      <DecisionFunctionRuleSet id="L}53">
+        <CreationUpdateNumber>5</CreationUpdateNumber>
+        <Form>rule set</Form>
+        <Ruleset>CalculateBaseRate</Ruleset>
+        <refID>G}-39dda2ed:145696b67ee:-7b89</refID>
+      </DecisionFunctionRuleSet>
+      <DecisionFunctionRuleSet id="L}184">
+        <CreationUpdateNumber>59</CreationUpdateNumber>
+        <Form>rule set</Form>
+        <Ruleset>CalculateTotalCharge</Ruleset>
+        <refID>G}-39dda2ed:145696b67ee:-7b7e</refID>
+      </DecisionFunctionRuleSet>
+      <DecisionFunctionOutput id="G}-39dda2ed:145696b67ee:-7b86">
+        <Name>AirportCharge</Name>
+        <Alias>AirportCharge</Alias>
+        <Visible>true</Visible>
+        <CreationUpdateNumber>7</CreationUpdateNumber>
+        <IDofType>J}airport.saibot.finance.aircraftcharge.AirportChargeType</IDofType>
+        <List>false</List>
+        <Tree>false</Tree>
+      </DecisionFunctionOutput>
+      <ValidationUpdateNumber>457</ValidationUpdateNumber>
+      <RuleFiringLimit>10000</RuleFiringLimit>
+      <RuleFiringLimitError>true</RuleFiringLimitError>
+      <UniqueRulesets>false</UniqueRulesets>
+    </DecisionFunction>
+    <UpdateNumber>461</UpdateNumber>
+    <ValidationUpdateNumber>461</ValidationUpdateNumber>
+    <UpdateTime>0</UpdateTime>
+  </DataModel>
+  <RuleSet id="G}-39dda2ed:145696b67ee:-7b89">
+    <Name>CalculateBaseRate</Name>
+    <Alias>CalculateBaseRate</Alias>
+    <ValidationUpdateNumber>454</ValidationUpdateNumber>
+    <Active>true</Active>
+    <CalendarForm>DateTime</CalendarForm>
+    <Rule id="G}-39dda2ed:145696b67ee:-7b81">
+      <Name>UnderWeightLimit</Name>
+      <Alias>UnderWeightLimit</Alias>
+      <ValidationUpdateNumber>454</ValidationUpdateNumber>
+      <Priority>medium</Priority>
+      <Active>true</Active>
+      <CalendarForm>DateTime</CalendarForm>
+      <TreeMode>false</TreeMode>
+      <Visible>true</Visible>
+      <SimpleTest id="L}110">
+        <FactType>Flight</FactType>
+        <IDofFactType>J}airport.saibot.finance.aircraftcharge.FlightType</IDofFactType>
+        <FactPath>Flight</FactPath>
+        <FactPathIDs>L}110</FactPathIDs>
+        <Form>FormIsA</Form>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>false</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <SimpleTest id="L}105">
+        <IDofFactType>B}nil</IDofFactType>
+        <Form>FormNotNested</Form>
+        <Expression id="L}106">
+          <Value>Flight.aircraftMTOW</Value>
+          <ResolvedValue>`L}110`.`J}airport.saibot.finance.aircraftcharge.FlightType.{aircraftMTOW}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Expression id="L}107">
+          <Value>WeightLimit</Value>
+          <ResolvedValue>`G}-39dda2ed:145696b67ee:-7b84`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <IDofOperator>B}&lt;</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>true</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <Pattern id="L}99">
+        <IDofFactType>B}nil</IDofFactType>
+        <Form>Fact Type</Form>
+        <Connective>&amp;&amp;</Connective>
+        <TestForm>Simple</TestForm>
+        <Expression id="L}100">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Operator>(for each case where)</Operator>
+      </Pattern>
+      <ShowPatterns>false</ShowPatterns>
+      <Logical>false</Logical>
+      <Action id="L}117">
+        <Form>Assert New</Form>
+        <Target>AirportCharge</Target>
+        <ResolvedTarget>`J}public airport.saibot.finance.aircraftcharge.AirportChargeType()`</ResolvedTarget>
+        <Expression id="L}120">
+          <Value>BaseRateForUnderLimitWeight</Value>
+          <ResolvedValue>`G}-39dda2ed:145696b67ee:-7b82`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>baseRate</ParameterAlias>
+          <ParameterID>J}airport.saibot.finance.aircraftcharge.AirportChargeType.{baseRate}</ParameterID>
+        </Expression>
+        <Expression id="L}121">
+          <Value>0</Value>
+          <ResolvedValue>0</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>totalCharge</ParameterAlias>
+          <ParameterID>J}airport.saibot.finance.aircraftcharge.AirportChargeType.{totalCharge}</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+    </Rule>
+    <Rule id="G}-39dda2ed:145696b67ee:-7b80">
+      <Name>OverWeightLimit</Name>
+      <Alias>OverWeightLimit</Alias>
+      <ValidationUpdateNumber>454</ValidationUpdateNumber>
+      <Priority>medium</Priority>
+      <Active>true</Active>
+      <CalendarForm>DateTime</CalendarForm>
+      <TreeMode>false</TreeMode>
+      <Visible>true</Visible>
+      <SimpleTest id="L}139">
+        <FactType>Flight</FactType>
+        <IDofFactType>J}airport.saibot.finance.aircraftcharge.FlightType</IDofFactType>
+        <FactPath>Flight</FactPath>
+        <FactPathIDs>L}139</FactPathIDs>
+        <Form>FormIsA</Form>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>false</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <SimpleTest id="L}134">
+        <IDofFactType>B}nil</IDofFactType>
+        <Form>FormNotNested</Form>
+        <Expression id="L}135">
+          <Value>Flight.aircraftMTOW</Value>
+          <ResolvedValue>`L}139`.`J}airport.saibot.finance.aircraftcharge.FlightType.{aircraftMTOW}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Expression id="L}136">
+          <Value>WeightLimit</Value>
+          <ResolvedValue>`G}-39dda2ed:145696b67ee:-7b84`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <IDofOperator>B}&gt;=</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>true</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <Pattern id="L}128">
+        <IDofFactType>B}nil</IDofFactType>
+        <Form>Fact Type</Form>
+        <Connective>&amp;&amp;</Connective>
+        <TestForm>Simple</TestForm>
+        <Expression id="L}129">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Operator>(for each case where)</Operator>
+      </Pattern>
+      <ShowPatterns>false</ShowPatterns>
+      <Logical>false</Logical>
+      <Action id="L}146">
+        <Form>Assert New</Form>
+        <Target>AirportCharge</Target>
+        <ResolvedTarget>`J}public airport.saibot.finance.aircraftcharge.AirportChargeType()`</ResolvedTarget>
+        <Expression id="L}149">
+          <Value>PerThousandKilogramRate*Flight.aircraftMTOW/1000</Value>
+          <ResolvedValue>`G}-39dda2ed:145696b67ee:-7b83`*`L}139`.`J}airport.saibot.finance.aircraftcharge.FlightType.{aircraftMTOW}`/1000</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>baseRate</ParameterAlias>
+          <ParameterID>J}airport.saibot.finance.aircraftcharge.AirportChargeType.{baseRate}</ParameterID>
+        </Expression>
+        <Expression id="L}150">
+          <Value>0</Value>
+          <ResolvedValue>0</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>totalCharge</ParameterAlias>
+          <ParameterID>J}airport.saibot.finance.aircraftcharge.AirportChargeType.{totalCharge}</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+    </Rule>
+    <Rule id="G}-39dda2ed:145696b67ee:-7b4a">
+      <Name>CargoCorrrection</Name>
+      <Alias>CargoCorrrection</Alias>
+      <ValidationUpdateNumber>454</ValidationUpdateNumber>
+      <Priority>medium</Priority>
+      <Active>true</Active>
+      <CalendarForm>DateTime</CalendarForm>
+      <TreeMode>false</TreeMode>
+      <Visible>true</Visible>
+      <SimpleTest id="L}441">
+        <FactType>Flight</FactType>
+        <IDofFactType>J}airport.saibot.finance.aircraftcharge.FlightType</IDofFactType>
+        <FactPath>Flight</FactPath>
+        <FactPathIDs>L}441</FactPathIDs>
+        <Form>FormIsA</Form>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>false</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <SimpleTest id="L}436">
+        <IDofFactType>B}nil</IDofFactType>
+        <Form>FormNotNested</Form>
+        <Expression id="L}437">
+          <Value>Flight.numberOfPassengers</Value>
+          <ResolvedValue>`L}441`.`J}airport.saibot.finance.aircraftcharge.FlightType.{numberOfPassengers}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Expression id="L}438">
+          <Value>MaxNumberOfPassengersOnCargoFlight</Value>
+          <ResolvedValue>`G}-39dda2ed:145696b67ee:-7b5f`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <IDofOperator>B}&lt;=</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>true</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <SimpleTest id="L}453">
+        <FactType>AirportCharge</FactType>
+        <IDofFactType>J}airport.saibot.finance.aircraftcharge.AirportChargeType</IDofFactType>
+        <FactPath>AirportCharge</FactPath>
+        <FactPathIDs>L}453</FactPathIDs>
+        <Form>FormIsA</Form>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>false</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <Pattern id="L}432">
+        <IDofFactType>B}nil</IDofFactType>
+        <Form>Fact Type</Form>
+        <Connective>&amp;&amp;</Connective>
+        <TestForm>Simple</TestForm>
+        <Expression id="L}433">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Operator>(for each case where)</Operator>
+      </Pattern>
+      <ShowPatterns>false</ShowPatterns>
+      <Logical>false</Logical>
+      <Action id="L}448">
+        <Form>Modify</Form>
+        <Target>AirportCharge</Target>
+        <ResolvedTarget>`L}453`</ResolvedTarget>
+        <Expression id="L}451">
+          <Value>AirportCharge.baseRate/2</Value>
+          <ResolvedValue>`L}453`.`J}airport.saibot.finance.aircraftcharge.AirportChargeType.{baseRate}`/2</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>baseRate</ParameterAlias>
+          <ParameterID>J}airport.saibot.finance.aircraftcharge.AirportChargeType.{baseRate}</ParameterID>
+        </Expression>
+        <Expression id="L}452">
+          <IsConstant>false</IsConstant>
+          <ParameterAlias>totalCharge</ParameterAlias>
+          <ParameterID>J}airport.saibot.finance.aircraftcharge.AirportChargeType.{totalCharge}</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+    </Rule>
+    <VisibilityFilterEnabled>false</VisibilityFilterEnabled>
+    <CreationUpdateNumber>4</CreationUpdateNumber>
+  </RuleSet>
+  <RuleSet id="G}-39dda2ed:145696b67ee:-7b7e">
+    <Name>CalculateTotalCharge</Name>
+    <Alias>CalculateTotalCharge</Alias>
+    <Description>Rule to take all intermediate results can calculate total charge</Description>
+    <ValidationUpdateNumber>461</ValidationUpdateNumber>
+    <Active>true</Active>
+    <CalendarForm>DateTime</CalendarForm>
+    <Rule id="G}-39dda2ed:145696b67ee:-7b7d">
+      <Name>CalculateTotalCharge</Name>
+      <Alias>CalculateTotalCharge</Alias>
+      <ValidationUpdateNumber>461</ValidationUpdateNumber>
+      <Priority>medium</Priority>
+      <Active>true</Active>
+      <CalendarForm>DateTime</CalendarForm>
+      <TreeMode>false</TreeMode>
+      <Visible>true</Visible>
+      <SimpleTest id="L}168">
+        <FactType>AirportCharge</FactType>
+        <IDofFactType>J}airport.saibot.finance.aircraftcharge.AirportChargeType</IDofFactType>
+        <FactPath>AirportCharge</FactPath>
+        <FactPathIDs>L}168</FactPathIDs>
+        <Form>FormIsA</Form>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>false</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <SimpleTest id="L}162">
+        <IDofFactType>B}nil</IDofFactType>
+        <Form>FormNotNested</Form>
+        <Expression id="L}163">
+          <Value>AirportCharge.totalCharge</Value>
+          <ResolvedValue>`L}168`.`J}airport.saibot.finance.aircraftcharge.AirportChargeType.{totalCharge}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Expression id="L}164">
+          <Value>0</Value>
+          <ResolvedValue>0</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <IDofOperator>B}==</IDofOperator>
+        <Connective>&amp;&amp;</Connective>
+        <Visible>true</Visible>
+        <DSLId>B}nil</DSLId>
+      </SimpleTest>
+      <Pattern id="L}156">
+        <IDofFactType>B}nil</IDofFactType>
+        <Form>Fact Type</Form>
+        <Connective>&amp;&amp;</Connective>
+        <TestForm>Simple</TestForm>
+        <Expression id="L}157">
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <Operator>(for each case where)</Operator>
+      </Pattern>
+      <ShowPatterns>false</ShowPatterns>
+      <Logical>false</Logical>
+      <Action id="L}173">
+        <Form>Assign</Form>
+        <Target>AirportCharge.totalCharge</Target>
+        <ResolvedTarget>`L}168`.`J}airport.saibot.finance.aircraftcharge.AirportChargeType.{totalCharge}`</ResolvedTarget>
+        <Expression id="L}174">
+          <Value>AirportCharge.baseRate</Value>
+          <ResolvedValue>`L}168`.`J}airport.saibot.finance.aircraftcharge.AirportChargeType.{baseRate}`</ResolvedValue>
+          <IsConstant>false</IsConstant>
+          <ParameterID>B}nil</ParameterID>
+        </Expression>
+        <DSLId>B}nil</DSLId>
+      </Action>
+    </Rule>
+    <VisibilityFilterEnabled>false</VisibilityFilterEnabled>
+    <CreationUpdateNumber>49</CreationUpdateNumber>
+  </RuleSet>
+  <ValidationUpdateNumber>475</ValidationUpdateNumber>
+  <UpdateNumber>475</UpdateNumber>
+  <ResourceBundle>AirportChargeArbiterTranslations</ResourceBundle>
+  <TestModel id="L}3">
+    <TestSuite id="G}-51b077d:14578aae1b9:-7c26">
+      <Name>TestSuite1</Name>
+      <Alias>TestSuite1</Alias>
+      <DecisionFunctionID>G}-39dda2ed:145696b67ee:-7b88</DecisionFunctionID>
+      <DecisionFunction>CalculateAirportCharge</DecisionFunction>
+      <TestCase id="G}-51b077d:14578aae1b9:-7c25">
+        <Name>TestCaseUnderWeight</Name>
+        <Alias>Test Case - Under Weight</Alias>
+        <DecisionFunctionID>G}-39dda2ed:145696b67ee:-7b88</DecisionFunctionID>
+        <DecisionFunction>CalculateAirportCharge</DecisionFunction>
+        <TestInput id="L}1320">
+          <DecisionFunctionFactID>G}-39dda2ed:145696b67ee:-7b87</DecisionFunctionFactID>
+          <DecisionFunctionFactAlias>Flight</DecisionFunctionFactAlias>
+          <Fact id="G}-51b077d:14578aae1b9:-7c24">
+            <Name>Flight_Fact1</Name>
+            <Alias>Flight_Fact 1</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>312</CreationUpdateNumber>
+            <IDofType>J}airport.saibot.finance.aircraftcharge.FlightType</IDofType>
+            <ListContentID>B}nil</ListContentID>
+            <Type>Flight</Type>
+            <PropertyValue id="L}1323">
+              <CreationUpdateNumber>312</CreationUpdateNumber>
+              <PropertyID>J}airport.saibot.finance.aircraftcharge.FlightType.{numberOfPassengers}</PropertyID>
+              <PropertyAlias>numberOfPassengers</PropertyAlias>
+              <Fact id="G}-51b077d:14578aae1b9:-7c23">
+                <Name>numberOfPassengers_Fact1</Name>
+                <Alias>numberOfPassengers_Fact 1</Alias>
+                <Visible>true</Visible>
+                <CreationUpdateNumber>312</CreationUpdateNumber>
+                <IDofType>J}int</IDofType>
+                <ListContentID>B}nil</ListContentID>
+                <Type>int</Type>
+                <Expression id="L}1324">
+                  <Value>150</Value>
+                  <ResolvedValue>150</ResolvedValue>
+                  <IsConstant>false</IsConstant>
+                  <ParameterID>B}nil</ParameterID>
+                </Expression>
+                <isParam>false</isParam>
+                <ValidationUpdateNumber>474</ValidationUpdateNumber>
+              </Fact>
+            </PropertyValue>
+            <PropertyValue id="L}1326">
+              <CreationUpdateNumber>312</CreationUpdateNumber>
+              <PropertyID>J}airport.saibot.finance.aircraftcharge.FlightType.{aircraftMTOW}</PropertyID>
+              <PropertyAlias>aircraftMTOW</PropertyAlias>
+              <Fact id="G}-51b077d:14578aae1b9:-7c22">
+                <Name>aircraftMTOW_Fact1</Name>
+                <Alias>aircraftMTOW_Fact 1</Alias>
+                <Visible>true</Visible>
+                <CreationUpdateNumber>312</CreationUpdateNumber>
+                <IDofType>J}int</IDofType>
+                <ListContentID>B}nil</ListContentID>
+                <Type>int</Type>
+                <Expression id="L}1327">
+                  <Value>15000</Value>
+                  <ResolvedValue>15000</ResolvedValue>
+                  <IsConstant>false</IsConstant>
+                  <ParameterID>B}nil</ParameterID>
+                </Expression>
+                <isParam>false</isParam>
+                <ValidationUpdateNumber>473</ValidationUpdateNumber>
+              </Fact>
+            </PropertyValue>
+            <Expression id="L}1321">
+              <IsConstant>false</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+            <isParam>false</isParam>
+            <ValidationUpdateNumber>474</ValidationUpdateNumber>
+          </Fact>
+        </TestInput>
+        <TestResult id="L}1338">
+          <DecisionFunctionFactID>G}-39dda2ed:145696b67ee:-7b86</DecisionFunctionFactID>
+          <DecisionFunctionFactAlias>AirportCharge</DecisionFunctionFactAlias>
+          <Fact id="G}-51b077d:14578aae1b9:-7c1e">
+            <Name>AirportCharge_Fact1</Name>
+            <Alias>AirportCharge_Fact 1</Alias>
+            <Visible>true</Visible>
+            <CreationUpdateNumber>312</CreationUpdateNumber>
+            <IDofType>J}airport.saibot.finance.aircraftcharge.AirportChargeType</IDofType>
+            <ListContentID>B}nil</ListContentID>
+            <Type>AirportCharge</Type>
+            <PropertyValue id="L}1341">
+              <CreationUpdateNumber>312</CreationUpdateNumber>
+              <PropertyID>J}airport.saibot.finance.aircraftcharge.AirportChargeType.{baseRate}</PropertyID>
+              <PropertyAlias>baseRate</PropertyAlias>
+              <Fact id="G}-51b077d:14578aae1b9:-7c1d">
+                <Name>baseRate_Fact1</Name>
+                <Alias>baseRate_Fact 1</Alias>
+                <Visible>true</Visible>
+                <CreationUpdateNumber>312</CreationUpdateNumber>
+                <IDofType>J}float</IDofType>
+                <ListContentID>B}nil</ListContentID>
+                <Type>float</Type>
+                <Expression id="L}1342">
+                  <Value>BaseRateForUnderLimitWeight</Value>
+                  <ResolvedValue>`G}-39dda2ed:145696b67ee:-7b82`</ResolvedValue>
+                  <IsConstant>false</IsConstant>
+                  <ParameterID>B}nil</ParameterID>
+                </Expression>
+                <isParam>false</isParam>
+                <ValidationUpdateNumber>470</ValidationUpdateNumber>
+              </Fact>
+            </PropertyValue>
+            <PropertyValue id="L}1344">
+              <CreationUpdateNumber>312</CreationUpdateNumber>
+              <PropertyID>J}airport.saibot.finance.aircraftcharge.AirportChargeType.{totalCharge}</PropertyID>
+              <PropertyAlias>totalCharge</PropertyAlias>
+              <Fact id="G}-51b077d:14578aae1b9:-7c1c">
+                <Name>totalCharge_Fact1</Name>
+                <Alias>totalCharge_Fact 1</Alias>
+                <Visible>true</Visible>
+                <CreationUpdateNumber>312</CreationUpdateNumber>
+                <IDofType>J}float</IDofType>
+                <ListContentID>B}nil</ListContentID>
+                <Type>float</Type>
+                <Expression id="L}1345">
+                  <Value>BaseRateForUnderLimitWeight</Value>
+                  <ResolvedValue>`G}-39dda2ed:145696b67ee:-7b82`</ResolvedValue>
+                  <IsConstant>false</IsConstant>
+                  <ParameterID>B}nil</ParameterID>
+                </Expression>
+                <isParam>false</isParam>
+                <ValidationUpdateNumber>471</ValidationUpdateNumber>
+              </Fact>
+            </PropertyValue>
+            <Expression id="L}1339">
+              <IsConstant>false</IsConstant>
+              <ParameterID>B}nil</ParameterID>
+            </Expression>
+            <isParam>false</isParam>
+            <ValidationUpdateNumber>471</ValidationUpdateNumber>
+          </Fact>
+        </TestResult>
+        <NoRuleFiredIsError>false</NoRuleFiredIsError>
+        <ValidationUpdateNumber>475</ValidationUpdateNumber>
+      </TestCase>
+      <ValidationUpdateNumber>475</ValidationUpdateNumber>
+    </TestSuite>
+    <ValidationUpdateNumber>475</ValidationUpdateNumber>
+    <UpdateNumber>475</UpdateNumber>
+    <Validation>true</Validation>
+    <AutoSync>true</AutoSync>
+  </TestModel>
+  <Preferences id="G}-39dda2ed:145696b67ee:-7b90">
+    <RulesExecutionAlgorithm>RETE</RulesExecutionAlgorithm>
+    <DisallowErrorSuppression>false</DisallowErrorSuppression>
+    <PhraseSuggestions>All</PhraseSuggestions>
+    <RestrictAutoSuggestions>true</RestrictAutoSuggestions>
+    <IncludeChainedExpressions>true</IncludeChainedExpressions>
+  </Preferences>
+</RuleDictionary>

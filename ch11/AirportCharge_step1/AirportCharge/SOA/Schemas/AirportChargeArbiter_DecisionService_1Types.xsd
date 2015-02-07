@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema blockDefault="#all" 
+            attributeFormDefault="unqualified" 
+            elementFormDefault="qualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://xmlns.oracle.com/AirportChargeArbiter/AirportChargeArbiter_DecisionService_1"
+            xmlns:bpelpm="http://xmlns.oracle.com/bpel"
+            xmlns:tns="http://xmlns.oracle.com/AirportChargeArbiter/AirportChargeArbiter_DecisionService_1"
+            targetNamespace="http://xmlns.oracle.com/AirportChargeArbiter/AirportChargeArbiter_DecisionService_1">
+
+  <!-- 
+    Decision Service type definitions.
+    This file is auto-generated, please don't edit.
+  -->
+
+  <!--
+    Import common definitions
+  -->
+  <xsd:import namespace="http://xmlns.oracle.com/bpel"
+              schemaLocation="oramds:/soa/shared/rules/BpelProcess.xsd"/>
+
+
+  <!--
+    Top level elements to follow here
+  -->
+  <xsd:element name="errorInfo" type="tns:tDecisionServiceError">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service fault element
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+
+
+  <!--
+    Attribute groups to follow here
+  -->
+  <xsd:attributeGroup name="name-desc">
+    <xsd:annotation>
+      <xsd:documentation>
+        Attribute group for elements requiring (name, description) attributes
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:attribute name="name" type="xsd:NCName" use="required"/>
+    <xsd:attribute name="displayName" type="xsd:string" use="optional"/>
+    <xsd:attribute name="description" type="xsd:string" use="optional"/>
+  </xsd:attributeGroup>
+  
+  <!--
+    Type definitions to follow here
+  -->  
+  <xsd:complexType name="tProperty">
+    <xsd:annotation>
+      <xsd:documentation>
+        Property Type
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="xsd:NCName" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="tPropertyList">
+    <xsd:annotation>
+      <xsd:documentation>
+        PropertyList
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="property" type="tns:tProperty" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="tAssertPattern">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service type for pattern Assert
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecideContext">
+        <xsd:sequence>
+          <xsd:element name="assertList" type="xsd:anyType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="tAssertExecutePattern">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service type for pattern AssertExecute
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecideContext">
+        <xsd:sequence>
+          <xsd:element name="assertList" type="xsd:anyType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="tWatchPattern">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service type for pattern Watch
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecideContext">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="tAssertExecuteWatchStatelessPattern">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service type for patterns AssertExecuteWatchStateless
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecideContext">
+        <xsd:sequence>
+          <xsd:element name="assertList" type="xsd:anyType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="tAssertExecuteWatchStatefulPattern">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service type for patterns AssertExecuteWatchStateful
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecideContext">
+        <xsd:sequence>
+          <xsd:element name="assertList" type="xsd:anyType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="tCallFunctionStatelessPattern">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service type for patterns CallFunctionStateless
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecideContext">
+        <xsd:sequence>
+          <xsd:element name="parameterList" type="xsd:anyType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="tCallFunctionStatefulPattern">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service type for patterns CallFunctionStateful
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecideContext">
+        <xsd:sequence>
+          <xsd:element name="parameterList" type="xsd:anyType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="tWatchDecision">
+    <xsd:annotation>
+      <xsd:documentation>BPEL Decision Service output parameter for Watch pattern</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecisionContext">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>  
+
+  <xsd:complexType name="tAssertExecuteWatchStatelessDecision">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service output parameter for AssertExecuteWatchStateless pattern
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecisionContext">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>  
+
+  <xsd:complexType name="tAssertExecuteWatchStatefulDecision">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service output parameter for AssertExecuteWatchStateful pattern
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecisionContext">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>  
+
+  <xsd:complexType name="tCallFunctionStatelessDecision">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service output parameter for CallFunctionStateless pattern
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecisionContext">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>  
+
+  <xsd:complexType name="tCallFunctionStatefulDecision">
+    <xsd:annotation>
+      <xsd:documentation>
+        BPEL Decision Service output parameter for CallFunctionStateful pattern
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexContent>
+      <xsd:extension base="tns:tDecisionContext">
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>  
+
+  <xsd:complexType name="tDecisionContext">
+    <xsd:annotation>
+      <xsd:documentation>BPEL Decision Service response base type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="resultList" type="xsd:anyType" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+    <xsd:attribute name="ecid" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="tDecideContext">
+    <xsd:annotation>
+      <xsd:documentation>Decision Service request base type</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="configURL" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="composite" type="tns:tComposite" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="bpelInstance" type="bpelpm:tBpelProcess" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+    <xsd:attribute name="name" type="xsd:NCName" use="optional"/>
+    <xsd:attribute name="ecid" type="xsd:string" use="optional"/>
+    <xsd:attribute name="conversationId" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="tComposite">
+    <xsd:attribute name="name" type="xsd:string"/>
+    <xsd:attribute name="revision" type="xsd:string"/>
+    <xsd:attribute name="label" type="xsd:string"/>
+    <xsd:attribute name="applicationName" type="xsd:string"/>
+    <xsd:attribute name="component" type="xsd:string"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="tDecisionServiceError">
+    <xsd:annotation>
+      <xsd:documentation>BPEL Decision Service Error base type</xsd:documentation>
+    </xsd:annotation>
+      <xsd:sequence>
+        <xsd:element name="errorMessage" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
+

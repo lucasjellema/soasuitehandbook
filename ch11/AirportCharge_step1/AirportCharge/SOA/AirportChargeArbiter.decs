@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<decisionServices xmlns="http://xmlns.oracle.com/bpel/rules" name="AirportChargeArbiter">
+    <ruleEngineProvider provider="Oracle_11.0.0.0.0" name="OracleRulesSDK">
+        <repository type="SCA-Archive">
+            <path>AirportCharge/oracle/rules/saibot/airport/finance/airportcharge/AirportChargeArbiter.rules</path>
+        </repository>
+    </ruleEngineProvider>
+    <decisionService name="AirportChargeArbiter_DecisionService_1" ruleEngineProviderReference="OracleRulesSDK" targetNamespace="http://xmlns.oracle.com/AirportChargeArbiter/AirportChargeArbiter_DecisionService_1">
+        <catalog>AirportChargeArbiter</catalog>
+        <pattern name="CallFunctionStateless">
+            <arguments>
+                <call>saibot.airport.finance.airportcharge.AirportChargeArbiter.CalculateAirportCharge</call>
+            </arguments>
+        </pattern>
+        <pattern name="CallFunctionStateful">
+            <arguments>
+                <call>saibot.airport.finance.airportcharge.AirportChargeArbiter.CalculateAirportCharge</call>
+            </arguments>
+        </pattern>
+    </decisionService>
+    <schemaInformation>
+        <dictionary fqnPackage="saibot.airport.finance.airportcharge" fqnName="AirportChargeArbiter" updateNumber="475">
+            <schemaBrowser>
+                <package>airport.saibot.finance.aircraftcharge</package>
+                <namespace>saibot.airport/finance/aircraftcharge</namespace>
+            </schemaBrowser>
+            <schemaImport namespace="saibot.airport/finance/aircraftcharge" localPart="AirportChargeCalculation.xsd" schemaLocation="Schemas/AirportChargeCalculation.xsd">
+                <import namespace="saibot.airport/finance/aircraftcharge" localPart="AirportChargeCalculation.xsd" schemaLocation="Schemas/AirportChargeCalculation.xsd"/>
+            </schemaImport>
+        </dictionary>
+    </schemaInformation>
+</decisionServices>
