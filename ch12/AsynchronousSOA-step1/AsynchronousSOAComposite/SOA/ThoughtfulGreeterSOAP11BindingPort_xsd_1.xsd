@@ -1,0 +1,17 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<schema xmlns:pr="saibot.airport/services/pr" xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified"
+     elementFormDefault="qualified" targetNamespace="saibot.airport/services/pr">
+    <element name="requestMessage" type="pr:greetingRequestType"/>
+    <element name="responseMessage" type="pr:greetingResponseType"/>
+    <complexType name="greetingRequestType">
+        <sequence>
+            <element name="name" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="greetingResponseType">
+        <sequence>
+            <element name="greeting" type="string"/>
+        </sequence>
+    </complexType>
+</schema>
+<!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.9-b140105.1832 svn-revision#fe86fbd5dab1bf10ed66b14644097a3f96f55965. -->

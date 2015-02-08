@@ -1,0 +1,45 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is JAX-WS RI 2.2.9-b140105.1832 svn-revision#fe86fbd5dab1bf10ed66b14644097a3f96f55965. -->
+<wsdl:definitions
+     name="ThoughtfulGreeter"
+     targetNamespace="saibot.airport/services/pr"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="saibot.airport/services/pr"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <plnk:partnerLinkType name="ThoughtfulGreeter">
+        <plnk:role name="ThoughtfulGreeterProvider" portType="client:ThoughtfulGreeter"/>
+        <plnk:role name="ThoughtfulGreeterRequester" portType="client:ThoughtfulGreeterCallback"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="saibot.airport/services/pr" schemaLocation="../ThoughtfulGreeterSOAP11BindingPort_xsd_1.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ThoughtfulGreeterRequestMessage">
+        <wsdl:part name="payload" element="client:requestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="ThoughtfulGreeterResponseMessage">
+        <wsdl:part name="payload" element="client:responseMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="ThoughtfulGreeter">
+        <wsdl:operation name="helloToWorld">
+            <wsdl:input message="client:ThoughtfulGreeterRequestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ThoughtfulGreeterSOAP11Binding" type="client:ThoughtfulGreeter">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="helloToWorld">
+            <soap:operation style="document" soapAction="saibot.airport/services/pr/helloToWorld"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="payload"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ThoughtfulGreeterService">
+        <wsdl:port name="ThoughtfulGreeterPort" binding="client:ThoughtfulGreeterSOAP11Binding">
+            <soap:address location="http://localhost:7101/AsynchronousSOA-ExposeAsynchronousGreeterService-context-root/ThoughtfulGreeterSOAP11BindingPort"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

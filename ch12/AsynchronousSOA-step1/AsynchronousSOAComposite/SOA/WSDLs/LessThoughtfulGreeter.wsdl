@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ThoughtfulGreeter"
+             targetNamespace="saibot.airport/services/pr"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="saibot.airport/services/pr"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	TYPE DEFINITION - List of services participating in this BPEL process
+	The default output of the BPEL designer uses strings as input and 
+	output to the BPEL Process. But you can define or import any XML 
+	Schema type and use them as part of the message types.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="saibot.airport/services/pr" schemaLocation="../Schemas/ThoughtfulGreeter.xsd" />
+		</schema>
+	</wsdl:types>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	MESSAGE TYPE DEFINITION - Definition of the message types used as 
+	part of the port type defintions
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
+	<wsdl:message name="LessThoughtfulGreeterRequestMessage">
+		<wsdl:part name="payload" element="client:requestMessage"/>
+	</wsdl:message>
+
+	<wsdl:message name="LessThoughtfulGreeterResponseMessage">
+		<wsdl:part name="payload" element="client:responseMessage"/>
+	</wsdl:message>
+
+
+	<wsdl:portType name="LessThoughtfulGreeter">
+		<wsdl:operation name="helloToAndFromWorld">
+			<wsdl:input message="client:LessThoughtfulGreeterRequestMessage"/>
+                        <wsdl:output message="client:LessThoughtfulGreeterResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+</wsdl:definitions>

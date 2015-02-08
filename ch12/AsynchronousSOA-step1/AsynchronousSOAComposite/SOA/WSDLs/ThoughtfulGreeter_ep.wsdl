@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="ThoughtfulGreeter"
+     targetNamespace="saibot.airport/services/pr"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="saibot.airport/services/pr"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <wsdl:documentation>
+        <abstractWSDL>https://localhost:7102/soa-infra/services/default/AsynchronousSOAComposite!1.0/WSDLs/ThoughtfulGreeter.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="ThoughtfulGreeter">
+        <plnk:role name="ThoughtfulGreeterRequester" portType="client:ThoughtfulGreeterCallback"/>
+        <plnk:role name="ThoughtfulGreeterProvider" portType="client:ThoughtfulGreeter"/>
+    </plnk:partnerLinkType>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="wsaddr_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+    </wsp:Policy>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="saibot.airport/services/pr" schemaLocation="../ThoughtfulGreeter.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ThoughtfulGreeterRequestMessage">
+        <wsdl:part name="payload" element="client:requestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="ThoughtfulGreeterResponseMessage">
+        <wsdl:part name="payload" element="client:responseMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="ThoughtfulGreeter">
+        <wsdl:operation name="helloToWorld">
+            <wsdl:input message="client:ThoughtfulGreeterRequestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="ThoughtfulGreeterCallback">
+        <wsdl:operation name="helloFromWorld">
+            <wsdl:input message="client:ThoughtfulGreeterResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ThoughtfulGreeterSOAP11Binding" type="client:ThoughtfulGreeter">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wsaddr_policy"
+             wsdl:required="false"/>
+        <wsdl:operation name="helloToWorld">
+            <soap:operation style="document" soapAction="saibot.airport/services/pr/helloToWorld"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="payload"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ThoughtfulGreeterCallbackSOAP11Binding" type="client:ThoughtfulGreeterCallback">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="helloFromWorld">
+            <soap:operation style="document" soapAction="saibot.airport/services/pr/helloFromWorld"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="payload"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ThoughtfulGreeter_ep">
+        <wsdl:port name="ThoughtfulGreeter_pt" binding="client:ThoughtfulGreeterSOAP11Binding">
+            <soap:address location="https://localhost:7102/soa-infra/services/default/AsynchronousSOAComposite!1.0*soa_5e0a36a3-ac4d-41a5-8fb1-d32e9bead265/ThoughtfulGreeter_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

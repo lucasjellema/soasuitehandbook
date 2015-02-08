@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line/>
+      <col/>
+      <file>Mediators/ThoughtfulGreeterMediator.mplan</file>
+      <name>Mediators/ThoughtfulGreeterMediator.mplan</name>
+      <fix/>
+      <msg>Assigning property/constant "concat("Hello dear ",$in.payload/client:requestMessage/client:name," reply to ")" to element "$out.payload/client:responseMessage/client:greeting". Please make sure target is single leaf node, otherwise non-leaf node will contain only string value which may generate non-valid xml as per the xsd.</msg>
+   </Fault>
+</Faults>
