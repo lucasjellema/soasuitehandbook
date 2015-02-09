@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ThoughtfulGreeter"
+             targetNamespace="saibot.airport/services/pr"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:client="saibot.airport/services/pr"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	TYPE DEFINITION - List of services participating in this BPEL process
+	The default output of the BPEL designer uses strings as input and 
+	output to the BPEL Process. But you can define or import any XML 
+	Schema type and use them as part of the message types.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->   
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import namespace="saibot.airport/services/pr" schemaLocation="../Schemas/ThoughtfulGreeter.xsd" />
+		</schema>
+	</wsdl:types>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	MESSAGE TYPE DEFINITION - Definition of the message types used as 
+	part of the port type defintions
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->      
+	<wsdl:message name="ThoughtfulGreeterRequestMessage">
+		<wsdl:part name="payload" element="client:requestMessage"/>
+	</wsdl:message>
+
+	<wsdl:message name="ThoughtfulGreeterResponseMessage">
+		<wsdl:part name="payload" element="client:responseMessage"/>
+	</wsdl:message>
+
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	PORT TYPE DEFINITION - A port type groups a set of operations into
+	a logical service unit.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- portType implemented by the ThoughtfulGreeter BPEL process -->
+	<wsdl:portType name="ThoughtfulGreeter">
+		<wsdl:operation name="helloToWorld">
+			<wsdl:input message="client:ThoughtfulGreeterRequestMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- portType implemented by the requester of ThoughtfulGreeter BPEL process
+	for asynchronous callback purposes
+	-->
+	<wsdl:portType name="ThoughtfulGreeterCallback">
+		<wsdl:operation name="helloFromWorld">
+			<wsdl:input message="client:ThoughtfulGreeterResponseMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	PARTNER LINK TYPE DEFINITION
+	the ThoughtfulGreeter partnerLinkType binds the provider and
+	requester portType into an asynchronous conversation.
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<plnk:partnerLinkType name="ThoughtfulGreeter">
+		<plnk:role name="ThoughtfulGreeterProvider" portType="client:ThoughtfulGreeter"/>
+		<plnk:role name="ThoughtfulGreeterRequester" portType="client:ThoughtfulGreeterCallback"/>
+	</plnk:partnerLinkType>
+ <wsdl:binding name="ThoughtfulGreeterSOAP11Binding" type="client:ThoughtfulGreeter">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:operation name="helloToWorld">
+   <soap:operation style="document" soapAction="saibot.airport/services/pr/helloToWorld"/>
+   <wsdl:input>
+    <soap:body use="literal" parts="payload"/>
+   </wsdl:input>
+  </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:binding name="ThoughtfulGreeterCallbackSOAP11Binding" type="client:ThoughtfulGreeterCallback">
+  <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <wsdl:operation name="helloFromWorld">
+   <soap:operation style="document" soapAction="saibot.airport/services/pr/helloFromWorld"/>
+   <wsdl:input>
+    <soap:body use="literal" parts="payload"/>
+   </wsdl:input>
+  </wsdl:operation>
+ </wsdl:binding>
+</wsdl:definitions>

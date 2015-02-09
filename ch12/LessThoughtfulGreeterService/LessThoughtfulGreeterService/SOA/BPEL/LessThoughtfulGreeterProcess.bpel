@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Apr 28 08:24:15 CEST 2014
+  Author:  oracle
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="LessThoughtfulGreeterProcess"
+               targetNamespace="http://xmlns.oracle.com/AsynchronousSOA/AsynchronousSOAComposite/LessThoughtfulGreeterProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/AsynchronousSOA/AsynchronousSOAComposite/LessThoughtfulGreeterProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="saibot.airport/services/pr"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ui="http://xmlns.oracle.com/soa/designer">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <import namespace="saibot.airport/services/pr" location="../WSDLs/LessThoughtfulGreeterWrapper.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/" ui:processWSDL="true"/>
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="LessThoughtfulGreeter" partnerLinkType="ns1:LessThoughtfulGreeterProcess" myRole="LessThoughtfulGreeter"/>
+    <partnerLink name="ThoughtGreeterServer" partnerLinkType="ns1:ThoughtfulGreeter"
+                 partnerRole="ThoughtfulGreeterProvider" myRole="ThoughtfulGreeterRequester"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:LessThoughtfulGreeterRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:LessThoughtfulGreeterResponseMessage"/>
+    <variable name="InvokeThoughtfulGreeterService_helloToWorld_InputVariable"
+              messageType="ns1:ThoughtfulGreeterRequestMessage"/>
+    <variable name="ReceiveThoughtfulGreeting_helloFromWorld_InputVariable"
+              messageType="ns1:ThoughtfulGreeterResponseMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in LessThoughtfulGreeterProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="LessThoughtfulGreeter" portType="ns1:LessThoughtfulGreeter" operation="helloToAndFromWorld" variable="inputVariable" createInstance="yes"/>
+    <assign name="AssignInputToGreeter">
+      <copy>
+        <from>$inputVariable.payload/ns1:name</from>
+        <to>$InvokeThoughtfulGreeterService_helloToWorld_InputVariable.payload/ns1:name</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeThoughtfulGreeterService" partnerLink="ThoughtGreeterServer"
+            portType="ns1:ThoughtfulGreeter" operation="helloToWorld"
+            inputVariable="InvokeThoughtfulGreeterService_helloToWorld_InputVariable" bpelx:invokeAsDetail="no"/>
+    <receive name="ReceiveThoughtfulGreeting" partnerLink="ThoughtGreeterServer"
+             portType="ns1:ThoughtfulGreeterCallback" operation="helloFromWorld"
+             variable="ReceiveThoughtfulGreeting_helloFromWorld_InputVariable"/>
+    <assign name="ProcessOutputFromGreeter">
+      <copy>
+        <from>$ReceiveThoughtfulGreeting_helloFromWorld_InputVariable.payload/ns1:greeting</from>
+        <to>$outputVariable.payload/ns1:greeting</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="LessThoughtfulGreeter" portType="ns1:LessThoughtfulGreeter" operation="helloToAndFromWorld" variable="outputVariable"/>
+  </sequence>
+</process>

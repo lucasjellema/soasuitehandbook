@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="ThoughtfulGreeter"
+     targetNamespace="saibot.airport/services/pr"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:client="saibot.airport/services/pr"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="LessThoughtfulGreeterProcess">
+        <plnk:role name="LessThoughtfulGreeter" portType="client:LessThoughtfulGreeter"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="saibot.airport/services/pr" location="LessThoughtfulGreeter.wsdl"/>
+</wsdl:definitions>
