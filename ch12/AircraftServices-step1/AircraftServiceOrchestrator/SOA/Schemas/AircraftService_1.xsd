@@ -1,0 +1,58 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="saibot.airport/operational/aircraftservice"
+     xmlns:acs="saibot.airport/operational/aircraftservice" xmlns="http://www.w3.org/2001/XMLSchema">
+    <element name="RequestProposalMessage" type="acs:requestProposalMessageType"/>
+    <element name="SubmitProposalCallbackMessage" type="acs:submitProposalCallbackMessageType"/>
+    <complexType name="requestProposalMessageType">
+        <sequence>
+            <element name="RequestingCarrierIATACode" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="Flight" nillable="false" type="acs:flightType" minOccurs="1" maxOccurs="1"/>
+            <element name="Services">
+                <complexType>
+                    <sequence>
+                        <element name="ServiceRequirement" type="acs:serviceRequirementType" minOccurs="0"
+                             maxOccurs="10"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="RFPIdentificationNumber" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+            <element name="DeadlineForProposals" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+    <complexType name="submitProposalCallbackMessageType">
+        <sequence>
+            <element name="RFPIdentificationNumber" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+            <element name="CanDo" nillable="false" type="boolean" minOccurs="1" maxOccurs="1"/>
+            <element name="Price" nillable="false" type="float" minOccurs="0" maxOccurs="1"/>
+            <element name="Comments" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="ProposalExpiryDate" nillable="false" type="dateTime" minOccurs="0" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+    <complexType name="flightType">
+        <sequence>
+            <element name="AircraftTypeIATACode" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="EstimatedNumberOfPassengers" nillable="false" type="int" minOccurs="1"
+                 maxOccurs="1"/>
+            <element name="SlotTime" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+            <element name="ArrivalOrDeparture" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="ConnectingAirport" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+    <complexType name="serviceRequirementType">
+        <sequence>
+            <element name="Service" type="acs:serviceType" minOccurs="1" maxOccurs="1"/>
+            <element name="MinimumQualityLevel" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+            <element name="Quantity" nillable="false" type="int" minOccurs="0" maxOccurs="1"/>
+            <element name="Description" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+    <simpleType name="serviceType">
+        <restriction base="string">
+            <enumeration value="fuel"/>
+            <enumeration value="catering"/>
+            <enumeration value="cleaning"/>
+            <enumeration value="bagage"/>
+            <enumeration value="deicing"/>
+        </restriction>
+    </simpleType>
+</schema>
