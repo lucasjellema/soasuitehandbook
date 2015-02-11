@@ -16,5 +16,38 @@
     <packaging>sbar</packaging>
 
     <description/>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.oracle.adf.plugin</groupId>
+                <artifactId>ojdeploy</artifactId>
+                <version>12.1.3-0-0</version>
+                <configuration>
+                    <ojdeploy>
+                        ${oracleHome}/jdeveloper/jdev/bin/ojdeploy.exe
+                    </ojdeploy>
+                    <workspace>
+                        ${basedir}/../AircraftServiceProviderSB.jws
+                    </workspace>
+                    <project>
+                        AircraftServiceProvider
+                    </project>
+                    <profile>
+                        AircraftServiceProviderSB_AircraftServiceProvider_ServiceBusProjectProfile
+                    </profile>
+                    <usemaven>
+                        true
+                    </usemaven>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
