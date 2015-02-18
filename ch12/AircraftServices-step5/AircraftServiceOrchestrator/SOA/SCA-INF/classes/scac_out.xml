@@ -1,0 +1,23 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Faults>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>22</line>
+      <col/>
+      <file>BPEL/AircraftServiceNegotiationProcessor.bpel</file>
+      <name>BPEL/AircraftServiceNegotiationProcessor.bpel</name>
+      <fix>Fix the process to be *either* durable or synchronous.</fix>
+      <msg>Process "AircraftServiceNegotiationProcessor" is both durable (onMessage,Receive,Wait) and synchronous.</msg>
+   </Fault>
+   <Fault>
+      <severity>warning</severity>
+      <loc/>
+      <line>112</line>
+      <col/>
+      <file>BPEL/AircraftServiceNegotiationProcessor.bpel</file>
+      <name>BPEL/AircraftServiceNegotiationProcessor.bpel</name>
+      <fix>Types must be compatible.</fix>
+      <msg>The from-spec of "ns3:Services" is not compatible with to-spec of "ns1:Services"</msg>
+   </Fault>
+</Faults>

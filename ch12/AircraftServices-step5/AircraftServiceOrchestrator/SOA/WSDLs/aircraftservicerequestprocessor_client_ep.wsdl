@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="AirportService"
+     targetNamespace="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    >
+    <wsdl:documentation>
+        <abstractWSDL>http://soa2admin2.example.com:8001/soa-infra/services/default/AircraftServiceProvider!1.0/WSDLs/AircraftServiceWrapper.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="AircraftServiceRequestProcessor">
+        <plnk:role name="AircraftServiceCallback" portType="tns:AircraftServiceCallback"/>
+        <plnk:role name="AircraftService" portType="tns:AircraftService"/>
+    </plnk:partnerLinkType>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+         wsu:Id="wsaddr_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+        <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+    </wsp:Policy>
+    <wsdl:import namespace="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService"
+         location="aircraftservicerequestprocessor_client_ep_WSDL_AircraftService.wsdl"/>
+    <wsdl:binding name="AircraftServiceBinding" type="tns:AircraftService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wsaddr_policy"
+             wsdl:required="false"/>
+        <wsdl:operation name="requestProposal">
+            <soap:operation style="document" soapAction="requestProposal"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="AircraftServiceCallbackBinding" type="tns:AircraftServiceCallback">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="submitProposal">
+            <soap:operation style="document" soapAction="submitProposal"/>
+            <wsdl:input>
+                <soap:body use="literal" namespace="http://xmlns.oracle.com/AirportServicesPlatform/AirportServiceRequest/AirportService"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="aircraftservicerequestprocessor_client_ep">
+        <wsdl:port name="AircraftService_pt" binding="tns:AircraftServiceBinding">
+            <soap:address location="http://soa2admin2.example.com:8001/soa-infra/services/default/AircraftServiceProvider/aircraftservicerequestprocessor_client_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
