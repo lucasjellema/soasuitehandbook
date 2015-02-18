@@ -1,0 +1,64 @@
+<schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+        targetNamespace="saibot.airport/operational/aircraftservicenegotiation"
+        xmlns:acs="saibot.airport/operational/aircraftservice" 
+        xmlns:acsn="saibot.airport/operational/aircraftservicenegotiation" xmlns="http://www.w3.org/2001/XMLSchema">
+  <import schemaLocation="../Schemas/AircraftService.xsd"
+          namespace="saibot.airport/operational/aircraftservice"/>
+  <element name="ArrangeAircraftServiceRequestMessage" type="acsn:requestforAircraftServiceRequestMessageType"/>
+  <element name="ArrangeAircraftServiceResponseMessage" type="acsn:requestforAircraftServiceResponseMessageType"/>
+  <element name="CancelAircraftServiceRequestMessage" type="acsn:cancelRequestforAircraftServiceRequestMessageType"/>
+  <element name="CancelAircraftServiceResponseMessage" type="acsn:cancelRequestforAircraftServiceResponseMessageType"/>
+
+  <complexType name="requestforAircraftServiceRequestMessageType">
+    <sequence>
+      <element name="RequestingCarrierIATACode" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="Flight" nillable="false" type="acs:flightType" minOccurs="1" maxOccurs="1"/>
+      <element name="Services">
+        <complexType>
+          <sequence>
+            <element name="ServiceRequirement" type="acs:serviceRequirementType" minOccurs="0" maxOccurs="10"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ServiceRequestId" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="ServiceDeliveryDate" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="requestforAircraftServiceResponseMessageType">
+    <sequence>
+      <element name="ServiceRequestId" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="DealCloseDate" nillable="false" type="dateTime" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="cancelRequestforAircraftServiceRequestMessageType">
+    <sequence>
+      <element name="ServiceRequestId" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="Reason" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+  <complexType name="cancelRequestforAircraftServiceResponseMessageType">
+    <sequence>
+      <element name="ServiceRequestId" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+      <element name="Description" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+    </sequence>
+  </complexType>
+
+
+      <complexType name="proposalsListType">
+        <sequence>
+            <element name="proposal" nillable="false" type="acsn:aircraftServiceProposalType" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+  
+      <complexType name="aircraftServiceProposalType">
+        <sequence>
+            <element name="RFPIdentificationNumber" nillable="false" type="int" minOccurs="1" maxOccurs="1"/>
+            <element name="AircraftServiceProvider" nillable="false" type="string" minOccurs="1" maxOccurs="1"/>
+            <element name="CanDo" nillable="false" type="boolean" minOccurs="1" maxOccurs="1"/>
+            <element name="Price" nillable="false" type="float" minOccurs="0" maxOccurs="1"/>
+            <element name="Comments" nillable="false" type="string" minOccurs="0" maxOccurs="1"/>
+            <element name="ProposalExpiryDate" nillable="false" type="dateTime" minOccurs="0" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+
+</schema>

@@ -1,0 +1,38 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="AircraftServiceNegotiation"
+     xmlns:acs="saibot.airport/operational/aircraftservice" 
+     xmlns:acsn="saibot.airport/operational/aircraftservicenegotiation" 
+     targetNamespace="saibot.airport/operational/aircraftservice"
+     xmlns:tns="saibot.airport/operational/aircraftservice"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="saibot.airport/operational/aircraftservicenegotiation"
+                        schemaLocation="../Schemas/AircraftServiceNegotiation.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="ArrangeAircraftServiceRequestMessage">
+        <wsdl:part name="part1" element="acsn:ArrangeAircraftServiceRequestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="ArrangeAircraftServiceResponseMessage">
+        <wsdl:part name="part1" element="acsn:ArrangeAircraftServiceResponseMessage"/>
+    </wsdl:message>
+    <wsdl:message name="CancelAircraftServiceRequestMessage">
+        <wsdl:part name="part1" element="acsn:CancelAircraftServiceRequestMessage"/>
+    </wsdl:message>
+    <wsdl:message name="CancelAircraftServiceResponseMessage">
+        <wsdl:part name="part1" element="acsn:CancelAircraftServiceResponseMessage"/>
+    </wsdl:message>
+    <wsdl:portType name="AircraftServiceNegotiation">
+        <wsdl:operation name="arrangeAircraftService">
+            <wsdl:input message="tns:ArrangeAircraftServiceRequestMessage"/>
+            <wsdl:output message="tns:ArrangeAircraftServiceResponseMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="cancelAircraftService">
+            <wsdl:input message="tns:CancelAircraftServiceRequestMessage"/>
+            <wsdl:output message="tns:CancelAircraftServiceResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
