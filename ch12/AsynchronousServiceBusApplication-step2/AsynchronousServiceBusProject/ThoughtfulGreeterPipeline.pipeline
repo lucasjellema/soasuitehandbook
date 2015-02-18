@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/publish/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="AsynchronousServiceBusProject/WSDLs/ThoughtfulGreeter"/>
+            <con:binding>
+                <con:name>ThoughtfulGreeterCallbackSOAP11Binding</con:name>
+                <con:namespace>saibot.airport/services/pr</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N8000">
+            <con:stage id="_StageId-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7ffe" name="GatherCallbackToandMessageID">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="callbackToAddress">
+                        <con2:id>_ActionId-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7ff8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$header/wsa05:ReplyTo/wsa05:Address/.</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="MessageId">
+                        <con2:id>_ActionId-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7ff5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$header/wsa05:MessageID/.</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="relatesTo">
+                        <con2:id>_ActionId-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7ff2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$header/wsa05:RelatesTo/.</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7ffc" name="ProcessBody">
+                <con:context>
+                    <con2:userNsDecl prefix="pr" namespace="saibot.airport/services/pr"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true">
+                        <con2:id>_ActionId-7f000001.N35461d68.0.145a8a7aeb5.N7e84</con2:id>
+                        <con1:location>
+                            <con2:xpathText>.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText>&lt;pr:responseMessage xmlns:pr="saibot.airport/services/pr">
+         &lt;pr:greeting>{fn:concat("Hello dear ",$body/pr:requestMessage/pr:name,", we are so glad to meet you.")}&lt;/pr:greeting>
+      &lt;/pr:responseMessage></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7ffb" name="PublishToCallbackInterface">
+                <con:context/>
+                <con:actions>
+                    <con3:route>
+                        <con2:id>_ActionId-7f000001.N35461d68.0.145a8a7aeb5.N7ec8</con2:id>
+                        <con3:service ref="AsynchronousServiceBusProject/ThoughtfulGreeterCallback" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>helloFromWorld</con3:operation>
+                        <con3:outboundTransform>
+                            <con1:replace varName="header">
+                                <con2:id>_ActionId-7f000001.N35461d68.0.145a8a7aeb5.N7e92</con2:id>
+                                <con1:location>
+                                    <con2:xpathText>.</con2:xpathText>
+                                </con1:location>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<soap-env:Header >
+  <wsa05:Action  soap-env:mustUnderstand="1">saibot.airport/services/pr/helloFromWorld</wsa05:Action> 
+  <wsa05:To>{$callbackToAddress/text()}</wsa05:To>
+  <wsa05:RelatesTo>{$MessageID/text()}</wsa05:RelatesTo>
+  <wsa05:ReplyTo>
+    <wsa05:Address>http://www.w3.org/2005/08/addressing/anonymous</wsa05:Address>
+    <wsa05:ReferenceParameters />
+  </wsa05:ReplyTo>
+</soap-env:Header>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                            <con1:routing-options>
+                                <con2:id>_ActionId-7f000001.N35461d68.0.145a8a7aeb5.N7e95</con2:id>
+                                <con1:uriExpr>
+                                    <con2:xqueryText>$callbackToAddress/text()</con2:xqueryText>
+                                </con1:uriExpr>
+                                <con1:mode>request</con1:mode>
+                            </con1:routing-options>
+                        </con3:outboundTransform>
+                    </con3:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7fff">
+            <con:stage id="_StageId-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7ffd" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="PipelinePairNode1">
+                <con:request>request-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N8000</con:request>
+                <con:response>response-N3f57c7ff.N349ec22e.0.14b9c3ce6f4.N7fff</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57c7ff.N27fb4f09.0.14b6b05ca44.N7ffe</con2:id>
+                        <con1:service ref="AsynchronousServiceBusProject/ThoughtfulGreeterCallback" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation passThrough="true"/>
+                        <con1:outboundTransform/>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
